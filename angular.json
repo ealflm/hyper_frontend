@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "projects": {
+    "tourism-smart-transportation": {
+      "projectType": "application",
+      "root": "apps/tourism-smart-transportation",
+      "sourceRoot": "apps/tourism-smart-transportation/src",
+      "prefix": "tourism-smart-transportation",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/tourism-smart-transportation",
+            "index": "apps/tourism-smart-transportation/src/index.html",
+            "main": "apps/tourism-smart-transportation/src/main.ts",
+            "polyfills": "apps/tourism-smart-transportation/src/polyfills.ts",
+            "tsConfig": "apps/tourism-smart-transportation/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/tourism-smart-transportation/src/favicon.ico",
+              "apps/tourism-smart-transportation/src/assets"
+            ],
+            "styles": ["apps/tourism-smart-transportation/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/tourism-smart-transportation/src/environments/environment.ts",
+                  "with": "apps/tourism-smart-transportation/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "tourism-smart-transportation:build:production"
+            },
+            "development": {
+              "browserTarget": "tourism-smart-transportation:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "tourism-smart-transportation:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/tourism-smart-transportation/src/**/*.ts",
+              "apps/tourism-smart-transportation/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/tourism-smart-transportation"],
+          "options": {
+            "jestConfig": "apps/tourism-smart-transportation/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "tourism-smart-transportation-e2e": {
+      "root": "apps/tourism-smart-transportation-e2e",
+      "sourceRoot": "apps/tourism-smart-transportation-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/tourism-smart-transportation-e2e/cypress.json",
+            "devServerTarget": "tourism-smart-transportation:serve:development"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "tourism-smart-transportation:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "apps/tourism-smart-transportation-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["tourism-smart-transportation"]
+    }
+  }
+}
