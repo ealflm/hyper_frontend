@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdminService } from './services/admin.service';
 
 @Component({
   selector: 'tourism-smart-transportation-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tourism-smart-transportation';
+  constructor(private adminService: AdminService) {
+    this.adminService.getAllAdmin().subscribe((res) => console.log(res));
+  }
 }
