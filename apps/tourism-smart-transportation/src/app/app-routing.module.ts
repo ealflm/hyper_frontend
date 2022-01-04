@@ -15,8 +15,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forRoot(routes, {
-      useHash: true,
-      initialNavigation: 'enabled',
+      // useHash: true,
+      // initialNavigation: 'enabled',
     }),
     AdminPagesModule,
   ],
