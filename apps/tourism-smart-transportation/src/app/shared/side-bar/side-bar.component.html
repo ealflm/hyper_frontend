@@ -39,9 +39,11 @@
     <ul [ngClass]="statusLink ? 'navClose' : ''">
       <li class="nav-item">
         <a class="nav-link" href="">
-          <span [ngClass]="statusLink ? 'navIconClose' : ''"
-            ><i class="fas fa-sliders-h"></i
-          ></span>
+          <div>
+            <span [ngClass]="statusLink ? 'navIconClose' : ''">
+              <i class="fas fa-sliders-h"></i>
+            </span>
+          </div>
           <span
             [ngClass]="
               statusLink
