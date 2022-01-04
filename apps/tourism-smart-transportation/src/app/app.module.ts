@@ -1,12 +1,27 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from "@angular/common/http"
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { CommonModule } from '@angular/common';
+import { AppRoutingModule } from './app-routing.module';
+import { AuthModule } from './auth/auth.module';
+import { PrimengModule } from './primeng/primeng.module';
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent],
-  imports: [BrowserModule, HttpClientModule],
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    CommonModule,
+    AppRoutingModule,
+    AuthModule,
+    ReactiveFormsModule,
+    FormsModule,
+    PrimengModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiURL: 'https://tourism-smart-transportation.azurewebsites.net/api/v1.0/',
 };
 
 /*
