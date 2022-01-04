@@ -20,7 +20,7 @@
             "assets": [
               "apps/tourism-smart-transportation/src/favicon.ico",
               "apps/tourism-smart-transportation/src/assets",
-              "app/tourism-smart-transportation/src/assets/routes.json"
+              "apps/tourism-smart-transportation/src/assets/routes.json"
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",
