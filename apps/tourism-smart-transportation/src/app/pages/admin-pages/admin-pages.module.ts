@@ -16,10 +16,7 @@ const ADMIN_ROUTES: Routes = [
         redirectTo: 'dashboard',
         pathMatch: 'full',
       },
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-      },
+      { path: 'dashboard', component: DashboardComponent },
     ],
   },
 ];
