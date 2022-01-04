@@ -1,0 +1,58 @@
+html,
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+::ng-deep .p-inputtext {
+  border-radius: 2rem;
+}
+::ng-deep .p-button-rounded {
+  box-shadow: 0 0 0 2px rgb(20, 184, 166), 0.1em 0.1em 1em rgb(20, 184, 166);
+}
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex-item-left {
+  height: 100vh;
+  text-align: center;
+  flex: 40%;
+  overflow: hidden;
+  position: relative;
+  .login-form {
+    position: absolute;
+    top: 30%;
+    left: 15%;
+    width: 24rem;
+    height: 22rem;
+    border-radius: 30px;
+    box-shadow: 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  }
+}
+.flex-item-right {
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  flex: 60%;
+  .vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    img {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .flex-item-left {
+    flex: 100%;
+  }
+  .flex-item-right {
+    display: none;
+  }
+}

@@ -1,0 +1,85 @@
+.side-bar {
+  height: 100vh;
+  box-shadow: 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+.btn {
+  position: relative;
+}
+.btn-open {
+  position: absolute;
+  text-align: center;
+  margin-top: 2rem;
+  right: 25%;
+  background-color: rgba(0, 0, 0, 0.062);
+  border: none;
+  outline: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 26%;
+  transition: 0.4s;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+.open {
+  width: 260px;
+  transition: 0.4s;
+}
+.close {
+  width: 60px;
+  transition: 0.4s;
+}
+.hidden-logo {
+  opacity: 0;
+  display: none;
+  transition: 0.4s;
+}
+.btn-lock {
+  background-color: rgba(0, 0, 0, 0.062);
+  border: none;
+  outline: none;
+  width: 3.3rem;
+  border-radius: 26%;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  i {
+    font-size: 1.2rem;
+  }
+}
+ul {
+  li {
+    list-style-type: none;
+    margin-top: 1.5rem;
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-color);
+      span {
+        padding: 3px;
+      }
+    }
+  }
+}
+
+.hiden-text {
+  opacity: 1;
+}
+.navLinkDar {
+  display: none;
+  visibility: hidden;
+}
+.navLinkShow {
+  display: inline-block;
+  visibility: visible;
+}
+.navClose {
+  padding-inline-start: 15px;
+}
+.navIconClose {
+  font-size: 1.5rem;
+  transition: 0.4s;
+}

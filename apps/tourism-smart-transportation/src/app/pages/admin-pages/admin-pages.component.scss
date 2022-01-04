@@ -1,0 +1,14 @@
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.main-screen {
+  display: flex;
+
+  .main-content {
+    padding-left: 1rem;
+    max-width: calc(100vw - 260px);
+  }
+}
