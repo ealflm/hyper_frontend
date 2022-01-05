@@ -9,7 +9,7 @@ export class SideBarComponent implements OnInit {
   status = true;
   statusLink = false;
   showMore = false;
-  locked = false;
+  locked = true;
   constructor() {}
 
   ngOnInit(): void {}

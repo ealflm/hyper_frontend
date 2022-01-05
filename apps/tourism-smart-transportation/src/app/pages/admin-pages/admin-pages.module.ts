@@ -18,6 +18,13 @@ const ADMIN_ROUTES: Routes = [
         pathMatch: 'full',
       },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'account-partner', component: DashboardComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      {
+        path: 'setting',
+        component: DashboardComponent,
+        children: [{ path: 'service', component: DashboardComponent }],
+      },
     ],
   },
 ];
