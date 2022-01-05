@@ -1,9 +1,18 @@
 .side-bar {
   height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   box-shadow: 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 .btn {
   position: relative;
+}
+.logo {
+  width: 100%;
+  &-avatar {
+    padding-left: 6.5px;
+  }
 }
 .btn-open {
   position: absolute;
@@ -26,7 +35,7 @@
 }
 
 .open {
-  width: 260px;
+  width: 280px;
   transition: 0.4s;
 }
 .close {
@@ -39,10 +48,13 @@
   transition: 0.4s;
 }
 .btn-lock {
+  position: absolute;
+  right: 20px;
   background-color: rgba(0, 0, 0, 0.062);
   border: none;
   outline: none;
   width: 3.3rem;
+  height: 100%;
   border-radius: 26%;
   &:hover {
     background-color: rgba(0, 0, 0, 0.2);
@@ -53,19 +65,42 @@
 }
 ul {
   padding-inline-start: 0px;
+
   ul {
-    li {
-      padding-left: 2.9rem;
+    .active-link {
+      background-color: rgba(0, 0, 0, 0.05);
+      border-left: 4px solid;
+      color: rgb(48, 213, 200);
+      padding-left: 36px !important;
     }
+    li {
+      padding-left: 40px;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        border-left: 4px solid;
+        color: rgb(48, 213, 200);
+        padding-left: 36px;
+      }
+    }
+  }
+  .active {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-left: 4px solid;
+    color: rgb(48, 213, 200);
+    padding-left: 12px !important;
   }
   li {
     list-style-type: none;
-    padding-left: 1rem;
-    padding: 12px 0 12px 1em;
+    padding: 12px 0 12px 17px;
+
     .nav-link {
       display: flex;
       text-decoration: none;
       color: var(--text-color);
+      .icon-chevron {
+        right: 10%;
+        padding-top: 2.5px;
+      }
       .icon-title {
         padding-top: 2.5px;
       }
@@ -78,6 +113,7 @@ ul {
       background-color: rgba(0, 0, 0, 0.05);
       border-left: 4px solid;
       color: rgb(48, 213, 200);
+      padding-left: 12px;
     }
   }
 }
@@ -90,7 +126,7 @@ ul {
 .navLinkShow {
   display: inline-block;
   visibility: visible;
-  padding: 0 0 0 1rem;
+  padding: 0 0 0 2rem;
 }
 .navClose {
 }
@@ -102,4 +138,36 @@ ul {
   background-color: rgba(0, 0, 0, 0.05);
   border-left: 4px solid;
   color: rgb(48, 213, 200);
+  padding-left: 12px !important;
+}
+.footer-avatar {
+  position: absolute;
+  bottom: 5%;
+  left: 0%;
+  width: 100%;
+  .footer-avatar-content {
+    display: flex;
+    justify-content: start;
+    position: relative;
+    .avatarImage {
+      width: 48px;
+      height: 48px;
+      margin-left: 6.5px;
+    }
+    img {
+      border-radius: 50%;
+      background-size: cover;
+      object-fit: cover;
+    }
+    div {
+      position: absolute;
+      right: 40%;
+      top: 30%;
+    }
+    i {
+      position: absolute;
+      right: 10%;
+      top: 30%;
+    }
+  }
 }

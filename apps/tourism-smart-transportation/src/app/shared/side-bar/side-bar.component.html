@@ -1,6 +1,11 @@
-<div class="side-bar" [ngClass]="status ? 'open' : 'close'">
+<div
+  class="side-bar"
+  [ngClass]="status ? 'open' : 'close'"
+  (mouseenter)="mouseEnter()"
+  (mouseleave)="mouseLeave()"
+>
   <div class="btn pb-8">
-    <button
+    <!-- <button
       class="btn-open"
       [ngClass]="status ? 'hidden-logo' : ''"
       (click)="onToggle()"
@@ -8,15 +13,14 @@
       <mat-icon class="material-icons-outlined">{{
         locked ? 'lock' : 'lock_open'
       }}</mat-icon>
-    </button>
+    </button> -->
   </div>
-  <div
-    style="height: 70vh"
-    (mouseenter)="mouseEnter()"
-    (mouseleave)="mouseLeave()"
-  >
-    <div class="logo">
-      <div class="flex justify-content-around">
+  <div>
+    <div class="logo mb-7">
+      <div
+        class="flex justify-content-start logo-avatar"
+        style="position: relative"
+      >
         <div class="flex">
           <button
             pButton
@@ -25,7 +29,7 @@
             icon="pi pi-check"
             class="p-button-rounded"
           ></button>
-          <p [ngClass]="status ? '' : 'hidden-logo'">Logo</p>
+          <p [ngClass]="status ? 'ml-3' : 'hidden-logo'">Logo</p>
         </div>
         <button
           class="btn-lock"
@@ -76,9 +80,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <div
+          <a
             style="cursor: pointer"
-            class="nav-link"
+            class="nav-link relative"
             (click)="onShowSetting()"
           >
             <mat-icon class="material-icons-outlined">settings</mat-icon>
@@ -88,39 +92,34 @@
             >
               Cài đặt
             </div>
-            <span style="margin-left: 5rem; padding-top: 2.5px"
+            <span
+              class="absolute icon-chevron"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
               ><i
                 [ngClass]="
                   showMore ? 'pi pi-chevron-up ' : 'pi pi-chevron-down'
                 "
-                [ngClass]="statusLink ? 'navLinkDar' : ''"
               ></i
             ></span>
-          </div>
+          </a>
         </li>
         <ul [ngClass]="showMore ? '' : 'navLinkDar'">
-          <li class="nav-item">
+          <li class="nav-item nav-item-content">
             <a class="nav-link" href="">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-              <span
-                [ngClass]="
-                  statusLink
-                    ? 'navLinkDar'
-                    : 'navLinkShow animate__animated animate__fadeInDown'
-                "
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Loại dịch vụ</span
               >
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">
+          <li
+            class="nav-item"
+            [ngClass]="status ? 'active-link' : ''"
+            routerLinkActive="active-link"
+          >
+            <a class="nav-link" routerLink="/setting/service">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-              <span
-                [ngClass]="
-                  statusLink
-                    ? 'navLinkDar'
-                    : 'navLinkShow animate__animated animate__fadeInDown'
-                "
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Loại xe</span
               >
             </a>
@@ -128,12 +127,7 @@
           <li class="nav-item">
             <a class="nav-link" href="">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-              <span
-                [ngClass]="
-                  statusLink
-                    ? 'navLinkDar'
-                    : 'navLinkShow animate__animated animate__fadeInDown'
-                "
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Trạm</span
               >
             </a>
@@ -141,18 +135,28 @@
           <li class="nav-item">
             <a class="nav-link" href="">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-              <span
-                [ngClass]="
-                  statusLink
-                    ? 'navLinkDar'
-                    : 'navLinkShow animate__animated animate__fadeInDown'
-                "
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Khuyến mãi</span
               >
             </a>
           </li>
         </ul>
       </ul>
+    </div>
+  </div>
+  <div class="footer-avatar">
+    <div class="footer-avatar-content">
+      <img class="avatarImage" src="../../../assets/image/avatar.jpg" alt="" />
+      <div
+        class="footer-avatar-name"
+        [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+      >
+        Sang Đẹp Trai
+      </div>
+      <i
+        class="pi pi-chevron-down"
+        [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+      ></i>
     </div>
   </div>
 </div>
