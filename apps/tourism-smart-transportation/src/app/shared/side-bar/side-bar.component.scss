@@ -55,16 +55,20 @@ ul {
   padding-inline-start: 0px;
   ul {
     li {
-      padding-left: 3.2em;
+      padding-left: 2.9rem;
     }
   }
   li {
     list-style-type: none;
     padding-left: 1rem;
-    padding: 10px 0 10px 1em;
+    padding: 12px 0 12px 1em;
     .nav-link {
+      display: flex;
       text-decoration: none;
       color: var(--text-color);
+      .icon-title {
+        padding-top: 2.5px;
+      }
       .icon {
         margin-right: 2px;
         padding-right: 15px;
@@ -78,23 +82,22 @@ ul {
   }
 }
 
-.hiden-text {
-  opacity: 1;
-}
 .navLinkDar {
   display: none;
   visibility: hidden;
 }
+
 .navLinkShow {
   display: inline-block;
   visibility: visible;
+  padding: 0 0 0 1rem;
 }
 .navClose {
 }
-.navIconClose {
-  font-size: 1.5rem;
-  transition: 0.4s;
-}
+// .navIconClose {
+//   font-size: 1.5rem;
+//   transition: 0.4s;
+// }
 .active-link {
   background-color: rgba(0, 0, 0, 0.05);
   border-left: 4px solid;

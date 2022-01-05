@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
 import { PrimengModule } from './primeng/primeng.module';
+import { MaterialuiModule } from './materialui/materialui.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { PrimengModule } from './primeng/primeng.module';
     ReactiveFormsModule,
     FormsModule,
     PrimengModule,
+    MaterialuiModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

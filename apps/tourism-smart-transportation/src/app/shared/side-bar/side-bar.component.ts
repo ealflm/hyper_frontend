@@ -25,13 +25,10 @@ export class SideBarComponent implements OnInit {
       return;
     } else {
       this.status = true;
-
       if (this.statusLink) {
         setTimeout(() => {
           this.statusLink = false;
         }, 230);
-      } else {
-        this.statusLink = true;
       }
     }
   }

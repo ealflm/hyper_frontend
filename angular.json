@@ -9,7 +9,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/tourism-smart-transportation",
             "index": "apps/tourism-smart-transportation/src/index.html",
@@ -23,6 +25,7 @@
               "apps/tourism-smart-transportation/src/assets/routes.json"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/lara-light-teal/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
@@ -31,7 +34,9 @@
               "node_modules/primeflex/primeflex.css",
               "apps/tourism-smart-transportation/src/styles.scss"
             ],
-            "scripts": ["node_modules/quill/dist/quill.js"]
+            "scripts": [
+              "node_modules/quill/dist/quill.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -95,7 +100,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/tourism-smart-transportation"],
+          "outputs": [
+            "coverage/apps/tourism-smart-transportation"
+          ],
           "options": {
             "jestConfig": "apps/tourism-smart-transportation/jest.config.js",
             "passWithNoTests": true
@@ -123,7 +130,9 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
             "lintFilePatterns": [
               "apps/tourism-smart-transportation-e2e/**/*.{js,ts}"
@@ -132,7 +141,9 @@
         }
       },
       "tags": [],
-      "implicitDependencies": ["tourism-smart-transportation"]
+      "implicitDependencies": [
+        "tourism-smart-transportation"
+      ]
     }
   }
 }

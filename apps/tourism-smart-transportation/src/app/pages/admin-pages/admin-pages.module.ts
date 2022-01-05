@@ -1,3 +1,4 @@
+import { MaterialuiModule } from './../../materialui/materialui.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,11 @@ const ADMIN_ROUTES: Routes = [
 ];
 @NgModule({
   declarations: [AdminPagesComponent, SideBarComponent, DashboardComponent],
-  imports: [CommonModule, RouterModule.forChild(ADMIN_ROUTES), PrimengModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(ADMIN_ROUTES),
+    PrimengModule,
+    MaterialuiModule,
+  ],
 })
 export class AdminPagesModule {}

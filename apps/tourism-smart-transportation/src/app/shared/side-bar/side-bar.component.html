@@ -5,7 +5,9 @@
       [ngClass]="status ? 'hidden-logo' : ''"
       (click)="onToggle()"
     >
-      <i class="fas" [ngClass]="locked ? 'fa-lock' : 'fa-unlock-alt'"></i>
+      <mat-icon class="material-icons-outlined">{{
+        locked ? 'lock' : 'lock_open'
+      }}</mat-icon>
     </button>
   </div>
   <div
@@ -30,7 +32,9 @@
           [ngClass]="status ? '' : 'hidden-logo'"
           (click)="onToggle()"
         >
-          <i class="fas" [ngClass]="locked ? 'fa-lock' : 'fa-unlock-alt'"></i>
+          <mat-icon class="material-icons-outlined">{{
+            locked ? 'lock' : 'lock_open'
+          }}</mat-icon>
         </button>
       </div>
     </div>
@@ -38,51 +42,37 @@
       <ul [ngClass]="statusLink ? 'navClose' : ''">
         <li class="nav-item" routerLinkActive="active-link">
           <a class="nav-link" routerLink="/dashboard">
-            <span class="icon" [ngClass]="statusLink ? 'navIconClose' : ''">
-              <i class="fas fa-sliders-h"></i>
-            </span>
+            <mat-icon class="material-icons-outlined">dashboard</mat-icon>
 
-            <span
-              [ngClass]="
-                statusLink
-                  ? 'navLinkDar'
-                  : 'navLinkShow animate__animated animate__fadeInRight'
-              "
-              >Bảng điều khiển</span
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
+              Bảng điều khiển
+            </div>
           </a>
         </li>
         <li class="nav-item" routerLinkActive="active-link">
           <a class="nav-link" href="" routerLink="/partner">
-            <span
-              style="padding-right: 11px"
-              [ngClass]="statusLink ? 'navIconClose' : ''"
+            <mat-icon class="material-icons-outlined">person_outline</mat-icon>
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
-              <i class="fas fa-user-friends"></i
-            ></span>
-            <span
-              [ngClass]="
-                statusLink
-                  ? 'navLinkDar'
-                  : 'navLinkShow animate__animated animate__fadeInRight'
-              "
-              >Tài khoản đối tác</span
-            >
+              Tài khoản đối tác
+            </div>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="">
-            <span class="icon" [ngClass]="statusLink ? 'navIconClose' : ''">
-              <i class="fas fa-user"></i
-            ></span>
-            <span
-              [ngClass]="
-                statusLink
-                  ? 'navLinkDar'
-                  : 'navLinkShow animate__animated animate__fadeInRight'
-              "
-              >Tài khoản người dùng</span
+            <mat-icon class="material-icons-outlined">person_outline</mat-icon>
+
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
+              Tài khoản người dùng
+            </div>
           </a>
         </li>
         <li class="nav-item">
@@ -91,20 +81,18 @@
             class="nav-link"
             (click)="onShowSetting()"
           >
-            <span class="icon" [ngClass]="statusLink ? 'navIconClose' : ''">
-              <i class="fas fa-cog"></i
-            ></span>
-            <span
-              [ngClass]="
-                statusLink
-                  ? 'navLinkDar'
-                  : 'navLinkShow animate__animated animate__fadeInRight'
-              "
-              >Cài đặt</span
+            <mat-icon class="material-icons-outlined">settings</mat-icon>
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
-            <span style="margin-left: 5rem"
+              Cài đặt
+            </div>
+            <span style="margin-left: 5rem; padding-top: 2.5px"
               ><i
-                [ngClass]="showMore ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+                [ngClass]="
+                  showMore ? 'pi pi-chevron-up ' : 'pi pi-chevron-down'
+                "
                 [ngClass]="statusLink ? 'navLinkDar' : ''"
               ></i
             ></span>
