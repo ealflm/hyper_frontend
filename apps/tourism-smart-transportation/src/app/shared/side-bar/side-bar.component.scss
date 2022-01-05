@@ -52,15 +52,28 @@
   }
 }
 ul {
+  padding-inline-start: 0px;
+  ul {
+    li {
+      padding-left: 3.2em;
+    }
+  }
   li {
     list-style-type: none;
-    margin-top: 1.5rem;
+    padding-left: 1rem;
+    padding: 10px 0 10px 1em;
     .nav-link {
       text-decoration: none;
       color: var(--text-color);
-      span {
-        padding: 3px;
+      .icon {
+        margin-right: 2px;
+        padding-right: 15px;
       }
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      border-left: 4px solid;
+      color: rgb(48, 213, 200);
     }
   }
 }
@@ -77,9 +90,13 @@ ul {
   visibility: visible;
 }
 .navClose {
-  padding-inline-start: 15px;
 }
 .navIconClose {
   font-size: 1.5rem;
   transition: 0.4s;
+}
+.active-link {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-left: 4px solid;
+  color: rgb(48, 213, 200);
 }
