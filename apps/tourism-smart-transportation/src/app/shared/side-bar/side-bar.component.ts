@@ -9,43 +9,44 @@ export class SideBarComponent implements OnInit {
   status = true;
   statusLink = false;
   showMore = false;
+  locked = false;
   constructor() {}
 
   ngOnInit(): void {}
 
   onToggle() {
-    this.status = !this.status;
-    if (this.statusLink) {
-      setTimeout(() => {
-        this.statusLink = false;
-      }, 230);
-    } else {
-      this.statusLink = true;
-    }
+    this.locked = !this.locked;
   }
   onShowSetting() {
     this.showMore = !this.showMore;
   }
   mouseEnter() {
-    this.status = true;
-    console.log(this.status);
-
-    if (this.statusLink) {
-      setTimeout(() => {
-        this.statusLink = false;
-      }, 230);
+    if (this.locked) {
+      return;
     } else {
-      this.statusLink = true;
+      this.status = true;
+
+      if (this.statusLink) {
+        setTimeout(() => {
+          this.statusLink = false;
+        }, 230);
+      } else {
+        this.statusLink = true;
+      }
     }
   }
   mouseLeave() {
-    this.status = false;
-    if (this.statusLink) {
-      setTimeout(() => {
-        this.statusLink = true;
-      }, 230);
+    if (this.locked) {
+      return;
     } else {
-      this.statusLink = true;
+      this.status = false;
+      if (this.statusLink) {
+        setTimeout(() => {
+          this.statusLink = true;
+        }, 230);
+      } else {
+        this.statusLink = true;
+      }
     }
   }
 }
