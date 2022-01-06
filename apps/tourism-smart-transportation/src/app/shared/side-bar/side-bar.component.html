@@ -16,7 +16,7 @@
     </button> -->
   </div>
   <div>
-    <div class="logo mb-7">
+    <div class="logo">
       <div
         class="flex justify-content-start logo-avatar"
         style="position: relative"
@@ -33,7 +33,7 @@
         </div>
         <button
           class="btn-lock"
-          [ngClass]="status ? '' : 'hidden-logo'"
+          [ngClass]="statusLink ? 'hidden-logo' : ''"
           (click)="onToggle()"
         >
           <mat-icon class="material-icons-outlined">{{
@@ -42,8 +42,9 @@
         </button>
       </div>
     </div>
-    <div class="sideBarOrta">
-      <ul [ngClass]="statusLink ? 'navClose' : ''">
+    <div class="mt-7"></div>
+    <div class="sideBarOrta" [ngClass]="statusLink ? 'navClose' : ''">
+      <ul>
         <li class="nav-item" routerLinkActive="active-link">
           <a class="nav-link" routerLink="/dashboard">
             <mat-icon class="material-icons-outlined">dashboard</mat-icon>
@@ -149,7 +150,7 @@
       <img class="avatarImage" src="../../../assets/image/avatar.jpg" alt="" />
       <div
         class="footer-avatar-name"
-        [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+        [ngClass]="statusLink ? 'navLinkDar' : ''"
       >
         Sang Đẹp Trai
       </div>
