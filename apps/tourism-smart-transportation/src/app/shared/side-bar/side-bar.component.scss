@@ -10,8 +10,12 @@
 }
 .logo {
   width: 100%;
+  height: 48px;
   &-avatar {
     padding-left: 6.5px;
+    .btn-lock {
+      z-index: 1;
+    }
   }
 }
 .btn-open {
@@ -43,9 +47,15 @@
   transition: 0.4s;
 }
 .hidden-logo {
-  opacity: 0;
   display: none;
-  transition: 0.4s;
+  // transition: 0.4s;
+  visibility: hidden;
+}
+.show-logo-lock {
+  display: inline-block;
+  visibility: visible;
+}
+.sideBarOrta {
 }
 .btn-lock {
   position: absolute;
@@ -65,7 +75,6 @@
 }
 ul {
   padding-inline-start: 0px;
-
   ul {
     .active-link {
       background-color: rgba(0, 0, 0, 0.05);
@@ -120,7 +129,7 @@ ul {
 .navLinkShow {
   display: inline-block;
   visibility: visible;
-  padding: 0 0 0 2rem;
+  padding-left: 2rem;
 }
 .navClose {
 }
@@ -157,11 +166,13 @@ ul {
       position: absolute;
       right: 40%;
       top: 30%;
+      color: var(--text-color);
     }
     i {
       position: absolute;
       right: 10%;
       top: 30%;
+      color: var(--text-color);
     }
   }
 }
