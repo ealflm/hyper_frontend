@@ -77,9 +77,6 @@ ul {
       padding-left: 40px;
       &:hover {
         background-color: rgba(0, 0, 0, 0.05);
-        border-left: 4px solid;
-        color: rgb(48, 213, 200);
-        padding-left: 36px;
       }
     }
   }
@@ -111,9 +108,6 @@ ul {
     }
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
-      border-left: 4px solid;
-      color: rgb(48, 213, 200);
-      padding-left: 12px;
     }
   }
 }
@@ -136,9 +130,9 @@ ul {
 // }
 .active-link {
   background-color: rgba(0, 0, 0, 0.05);
+  padding-left: 13px !important;
   border-left: 4px solid;
   color: rgb(48, 213, 200);
-  padding-left: 12px !important;
 }
 .footer-avatar {
   position: absolute;
