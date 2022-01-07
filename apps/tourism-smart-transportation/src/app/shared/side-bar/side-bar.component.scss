@@ -123,13 +123,16 @@ ul {
 
 .navLinkDar {
   display: none;
-  visibility: hidden;
 }
 
 .navLinkShow {
   display: inline-block;
   visibility: visible;
   padding-left: 2rem;
+}
+.showName {
+  display: block;
+  visibility: visible;
 }
 .navClose {
 }
@@ -148,6 +151,11 @@ ul {
   bottom: 5%;
   left: 0%;
   width: 100%;
+  &-name {
+    padding-top: 15px;
+    padding-left: 15px;
+    color: var(--text-color);
+  }
   .footer-avatar-content {
     display: flex;
     justify-content: start;
