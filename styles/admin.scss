@@ -1,0 +1,11 @@
+@import './base/colors.scss';
+@import './base/fonts.scss';
+@import './base/mixins.scss';
+html,
+body {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+}

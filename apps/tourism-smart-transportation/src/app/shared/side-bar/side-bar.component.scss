@@ -1,8 +1,7 @@
+@import '../../../styles.scss';
 .side-bar {
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  box-shadow: 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  @include fixed-scroll-view;
+  @include shadown-color-dark;
   position: relative;
 }
 .btn {
@@ -23,7 +22,7 @@
   text-align: center;
   margin-top: 2rem;
   right: 25%;
-  background-color: rgba(0, 0, 0, 0.062);
+  background-color: $background-color-grey;
   border: none;
   outline: none;
   width: 2rem;
@@ -31,7 +30,7 @@
   border-radius: 26%;
   transition: 0.4s;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: $background-color-grey;
   }
   i {
     font-size: 1.2rem;
@@ -55,8 +54,8 @@
   display: inline-block;
   visibility: visible;
 }
-.sideBarOrta {
-}
+// .sideBarOrta {
+// }
 .btn-lock {
   position: absolute;
   right: 20px;
@@ -67,7 +66,7 @@
   height: 100%;
   border-radius: 26%;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: $background-color-grey;
   }
   i {
     font-size: 1.2rem;
@@ -77,24 +76,29 @@ ul {
   padding-inline-start: 0px;
   ul {
     .active-link {
-      background-color: rgba(0, 0, 0, 0.05);
+      background: $background-color-gradient-primary;
       border-left: 4px solid;
-      color: rgb(48, 213, 200);
       padding-left: 36px !important;
+      a {
+        span {
+          color: $primary-color;
+          font-weight: 700;
+        }
+      }
     }
     li {
       padding-left: 40px;
       &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+        background: $background-color-gradient-primary;
       }
     }
   }
-  .active {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-left: 4px solid;
-    color: rgb(48, 213, 200);
-    padding-left: 12px !important;
-  }
+  // .active {
+  //   background: $background-color-gradient-primary;
+  //   border-left: 4px solid;
+  //   color: $primary-color;
+  //   padding-left: 12px !important;
+  // }
   li {
     list-style-type: none;
     padding: 12px 0 12px 17px;
@@ -116,7 +120,7 @@ ul {
       }
     }
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+      background: $background-color-gradient-primary;
     }
   }
 }
@@ -134,23 +138,60 @@ ul {
   display: block;
   visibility: visible;
 }
-.navClose {
-}
+// .navClose {
+// }
 // .navIconClose {
 //   font-size: 1.5rem;
 //   transition: 0.4s;
 // }
 .active-link {
-  background-color: rgba(0, 0, 0, 0.05);
+  background: $background-color-gradient-primary;
   padding-left: 13px !important;
   border-left: 4px solid;
-  color: rgb(48, 213, 200);
+  color: $primary-color;
+  a {
+    color: $primary-color;
+    .mat-icon {
+      color: $primary-color;
+    }
+    .icon-title {
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
 }
+.avatar-fade-up {
+  animation: slideUp;
+  animation-timing-function: ease-out;
+  animation-duration: 0.3s;
+}
+
 .footer-avatar {
   position: absolute;
-  bottom: 5%;
-  left: 0%;
   width: 100%;
+  bottom: 15px;
+  cursor: pointer;
+  .footer {
+    .content-item {
+      &:hover {
+      }
+      margin: 5px;
+      padding: 5px 15px 5px 15px;
+      text-align: center;
+      &-name {
+        padding-left: 20px;
+        padding-top: 2px;
+      }
+    }
+  }
+  .footer-content {
+    display: none;
+  }
+  .footer-content-block {
+    display: block;
+    animation-timing-function: ease-out;
+    animation-duration: 0.3s;
+  }
   &-name {
     padding-top: 15px;
     padding-left: 15px;
@@ -161,9 +202,22 @@ ul {
     justify-content: start;
     position: relative;
     .avatarImage {
-      width: 48px;
-      height: 48px;
+      @include size-logo-image-small;
       margin-left: 6.5px;
+      &:hover {
+        outline-width: 3px;
+        outline-style: solid;
+        outline-color: $background-color-grey-secondary;
+      }
+    }
+
+    .outline-img {
+      outline-width: 3px;
+      outline-style: solid;
+      outline-color: rgba(176, 238, 211);
+      &:hover {
+        outline-color: rgba(176, 238, 211);
+      }
     }
     img {
       border-radius: 50%;
@@ -182,5 +236,14 @@ ul {
       top: 30%;
       color: var(--text-color);
     }
+  }
+}
+@keyframes slideUp {
+  0% {
+    transform: translateY(15px);
+  }
+
+  100% {
+    transform: translateY(0px);
   }
 }

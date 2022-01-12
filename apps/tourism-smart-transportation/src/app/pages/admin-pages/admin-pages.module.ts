@@ -6,6 +6,8 @@ import { AdminPagesComponent } from './admin-pages.component';
 import { SideBarComponent } from '../../shared/side-bar/side-bar.component';
 import { PrimengModule } from '../../primeng/primeng.module';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { PartnerComponent } from '../partner/partner.component';
+import { UsersComponent } from '../users/users.component';
 const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -18,8 +20,8 @@ const ADMIN_ROUTES: Routes = [
         pathMatch: 'full',
       },
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'account-partner', component: DashboardComponent },
-      { path: 'dashboard', component: DashboardComponent },
+      { path: 'account-partner', component: PartnerComponent },
+      { path: 'account-users', component: UsersComponent },
       {
         path: 'setting',
         component: DashboardComponent,
@@ -29,7 +31,13 @@ const ADMIN_ROUTES: Routes = [
   },
 ];
 @NgModule({
-  declarations: [AdminPagesComponent, SideBarComponent, DashboardComponent],
+  declarations: [
+    AdminPagesComponent,
+    SideBarComponent,
+    DashboardComponent,
+    PartnerComponent,
+    UsersComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(ADMIN_ROUTES),
