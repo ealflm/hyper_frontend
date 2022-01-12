@@ -1,3 +1,4 @@
+@import '../../../styles.scss';
 html,
 body {
   overflow-x: hidden;
@@ -7,8 +8,14 @@ body {
 ::ng-deep .p-inputtext {
   border-radius: 2rem;
 }
-::ng-deep .p-button-rounded {
-  box-shadow: 0 0 0 2px rgb(20, 184, 166), 0.1em 0.1em 1em rgb(20, 184, 166);
+::ng-deep .p-button {
+  background-color: $primary-color;
+  box-shadow: 0 0 0 2px $primary-color, 0.1em 0.1em 1em $primary-color;
+  border: none !important;
+  &:hover {
+    background: $primary-color !important;
+    border-color: $primary-color !important;
+  }
 }
 .flex-container {
   display: flex;
@@ -27,7 +34,7 @@ body {
     width: 24rem;
     height: 22rem;
     border-radius: 30px;
-    box-shadow: 0 0 0 2px rgb(255, 255, 255), 0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+    @include shadown-color-dark;
   }
 }
 .flex-item-right {

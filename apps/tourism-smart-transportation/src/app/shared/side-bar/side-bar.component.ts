@@ -10,6 +10,7 @@ export class SideBarComponent implements OnInit {
   statusLink = false;
   showMore = false;
   locked = true;
+  displayAvatar = false;
   constructor() {}
 
   ngOnInit(): void {}
@@ -45,5 +46,8 @@ export class SideBarComponent implements OnInit {
         this.statusLink = true;
       }
     }
+  }
+  onClickAvatar() {
+    this.displayAvatar = !this.displayAvatar;
   }
 }

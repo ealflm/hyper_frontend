@@ -45,9 +45,18 @@
     <div class="mt-7"></div>
     <div class="sideBarOrta" [ngClass]="statusLink ? 'navClose' : ''">
       <ul>
-        <li class="nav-item" routerLinkActive="active-link">
+        <li
+          class="nav-item"
+          routerLinkActive="active-link"
+          #rla="routerLinkActive"
+        >
           <a class="nav-link" routerLink="/dashboard">
-            <mat-icon class="material-icons-outlined">dashboard</mat-icon>
+            <mat-icon
+              [ngClass]="
+                rla.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >dashboard</mat-icon
+            >
 
             <div
               class="icon-title"
@@ -57,9 +66,18 @@
             </div>
           </a>
         </li>
-        <li class="nav-item" routerLinkActive="active-link">
-          <a class="nav-link" href="" routerLink="/partner">
-            <mat-icon class="material-icons-outlined">person_outline</mat-icon>
+        <li
+          class="nav-item"
+          routerLinkActive="active-link"
+          #partner="routerLinkActive"
+        >
+          <a class="nav-link" href="" routerLink="/account-partner">
+            <mat-icon
+              [ngClass]="
+                partner.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{ partner.isActive ? 'person' : 'person_outlined' }}</mat-icon
+            >
             <div
               class="icon-title"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
@@ -68,9 +86,18 @@
             </div>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="">
-            <mat-icon class="material-icons-outlined">person_outline</mat-icon>
+        <li
+          class="nav-item"
+          routerLinkActive="active-link"
+          #user="routerLinkActive"
+        >
+          <a class="nav-link" routerLink="/account-users">
+            <mat-icon
+              [ngClass]="
+                user.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{ user.isActive ? 'person' : 'person_outlined' }}</mat-icon
+            >
 
             <div
               class="icon-title"
@@ -80,13 +107,21 @@
             </div>
           </a>
         </li>
-        <li class="nav-item">
+        <li
+          class="nav-item"
+          [ngClass]="stg.isActive && !status ? 'active-link' : ''"
+        >
           <a
             style="cursor: pointer"
             class="nav-link relative"
             (click)="onShowSetting()"
           >
-            <mat-icon class="material-icons-outlined">settings</mat-icon>
+            <mat-icon
+              [ngClass]="
+                stg.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >settings</mat-icon
+            >
             <div
               class="icon-title"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
@@ -117,6 +152,7 @@
             class="nav-item"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
             routerLinkActive="active-link"
+            #stg="routerLinkActive"
           >
             <a class="nav-link" routerLink="/setting/service">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
@@ -145,9 +181,18 @@
       </ul>
     </div>
   </div>
-  <div class="footer-avatar">
+  <div
+    class="footer-avatar"
+    [ngClass]="displayAvatar ? 'avatar-fade-up' : ''"
+    (click)="onClickAvatar()"
+  >
     <div class="footer-avatar-content">
-      <img class="avatarImage" src="../../../assets/image/avatar.jpg" alt="" />
+      <img
+        class="avatarImage"
+        [ngClass]="displayAvatar ? 'outline-img' : ''"
+        src="../../../assets/image/avatar.jpg"
+        alt=""
+      />
       <span
         class="footer-avatar-name"
         [ngClass]="statusLink ? 'navLinkDar' : 'showName'"
@@ -158,6 +203,19 @@
         class="pi pi-chevron-down"
         [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
       ></i>
+    </div>
+    <div
+      class="footer"
+      [ngClass]="displayAvatar ? 'footer-content-block' : 'footer-content'"
+    >
+      <div class="flex content-item">
+        <span class="material-icons-outlined"> power_settings_new </span>
+        <div class="content-item-name">Đăng xuất</div>
+      </div>
+      <div class="flex content-item">
+        <span class="material-icons-outlined"> person </span>
+        <div class="content-item-name">Tài Khoản</div>
+      </div>
     </div>
   </div>
 </div>
