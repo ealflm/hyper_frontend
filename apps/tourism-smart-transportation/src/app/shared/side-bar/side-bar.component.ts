@@ -29,6 +29,7 @@ export class SideBarComponent implements OnInit {
       if (this.statusLink) {
         setTimeout(() => {
           this.statusLink = false;
+          this.displayAvatar = false;
         }, 230);
       }
     }
@@ -44,6 +45,7 @@ export class SideBarComponent implements OnInit {
         }, 230);
       } else {
         this.statusLink = true;
+        this.displayAvatar = false;
       }
     }
   }
