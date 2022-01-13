@@ -1,0 +1,79 @@
+<div class="header-services">
+  <div class="header-services-content">
+    <div class="header-item"><p>Loại dịch vụ</p></div>
+    <div class="header-item">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Xuất file"
+        class="p-button-outlined p-button-rounded"
+      ></button>
+    </div>
+    <div class="header-item">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Tạo mới"
+        class="p-button-rounded button-background"
+      ></button>
+    </div>
+    <div class="header-item header-search">
+      <span class="p-input-icon-left">
+        <i class="material-icons-outlined"> search </i>
+        <input type="text" pInputText placeholder="Tìm kiếm theo tên, mã,…" />
+      </span>
+    </div>
+  </div>
+  <div class="header-status">
+    <div class="status-item" (click)="navmenuclick('1')">
+      <span [ngClass]="selected === '1' ? 'active' : ''">Tất cả</span>
+    </div>
+    <div class="status-item" (click)="navmenuclick('2')">
+      <span [ngClass]="selected === '2' ? 'active' : ''">Kích Hoạt</span>
+    </div>
+    <div class="status-item" (click)="navmenuclick('3')">
+      <span [ngClass]="selected === '3' ? 'active' : ''">Vô hiệu hóa</span>
+    </div>
+    <div class="status-item-right">
+      <span class="status-item-right-title">Hiển thị bộ lọc</span>
+      <i class="material-icons-outlined"> filter_list </i>
+    </div>
+  </div>
+  <div class="mt-5"></div>
+  <div class="body-table">
+    <p-table
+      [value]="services"
+      responsiveLayout="scroll"
+      scrollDirection="both"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Stt</th>
+          <th>Tên</th>
+          <th>Mã</th>
+          <th>Ngày tạo</th>
+          <th>Người tạo</th>
+          <th>Ngày sửa</th>
+          <th>Người sửa</th>
+          <th>trạng thái</th>
+          <th>...</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-service let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <td>{{ service.name }}</td>
+          <td>{{ service.code }}</td>
+          <td>{{ service.createDate }}</td>
+          <td>{{ service.userCreate }}</td>
+          <td>{{ service.editDate }}</td>
+          <td>{{ service.userEdit }}</td>
+          <td>{{ service.status }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
