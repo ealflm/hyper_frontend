@@ -8,6 +8,8 @@ import { PrimengModule } from '../../primeng/primeng.module';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { PartnerComponent } from '../partner/partner.component';
 import { UsersComponent } from '../users/users.component';
+import { ManagerServicesComponent } from '../manager-services/manager-services.component';
+import { ManagerVehicleTypeComponent } from '../manager-vehicle-type/manager-vehicle-type.component';
 const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -24,8 +26,15 @@ const ADMIN_ROUTES: Routes = [
       { path: 'account-users', component: UsersComponent },
       {
         path: 'setting',
-        component: DashboardComponent,
-        children: [{ path: 'service', component: DashboardComponent }],
+        redirectTo: 'setting/services',
+        pathMatch: 'full',
+      },
+      {
+        path: 'setting',
+        children: [
+          { path: 'services', component: ManagerServicesComponent },
+          { path: 'vehicle-type', component: ManagerVehicleTypeComponent },
+        ],
       },
     ],
   },
@@ -37,6 +46,8 @@ const ADMIN_ROUTES: Routes = [
     DashboardComponent,
     PartnerComponent,
     UsersComponent,
+    ManagerServicesComponent,
+    ManagerVehicleTypeComponent,
   ],
   imports: [
     CommonModule,

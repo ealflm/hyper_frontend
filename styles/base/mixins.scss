@@ -9,6 +9,14 @@
 @mixin shadown-color-primary {
   box-shadow: 0 0 0 2px rgb(20, 184, 166), 0.1em 0.1em 1em rgb(20, 184, 166);
 }
+@mixin box-shadown-grey {
+  box-shadow: 0.3em 0.3em 1em rgba(0, 0, 0, 0.1);
+}
+
+@mixin box-shadown-green {
+  box-shadow: 0.1em 0.1em 1em rgb(74, 214, 151);
+}
+
 @mixin fixed-scroll-view {
   height: 100vh;
   overflow-x: hidden;

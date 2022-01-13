@@ -109,7 +109,12 @@
         </li>
         <li
           class="nav-item"
-          [ngClass]="stg.isActive && !status ? 'active-link' : ''"
+          [ngClass]="
+            (stg.isActive || stg1.isActive || stg2.isActive || stg3.isActive) &&
+            !status
+              ? 'active-link'
+              : ''
+          "
         >
           <a
             style="cursor: pointer"
@@ -118,7 +123,9 @@
           >
             <mat-icon
               [ngClass]="
-                stg.isActive ? 'material-icons' : 'material-icons-outlined'
+                stg.isActive || stg1.isActive || stg2.isActive || stg3.isActive
+                  ? 'material-icons'
+                  : 'material-icons-outlined'
               "
               >settings</mat-icon
             >
@@ -140,8 +147,13 @@
           </a>
         </li>
         <ul [ngClass]="showMore ? '' : 'navLinkDar'">
-          <li class="nav-item nav-item-content">
-            <a class="nav-link" href="">
+          <li
+            class="nav-item nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #stg="routerLinkActive"
+          >
+            <a class="nav-link" href="" routerLink="/setting/services">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
               <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Loại dịch vụ</span
@@ -152,25 +164,35 @@
             class="nav-item"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
             routerLinkActive="active-link"
-            #stg="routerLinkActive"
+            #stg1="routerLinkActive"
           >
-            <a class="nav-link" routerLink="/setting/service">
+            <a class="nav-link" routerLink="/setting/vehicle-type">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
               <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Loại xe</span
               >
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">
+          <li
+            class="nav-item"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #stg2="routerLinkActive"
+          >
+            <a class="nav-link" routerLink="/setting/station">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
               <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Trạm</span
               >
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">
+          <li
+            class="nav-item"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #stg3="routerLinkActive"
+          >
+            <a class="nav-link" routerLink="/setting/discount">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
               <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
                 >Khuyến mãi</span
