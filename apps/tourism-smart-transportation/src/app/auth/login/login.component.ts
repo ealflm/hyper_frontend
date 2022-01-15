@@ -47,14 +47,14 @@ export class LoginComponent implements OnInit {
     }
     this.userService
       .signIn(this.usersForm['email'].value, this.usersForm['password'].value)
-      .subscribe(
-        (res) => {
+      .subscribe({
+        next: (res) => {
           if (res.token !== undefined) {
             this.localStorageService.setToken(res.token);
             this.router.navigate(['dashboard']);
           }
         },
-        (error: HttpErrorResponse) => {
+        error: (error: HttpErrorResponse) => {
           // console.log(error.status);
           if (error.status === 401) {
             this.messageService.add({
@@ -63,8 +63,8 @@ export class LoginComponent implements OnInit {
               detail: 'Email or password incorect',
             });
           }
-        }
-      );
+        },
+      });
   }
   get usersForm() {
     return this.userForm.controls;
