@@ -9,6 +9,6 @@ import { AdminService } from './services/admin.service';
 export class AppComponent {
   title = 'tourism-smart-transportation';
   constructor(private adminService: AdminService) {
-    this.adminService.getAllAdmin().subscribe((res) => console.log(res));
+    // this.adminService.getAllAdmin().subscribe((res) => console.log(res));
   }
 }

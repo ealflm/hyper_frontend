@@ -52,21 +52,15 @@ export class LoginComponent implements OnInit {
           if (res.token !== undefined) {
             this.localStorageService.setToken(res.token);
             this.router.navigate(['dashboard']);
-          } else {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: res.error,
-            });
           }
         },
         (error: HttpErrorResponse) => {
-          console.log(error);
-          if (error.status === 400) {
+          // console.log(error.status);
+          if (error.status === 401) {
             this.messageService.add({
               severity: 'error',
-              summary: 'email or password incorect',
-              detail: error.message,
+              summary: 'Unauthorized',
+              detail: 'Email or password incorect',
             });
           }
         }

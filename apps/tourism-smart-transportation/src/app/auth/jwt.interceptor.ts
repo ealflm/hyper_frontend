@@ -5,6 +5,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -28,9 +29,8 @@ export class JwtInterceptor implements HttpInterceptor {
       });
     }
     return next.handle(request).pipe(
-      catchError((error) => {
-        console.log(error);
-        return throwError(error.message);
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
       })
     );
   }
