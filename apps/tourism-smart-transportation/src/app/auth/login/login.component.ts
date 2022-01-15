@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
       .signIn(this.usersForm['email'].value, this.usersForm['password'].value)
       .subscribe(
         (res) => {
-          if (res.data !== undefined) {
-            this.localStorageService.setToken(res.data);
+          if (res.token !== undefined) {
+            this.localStorageService.setToken(res.token);
             this.router.navigate(['dashboard']);
           } else {
             this.messageService.add({

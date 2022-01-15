@@ -1,3 +1,4 @@
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,6 +27,8 @@ import { JwtInterceptor } from './auth/jwt.interceptor';
     MaterialuiModule,
   ],
   providers: [
+    MessageService,
+    ConfirmationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

@@ -14,7 +14,7 @@ export class AdminService {
   }
   signIn(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiURL}/authorization/login`, {
-      emailAddress: email,
+      email: email,
       password: password,
     });
   }
