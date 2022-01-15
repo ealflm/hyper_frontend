@@ -7,9 +7,15 @@ import { environment } from '../../environments/environment.prod';
   providedIn: 'root',
 })
 export class AdminService {
-  apiURL = environment.apiURL + 'admins';
+  apiURL = environment.apiURL + 'admin';
   constructor(private http: HttpClient) {}
   getAllAdmin(): Observable<any> {
     return this.http.get<any>(this.apiURL);
+  }
+  signIn(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiURL}/authorization/login`, {
+      emailAddress: email,
+      password: password,
+    });
   }
 }
