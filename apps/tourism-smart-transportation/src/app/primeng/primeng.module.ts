@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [],
   imports: [
@@ -13,7 +14,14 @@ import { TableModule } from 'primeng/table';
     InputTextModule,
     ButtonModule,
     TableModule,
+    ToastModule,
   ],
-  exports: [CardModule, InputTextModule, ButtonModule, TableModule],
+  exports: [
+    CardModule,
+    InputTextModule,
+    ButtonModule,
+    TableModule,
+    ToastModule,
+  ],
 })
 export class PrimengModule {}

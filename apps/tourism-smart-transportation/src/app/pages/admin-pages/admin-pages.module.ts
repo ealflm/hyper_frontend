@@ -1,3 +1,4 @@
+import { AuthGuardService } from './../../auth/auth.guard';
 import { MaterialuiModule } from './../../materialui/materialui.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -14,7 +15,7 @@ const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminPagesComponent,
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: '',

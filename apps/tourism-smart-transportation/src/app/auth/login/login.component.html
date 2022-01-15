@@ -1,32 +1,56 @@
+<p-toast position="top-right"></p-toast>
 <div class="flex-container">
   <div class="flex-item-left">
-    <div class="login-form">
-      <h2 class="mt-6">Đăng Nhập</h2>
-      <div
-        class="login-form-input align-items-center justify-content-center mt-4"
-      >
-        <span class="p-input-icon-left">
-          <i class="fas fa-envelope"></i>
-          <input type="text" pInputText placeholder="Tài khoản" />
-        </span>
-        <div class="mt-3"></div>
-        <span class="p-input-icon-left">
-          <i class="fas fa-lock"></i>
-          <input type="password" pInputText placeholder="Mật khẩu" />
-        </span>
+    <form [formGroup]="userForm">
+      <div class="login-form">
+        <h2 class="mt-6">Đăng Nhập</h2>
+        <div
+          class="login-form-input align-items-center justify-content-center mt-4"
+        >
+          <span class="p-input-icon-left">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              pInputText
+              placeholder="Tài khoản"
+              formControlName="email"
+            />
+            <small *ngIf="usersForm['email'].invalid && isSubmit" class="p-error"
+              >Email không được bỏ trống</small
+            >
+          </span>
+          <div class="mt-3"></div>
+          <span class="p-input-icon-left">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              pInputText
+              placeholder="Mật khẩu"
+              formControlName="password"
+            />
+            <small
+              *ngIf="usersForm['password'].invalid && isSubmit"
+              class="p-error"
+              >Password không được trống</small
+            >
+          </span>
+        </div>
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Đăng nhập"
+          class="p-button-rounded w-8 mt-4"
+          (click)="onSignIn()"
+          (keydown.enter)="onSignIn()"
+        ></button>
       </div>
-      <button
-        pButton
-        pRipple
-        type="button"
-        label="Đăng nhập"
-        class="p-button-rounded w-8 mt-4"
-      ></button>
-    </div>
-  </div>
-  <div class="flex-item-right">
-    <div class="vertical-center">
-      <img src="../../../assets/background-login.png" alt="" />
+    </form>
+    /div>
+    <div class="flex-item-right">
+      <div class="vertical-center">
+        <img src="../../../assets/background-login.png" alt="" />
+      </div>
     </div>
   </div>
 </div>
