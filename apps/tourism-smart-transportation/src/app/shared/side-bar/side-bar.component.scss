@@ -175,9 +175,9 @@ ul {
     color: var(--text-color);
     .content-item {
       &:hover {
+        background-color: $background-hover-grey;
       }
-      margin: 5px;
-      padding: 5px 15px 5px 15px;
+      padding: 8px 20px 8px 20px;
       text-align: center;
       &-name {
         padding-left: 20px;
@@ -202,18 +202,22 @@ ul {
     display: flex;
     justify-content: start;
     position: relative;
+    padding: 2px;
+    &:hover {
+      background-color: $background-hover-grey;
+    }
     .avatarImage {
       @include size-logo-image-small;
       margin-left: 6.5px;
       &:hover {
-        outline-width: 3px;
+        outline-width: 2px;
         outline-style: solid;
         outline-color: $background-color-grey-secondary;
       }
     }
 
     .outline-img {
-      outline-width: 3px;
+      outline-width: 2px;
       outline-style: solid;
       outline-color: rgba(176, 238, 211);
       &:hover {

@@ -230,7 +230,7 @@
       class="footer"
       [ngClass]="displayAvatar ? 'footer-content-block' : 'footer-content'"
     >
-      <div class="flex content-item">
+      <div class="flex content-item" (click)="onLogout()">
         <span class="material-icons-outlined"> power_settings_new </span>
         <div class="content-item-name">Đăng xuất</div>
       </div>

@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { LocalStorageService } from './../../auth/localstorage.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,7 +13,10 @@ export class SideBarComponent implements OnInit {
   showMore = false;
   locked = true;
   displayAvatar = false;
-  constructor() {}
+  constructor(
+    private localStorage: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
@@ -51,5 +56,9 @@ export class SideBarComponent implements OnInit {
   }
   onClickAvatar() {
     this.displayAvatar = !this.displayAvatar;
+  }
+  onLogout() {
+    this.localStorage.removeToken();
+    this.router.navigate(['login']);
   }
 }
