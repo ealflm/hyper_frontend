@@ -54,6 +54,8 @@
           type="button"
           label="Đăng nhập"
           class="p-button-rounded w-8 mt-4 btn-login"
+          [loading]="loading"
+          (click)="onSignIn()"
         ></button>
       </form>
     </div>

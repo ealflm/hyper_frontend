@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
+import { exhaustMap, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'tourism-smart-transportation-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   isSubmit = false;
   userForm!: FormGroup;
-
+  $sub: Subject<any> = new Subject();
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -40,13 +41,14 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
-    }, 1000);
+    }, 1500);
     this.isSubmit = true;
     if (this.userForm.invalid) {
       return;
     }
     this.userService
       .signIn(this.usersForm['email'].value, this.usersForm['password'].value)
+      .pipe(takeUntil(this.$sub))
       .subscribe({
         next: (res) => {
           if (res.token !== undefined) {
@@ -64,7 +66,31 @@ export class LoginComponent implements OnInit {
             });
           }
         },
+        complete: () => {
+          this.$sub.unsubscribe();
+        },
       });
+
+    // this.userService
+    //   .signIn(this.usersForm['email'].value, this.usersForm['password'].value)
+    //   .subscribe({
+    //     next: (res) => {
+    //       if (res.token !== undefined) {
+    //         this.localStorageService.setToken(res.token);
+    //         this.router.navigate(['dashboard']);
+    //       }
+    //     },
+    //     error: (error: HttpErrorResponse) => {
+    //       // console.log(error.status);
+    //       if (error.status === 401) {
+    //         this.messageService.add({
+    //           severity: 'error',
+    //           summary: 'Unauthorized',
+    //           detail: 'Email or password incorect',
+    //         });
+    //       }
+    //     },
+    //   });
   }
   get usersForm() {
     return this.userForm.controls;
