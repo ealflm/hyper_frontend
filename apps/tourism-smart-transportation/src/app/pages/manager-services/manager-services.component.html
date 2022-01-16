@@ -6,7 +6,7 @@
         pButton
         pRipple
         type="button"
-        label="Xuất file"
+        label="Xuất excel"
         class="p-button-outlined p-button-rounded"
       ></button>
     </div>
@@ -27,14 +27,26 @@
     </div>
   </div>
   <div class="header-status">
-    <div class="status-item" (click)="navmenuclick('1')">
-      <span [ngClass]="selected === '1' ? 'active' : ''">Tất cả</span>
+    <div
+      class="status-item"
+      [ngClass]="selected === '1' ? 'active' : ''"
+      (click)="navmenuclick('1')"
+    >
+      <span>Tất cả</span>
     </div>
-    <div class="status-item" (click)="navmenuclick('2')">
-      <span [ngClass]="selected === '2' ? 'active' : ''">Kích Hoạt</span>
+    <div
+      class="status-item"
+      [ngClass]="selected === '2' ? 'active' : ''"
+      (click)="navmenuclick('2')"
+    >
+      <span>Kích Hoạt</span>
     </div>
-    <div class="status-item" (click)="navmenuclick('3')">
-      <span [ngClass]="selected === '3' ? 'active' : ''">Vô hiệu hóa</span>
+    <div
+      class="status-item"
+      [ngClass]="selected === '3' ? 'active' : ''"
+      (click)="navmenuclick('3')"
+    >
+      <span>Vô hiệu hóa</span>
     </div>
     <div class="status-item-right">
       <span class="status-item-right-title">Hiển thị bộ lọc</span>
@@ -50,7 +62,6 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Stt</th>
           <th>Tên</th>
           <th>Mã</th>
           <th>Ngày tạo</th>
@@ -58,12 +69,11 @@
           <th>Ngày sửa</th>
           <th>Người sửa</th>
           <th>trạng thái</th>
-          <th>...</th>
+          <th><span class="material-icons"> more_horiz </span></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-service let-i="rowIndex">
         <tr>
-          <td>{{ i + 1 }}</td>
           <td>{{ service.name }}</td>
           <td>{{ service.code }}</td>
           <td>{{ service.createDate }}</td>

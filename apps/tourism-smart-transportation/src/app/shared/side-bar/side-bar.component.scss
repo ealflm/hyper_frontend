@@ -1,7 +1,7 @@
 @import '../../../styles.scss';
 .side-bar {
   @include fixed-scroll-view;
-  @include shadown-color-dark;
+  @include box-shadown-grey;
   position: relative;
 }
 .btn {
