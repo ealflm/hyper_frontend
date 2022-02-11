@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
       .pipe(takeUntil(this.$sub))
       .subscribe({
         next: (res) => {
-          if (res.token !== undefined) {
+          if (res.token !== null) {
             this.localStorageService.setToken(res.token);
             this.router.navigate(['dashboard']);
           }
