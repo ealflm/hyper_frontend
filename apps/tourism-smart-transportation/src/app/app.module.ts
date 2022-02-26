@@ -11,9 +11,10 @@ import { AuthModule } from './auth/auth.module';
 import { PrimengModule } from './primeng/primeng.module';
 import { MaterialuiModule } from './materialui/materialui.module';
 import { JwtInterceptor } from './auth/jwt.interceptor';
+import { PagenotfoundComponentComponent } from './components/pagenotfound-component/pagenotfound-component.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PagenotfoundComponentComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

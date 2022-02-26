@@ -1,3 +1,4 @@
+import { PagenotfoundComponentComponent } from './../components/pagenotfound-component/pagenotfound-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,7 @@ export const usersRoutes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+  { path: '**', pathMatch: 'full', component: PagenotfoundComponentComponent },
 ];
 
 @NgModule({

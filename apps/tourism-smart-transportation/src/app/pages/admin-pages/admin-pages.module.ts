@@ -1,3 +1,4 @@
+import { PagenotfoundComponentComponent } from './../../components/pagenotfound-component/pagenotfound-component.component';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { MaterialuiModule } from './../../materialui/materialui.module';
 import { Routes, RouterModule } from '@angular/router';

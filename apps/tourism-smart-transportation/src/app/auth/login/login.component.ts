@@ -39,11 +39,12 @@ export class LoginComponent implements OnInit {
   }
   onSignIn() {
     this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-    }, 1500);
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 1500);
     this.isSubmit = true;
     if (this.userForm.invalid) {
+      this.loading = false;
       return;
     }
     this.userService
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
           if (res.token !== null) {
             this.localStorageService.setToken(res.token);
             this.router.navigate(['dashboard']);
+            this.loading = false;
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -65,9 +67,11 @@ export class LoginComponent implements OnInit {
               detail: 'Email or password incorect',
             });
           }
+          this.loading = false;
         },
         complete: () => {
           this.$sub.unsubscribe();
+          this.loading = false;
         },
       });
 
