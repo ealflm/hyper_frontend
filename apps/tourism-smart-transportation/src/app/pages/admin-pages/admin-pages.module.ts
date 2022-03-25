@@ -1,4 +1,4 @@
-import { PagenotfoundComponentComponent } from './../../components/pagenotfound-component/pagenotfound-component.component';
+import { MapComponent } from './../../components/map/map.component';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { MaterialuiModule } from './../../materialui/materialui.module';
 import { Routes, RouterModule } from '@angular/router';
@@ -50,6 +50,7 @@ const ADMIN_ROUTES: Routes = [
     UsersComponent,
     ManagerServicesComponent,
     ManagerVehicleTypeComponent,
+    MapComponent
   ],
   imports: [
     CommonModule,

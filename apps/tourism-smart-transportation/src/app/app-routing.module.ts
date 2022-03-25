@@ -2,8 +2,7 @@ import { AdminPagesModule } from './pages/admin-pages/admin-pages.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { PagenotfoundComponentComponent } from './components/pagenotfound-component/pagenotfound-component.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 const routes: Routes = [
   {

@@ -1,14 +1,12 @@
 // import { SocialUser, SocialAuthService } from 'angularx-social-login';
 // import { LocalstorageService, LocalStorageService } from './localstorage.service';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
 import { LocalStorageService } from './localstorage.service';
 
