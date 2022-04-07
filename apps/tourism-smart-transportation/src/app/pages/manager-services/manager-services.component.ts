@@ -1,13 +1,39 @@
 import { Service } from './../../models/services';
 import { Component, OnInit } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Component({
   selector: 'tourism-smart-transportation-manager-services',
   templateUrl: './manager-services.component.html',
   styleUrls: ['./manager-services.component.scss'],
+  animations: [
+    trigger('openCloseIcon', [
+      state(
+        'openIcon',
+        style({
+          transform: 'rotate(0deg)',
+        })
+      ),
+      state(
+        'closeIcon',
+        style({
+          transform: 'rotate(90deg)',
+        })
+      ),
+      transition('openIcon => closeIcon', [animate('0.5s')]),
+      transition('closeIcon => openIcon', [animate('0.5s')]),
+    ]),
+  ],
 })
 export class ManagerServicesComponent implements OnInit {
   selected: any = '1';
+  isOpenIconFillter = true;
   services: Service[] = [
     {
       name: 'Đi theo chuyến',
@@ -42,5 +68,8 @@ export class ManagerServicesComponent implements OnInit {
   ngOnInit(): void {}
   navmenuclick(value: any) {
     this.selected = value;
+  }
+  onToggle() {
+    this.isOpenIconFillter = !this.isOpenIconFillter;
   }
 }

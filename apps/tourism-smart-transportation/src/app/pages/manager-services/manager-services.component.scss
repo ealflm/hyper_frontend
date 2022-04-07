@@ -112,6 +112,10 @@
         }
         td {
           border: none;
+          .material-icons-outlined:hover {
+            cursor: pointer;
+            color: $red-primary;
+          }
           &:last-child {
             text-align: center;
             .material-icons-outlined {
