@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment.prod';
 export class MapService {
   map!: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/streets-v11';
+  // style = 'mapbox://styles/mapbox/satellite-v9';
   lat = 10.8427;
   lng = 106.809334;
   zoom = 12;

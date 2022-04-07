@@ -8,4 +8,6 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-size: 12px;
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
 }
