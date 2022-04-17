@@ -24,6 +24,9 @@ export class MapService {
     });
     this.map.addControl(new mapboxgl.NavigationControl());
   }
+  setStyleMap(style: string) {
+    this.style = style;
+  }
   getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(

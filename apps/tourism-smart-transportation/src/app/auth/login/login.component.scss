@@ -43,10 +43,11 @@ body {
   position: relative;
   flex: 60%;
   .vertical-center {
+    z-index: -1;
+
     margin: 0;
     position: absolute;
     top: 50%;
-    z-index: -1;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     img {
@@ -56,9 +57,13 @@ body {
     }
   }
 }
-@media only screen and (max-width: 867px) {
+@media only screen and (max-width: 1230px) {
   .flex-item-left {
+    z-index: 99;
     flex: 100%;
+    .login-form {
+      z-index: 99;
+    }
   }
   .flex-item-right {
     display: none;

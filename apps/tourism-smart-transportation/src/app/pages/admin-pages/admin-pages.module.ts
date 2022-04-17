@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MapComponent } from './../../components/map/map.component';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { MaterialuiModule } from './../../materialui/materialui.module';
@@ -50,13 +51,16 @@ const ADMIN_ROUTES: Routes = [
     UsersComponent,
     ManagerServicesComponent,
     ManagerVehicleTypeComponent,
-    MapComponent
+    MapComponent,
+
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(ADMIN_ROUTES),
     PrimengModule,
     MaterialuiModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
 })
 export class AdminPagesModule {}
