@@ -26,8 +26,8 @@ import {
           transform: 'rotate(90deg)',
         })
       ),
-      transition('openIcon => closeIcon', [animate('0.5s')]),
-      transition('closeIcon => openIcon', [animate('0.5s')]),
+      transition('openIcon => closeIcon', [animate('0.2s')]),
+      transition('closeIcon => openIcon', [animate('0.2s')]),
     ]),
   ],
 })
