@@ -94,12 +94,12 @@
 <p-dialog
   header="Chỉnh sửa tài khoản đối tác"
   [(visible)]="displayDialog"
-  [style]="{ width: '30vw' }"
+  [style]="{ width: '40vw' }"
   [contentStyle]="{
     'overflow-y': 'auto',
     'overflow-x': 'hidden',
     'max-height': '50vh',
-    'min-height': '35vh'
+    'min-height': '25vh'
   }"
   [blockScroll]="true"
   [resizable]="true"
@@ -109,75 +109,95 @@
     <div class="infor-form">
       <form [formGroup]="inforForm">
         <div class="mt-4 grid p-fluid">
-          <div class="col-12">
-            <input
-              type="text"
-              pInputText
-              placeholder="Tài khoản"
-              formControlName="userName"
-            />
-            <div></div>
-          </div>
-          <div class="mt-3"></div>
-          <div class="col-12">
-            <input
-              type="text"
-              pInputText
-              placeholder="Tên"
-              formControlName="name"
-              (keyup.enter)="onSaveInfor()"
-            />
-            <div>
-              <small
-                *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
-                class="p-error"
-                >Tên không được bỏ trống</small
-              >
+          <div class="col-7">
+            <div class="grid">
+              <div class="col-12">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Tài khoản"
+                  formControlName="userName"
+                />
+                <div></div>
+              </div>
+              <div class="mt-3"></div>
+              <div class="col-12">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Tên"
+                  formControlName="name"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div>
+                  <small
+                    *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                    class="p-error"
+                    >Tên không được bỏ trống</small
+                  >
+                </div>
+              </div>
+              <div class="mt-3"></div>
+              <div class="col-12">
+                <p-dropdown
+                  [options]="status"
+                  formControlName="selectedStatus"
+                  optionLabel="lable"
+                  optionValue="id"
+                ></p-dropdown>
+              </div>
+              <div class="mt-3"></div>
+              <div class="col-12">
+                <input
+                  type="text"
+                  pInputText
+                  placeholder="Địa chỉ"
+                  formControlName="address"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div>
+                  <small
+                    *ngIf="inforsForm['address'].invalid && isSubmit"
+                    class="p-error"
+                    >Địa chỉ không được trống</small
+                  >
+                </div>
+              </div>
             </div>
           </div>
-          <div class="mt-3"></div>
-          <div class="col-12">
-            <input
-              type="text"
-              pInputText
-              placeholder="Địa chỉ"
-              formControlName="address"
-              (keyup.enter)="onSaveInfor()"
-            />
-            <div>
-              <small
-                *ngIf="inforsForm['address'].invalid && isSubmit"
-                class="p-error"
-                >Địa chỉ không được trống</small
+          <div class="col-5">
+            <div class="col-12">
+              <div class="upload-container">
+                <label for="upload" class="thumnail">
+                  <img [src]="imagePreview" alt="image avatar" />
+                  <div class="image-overlay">
+                    <div class="circle-icon">
+                      <span class="material-icons-outlined"> upload </span>
+                    </div>
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id="upload"
+                  accept="image/*"
+                  (change)="onUpload($event)"
+                />
+              </div>
+              <!-- <p-fileUpload
+                url="./upload.php"
+                (onUpload)="onUpload($event)"
+                [multiple]="true"
+                accept="image/*"
               >
+                <ng-template pTemplate="content">
+                  <ul *ngIf="uploadedFiles.length">
+                    <li *ngFor="let file of uploadedFiles">
+                      {{ file.name }} - {{ file.size }} bytes
+                    </li>
+                  </ul>
+                </ng-template>
+              </p-fileUpload> -->
             </div>
-          </div>
-          <div class="mt-3"></div>
-          <div class="col-12">
-            <p-dropdown
-              [options]="status"
-              formControlName="selectedStatus"
-              optionLabel="lable"
-              optionValue="id"
-            ></p-dropdown>
-          </div>
-          <div class="mt-3"></div>
-          <div class="col-12">
-            <p-fileUpload
-              name="myfile[]"
-              url="./upload.php"
-              (onUpload)="onUpload($event)"
-              [multiple]="true"
-              accept="image/*"
-            >
-              <ng-template pTemplate="content">
-                <ul *ngIf="uploadedFiles.length">
-                  <li *ngFor="let file of uploadedFiles">
-                    {{ file.name }} - {{ file.size }} bytes
-                  </li>
-                </ul>
-              </ng-template>
-            </p-fileUpload>
           </div>
         </div>
       </form>
@@ -191,7 +211,7 @@
       styleClass="p-button-text"
     ></p-button>
     <p-button
-      (click)="displayDialog = false"
+      (click)="onSaveInfor()"
       label="Đồng ý"
       styleClass="p-button-text"
     ></p-button>
