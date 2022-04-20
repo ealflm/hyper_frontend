@@ -22,14 +22,11 @@
         style="position: relative"
       >
         <div class="flex">
-          <button
-            pButton
-            pRipple
-            type="button"
-            icon="pi pi-check"
-            class="p-button-rounded"
-          ></button>
-          <p [ngClass]="status ? 'ml-3' : 'hidden-logo'">Logo</p>
+          <!-- <p [ngClass]="status ? 'ml-3' : 'hidden-logo'"></p> -->
+          <img
+            style="width: 50px; height: 50px"
+            src="https://img.icons8.com/external-filled-outline-geotatah/64/000000/external-tourism-industrial-revolution-color-filled-outline-geotatah.png"
+          />
         </div>
         <button
           class="btn-lock"
@@ -107,23 +104,21 @@
             </div>
           </a>
         </li>
+        <!--Dịch Vụ-->
         <li
           class="nav-item"
           [ngClass]="
-            (stg.isActive || stg1.isActive || stg2.isActive || stg3.isActive) &&
-            !status
-              ? 'active-link'
-              : ''
+            (stg.isActive || stg2.isActive) && !status ? 'active-link' : ''
           "
         >
           <a
             style="cursor: pointer"
             class="nav-link relative"
-            (click)="onShowSetting()"
+            (click)="onShowMoreSetting()"
           >
             <mat-icon
               [ngClass]="
-                stg.isActive || stg1.isActive || stg2.isActive || stg3.isActive
+                stg.isActive || stg2.isActive
                   ? 'material-icons'
                   : 'material-icons-outlined'
               "
@@ -133,20 +128,20 @@
               class="icon-title"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
-              Cài đặt
+              Quản lý dịch vụ
             </div>
             <span
               class="absolute icon-chevron"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
               ><i
                 [ngClass]="
-                  showMore ? 'pi pi-chevron-up ' : 'pi pi-chevron-down'
+                  showMoreService ? 'pi pi-chevron-up ' : 'pi pi-chevron-down'
                 "
               ></i
             ></span>
           </a>
         </li>
-        <ul [ngClass]="showMore ? '' : 'navLinkDar'">
+        <ul [ngClass]="showMoreService ? '' : 'navLinkDar'">
           <li
             class="nav-item nav-item-content"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
@@ -156,20 +151,7 @@
             <a class="nav-link" href="" routerLink="/setting/services">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
               <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
-                >Loại dịch vụ</span
-              >
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            [ngClass]="statusLink ? 'navLinkDar' : ''"
-            routerLinkActive="active-link"
-            #stg1="routerLinkActive"
-          >
-            <a class="nav-link" routerLink="/setting/vehicle-type">
-              <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
-                >Loại xe</span
+                >Dịch vụ</span
               >
             </a>
           </li>
@@ -179,19 +161,6 @@
             routerLinkActive="active-link"
             #stg2="routerLinkActive"
           >
-            <a class="nav-link" routerLink="/setting/station">
-              <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
-                >Trạm</span
-              >
-            </a>
-          </li>
-          <li
-            class="nav-item"
-            [ngClass]="statusLink ? 'navLinkDar' : ''"
-            routerLinkActive="active-link"
-            #stg3="routerLinkActive"
-          >
             <a class="nav-link" routerLink="/setting/discount">
               <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
               <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
@@ -200,6 +169,190 @@
             </a>
           </li>
         </ul>
+        <!--End Dịch vụ-->
+        <!--Bản Đồ-->
+        <li
+          class="nav-item"
+          [ngClass]="
+            (sMap.isActive ||
+              sMap2.isActive ||
+              sMap3.isActive ||
+              sMap4.isActive) &&
+            !status
+              ? 'active-link'
+              : ''
+          "
+        >
+          <a
+            style="cursor: pointer"
+            class="nav-link relative"
+            (click)="onShowMoreMap()"
+          >
+            <mat-icon
+              [ngClass]="
+                sMap.isActive ||
+                sMap2.isActive ||
+                sMap3.isActive ||
+                sMap4.isActive
+                  ? 'material-icons'
+                  : 'material-icons-outlined'
+              "
+              >map</mat-icon
+            >
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Bản Đồ
+            </div>
+            <span
+              class="absolute icon-chevron"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+              ><i
+                [ngClass]="
+                  showMoreMap ? 'pi pi-chevron-up ' : 'pi pi-chevron-down'
+                "
+              ></i
+            ></span>
+          </a>
+        </li>
+        <ul [ngClass]="showMoreMap ? '' : 'navLinkDar'">
+          <li
+            class="nav-item nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #sMap="routerLinkActive"
+          >
+            <a class="nav-link" href="" routerLink="/map/station-car-rental">
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+                >Trạm cho thuê xe
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #sMap2="routerLinkActive"
+          >
+            <a class="nav-link" routerLink="/map/route">
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+                >Tuyến đường</span
+              >
+            </a>
+          </li>
+          <li
+            class="nav-item nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #sMap3="routerLinkActive"
+          >
+            <a class="nav-link" href="" routerLink="/map/station-static">
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+                >Trạm cố định</span
+              >
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #sMap4="routerLinkActive"
+          >
+            <a class="nav-link" routerLink="/map/driver">
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+                >Tài xế</span
+              >
+            </a>
+          </li>
+        </ul>
+        <!--End Bản Đồ-->
+
+        <!--Quản lý tài chính-->
+        <li
+          class="nav-item"
+          [ngClass]="
+            (financeStatus.isActive ||
+              financeStatus2.isActive ||
+              financeStatus3.isActive) &&
+            !status
+              ? 'active-link'
+              : ''
+          "
+        >
+          <a
+            style="cursor: pointer"
+            class="nav-link relative"
+            (click)="onShowMoreFinance()"
+          >
+            <mat-icon
+              [ngClass]="
+                financeStatus.isActive ||
+                financeStatus2.isActive ||
+                financeStatus3.isActive
+                  ? 'material-icons'
+                  : 'material-icons-outlined'
+              "
+              >account_balance</mat-icon
+            >
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Quản lý tài chính
+            </div>
+            <span
+              class="absolute icon-chevron"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+              ><i
+                [ngClass]="
+                  showMoreFinance ? 'pi pi-chevron-up ' : 'pi pi-chevron-down'
+                "
+              ></i
+            ></span>
+          </a>
+        </li>
+        <ul [ngClass]="showMoreFinance ? '' : 'navLinkDar'">
+          <li
+            class="nav-item nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #financeStatus="routerLinkActive"
+          >
+            <a class="nav-link" href="" routerLink="/finance/wallet">
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+                >Ví</span
+              >
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #financeStatus2="routerLinkActive"
+          >
+            <a class="nav-link" routerLink="/finance/transaction">
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+                >Giao Dịch</span
+              >
+            </a>
+          </li>
+          <li
+            class="nav-item"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link"
+            #financeStatus3="routerLinkActive"
+          >
+            <a class="nav-link" routerLink="/finance/payment">
+              <span [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
+                >Thanh Toán</span
+              >
+            </a>
+          </li>
+        </ul>
+        <!--End -->
+
+        <!---->
       </ul>
     </div>
   </div>

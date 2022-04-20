@@ -81,7 +81,15 @@
           <td>{{ partner.name }}</td>
           <td>{{ partner.userName }}</td>
           <td>{{ partner.address }}</td>
-          <td><img [src]="partner.photoUrl" /></td>
+          <td>
+            <img
+              style="width: 50px; height: 50px; border-radius: 50%"
+              [src]="
+                'https://uni03.blob.core.windows.net/company/' +
+                partner.photoUrl
+              "
+            />
+          </td>
           <td>{{ partner.status }}</td>
           <td (click)="showDialog(partner.id)">
             <span class="material-icons-outlined"> edit </span>
@@ -172,7 +180,7 @@
                   <img [src]="imagePreview" alt="image avatar" />
                   <div class="image-overlay">
                     <div class="circle-icon">
-                      <span class="material-icons-outlined"> upload </span>
+                      <span class="material-icons-outlined"> file_upload </span>
                     </div>
                   </div>
                 </label>

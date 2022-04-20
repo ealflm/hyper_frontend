@@ -31,12 +31,14 @@ export class JwtInterceptor implements HttpInterceptor {
     }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        // console.log(error);
+
         if (error.status === 401) {
           console.log(error);
 
           this.localstorageService.removeToken();
         }
-        return throwError(error);
+        return throwError(error.message);
       })
     );
   }
