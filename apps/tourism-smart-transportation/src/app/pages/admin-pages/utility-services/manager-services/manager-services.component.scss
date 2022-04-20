@@ -1,5 +1,5 @@
-@import '../../../styles.scss';
-.header-partners {
+@import '../../../../../styles.scss';
+.header-services {
   &-content {
     display: flex;
     position: relative;
@@ -7,8 +7,7 @@
       position: absolute;
       right: 1%;
       ::ng-deep {
-        .p-inputtext,
-        .p-dropdown {
+        .p-inputtext {
           border: none;
           border-radius: 20px;
           width: 352px;
@@ -27,7 +26,7 @@
       }
     }
   }
-  .header-partners-content {
+  .header-services-content {
     display: flex;
     padding: 0 12px 0 12px;
     align-items: center;
@@ -115,7 +114,7 @@
           border: none;
           .material-icons-outlined:hover {
             cursor: pointer;
-            color: $primary-color;
+            color: $red-primary;
           }
           &:last-child {
             text-align: center;
@@ -129,69 +128,5 @@
         }
       }
     }
-  }
-}
-.infor-form {
-  .thumbnail {
-    width: 300px;
-    height: 300px;
-    background: #eee;
-    position: relative;
-    display: table-cell;
-    vertical-align: middle;
-  }
-
-  img {
-    position: absolute;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    right: 50px;
-    top: 75px;
-    height: 190px;
-    width: 200px;
-    border-radius: 50%;
-  }
-
-  .image-overlay {
-    border-radius: 50%;
-    position: absolute;
-    opacity: 0;
-    background: rgba(0, 0, 0, 0.7);
-    color: black;
-    height: 190px;
-    width: 200px;
-    top: 75px;
-    right: 50px;
-    font-size: 50px;
-    text-align: center;
-    line-height: 300px;
-    cursor: pointer;
-    transition: opacity ease 0.5s;
-  }
-
-  .circle-icon {
-    height: 80px;
-    width: 80px;
-    right: -30%;
-    top: 30%;
-    border-radius: 50%;
-    background: #eee;
-    position: relative;
-    vertical-align: middle;
-  }
-
-  .circle-icon span {
-    position: absolute;
-    margin-left: -35px;
-    font-size: 70px;
-  }
-
-  .image-overlay:hover {
-    opacity: 1;
-  }
-
-  input[type='file'] {
-    opacity: 0;
   }
 }

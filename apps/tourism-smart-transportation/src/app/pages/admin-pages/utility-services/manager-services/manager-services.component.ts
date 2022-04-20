@@ -1,4 +1,4 @@
-import { Service } from './../../models/services';
+import { Service } from '../../../../models/services';
 import { Component, OnInit } from '@angular/core';
 import {
   animate,

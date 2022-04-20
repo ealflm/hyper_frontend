@@ -10,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class SideBarComponent implements OnInit {
   status = true;
   statusLink = false;
-  showMore = false;
+  showMoreService = false;
+  showMoreFinance = false;
+  showMoreMap = false;
   locked = true;
   displayAvatar = false;
   constructor(
@@ -23,8 +25,14 @@ export class SideBarComponent implements OnInit {
   onToggle() {
     this.locked = !this.locked;
   }
-  onShowSetting() {
-    this.showMore = !this.showMore;
+  onShowMoreSetting() {
+    this.showMoreService = !this.showMoreService;
+  }
+  onShowMoreFinance() {
+    this.showMoreFinance = !this.showMoreFinance;
+  }
+  onShowMoreMap() {
+    this.showMoreMap = !this.showMoreMap;
   }
   mouseEnter() {
     if (this.locked) {

@@ -1,8 +1,8 @@
-import { PartnerResponse } from './../../models/PartnerResponse';
-import { STATUS } from './../../constant/status';
+import { PartnerResponse } from '../../../models/PartnerResponse';
+import { STATUS } from '../../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PartnersService } from './../../services/partners.service';
-import { Partner } from '../../models/PartnerResponse';
+import { PartnersService } from '../../../services/partners.service';
+import { Partner } from '../../../models/PartnerResponse';
 import { Component, OnInit } from '@angular/core';
 import {
   animate,
@@ -11,6 +11,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'tourism-smart-transportation-partner',
@@ -42,6 +43,7 @@ export class PartnerComponent implements OnInit {
   partners: Partner[] = [];
   displayDialog = false;
   loading = false;
+  progress!: number;
   isSubmit = false;
   status: any[] = [];
   uploadedFiles: any[] = [];
@@ -68,6 +70,7 @@ export class PartnerComponent implements OnInit {
 
   private initForm() {
     this.inforForm = this.formBuilder.group({
+      id: [''],
       userName: [{ value: '', disabled: true }],
       name: ['', Validators.required],
       address: ['', Validators.required],
@@ -81,9 +84,9 @@ export class PartnerComponent implements OnInit {
   getAllPartners() {
     this.partnerService
       .getAllPartners()
-      .subscribe((partnerResponse: PartnerResponse) => {
-        console.log(partnerResponse);
-        partnerResponse.items?.map((partner: Partner) => {
+      .subscribe((partnersResponse: PartnerResponse) => {
+        console.log(partnersResponse);
+        partnersResponse.items?.map((partner: Partner) => {
           this.partners = [...this.partners, partner];
         });
         console.log(this.partners);
@@ -100,16 +103,27 @@ export class PartnerComponent implements OnInit {
   showDialog(id: string) {
     this.displayDialog = !this.displayDialog;
     if (this.displayDialog) {
-      this.partnerService.getPartnerById(id).subscribe((partnerResponse) => {
-        console.log(partnerResponse);
-        this.inforsForm['userName'].setValue(partnerResponse.userName);
-        this.inforsForm['name'].setValue(partnerResponse.name);
-        this.inforsForm['address'].setValue(partnerResponse.address);
-      });
+      this.partnerService
+        .getPartnerById(id)
+        .subscribe((partnerResponse: Partner) => {
+          console.log(partnerResponse);
+          this.inforsForm['id'].setValue(partnerResponse.id);
+          this.inforsForm['userName'].setValue(partnerResponse.userName);
+          this.inforsForm['name'].setValue(partnerResponse.name);
+          this.inforsForm['selectedStatus'].setValue(
+            partnerResponse.status?.toString()
+          );
+          this.inforsForm['address'].setValue(partnerResponse.address);
+          this.inforsForm['photoUrl'].setValue(partnerResponse.photoUrl);
+          this.imagePreview = `https://uni03.blob.core.windows.net/company/${partnerResponse.photoUrl}`;
+        });
     } else {
+      this.inforsForm['id'].setValue('');
       this.inforsForm['userName'].setValue('');
       this.inforsForm['name'].setValue('');
       this.inforsForm['address'].setValue('');
+      this.inforsForm['photoUrl'].setValue('');
+      this.imagePreview = '../assets/image/imagePreview.png';
     }
   }
   onUpload(event: any) {
@@ -131,13 +145,48 @@ export class PartnerComponent implements OnInit {
   onSaveInfor() {
     this.displayDialog = false;
     const formData = new FormData();
-
+    const idPartner = this.inforsForm['id'].value;
     formData.append('Name', this.inforsForm['name'].value);
     formData.append('Address', this.inforsForm['address'].value);
     formData.append('Status', this.inforsForm['selectedStatus'].value);
     formData.append('UploadFile', this.inforsForm['photoUrl'].value);
-    formData.forEach((values) => {
-      console.log(values);
-    });
+    // formData.forEach((values) => {
+    //   console.log(values);
+    // });
+    if (idPartner != null) {
+      this.partnerService
+        .updatePartnerById(idPartner, formData)
+        .subscribe((updatePartnerRes: HttpEvent<any>) => {
+          console.log(updatePartnerRes);
+          // switch (updatePartnerRes.type) {
+          //   case HttpEventType.Sent:
+          //     // console.log('Request has been made!');
+          //     break;
+          //   case HttpEventType.ResponseHeader:
+          //     // console.log('Response header has been received!');
+          //     break;
+          //   case HttpEventType.UploadProgress:
+          //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          //     this.progress = Math.round(
+          //       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          //       (updatePartnerRes.loaded / updatePartnerRes.total!) * 100
+          //     );
+          //     // console.log(`Uploaded! ${this.progress}%`);
+          //     break;
+          //   case HttpEventType.Response:
+          //     // console.log('User successfully created!', res.body);
+          //     // this.messageService.add({
+          //     //   severity: 'success',
+          //     //   summary: 'Upload hình thành công',
+          //     // });
+          //     // this.imageLink = res.body.data;
+          //     // console.log(res.body.data);
+
+          //     setTimeout(() => {
+          //       this.progress = 0;
+          //     }, 1500);
+          // }
+        });
+    }
   }
 }
