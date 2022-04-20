@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { PartnerResponse } from '../../../models/PartnerResponse';
 import { STATUS } from '../../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -49,6 +50,8 @@ export class PartnerComponent implements OnInit {
   uploadedFiles: any[] = [];
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
+  deleteFile?: string | null;
+  $sub: Subject<any> = new Subject();
   constructor(
     private partnerService: PartnersService,
     private formBuilder: FormBuilder
@@ -75,6 +78,7 @@ export class PartnerComponent implements OnInit {
       name: ['', Validators.required],
       address: ['', Validators.required],
       selectedStatus: ['', Validators.required],
+      DeleteFile: [''],
       photoUrl: ['', Validators.required],
     });
   }
@@ -87,9 +91,9 @@ export class PartnerComponent implements OnInit {
       .subscribe((partnersResponse: PartnerResponse) => {
         console.log(partnersResponse);
         partnersResponse.items?.map((partner: Partner) => {
-          this.partners = [...this.partners, partner];
+          this.partners = [partner];
         });
-        console.log(this.partners);
+        // console.log(this.partners);
         // this.partners = partnerResponse.items;
         // console.log(partnerResponse);
       });
@@ -116,6 +120,7 @@ export class PartnerComponent implements OnInit {
           this.inforsForm['address'].setValue(partnerResponse.address);
           this.inforsForm['photoUrl'].setValue(partnerResponse.photoUrl);
           this.imagePreview = `https://uni03.blob.core.windows.net/company/${partnerResponse.photoUrl}`;
+          this.deleteFile = partnerResponse.photoUrl?.trim();
         });
     } else {
       this.inforsForm['id'].setValue('');
@@ -124,6 +129,7 @@ export class PartnerComponent implements OnInit {
       this.inforsForm['address'].setValue('');
       this.inforsForm['photoUrl'].setValue('');
       this.imagePreview = '../assets/image/imagePreview.png';
+      this.deleteFile = '';
     }
   }
   onUpload(event: any) {
@@ -135,11 +141,13 @@ export class PartnerComponent implements OnInit {
     if (avatarFile) {
       this.inforForm.patchValue({ image: avatarFile });
       this.inforsForm['photoUrl'].setValue(avatarFile);
+      this.inforsForm['DeleteFile'].setValue(this.deleteFile);
       const fileReader = new FileReader();
       fileReader.onload = () => {
         this.imagePreview = fileReader.result;
       };
       fileReader.readAsDataURL(avatarFile);
+      console.log(this.deleteFile);
     }
   }
   onSaveInfor() {
@@ -150,42 +158,16 @@ export class PartnerComponent implements OnInit {
     formData.append('Address', this.inforsForm['address'].value);
     formData.append('Status', this.inforsForm['selectedStatus'].value);
     formData.append('UploadFile', this.inforsForm['photoUrl'].value);
-    // formData.forEach((values) => {
-    //   console.log(values);
-    // });
+    formData.append('DeleteFile', this.inforsForm['DeleteFile'].value);
+    formData.forEach((values) => {
+      console.log(values);
+    });
     if (idPartner != null) {
       this.partnerService
         .updatePartnerById(idPartner, formData)
         .subscribe((updatePartnerRes: HttpEvent<any>) => {
           console.log(updatePartnerRes);
-          // switch (updatePartnerRes.type) {
-          //   case HttpEventType.Sent:
-          //     // console.log('Request has been made!');
-          //     break;
-          //   case HttpEventType.ResponseHeader:
-          //     // console.log('Response header has been received!');
-          //     break;
-          //   case HttpEventType.UploadProgress:
-          //     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          //     this.progress = Math.round(
-          //       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          //       (updatePartnerRes.loaded / updatePartnerRes.total!) * 100
-          //     );
-          //     // console.log(`Uploaded! ${this.progress}%`);
-          //     break;
-          //   case HttpEventType.Response:
-          //     // console.log('User successfully created!', res.body);
-          //     // this.messageService.add({
-          //     //   severity: 'success',
-          //     //   summary: 'Upload hình thành công',
-          //     // });
-          //     // this.imageLink = res.body.data;
-          //     // console.log(res.body.data);
-
-          //     setTimeout(() => {
-          //       this.progress = 0;
-          //     }, 1500);
-          // }
+          this.getAllPartners();
         });
     }
   }
