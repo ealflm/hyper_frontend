@@ -1,5 +1,5 @@
 import { catchError } from 'rxjs/operators';
-import { Partner, PartnerResponse } from './../models/PartnerResponse';
+import { Partner, PartnerResponse, PartnersResponse } from './../models/PartnerResponse';
 import { map, Observable, retry, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { environment } from './../../environments/environment';
@@ -11,11 +11,11 @@ import { Injectable } from '@angular/core';
 export class PartnersService {
   apiURL = environment.apiURL + 'admin/companies';
   constructor(private http: HttpClient) {}
-  getAllPartners(): Observable<PartnerResponse> {
-    return this.http.get<PartnerResponse>(this.apiURL);
+  getAllPartners(): Observable<PartnersResponse> {
+    return this.http.get<PartnersResponse>(this.apiURL);
   }
-  getPartnerById(id: string): Observable<Partner> {
-    return this.http.get<Partner>(`${this.apiURL}/${id}`);
+  getPartnerById(id: string): Observable<PartnerResponse> {
+    return this.http.get<PartnerResponse>(`${this.apiURL}/${id}`);
   }
   updatePartnerById(id: string, formData: FormData): Observable<any> {
     return this.http

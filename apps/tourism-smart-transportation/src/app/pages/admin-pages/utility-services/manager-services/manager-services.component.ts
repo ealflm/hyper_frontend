@@ -63,6 +63,7 @@ export class ManagerServicesComponent implements OnInit {
       status: '3',
     },
   ];
+  selectedServices?: Service[];
   constructor() {}
 
   ngOnInit(): void {}
@@ -71,5 +72,8 @@ export class ManagerServicesComponent implements OnInit {
   }
   onToggle() {
     this.isOpenIconFillter = !this.isOpenIconFillter;
+  }
+  onDelete() {
+    console.log(this.selectedServices);
   }
 }

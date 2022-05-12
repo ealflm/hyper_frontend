@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { MapService } from './../../../services/map.service';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  AfterViewChecked,
+  AfterContentInit,
+  OnDestroy,
+} from '@angular/core';
 
 @Component({
   selector: 'tourism-smart-transportation-dashboard',
@@ -6,7 +14,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  constructor() {}
+  constructor(private mapService: MapService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.mapService.initializeMap();
+    this.mapService.setMarker();
+    this.mapService.addMarker();
+  }
+  delete() {
+    console.log('click');
+  }
 }

@@ -1,5 +1,8 @@
+import {
+  PartnerResponse,
+  PartnersResponse,
+} from './../../../models/PartnerResponse';
 import { Subject } from 'rxjs';
-import { PartnerResponse } from '../../../models/PartnerResponse';
 import { STATUS } from '../../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PartnersService } from '../../../services/partners.service';
@@ -88,14 +91,11 @@ export class PartnerComponent implements OnInit {
   getAllPartners() {
     this.partnerService
       .getAllPartners()
-      .subscribe((partnersResponse: PartnerResponse) => {
+      .subscribe((partnersResponse: PartnersResponse) => {
         console.log(partnersResponse);
-        partnersResponse.items?.map((partner: Partner) => {
+        partnersResponse.body.items?.map((partner: Partner) => {
           this.partners = [partner];
         });
-        // console.log(this.partners);
-        // this.partners = partnerResponse.items;
-        // console.log(partnerResponse);
       });
   }
   navmenuclick(value: any) {
@@ -109,18 +109,18 @@ export class PartnerComponent implements OnInit {
     if (this.displayDialog) {
       this.partnerService
         .getPartnerById(id)
-        .subscribe((partnerResponse: Partner) => {
+        .subscribe((partnerResponse: PartnerResponse) => {
           console.log(partnerResponse);
-          this.inforsForm['id'].setValue(partnerResponse.id);
-          this.inforsForm['userName'].setValue(partnerResponse.userName);
-          this.inforsForm['name'].setValue(partnerResponse.name);
+          this.inforsForm['id'].setValue(partnerResponse.body?.id);
+          this.inforsForm['userName'].setValue(partnerResponse.body?.userName);
+          this.inforsForm['name'].setValue(partnerResponse.body?.name);
           this.inforsForm['selectedStatus'].setValue(
-            partnerResponse.status?.toString()
+            partnerResponse.body?.status?.toString()
           );
-          this.inforsForm['address'].setValue(partnerResponse.address);
-          this.inforsForm['photoUrl'].setValue(partnerResponse.photoUrl);
-          this.imagePreview = `https://uni03.blob.core.windows.net/company/${partnerResponse.photoUrl}`;
-          this.deleteFile = partnerResponse.photoUrl?.trim();
+          this.inforsForm['address'].setValue(partnerResponse.body?.address);
+          this.inforsForm['photoUrl'].setValue(partnerResponse.body?.photoUrl);
+          this.imagePreview = `https://uni03.blob.core.windows.net/company/${partnerResponse.body?.photoUrl}`;
+          this.deleteFile = partnerResponse.body?.photoUrl?.trim();
         });
     } else {
       this.inforsForm['id'].setValue('');
@@ -133,11 +133,7 @@ export class PartnerComponent implements OnInit {
     }
   }
   onUpload(event: any) {
-    console.log(event);
-
     const avatarFile = event.target.files[0];
-    console.log(avatarFile);
-
     if (avatarFile) {
       this.inforForm.patchValue({ image: avatarFile });
       this.inforsForm['photoUrl'].setValue(avatarFile);
@@ -147,7 +143,6 @@ export class PartnerComponent implements OnInit {
         this.imagePreview = fileReader.result;
       };
       fileReader.readAsDataURL(avatarFile);
-      console.log(this.deleteFile);
     }
   }
   onSaveInfor() {
@@ -159,9 +154,9 @@ export class PartnerComponent implements OnInit {
     formData.append('Status', this.inforsForm['selectedStatus'].value);
     formData.append('UploadFile', this.inforsForm['photoUrl'].value);
     formData.append('DeleteFile', this.inforsForm['DeleteFile'].value);
-    formData.forEach((values) => {
-      console.log(values);
-    });
+    // formData.forEach((values) => {
+    //   console.log(values);
+    // });
     if (idPartner != null) {
       this.partnerService
         .updatePartnerById(idPartner, formData)

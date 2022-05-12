@@ -1,6 +1,15 @@
+import { MapService } from './../../services/map.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './../../auth/localstorage.service';
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'tourism-smart-transportation-side-bar',
@@ -8,16 +17,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent implements OnInit {
-  status = true;
-  statusLink = false;
+  locked = false;
+  status = false;
+  statusLink = true;
+
   showMoreService = false;
   showMoreFinance = false;
   showMoreMap = false;
-  locked = true;
   displayAvatar = false;
   constructor(
     private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private mapService: MapService
   ) {}
 
   ngOnInit(): void {}
@@ -37,26 +48,22 @@ export class SideBarComponent implements OnInit {
   mouseEnter() {
     if (this.locked) {
       return;
-    } else {
+    } else if (this.locked == false) {
       this.status = true;
       if (this.statusLink) {
         setTimeout(() => {
           this.statusLink = false;
-          this.displayAvatar = false;
-        }, 230);
+          this.displayAvatar = true;
+        }, 200);
       }
     }
   }
   mouseLeave() {
     if (this.locked) {
       return;
-    } else {
+    } else if (this.locked == false) {
       this.status = false;
-      if (this.statusLink) {
-        setTimeout(() => {
-          this.statusLink = true;
-        }, 230);
-      } else {
+      if (!this.statusLink) {
         this.statusLink = true;
         this.displayAvatar = false;
       }

@@ -65,9 +65,13 @@
       [value]="services"
       responsiveLayout="scroll"
       scrollDirection="both"
+      [(selection)]="selectedServices"
     >
       <ng-template pTemplate="header">
         <tr>
+          <th>
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
           <th>Tên</th>
           <th>Mã</th>
           <th>Ngày tạo</th>
@@ -80,6 +84,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-service let-i="rowIndex">
         <tr>
+          <td>
+            <p-tableCheckbox [value]="service"></p-tableCheckbox>
+          </td>
           <td>{{ service.name }}</td>
           <td>{{ service.code }}</td>
           <td>{{ service.createDate }}</td>
@@ -87,7 +94,11 @@
           <td>{{ service.editDate }}</td>
           <td>{{ service.userEdit }}</td>
           <td>{{ service.status }}</td>
-          <td><span class="material-icons-outlined"> delete_outline </span></td>
+          <td>
+            <span class="material-icons-outlined" (click)="onDelete()">
+              delete_outline
+            </span>
+          </td>
         </tr>
       </ng-template>
     </p-table>

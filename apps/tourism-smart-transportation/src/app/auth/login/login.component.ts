@@ -59,8 +59,15 @@ export class LoginComponent implements OnInit {
           }
         },
         error: (error: HttpErrorResponse) => {
-          // console.log(error.status);
+          // console.log(error);
           if (error.status === 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Unauthorized',
+              detail: 'Email or password incorect',
+            });
+          }
+          if (error.status === 500) {
             this.messageService.add({
               severity: 'error',
               summary: 'Unauthorized',
