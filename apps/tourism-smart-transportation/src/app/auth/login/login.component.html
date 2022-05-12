@@ -49,16 +49,16 @@
               >Password không được trống</small
             >
           </div>
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Đăng nhập"
+            class="p-button-rounded w-8 mt-4 btn-login"
+            [loading]="loading"
+            (click)="onSignIn()"
+          ></button>
         </div>
-        <button
-          pButton
-          pRipple
-          type="button"
-          label="Đăng nhập"
-          class="p-button-rounded w-8 mt-4 btn-login"
-          [loading]="loading"
-          (click)="onSignIn()"
-        ></button>
       </form>
     </div>
   </div>

@@ -1,4 +1,21 @@
 .map-container {
-  width: 100%;
-  height: 100%;
+  // width: 100vw;
+  height: 100vh;
+  width: auto;
+}
+#info {
+  display: table;
+  position: absolute;
+  margin: 0px auto;
+  word-wrap: anywhere;
+  white-space: pre-wrap;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  color: #222;
+  background: #fff;
+  top: 10%;
+  left: 50%;
 }

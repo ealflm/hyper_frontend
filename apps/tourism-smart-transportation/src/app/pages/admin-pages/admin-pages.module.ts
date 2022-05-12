@@ -19,7 +19,7 @@ const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminPagesComponent,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [
       {
         path: '',
@@ -29,17 +29,6 @@ const ADMIN_ROUTES: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'account-partner', component: PartnerComponent },
       { path: 'account-users', component: UsersComponent },
-      // {
-      //   path: 'setting',
-      //   redirectTo: 'setting/services',
-      //   pathMatch: 'full',
-      // },
-      // {
-      //   path: 'setting',
-      //   children: [
-      //     { path: 'services', component: ManagerServicesComponent },
-      //   ],
-      // },
       // Loading modules UILITY-SERVICES
       {
         path: 'setting',
