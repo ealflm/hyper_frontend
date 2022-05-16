@@ -1,4 +1,4 @@
-import { MapService } from './../../services/map.service';
+import { MapService } from '../../services/map.service';
 import {
   Component,
   OnInit,
@@ -8,10 +8,10 @@ import {
 
 @Component({
   selector: 'tourism-smart-transportation-admin-pages',
-  templateUrl: './admin-pages.component.html',
-  styleUrls: ['./admin-pages.component.scss'],
+  templateUrl: './admin-page.component.html',
+  styleUrls: ['./admin-page.component.scss'],
 })
-export class AdminPagesComponent implements OnInit, AfterViewInit {
+export class AdminPageComponent implements OnInit, AfterViewInit {
   constructor(private mapService: MapService) {}
   ngAfterViewInit(): void {}
 

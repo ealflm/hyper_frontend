@@ -1,4 +1,4 @@
-import { AdminPagesModule } from './pages/admin-pages/admin-pages.module';
+import { AdminPageModule } from './pages/admin-page/admin-page.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -7,8 +7,15 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./pages/admin-pages/admin-pages.module').then(
-        (m) => m.AdminPagesModule
+      import('./pages/admin-page/admin-page.module').then(
+        (m) => m.AdminPageModule
+      ),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./pages/partner-page/partner-page.module').then(
+        (m) => m.PartnerPageModule
       ),
   },
 ];
@@ -20,7 +27,7 @@ const routes: Routes = [
       // useHash: true,
       // initialNavigation: 'enabled',
     }),
-    AdminPagesModule,
+    AdminPageModule,
   ],
   exports: [RouterModule],
 })

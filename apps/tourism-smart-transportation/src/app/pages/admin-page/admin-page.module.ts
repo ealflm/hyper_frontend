@@ -1,11 +1,12 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MapComponent } from './../../components/map/map.component';
 import { AuthGuardService } from './../../auth/auth.guard';
-import { MaterialuiModule } from './../../materialui/materialui.module';
+import { NzZorroAntdModule } from '../../nz-zorro-antd/nz-zorro-antd.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MapComponent } from '../../components/map/map.component';
+import { MaterialuiModule } from '../../materialui/materialui.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminPagesComponent } from './admin-pages.component';
+import { AdminPageComponent } from './admin-page.component';
 import { SideBarComponent } from '../../shared/side-bar/side-bar.component';
 import { PrimengModule } from '../../primeng/primeng.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,8 +19,11 @@ import { MapModule } from './map/map.module';
 const ADMIN_ROUTES: Routes = [
   {
     path: '',
-    component: AdminPagesComponent,
+    component: AdminPageComponent,
     // canActivate: [AuthGuardService],
+    // data: {
+    //   role: 'ROLE_ADMIN'
+    // },
     children: [
       {
         path: '',
@@ -51,7 +55,7 @@ const ADMIN_ROUTES: Routes = [
 ];
 @NgModule({
   declarations: [
-    AdminPagesComponent,
+    AdminPageComponent,
     SideBarComponent,
     DashboardComponent,
     PartnerComponent,
@@ -64,6 +68,7 @@ const ADMIN_ROUTES: Routes = [
     RouterModule.forChild(ADMIN_ROUTES),
     PrimengModule,
     MaterialuiModule,
+    NzZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
     UtilityServicesModule,
@@ -71,4 +76,4 @@ const ADMIN_ROUTES: Routes = [
     MapModule,
   ],
 })
-export class AdminPagesModule {}
+export class AdminPageModule {}
