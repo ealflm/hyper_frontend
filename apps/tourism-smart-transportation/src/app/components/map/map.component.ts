@@ -15,20 +15,11 @@ import * as mapboxgl from 'mapbox-gl';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, OnDestroy, AfterViewChecked {
-  coordinates: any;
   constructor(private mapboxService: MapService) {}
 
-  ngOnInit(): void {
-    this.mapboxService.getCoordinates().subscribe((res: any) => {
-      this.coordinates = res;
-      // console.log(res);
-    });
-  }
+  ngOnInit(): void {}
   ngOnDestroy(): void {}
   ngAfterViewChecked(): void {
     this.mapboxService.map.resize();
-  }
-  deleteMarkers() {
-    this.mapboxService.deleteMarkers();
   }
 }

@@ -1,4 +1,4 @@
-export class Partner {
+export abstract class Partner {
   id?: string;
   name?: string;
   userName?: string;
@@ -6,12 +6,12 @@ export class Partner {
   photoUrl?: string;
   status?: string;
 }
-export interface UtilPaging {
+export abstract class UtilPaging {
   pageSize?: number;
   totalItems?: number;
   items?: Partner[];
 }
-export class PartnerResponse extends Partner {
+export abstract class PartnerResponse extends Partner {
   statusCode?: number;
   message?: string;
   body?: Partner;

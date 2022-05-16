@@ -29,7 +29,10 @@ export class AuthGuardService implements CanActivate {
       // console.log(tokenDecode.exp);
       // console.log(this._tokenExpired(tokenDecode.exp));
       if (
-        !this._tokenExpired(tokenDecode.exp) /* tokenDecode.Role == 'admin' */
+        !this._tokenExpired(tokenDecode.exp) &&
+        route.data['role'] &&
+        route.data['role'].indexOf(tokenDecode.Role) !== -1
+        /* tokenDecode.Role == 'admin' */
       ) {
         return true;
       } else {
