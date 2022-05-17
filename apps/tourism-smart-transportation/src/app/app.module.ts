@@ -1,3 +1,4 @@
+import { MapService } from './services/map.service';
 import { MapComponent } from './components/map/map.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

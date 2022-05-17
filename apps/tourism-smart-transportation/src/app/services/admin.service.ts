@@ -13,7 +13,7 @@ export class AdminService {
     return this.http.get<any>(this.apiURL);
   }
   signIn(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiURL}/authorization/login`, {
+    return this.http.post(`${this.apiURL}/admin/authorization/login`, {
       userName: email,
       password: password,
     });

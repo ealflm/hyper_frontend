@@ -1,3 +1,4 @@
+import { MapService } from './../../services/map.service';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { NzZorroAntdModule } from '../../nz-zorro-antd/nz-zorro-antd.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,7 +62,6 @@ const ADMIN_ROUTES: Routes = [
     PartnerComponent,
     UsersComponent,
     ManagerServicesComponent,
-    MapComponent,
   ],
   imports: [
     CommonModule,

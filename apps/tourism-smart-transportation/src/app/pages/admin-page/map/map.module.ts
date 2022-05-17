@@ -1,3 +1,8 @@
+import { NzZorroAntdModule } from './../../../nz-zorro-antd/nz-zorro-antd.module';
+import { MaterialuiModule } from './../../../materialui/materialui.module';
+import { PrimengModule } from './../../../primeng/primeng.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MapComponent } from './../../../components/map/map.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -34,7 +39,15 @@ const MAP_ROUTE: Routes = [
     StationStaticComponent,
     StationCarRentalComponent,
     RouteComponent,
+    MapComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(MAP_ROUTE)],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(MAP_ROUTE),
+    ReactiveFormsModule,
+    PrimengModule,
+    MaterialuiModule,
+    NzZorroAntdModule,
+  ],
 })
 export class MapModule {}
