@@ -129,7 +129,7 @@ export class PartnerComponent implements OnInit {
       this.inforsForm['address'].setValue('');
       this.inforsForm['photoUrl'].setValue('');
       this.imagePreview = '../assets/image/imagePreview.png';
-      this.deleteFile = '';
+      this.deleteFile = null;
     }
   }
   onUpload(event: any) {
