@@ -1,27 +1,27 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DiscountComponent } from './discount/discount.component';
-import { ManagerServicesComponent } from './manager-services/manager-services.component';
+import { PriceDefaultComponent } from './price-default/price-default.component';
+import { ServiceTypeComponent } from './service-type/service-type.component';
 
 const SERVICES: Routes = [
   {
     path: 'setting',
-    redirectTo: 'setting/services',
+    redirectTo: 'setting/price-default',
     pathMatch: 'full',
   },
   {
-    path: 'services',
-    component: ManagerServicesComponent,
+    path: 'price-default',
+    component: PriceDefaultComponent,
   },
   {
-    path: 'discount',
-    component: DiscountComponent,
+    path: 'service-type',
+    component: ServiceTypeComponent,
   },
 ];
 
 @NgModule({
-  declarations: [DiscountComponent],
+  declarations: [PriceDefaultComponent, ServiceTypeComponent],
   imports: [CommonModule, RouterModule.forChild(SERVICES)],
 })
 export class UtilityServicesModule {}

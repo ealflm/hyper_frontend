@@ -20,7 +20,12 @@
             "assets": [
               "apps/tourism-smart-transportation/src/favicon.ico",
               "apps/tourism-smart-transportation/src/assets",
-              "apps/tourism-smart-transportation/src/assets/routes.json"
+              "apps/tourism-smart-transportation/src/assets/routes.json",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
