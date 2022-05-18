@@ -88,7 +88,13 @@ export class PartnerComponent implements OnInit {
   get inforsForm() {
     return this.inforForm.controls;
   }
-  getAllPartners() {
+  getAllPartners(
+    userName?: string,
+    status?: string,
+    pageIndex?: string,
+    itemsPerPage?: string,
+    sortBy?: string
+  ) {
     this.partnerService
       .getAllPartners()
       .subscribe((partnersResponse: PartnersResponse) => {
@@ -113,7 +119,7 @@ export class PartnerComponent implements OnInit {
           console.log(partnerResponse);
           this.inforsForm['id'].setValue(partnerResponse.body?.id);
           this.inforsForm['userName'].setValue(partnerResponse.body?.userName);
-          this.inforsForm['name'].setValue(partnerResponse.body?.name);
+          this.inforsForm['name'].setValue(partnerResponse.body?.firstName);
           this.inforsForm['selectedStatus'].setValue(
             partnerResponse.body?.status?.toString()
           );

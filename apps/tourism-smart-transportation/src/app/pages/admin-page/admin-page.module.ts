@@ -1,3 +1,4 @@
+import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
 import { MapService } from './../../services/map.service';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { NzZorroAntdModule } from '../../nz-zorro-antd/nz-zorro-antd.module';
@@ -65,6 +66,7 @@ const ADMIN_ROUTES: Routes = [
     UsersComponent,
     ManagerServicesComponent,
     DiscountComponent,
+    LimitLengthPipe,
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,9 @@
 import { catchError } from 'rxjs/operators';
-import { Partner, PartnerResponse, PartnersResponse } from './../models/PartnerResponse';
+import {
+  Partner,
+  PartnerResponse,
+  PartnersResponse,
+} from './../models/PartnerResponse';
 import { map, Observable, retry, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { environment } from './../../environments/environment';
@@ -9,7 +13,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class PartnersService {
-  apiURL = environment.apiURL + 'admin/companies';
+  apiURL = environment.apiURL + 'admin/partners';
   constructor(private http: HttpClient) {}
   getAllPartners(): Observable<PartnersResponse> {
     return this.http.get<PartnersResponse>(this.apiURL);

@@ -62,9 +62,18 @@
   <div class="mt-5"></div>
   <div class="body-table">
     <p-table
+      #dt
       [value]="partners"
       responsiveLayout="scroll"
       scrollDirection="both"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading"
+      responsiveLayout="scroll"
+      paginatorright="true"
+      [paginator]="true"
+      currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {totalRecords} mục"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -82,24 +91,49 @@
       </ng-template>
       <ng-template pTemplate="body" let-partner let-i="rowIndex">
         <tr>
-          <td>{{ partner.name }}</td>
-          <td>{{ partner.userName }}</td>
-          <td>{{ partner.address }}</td>
-          <td>
+          <td class="tb-name">
             <img
-              style="width: 50px; height: 50px; border-radius: 50%"
               [src]="
-                'https://uni03.blob.core.windows.net/company/' +
-                partner.photoUrl
+                'https://se32.blob.core.windows.net/partner/' + partner.photoUrl
               "
-            />
+              alt=""
+            />{{ partner.firstName + ' ' + partner.lastName }}
           </td>
+          <td>
+            <!-- {{
+              partner?.companyName.length > 10
+                ? (partner?.companyName | slice: 0:10) + '..'
+                : partner?.companyName
+            }} -->
+            {{ partner?.companyName | limitLength: [10] }}
+          </td>
+          <td>{{ partner.gender ? 'Nam' : 'Nữ' }}</td>
+          <td>{{ partner.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ partner.phone }}</td>
+          <td>{{ partner.email }}</td>
+          <td>{{ partner.createdDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ partner.modifiedDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ partner.status }}</td>
-          <td (click)="showDialog(partner.id)">
-            <span class="material-icons-outlined"> edit </span>
+          <td>
+            <span
+              class="material-icons-outlined"
+              (click)="showDialog(partner.id)"
+            >
+              edit
+            </span>
+
+            <span class="material-icons-outlined" style="margin-left: 5px">
+              delete
+            </span>
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">Không có nội dung nào để hiển thị.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft"> </ng-template>
     </p-table>
   </div>
 </div>
