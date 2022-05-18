@@ -1,7 +1,9 @@
+$white-primary-color: #ffffff;
 $primary-color: #00d795;
 $primary-color-teal: #30d5c8;
 $background-color-grey: rgba(0, 0, 0, 0.062);
 $background-color-grey-secondary: rgba(204, 204, 204, 0.8);
+$background-color-grey-thirdly: rgba(242, 242, 242, 0.5);
 $background-hover-grey: rgba(0, 0, 0, 0.03);
 $background-color-gradient-primary: linear-gradient(
   135deg,
@@ -10,4 +12,5 @@ $background-color-gradient-primary: linear-gradient(
   rgba(78, 212, 152, 0.1) 20%,
   rgba(255, 255, 255, 0) 100%
 );
+
 $red-primary: #eb4343;

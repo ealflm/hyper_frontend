@@ -2,7 +2,6 @@ import { MapService } from './../../services/map.service';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { NzZorroAntdModule } from '../../nz-zorro-antd/nz-zorro-antd.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MapComponent } from '../../components/map/map.component';
 import { MaterialuiModule } from '../../materialui/materialui.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -13,10 +12,11 @@ import { PrimengModule } from '../../primeng/primeng.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PartnerComponent } from './partner/partner.component';
 import { UsersComponent } from './users/users.component';
-import { ManagerServicesComponent } from './utility-services/manager-services/manager-services.component';
+import { ManagerServicesComponent } from './manager-services/manager-services.component';
 import { UtilityServicesModule } from './utility-services/utility-services.module';
 import { FinanceModule } from './finance/finance.module';
 import { MapModule } from './map/map.module';
+import { DiscountComponent } from './discount/discount.component';
 const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -34,6 +34,8 @@ const ADMIN_ROUTES: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'account-partner', component: PartnerComponent },
       { path: 'account-users', component: UsersComponent },
+      { path: 'manage-service', component: ManagerServicesComponent },
+      { path: 'discount', component: DiscountComponent },
       // Loading modules UILITY-SERVICES
       {
         path: 'setting',
@@ -43,13 +45,13 @@ const ADMIN_ROUTES: Routes = [
           ),
       },
       {
+        path: 'map',
+        loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
+      },
+      {
         path: 'finance',
         loadChildren: () =>
           import('./finance/finance.module').then((m) => m.FinanceModule),
-      },
-      {
-        path: 'map',
-        loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
       },
     ],
   },
@@ -62,6 +64,7 @@ const ADMIN_ROUTES: Routes = [
     PartnerComponent,
     UsersComponent,
     ManagerServicesComponent,
+    DiscountComponent,
   ],
   imports: [
     CommonModule,

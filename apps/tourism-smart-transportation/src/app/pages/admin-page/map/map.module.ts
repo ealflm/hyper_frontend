@@ -1,3 +1,4 @@
+import { MapPageComponent } from './map-page.component';
 import { NzZorroAntdModule } from './../../../nz-zorro-antd/nz-zorro-antd.module';
 import { MaterialuiModule } from './../../../materialui/materialui.module';
 import { PrimengModule } from './../../../primeng/primeng.module';
@@ -12,9 +13,8 @@ import { StationCarRentalComponent } from './station-car-rental/station-car-rent
 import { RouteComponent } from './route/route.component';
 const MAP_ROUTE: Routes = [
   {
-    path: 'map',
-    redirectTo: 'map/station-car-rental',
-    pathMatch: 'full',
+    path: '',
+    component: MapPageComponent,
   },
   {
     path: 'station-car-rental',

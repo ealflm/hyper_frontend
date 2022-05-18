@@ -3,11 +3,11 @@
 @import './base/mixins.scss';
 html,
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 12px;
   overflow-y: hidden; /* Hide vertical scrollbar */
   overflow-x: hidden; /* Hide horizontal scrollbar */
 }

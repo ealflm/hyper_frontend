@@ -35,8 +35,8 @@ import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
           transform: 'rotate(90deg)',
         })
       ),
-      transition('openIcon => closeIcon', [animate('0.2s')]),
-      transition('closeIcon => openIcon', [animate('0.2s')]),
+      transition('openIcon => closeIcon', [animate('0.3s')]),
+      transition('closeIcon => openIcon', [animate('0.3s')]),
     ]),
   ],
 })

@@ -17,9 +17,9 @@ import * as mapboxgl from 'mapbox-gl';
   styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent implements OnInit {
-  locked = false;
-  status = false;
-  statusLink = true;
+  locked = true;
+  status = true;
+  statusLink = false;
 
   showMoreService = false;
   showMoreFinance = false;
@@ -57,6 +57,7 @@ export class SideBarComponent implements OnInit {
         }, 200);
       }
     }
+    console.log(this.status);
   }
   mouseLeave() {
     if (this.locked) {
@@ -68,6 +69,7 @@ export class SideBarComponent implements OnInit {
         this.displayAvatar = false;
       }
     }
+    console.log(this.status);
   }
   onClickAvatar() {
     this.displayAvatar = !this.displayAvatar;
