@@ -1,10 +1,25 @@
 export abstract class Partner {
   id?: string;
-  name?: string;
   userName?: string;
+  firstName?: string;
+  lastName?: string;
   address?: string;
   photoUrl?: string;
-  status?: string;
+  gender?: boolean;
+  phone?: string;
+  address1?: null | string;
+  address2?: null | string;
+  dateOfBirth?: Date;
+  email?: null;
+  createdDate?: Date;
+  modifiedDate?: Date;
+  status?: number;
+  companyName?: string;
+}
+export interface PartnersResponse extends UtilPaging {
+  statusCode?: number;
+  message?: string;
+  body: UtilPaging;
 }
 export abstract class UtilPaging {
   pageSize?: number;
@@ -15,9 +30,4 @@ export abstract class PartnerResponse extends Partner {
   statusCode?: number;
   message?: string;
   body?: Partner;
-}
-export interface PartnersResponse extends UtilPaging {
-  statusCode?: number;
-  message?: string;
-  body: UtilPaging;
 }
