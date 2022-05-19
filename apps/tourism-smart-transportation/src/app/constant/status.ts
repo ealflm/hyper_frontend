@@ -1,8 +1,10 @@
-export const STATUS: any = {
+export const STATUS_PARTNER: any = {
   0: {
-    lable: 'Active',
+    lable: 'Vô hiệu hóa',
+    class: 'status-disabled',
   },
   1: {
-    lable: 'In active',
+    lable: 'Kích hoạt',
+    class: 'status-active',
   },
 };

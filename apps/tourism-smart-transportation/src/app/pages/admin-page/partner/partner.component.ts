@@ -3,7 +3,7 @@ import {
   PartnersResponse,
 } from './../../../models/PartnerResponse';
 import { Subject } from 'rxjs';
-import { STATUS } from '../../../constant/status';
+import { STATUS_PARTNER } from '../../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PartnersService } from '../../../services/partners.service';
 import { Partner } from '../../../models/PartnerResponse';
@@ -41,15 +41,17 @@ import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
   ],
 })
 export class PartnerComponent implements OnInit {
+  displayDialog = false;
+  loading = false;
+  isSubmit = false;
+  isOpenIconFillter = true;
+  progress!: number;
+  //
   inforForm!: FormGroup;
   fillterStatus: number | null = null;
   fillterByName: any | null;
-  isOpenIconFillter = true;
+  //
   partners: Partner[] = [];
-  displayDialog = false;
-  loading = false;
-  progress!: number;
-  isSubmit = false;
   status: any[] = [];
   uploadedFiles: any[] = [];
   imagePreview?: string | ArrayBuffer | null =
@@ -71,12 +73,14 @@ export class PartnerComponent implements OnInit {
     this.getAllPartners();
     this.initForm();
     this.mapStatus();
+    console.log(this.status);
   }
   private mapStatus() {
-    this.status = Object.keys(STATUS).map((key) => {
+    this.status = Object.keys(STATUS_PARTNER).map((key) => {
       return {
         id: key,
-        lable: STATUS[key].lable,
+        lable: STATUS_PARTNER[key].lable,
+        class: STATUS_PARTNER[key].class,
       };
     });
   }
@@ -96,9 +100,6 @@ export class PartnerComponent implements OnInit {
     return this.inforForm.controls;
   }
   getAllPartners() {
-    // console.log(this.pageIndex);
-    // console.log(this.itemsPerPage);
-
     this.partnerService
       .getAllPartners(
         this.fillterByName,
@@ -110,11 +111,6 @@ export class PartnerComponent implements OnInit {
       .subscribe((partnersResponse: PartnersResponse) => {
         this.totalItems = partnersResponse.body.totalItems as number;
         this.partners = partnersResponse.body.items;
-
-        // partnersResponse.body.items?.map((partner: Partner) => {
-        //   this.partners.push(partner);
-        // console.log(this.partners);
-        // });
       });
   }
 
