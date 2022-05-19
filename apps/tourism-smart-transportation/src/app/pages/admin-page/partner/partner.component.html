@@ -97,7 +97,9 @@
                   : ''
               "
               alt=""
-            />{{ partner.firstName + ' ' + partner.lastName }}
+            />{{
+              partner.firstName + ' ' + partner.lastName | limitLength: [10]
+            }}
           </td>
           <td>
             <!-- {{
@@ -113,7 +115,11 @@
           <td>{{ partner.email }}</td>
           <td>{{ partner.createdDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ partner.modifiedDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ partner.status }}</td>
+          <td>
+            <div [class]="status[partner.status].class">
+              {{ status[partner.status].lable }}
+            </div>
+          </td>
           <td>
             <span
               class="material-icons-outlined"
