@@ -91,13 +91,13 @@
           <td class="tb-name">
             <img
               [src]="
-                partner.photoUrl !== null
-                  ? 'https://se32.blob.core.windows.net/partner/' +
+                partner.photoUrl === '' || partner.photoUrl === null
+                  ? '../assets/image/imagePreview.png'
+                  : 'https://se32.blob.core.windows.net/partner/' +
                     partner.photoUrl
-                  : ''
               "
               alt=""
-            />{{
+            />&nbsp;{{
               partner.firstName + ' ' + partner.lastName | limitLength: [10]
             }}
           </td>
@@ -153,98 +153,243 @@
   </div>
 </div>
 <p-dialog
-  header="Chỉnh sửa tài khoản đối tác"
+  header="Chỉnh sửa đối tác"
   [(visible)]="displayDialog"
-  [style]="{ width: '40vw' }"
+  [style]="{ width: '764px', height: '856px' }"
   [contentStyle]="{
     'overflow-y': 'auto',
     'overflow-x': 'hidden',
-    'max-height': '50vh',
+    'max-height': '100vh',
     'min-height': '25vh'
   }"
   [blockScroll]="true"
   [resizable]="true"
   [modal]="true"
 >
+  <p-divider></p-divider>
+
   <ng-template pTemplate="content">
     <div class="infor-form">
       <form [formGroup]="inforForm">
         <div class="mt-4 grid p-fluid">
-          <div class="col-7">
-            <div class="grid">
-              <div class="col-12">
-                <input
-                  type="text"
-                  pInputText
-                  placeholder="Tài khoản"
-                  formControlName="userName"
-                />
-                <div></div>
-              </div>
-              <div class="mt-3"></div>
-              <div class="col-12">
-                <input
-                  type="text"
-                  pInputText
-                  placeholder="Tên"
-                  formControlName="name"
-                  (keyup.enter)="onSaveInfor()"
-                />
-                <div>
-                  <small
-                    *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
-                    class="p-error"
-                    >Tên không được bỏ trống</small
-                  >
+          <div class="col-12">
+            <div class="upload-container">
+              <label for="upload" class="thumnail">
+                <img [src]="imagePreview" />
+                <span class="thumnail-text">Tải hình ảnh lên</span>
+                <div class="icon-overplay">
+                  <div class="circle-icon">
+                    <span class="material-icons-outlined"> photo_camera </span>
+                  </div>
                 </div>
-              </div>
-              <div class="mt-3"></div>
-              <div class="col-12">
-                <p-dropdown
-                  [options]="status"
-                  formControlName="selectedStatus"
-                  optionLabel="lable"
-                  optionValue="id"
-                ></p-dropdown>
-              </div>
-              <div class="mt-3"></div>
-              <div class="col-12">
-                <input
-                  type="text"
-                  pInputText
-                  placeholder="Địa chỉ"
-                  formControlName="address"
-                  (keyup.enter)="onSaveInfor()"
-                />
-                <div>
-                  <small
-                    *ngIf="inforsForm['address'].invalid && isSubmit"
-                    class="p-error"
-                    >Địa chỉ không được trống</small
-                  >
-                </div>
-              </div>
+                <div class="image-overlay"></div>
+              </label>
+              <input
+                type="file"
+                id="upload"
+                accept="image/*"
+                (change)="onUpload($event)"
+              />
             </div>
           </div>
-          <div class="col-5">
-            <div class="col-12">
-              <div class="upload-container">
-                <label for="upload" class="thumnail">
-                  <img [src]="imagePreview" />
-                  <div class="image-overlay">
-                    <div class="circle-icon">
-                      <span class="material-icons-outlined"> file_upload </span>
-                    </div>
+          <p-divider class="col-12"></p-divider>
+          <div class="col-12">
+            <!-- thông tin đăng nhập -->
+            <div class="grid">
+              <div class="col-4">
+                <div class="partner-subtitle">Thông tin đăng nhập</div>
+              </div>
+              <div class="col-8">
+                <div class="grid">
+                  <div class="col-12">
+                    <div class="partner-text">Tên đăng nhập</div>
+                    <input type="text" pInputText formControlName="userName" />
+                    <div></div>
                   </div>
-                </label>
-                <input
-                  type="file"
-                  id="upload"
-                  accept="image/*"
-                  (change)="onUpload($event)"
-                />
+                  <div class="col-6">
+                    <div class="partner-text">Mật khẩu</div>
+                    <p-password
+                      [toggleMask]="true"
+                      [feedback]="false"
+                    ></p-password>
+                    <div></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="partner-text">Nhập lại mật khẩu</div>
+                    <p-password
+                      [toggleMask]="true"
+                      [feedback]="false"
+                    ></p-password>
+                    <div></div>
+                  </div>
+                </div>
               </div>
             </div>
+            <!-- end thông tin đăng nhập -->
+
+            <p-divider></p-divider>
+            <!-- thông tin người đại diện -->
+
+            <div class="grid">
+              <div class="col-4">
+                <div class="partner-subtitle">Thông tin người đại diện</div>
+              </div>
+              <div class="col-8">
+                <div class="grid">
+                  <div class="col-6">
+                    <div class="partner-text">Họ</div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="name"
+                      (keyup.enter)="onSaveInfor()"
+                    />
+                    <div>
+                      <small
+                        *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                        >Tên không được bỏ trống</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="partner-text">Tên</div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="name"
+                      (keyup.enter)="onSaveInfor()"
+                    />
+                    <div>
+                      <small
+                        *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                        >Tên không được bỏ trống</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="partner-text">Ngày sinh</div>
+                    <div class="input-calendar-custome">
+                      <p-calendar inputId="basic"> </p-calendar>
+                      <span class="material-icons-outlined input-calendar-icon">
+                        calendar_month
+                      </span>
+                    </div>
+                    <div>
+                      <small
+                        *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                        >Tên không được bỏ trống</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="partner-text">Giới tính</div>
+                    <p-dropdown
+                      [options]="status"
+                      formControlName="selectedStatus"
+                      optionLabel="lable"
+                      optionValue="id"
+                    ></p-dropdown>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="partner-text">Số điện thoại</div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="name"
+                      (keyup.enter)="onSaveInfor()"
+                    />
+                    <div>
+                      <small
+                        *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                        >Tên không được bỏ trống</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="partner-text">Email</div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="name"
+                      (keyup.enter)="onSaveInfor()"
+                    />
+                    <div>
+                      <small
+                        *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                        >Tên không được bỏ trống</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="partner-text">Địa chỉ</div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="name"
+                      (keyup.enter)="onSaveInfor()"
+                    />
+                    <div>
+                      <small
+                        *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                        >Tên không được bỏ trống</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end thông tin người đại diện -->
+            <p-divider></p-divider>
+            <!-- start thông tin công ty -->
+            <div class="grid">
+              <div class="col-4">
+                <div class="partner-subtitle">Thông tin công ty</div>
+              </div>
+              <div class="col-8">
+                <div class="partner-text">Công ty</div>
+                <div class="grid">
+                  <div class="col-12">
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="address"
+                      (keyup.enter)="onSaveInfor()"
+                    />
+                    <div>
+                      <small
+                        *ngIf="inforsForm['address'].invalid && isSubmit"
+                        class="p-error"
+                        >Địa chỉ không được trống</small
+                      >
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="partner-text">Địa chỉ</div>
+                    <input
+                      type="text"
+                      pInputText
+                      formControlName="address"
+                      (keyup.enter)="onSaveInfor()"
+                    />
+                    <div>
+                      <small
+                        *ngIf="inforsForm['address'].invalid && isSubmit"
+                        class="p-error"
+                        >Địa chỉ không được trống</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end thông tin công ty -->
           </div>
         </div>
       </form>

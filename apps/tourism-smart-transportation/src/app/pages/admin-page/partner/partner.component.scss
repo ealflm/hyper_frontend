@@ -193,6 +193,7 @@
   color: $red-primary;
   box-shadow: 0rem 0rem 2rem rgb(254, 230, 224);
   border-radius: 50px;
+  text-align: center;
   padding: 2px 15px 2px 15px;
 }
 .status-active {
@@ -203,67 +204,124 @@
   text-align: center;
   padding: 2px 15px 2px 15px;
 }
+::ng-deep {
+  p-dialog {
+    width: 654px;
+    height: 788px;
+  }
+}
 .infor-form {
-  .thumbnail {
-    width: 300px;
-    height: 300px;
-    background: #eee;
+  .upload-container {
+    height: 95px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     position: relative;
+  }
+  .thumbnail {
+    background: #eee;
     display: table-cell;
     vertical-align: middle;
+    position: relative;
   }
-
   img {
     position: absolute;
-    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    right: 50px;
-    top: 75px;
-    height: 190px;
-    width: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 125px;
+    width: 125px;
     border-radius: 50%;
+    border: 2px solid $background-color-grey;
   }
 
-  .image-overlay {
-    border-radius: 50%;
+  .icon-overplay {
     position: absolute;
-    opacity: 0;
-    background: rgba(0, 0, 0, 0.7);
-    color: black;
-    height: 190px;
-    width: 200px;
-    top: 75px;
-    right: 50px;
-    font-size: 50px;
-    text-align: center;
-    line-height: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    height: 125px;
+    width: 125px;
+    font-size: 12px;
     cursor: pointer;
     transition: opacity ease 0.5s;
+    text-align: center;
   }
-
   .circle-icon {
-    height: 80px;
-    width: 80px;
-    right: -30%;
-    top: 30%;
     border-radius: 50%;
-    background: #eee;
-    position: relative;
-    vertical-align: middle;
+    position: absolute;
+    bottom: 2%;
+    right: 9%;
+    background: $primary-color;
+    border: 2px solid $white-primary-color;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
   }
 
   .circle-icon span {
+    color: $white-primary-color;
     position: absolute;
-    margin-left: -35px;
-    font-size: 70px;
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+    right: 2px;
+    bottom: 2px;
+    z-index: 2;
   }
-
-  .image-overlay:hover {
-    opacity: 1;
+  .image-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.2);
+    color: black;
+    height: 125px;
+    width: 125px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: opacity ease 0.5s;
+    text-align: center;
+    z-index: 1;
   }
-
+  .thumnail-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    opacity: 0;
+  }
+  .upload-container :hover {
+    .image-overlay {
+      opacity: 1;
+      z-index: 1;
+    }
+    .thumnail-text {
+      opacity: 1;
+    }
+  }
   input[type='file'] {
     opacity: 0;
+  }
+
+  .partner-subtitle {
+    @include font-Roboto-Medium-Subtitle2;
+  }
+  .partner-text {
+    @include font-Roboto-Regular-Body2;
+    color: black;
+  }
+  .input-calendar-custome {
+    position: relative;
+  }
+  .input-calendar-icon {
+    position: absolute;
+    right: 4%;
+    top: 20%;
   }
 }

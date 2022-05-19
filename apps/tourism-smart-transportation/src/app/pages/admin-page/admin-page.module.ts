@@ -22,10 +22,10 @@ const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminPageComponent,
-    // canActivate: [AuthGuardService],
-    // data: {
-    //   role: 'ROLE_ADMIN'
-    // },
+    canActivate: [AuthGuardService],
+    data: {
+      role: 'Admin',
+    },
     children: [
       {
         path: '',

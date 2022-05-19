@@ -88,7 +88,7 @@ export class PartnerComponent implements OnInit {
   private initForm() {
     this.inforForm = this.formBuilder.group({
       id: [''],
-      userName: [{ value: '', disabled: true }],
+      userName: ['', Validators.required],
       name: ['', Validators.required],
       address: ['', Validators.required],
       selectedStatus: ['', Validators.required],
@@ -132,7 +132,7 @@ export class PartnerComponent implements OnInit {
     this.isOpenIconFillter = !this.isOpenIconFillter;
   }
 
-  showDialog(id: string) {
+  showDialog(id?: string) {
     this.displayDialog = !this.displayDialog;
     if (this.displayDialog) {
       this.partnerService
@@ -147,9 +147,10 @@ export class PartnerComponent implements OnInit {
           );
           this.inforsForm['address'].setValue(partnerResponse.body?.address);
           this.inforsForm['photoUrl'].setValue(partnerResponse.body?.photoUrl);
-          partnerResponse.body?.photoUrl !== null
-            ? (this.imagePreview = `https://se32.blob.core.windows.net/partner/${partnerResponse.body?.photoUrl}`)
-            : (this.imagePreview = null);
+          partnerResponse.body?.photoUrl == '' ||
+          partnerResponse.body?.photoUrl == null
+            ? (this.imagePreview = '../assets/image/imagePreview.png')
+            : (this.imagePreview = `https://se32.blob.core.windows.net/partner/${partnerResponse.body?.photoUrl}`);
           this.deleteFile = partnerResponse.body?.photoUrl?.trim();
         });
     } else {

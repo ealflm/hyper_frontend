@@ -13,6 +13,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { PaginatorModule } from 'primeng/paginator';
 import { TagModule } from 'primeng/tag';
+import { DividerModule } from 'primeng/divider';
+import { PasswordModule } from 'primeng/password';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [],
@@ -30,6 +33,9 @@ import { TagModule } from 'primeng/tag';
     FileUploadModule,
     PaginatorModule,
     TagModule,
+    DividerModule,
+    PasswordModule,
+    CalendarModule,
   ],
   exports: [
     CardModule,
@@ -44,6 +50,9 @@ import { TagModule } from 'primeng/tag';
     FileUploadModule,
     PaginatorModule,
     TagModule,
+    DividerModule,
+    PasswordModule,
+    CalendarModule,
   ],
 })
 export class PrimengModule {}

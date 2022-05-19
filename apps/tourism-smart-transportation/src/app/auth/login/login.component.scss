@@ -13,6 +13,8 @@ body {
   background-color: $primary-color;
   box-shadow: 0 0 0 2px $primary-color, 0.1em 0.1em 1em $primary-color;
   border: none !important;
+  width: 195px !important;
+  color: white !important;
   &:hover {
     background: $primary-color !important;
     border-color: $primary-color !important;
