@@ -11,6 +11,7 @@ import { MessageModule } from 'primeng/message';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     DialogModule,
     DropdownModule,
     FileUploadModule,
+    PaginatorModule,
   ],
   exports: [
     CardModule,
@@ -38,6 +40,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     DialogModule,
     DropdownModule,
     FileUploadModule,
+    PaginatorModule,
   ],
 })
 export class PrimengModule {}
