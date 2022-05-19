@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 import { exhaustMap, Subject, takeUntil } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'tourism-smart-transportation-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private localStorageService: LocalStorageService,
     private userService: AdminService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
   private _initForm() {
     this.userForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required]],
     });
   }
@@ -47,8 +49,11 @@ export class LoginComponent implements OnInit {
       this.loading = false;
       return;
     }
-    this.userService
-      .signIn(this.usersForm['email'].value, this.usersForm['password'].value)
+    this.authService
+      .signIn(
+        this.usersForm['username'].value,
+        this.usersForm['password'].value
+      )
       .pipe(takeUntil(this.$sub))
       .subscribe({
         next: (res) => {

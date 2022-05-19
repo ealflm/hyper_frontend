@@ -47,7 +47,7 @@ export class PartnersService {
       params: queryParams,
     });
   }
-  getPartnerById(id: string): Observable<PartnerResponse> {
+  getPartnerById(id?: string): Observable<PartnerResponse> {
     return this.http.get<PartnerResponse>(`${this.apiURL}/${id}`);
   }
   updatePartnerById(id: string, formData: FormData): Observable<any> {
