@@ -42,7 +42,8 @@ import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 })
 export class PartnerComponent implements OnInit {
   inforForm!: FormGroup;
-  selected: any = '1';
+  fillterStatus: number | null = null;
+  fillterByName: any | null;
   isOpenIconFillter = true;
   partners: Partner[] = [];
   displayDialog = false;
@@ -55,6 +56,12 @@ export class PartnerComponent implements OnInit {
     '../assets/image/imagePreview.png';
   deleteFile?: string | null;
   $sub: Subject<any> = new Subject();
+
+  //
+  totalItems = 0;
+  //
+  pageIndex?: number = 0;
+  itemsPerPage?: number = 5;
   constructor(
     private partnerService: PartnersService,
     private formBuilder: FormBuilder
@@ -88,28 +95,47 @@ export class PartnerComponent implements OnInit {
   get inforsForm() {
     return this.inforForm.controls;
   }
-  getAllPartners(
-    userName?: string,
-    status?: string,
-    pageIndex?: string,
-    itemsPerPage?: string,
-    sortBy?: string
-  ) {
+  getAllPartners() {
+    // console.log(this.pageIndex);
+    // console.log(this.itemsPerPage);
+
     this.partnerService
-      .getAllPartners()
+      .getAllPartners(
+        this.fillterByName,
+        this.fillterStatus,
+        this.pageIndex,
+        this.itemsPerPage,
+        null
+      )
       .subscribe((partnersResponse: PartnersResponse) => {
-        console.log(partnersResponse);
-        partnersResponse.body.items?.map((partner: Partner) => {
-          this.partners = [partner];
-        });
+        this.totalItems = partnersResponse.body.totalItems as number;
+        this.partners = partnersResponse.body.items;
+
+        // partnersResponse.body.items?.map((partner: Partner) => {
+        //   this.partners.push(partner);
+        // console.log(this.partners);
+        // });
       });
   }
-  navmenuclick(value: any) {
-    this.selected = value;
+
+  onPaginate(e: any) {
+    this.pageIndex = e.page + 1;
+    this.itemsPerPage = e.rows;
+    this.getAllPartners();
+  }
+  onChangeFillterByName(e: any) {
+    this.fillterByName = e.target.value;
+    this.getAllPartners();
+  }
+  navmenuclick(value?: any | null) {
+    this.fillterStatus = value;
+
+    this.getAllPartners();
   }
   onToggle() {
     this.isOpenIconFillter = !this.isOpenIconFillter;
   }
+
   showDialog(id: string) {
     this.displayDialog = !this.displayDialog;
     if (this.displayDialog) {
@@ -125,7 +151,9 @@ export class PartnerComponent implements OnInit {
           );
           this.inforsForm['address'].setValue(partnerResponse.body?.address);
           this.inforsForm['photoUrl'].setValue(partnerResponse.body?.photoUrl);
-          this.imagePreview = `https://uni03.blob.core.windows.net/company/${partnerResponse.body?.photoUrl}`;
+          partnerResponse.body?.photoUrl !== null
+            ? (this.imagePreview = `https://se32.blob.core.windows.net/partner/${partnerResponse.body?.photoUrl}`)
+            : (this.imagePreview = null);
           this.deleteFile = partnerResponse.body?.photoUrl?.trim();
         });
     } else {

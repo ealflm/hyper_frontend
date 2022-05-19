@@ -23,8 +23,8 @@ export interface PartnersResponse extends UtilPaging {
 }
 export abstract class UtilPaging {
   pageSize?: number;
-  totalItems?: number;
-  items?: Partner[];
+  totalItems!: number;
+  items!: Partner[];
 }
 export abstract class PartnerResponse extends Partner {
   statusCode?: number;
