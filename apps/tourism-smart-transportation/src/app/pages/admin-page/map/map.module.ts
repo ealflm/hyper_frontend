@@ -13,10 +13,6 @@ import { StationCarRentalComponent } from './station-car-rental/station-car-rent
 import { RouteComponent } from './route/route.component';
 const MAP_ROUTE: Routes = [
   {
-    path: '',
-    component: MapPageComponent,
-  },
-  {
     path: 'station-car-rental',
     component: StationCarRentalComponent,
   },

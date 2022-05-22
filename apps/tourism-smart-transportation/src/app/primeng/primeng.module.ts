@@ -16,7 +16,7 @@ import { TagModule } from 'primeng/tag';
 import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { CalendarModule } from 'primeng/calendar';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [],
   imports: [
@@ -36,6 +36,7 @@ import { CalendarModule } from 'primeng/calendar';
     DividerModule,
     PasswordModule,
     CalendarModule,
+    ConfirmDialogModule,
   ],
   exports: [
     CardModule,
@@ -53,6 +54,7 @@ import { CalendarModule } from 'primeng/calendar';
     DividerModule,
     PasswordModule,
     CalendarModule,
+    ConfirmDialogModule,
   ],
 })
 export class PrimengModule {}
