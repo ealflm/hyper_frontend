@@ -4,9 +4,11 @@
 
 export const environment = {
   production: false,
-  apiURL: 'https://tourism-smart-transportation-api.azurewebsites.net/api/v1.0/',
+  apiURL:
+    'https://tourism-smart-transportation-api.azurewebsites.net/api/v1.0/',
   mapbox: {
-    accessToken: 'pk.eyJ1IjoiZHRzYW5nZHRkIiwiYSI6ImNreHB4bXUydDd5YWQydXEzenYyM3FhbjUifQ.B0CxoZBSmclwbWpxuMAajQ',
+    accessToken:
+      'pk.eyJ1IjoiZHRzYW5nZHRkIiwiYSI6ImNreHB4bXUydDd5YWQydXEzenYyM3FhbjUifQ.B0CxoZBSmclwbWpxuMAajQ',
   },
 };
 

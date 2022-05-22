@@ -1,6 +1,8 @@
 @import '../../../../styles.scss';
+
 .header-partners {
   @include fixed-scroll-view;
+  @include custom-scrollbar;
   &-content {
     display: flex;
     position: relative;
@@ -140,8 +142,6 @@
       .p-dropdown-trigger-icon {
         font-size: 10px;
       }
-      .p-dropdown-label {
-      }
     }
   }
   ::ng-deep {
@@ -210,118 +210,185 @@
     height: 788px;
   }
 }
-.infor-form {
-  .upload-container {
-    height: 95px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    position: relative;
+::ng-deep {
+  .partner-input-short {
+    .p-dropdown .p-dropdown-label {
+      margin-top: -8px;
+    }
   }
-  .thumbnail {
-    background: #eee;
-    display: table-cell;
-    vertical-align: middle;
-    position: relative;
+}
+// confirm dialog
+::ng-deep {
+  .confirm-dialog-subtitle {
+    @include font-Roboto-Regular-Subtitle1;
   }
-  img {
-    position: absolute;
-    background-position: center;
-    background-size: cover;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 125px;
-    width: 125px;
-    border-radius: 50%;
-    border: 2px solid $background-color-grey;
+  .p-button-outlined {
+    @include button-outlined-primary(66, 32, null, $primary-color);
   }
+  .button-rounded {
+    @include button-rounded-primary(57, 32, null, $primary-color);
+  }
+}
+// dialog
+::ng-deep {
+  p-dialog {
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
 
-  .icon-overplay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    height: 125px;
-    width: 125px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: opacity ease 0.5s;
-    text-align: center;
+    ::-webkit-scrollbar-track {
+      background-color: #ebebeb;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      background: #6d6d6d;
+    }
+    .p-dialog-footer {
+      .p-button-outlined {
+        @include button-outlined-primary(66, 32, null, $primary-color);
+      }
+      .button-rounded {
+        @include button-rounded-primary(57, 32, null, $primary-color);
+      }
+    }
   }
-  .circle-icon {
-    border-radius: 50%;
-    position: absolute;
-    bottom: 2%;
-    right: 9%;
-    background: $primary-color;
-    border: 2px solid $white-primary-color;
-    border-radius: 50%;
-    width: 22px;
-    height: 22px;
-  }
+  .infor-form {
+    .partner-input-long {
+      width: 413px;
+      height: 49px;
+      .partner-input-text-long {
+        width: 413px;
+        height: 28px;
+      }
+    }
 
-  .circle-icon span {
-    color: $white-primary-color;
-    position: absolute;
-    font-size: 14px;
-    height: 14px;
-    width: 14px;
-    right: 2px;
-    bottom: 2px;
-    z-index: 2;
-  }
-  .image-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    opacity: 0;
-    background: rgba(0, 0, 0, 0.2);
-    color: black;
-    height: 125px;
-    width: 125px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: opacity ease 0.5s;
-    text-align: center;
-    z-index: 1;
-  }
-  .thumnail-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 12px;
-    opacity: 0;
-  }
-  .upload-container :hover {
+    .partner-input-short {
+      margin-top: 15px;
+      width: 200px;
+      height: 49px;
+
+      .partner-input-text-short {
+        width: 200px;
+        height: 28px;
+      }
+    }
+
+    .upload-container {
+      height: 95px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .thumbnail {
+      background: #eee;
+      display: table-cell;
+      vertical-align: middle;
+      position: relative;
+    }
+    img {
+      position: absolute;
+      background-position: center;
+      background-size: cover;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 125px;
+      width: 125px;
+      border-radius: 50%;
+      border: 2px solid $background-color-grey;
+    }
+
+    .icon-overplay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      height: 125px;
+      width: 125px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: opacity ease 0.5s;
+      text-align: center;
+    }
+    .circle-icon {
+      border-radius: 50%;
+      position: absolute;
+      bottom: 2%;
+      right: 9%;
+      background: $primary-color;
+      border: 2px solid $white-primary-color;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+    }
+
+    .circle-icon span {
+      color: $white-primary-color;
+      position: absolute;
+      font-size: 14px;
+      height: 14px;
+      width: 14px;
+      right: 2px;
+      bottom: 2px;
+      z-index: 2;
+    }
     .image-overlay {
-      opacity: 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      opacity: 0;
+      background: rgba(0, 0, 0, 0.1);
+      color: black;
+      height: 125px;
+      width: 125px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: opacity ease 0.5s;
+      text-align: center;
       z-index: 1;
     }
     .thumnail-text {
-      opacity: 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      opacity: 0;
     }
-  }
-  input[type='file'] {
-    opacity: 0;
-  }
+    .upload-container :hover {
+      .image-overlay {
+        opacity: 1;
+        z-index: 1;
+      }
+      .thumnail-text {
+        opacity: 1;
+      }
+    }
+    input[type='file'] {
+      opacity: 0;
+    }
 
-  .partner-subtitle {
-    @include font-Roboto-Medium-Subtitle2;
-  }
-  .partner-text {
-    @include font-Roboto-Regular-Body2;
-    color: black;
-  }
-  .input-calendar-custome {
-    position: relative;
-  }
-  .input-calendar-icon {
-    position: absolute;
-    right: 4%;
-    top: 20%;
+    .partner-subtitle {
+      @include font-Roboto-Medium-Subtitle2;
+    }
+    .partner-text {
+      @include font-Roboto-Regular-Body2;
+      color: black;
+    }
+    .input-calendar-custom {
+      width: 200px;
+      position: relative;
+    }
+    .input-calendar-icon {
+      position: absolute;
+      right: 4%;
+      top: 7%;
+    }
   }
 }

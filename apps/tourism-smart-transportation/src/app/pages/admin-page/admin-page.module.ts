@@ -1,3 +1,4 @@
+import { MapPageComponent } from './map/map-page.component';
 import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
 import { MapService } from './../../services/map.service';
 import { AuthGuardService } from './../../auth/auth.guard';
@@ -45,6 +46,7 @@ const ADMIN_ROUTES: Routes = [
             (m) => m.UtilityServicesModule
           ),
       },
+      { path: 'map', component: MapPageComponent },
       {
         path: 'map',
         loadChildren: () => import('./map/map.module').then((m) => m.MapModule),

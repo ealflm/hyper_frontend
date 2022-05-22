@@ -55,6 +55,9 @@ export class PartnersService {
       .put<Partner>(`${this.apiURL}/${id}`, formData)
       .pipe(catchError(this.errorMgmt));
   }
+  deletePartnerById(id: string): Observable<any> {
+    return this.http.delete(`${this.apiURL}/${id}`);
+  }
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
