@@ -1,0 +1,205 @@
+<div class="customer-details">
+  <div class="header-customer-content">
+    <div class="header-content-item">
+      <div class="header-item-H5">Khách hàng</div>
+      <div class="header-item">|</div>
+      <div class="header-item-H6">Chi tiết khách hàng</div>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <div class="form-edit">
+    <form [formGroup]="customerEditForm">
+      <div class="form-edit-container">
+        <div class="upload-container">
+          <label for="upload" class="thumnail">
+            <img [src]="imagePreview" />
+            <span class="thumnail-text">Tải hình ảnh lên</span>
+            <div class="icon-overplay">
+              <div class="circle-icon">
+                <span class="material-icons-outlined"> photo_camera </span>
+              </div>
+            </div>
+            <div class="image-overlay"></div>
+          </label>
+          <input
+            type="file"
+            id="upload"
+            accept="image/*"
+            (change)="onUpload($event)"
+          />
+        </div>
+        <div class="grid p-fluid form-content">
+          <div class="col-6 customer-input-short">
+            <div class="customer-text">
+              Họ
+              <!-- <small
+              *ngIf="
+            _inforsForm['userName'].errors?.['required'] && isSubmit
+          "
+              class="p-error"
+            >
+              không được bỏ trống
+            </small> -->
+            </div>
+            <input
+              class="customer-input-text-short"
+              type="text"
+              pInputText
+              formControlName="firstName"
+            />
+          </div>
+          <div class="col-6 customer-input-short" style="margin-left: 15px">
+            <div class="customer-text">
+              Tên
+              <!-- <small
+              *ngIf="
+            _inforsForm['userName'].errors?.['required'] && isSubmit
+          "
+              class="p-error"
+            >
+              không được bỏ trống
+            </small> -->
+            </div>
+            <input
+              class="customer-input-text-short"
+              type="text"
+              pInputText
+              formControlName="lastName"
+            />
+          </div>
+          <div class="col-6 customer-input-short">
+            <div class="customer-text">
+              Ngày sinh
+              <!-- <small
+              *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
+              class="p-error"
+            >
+              không được bỏ trống</small
+            >
+            <small
+              *ngIf="
+              _inforsForm['dateOfBirth'].errors?.['under18']
+            "
+              class="p-error"
+            >
+              Tuổi phải lớn hơn 18
+            </small> -->
+            </div>
+            <div class="input-calendar-custom">
+              <p-calendar
+                inputId="basic"
+                formControlName="dateOfBirth"
+                dateFormat="dd/mm/yy"
+                [style]="{
+                  width: '200px',
+                  height: '28px'
+                }"
+              >
+              </p-calendar>
+              <span class="material-icons-outlined input-calendar-icon">
+                calendar_month
+              </span>
+            </div>
+            <div></div>
+          </div>
+          <div class="col-6 customer-input-short" style="margin-left: 15px">
+            <div class="customer-text">Giới tính</div>
+            <p-dropdown
+              class="dropdown"
+              [style]="{ width: '200px', height: '28px' }"
+              [options]="gender"
+              formControlName="selectedGender"
+              optionLabel="lable"
+              optionValue="id"
+            ></p-dropdown>
+          </div>
+          <div class="col-12 customer-input-long">
+            <div class="customer-text">
+              Số điện thoại
+              <!-- <small
+              *ngIf="
+            _inforsForm['userName'].errors?.['required'] && isSubmit
+          "
+              class="p-error"
+            >
+              không được bỏ trống
+            </small> -->
+            </div>
+            <input
+              class="customer-input-text-long"
+              type="number"
+              pInputText
+              formControlName="phone"
+            />
+          </div>
+          <div class="col-12 customer-input-long">
+            <div class="customer-text">
+              Email
+              <!-- <small
+              *ngIf="
+            _inforsForm['userName'].errors?.['required'] && isSubmit
+          "
+              class="p-error"
+            >
+              không được bỏ trống
+            </small> -->
+            </div>
+            <input
+              class="customer-input-text-long"
+              type="text"
+              pInputText
+              formControlName="email"
+            />
+          </div>
+          <div class="col-12 customer-input-long">
+            <div class="customer-text">
+              Địa chỉ
+              <!-- <small
+              *ngIf="
+            _inforsForm['userName'].errors?.['required'] && isSubmit
+          "
+              class="p-error"
+            >
+              không được bỏ trống
+            </small> -->
+            </div>
+            <input
+              class="customer-input-text-long"
+              type="text"
+              pInputText
+              formControlName="addressUser"
+            />
+          </div>
+        </div>
+        <p-divider class="bottom-divider"></p-divider>
+      </div>
+    </form>
+    <div class="bottom-btn-form">
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Chỉnh sửa"
+      ></button>
+      <!-- <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Hủy"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-rounded button-rounded button-background"
+        pButton
+        pRipple
+        type="button"
+        label="Lưu"
+      ></button> -->
+    </div>
+  </div>
+  <div class="footer-detail-customer"></div>
+</div>

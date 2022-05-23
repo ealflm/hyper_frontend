@@ -1,3 +1,5 @@
+import { UtilPaging } from './UtilPaging';
+
 export abstract class Partner {
   id?: string;
   username?: string;
@@ -16,15 +18,10 @@ export abstract class Partner {
   status?: number;
   companyName?: string;
 }
-export interface PartnersResponse extends UtilPaging {
+export abstract class PartnersResponse extends UtilPaging {
   statusCode?: number;
   message?: string;
-  body: UtilPaging;
-}
-export abstract class UtilPaging {
-  pageSize?: number;
-  totalItems!: number;
-  items!: Partner[];
+  body?: UtilPaging;
 }
 export abstract class PartnerResponse extends Partner {
   statusCode?: number;
