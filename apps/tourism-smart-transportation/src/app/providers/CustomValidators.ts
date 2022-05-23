@@ -57,3 +57,32 @@ export function MustMatch(controlName: string, matchingControlName: string) {
     }
   };
 }
+function GetAge(date: string): number {
+  const today = new Date();
+  const birthDate = new Date(date);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const month = today.getMonth() - birthDate.getMonth();
+
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  // console.log('Age: ' + age + '\nBirthday: ' + birthDate);
+  return age;
+}
+
+export function AgeCheck(controlName: string) {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+
+    if (control?.errors && !control.errors['under18']) {
+      return;
+    }
+
+    if (GetAge(control?.value) <= 18) {
+      control.setErrors({ under18: true });
+      return;
+    } else {
+      return control.setErrors(null);
+    }
+  };
+}

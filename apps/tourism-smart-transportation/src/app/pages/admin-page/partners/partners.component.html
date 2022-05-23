@@ -99,7 +99,7 @@
               "
               alt=""
             />&nbsp;{{
-              partner.firstName + ' ' + partner.lastName | limitLength: [10]
+              partner.firstName + ' ' + partner.lastName | limitLength: 10
             }}
           </td>
           <td>
@@ -108,7 +108,7 @@
                 ? (partner?.companyName | slice: 0:10) + '..'
                 : partner?.companyName
             }} -->
-            {{ partner?.companyName | limitLength: [10] }}
+            {{ partner?.companyName | limitLength: 10 }}
           </td>
           <td>{{ partner.gender ? 'Nam' : 'Nữ' }}</td>
           <td>{{ partner.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
@@ -121,19 +121,26 @@
               {{ status[partner.status].lable }}
             </div>
           </td>
-          <td>
+          <td style="text-align: center">
             <span
-              class="material-icons-outlined"
+              class="material-icons-outlined iconEdit"
               (click)="showDialog(true, partner.id)"
             >
               edit
             </span>
 
             <span
-              class="material-icons-outlined"
+              class="material-icons-outlined enable"
               style="margin-left: 5px"
               (click)="showConfirmDialog(partner.id, true)"
               *ngIf="partner.status !== 0"
+            >
+              delete
+            </span>
+            <span
+              class="material-icons-outlined disable"
+              style="margin-left: 5px"
+              *ngIf="partner.status === 0"
             >
               delete
             </span>
@@ -158,50 +165,8 @@
     ></p-paginator>
   </div>
 </div>
-<!-- Confirm dialog -->
-<p-confirmDialog #cd [style]="{ width: '450px', height: '101px' }">
-  <ng-template pTemplate="header">
-    <div class="confirm-dialog-subtitle">
-      {{
-        comebackStatus
-          ? 'Bạn có chắc chắn muốn đống cửa sổ ?'
-          : 'Bạn có chắc chắn muốn xoá đối tác này ?'
-      }}
-    </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <button
-      [style]="{ width: '57', height: '32px' }"
-      class="p-button-outlined p-button-rounded"
-      pButton
-      pRipple
-      type="button"
-      label="Đóng"
-      (click)="cd.reject()"
-    ></button>
-    <button
-      [style]="{ width: '57', height: '32px' }"
-      *ngIf="comebackStatus"
-      class="p-button-rounded button-rounded"
-      pButton
-      pRipple
-      type="button"
-      label="Quay lại"
-      (click)="showDialog(editMode, '', true)"
-    ></button>
-    <button
-      [style]="{ width: '57', height: '32px' }"
-      *ngIf="!comebackStatus"
-      class="p-button-rounded button-rounded"
-      pButton
-      pRipple
-      type="button"
-      label="Xóa"
-      (click)="cd.accept()"
-    ></button>
-  </ng-template>
-</p-confirmDialog>
-<!-- end confirm dialog -->
+
+<!-- diaglog -->
 <p-dialog
   [header]="editMode ? 'Chỉnh sửa đối tác' : 'Tạo mới đối tác'"
   [(visible)]="displayDialog"
@@ -255,7 +220,7 @@
                       Tên đăng nhập
                       <small
                         *ngIf="
-                      inforsForm['userName'].errors?.['required'] && isSubmit
+                      _inforsForm['userName'].errors?.['required'] && isSubmit
                     "
                         class="p-error"
                       >
@@ -277,7 +242,7 @@
                       Mật khẩu
                       <small
                         *ngIf="
-                      inforsForm['password'].errors?.['required'] && isSubmit
+                      _inforsForm['password'].errors?.['required'] && isSubmit
                     "
                         class="p-error"
                       >
@@ -301,7 +266,7 @@
                     />
                     <small
                       *ngIf="
-                        inforsForm['confirmPassword'].errors?.['mustMatch']
+                        _inforsForm['confirmPassword'].errors?.['mustMatch']
                       "
                       class="p-error"
                     >
@@ -329,7 +294,7 @@
                     <div class="partner-text">
                       Họ
                       <small
-                        *ngIf="inforsForm['firstName'].errors?.['required'] && isSubmit"
+                        *ngIf="_inforsForm['firstName'].errors?.['required'] && isSubmit"
                         class="p-error"
                         >không được bỏ trống</small
                       >
@@ -347,7 +312,7 @@
                     <div class="partner-text">
                       Tên
                       <small
-                        *ngIf="inforsForm['lastName'].errors?.['required'] && isSubmit"
+                        *ngIf="_inforsForm['lastName'].errors?.['required'] && isSubmit"
                         class="p-error"
                         >không được bỏ trống</small
                       >
@@ -365,11 +330,19 @@
                     <div class="partner-text">
                       Ngày sinh
                       <small
-                        *ngIf="inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
+                        *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
                         class="p-error"
                       >
                         không được bỏ trống</small
                       >
+                      <small
+                        *ngIf="
+                        _inforsForm['dateOfBirth'].errors?.['under18']
+                      "
+                        class="p-error"
+                      >
+                        Tuổi phải lớn hơn 18
+                      </small>
                     </div>
                     <div class="input-calendar-custom">
                       <p-calendar
@@ -417,7 +390,7 @@
                     />
                     <div>
                       <!-- <small
-                        *ngIf="inforsForm['phone'].errors?.['required'] && isSubmit"
+                        *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
                         class="p-error"
                         >Số điện thoại không được bỏ trống</small
                       > -->
@@ -437,7 +410,7 @@
                     />
                     <div>
                       <!-- <small
-                        *ngIf="inforsForm['email'].errors?.['required'] && isSubmit"
+                        *ngIf="_inforsForm['email'].errors?.['required'] && isSubmit"
                         class="p-error"
                         >Tên không được bỏ trống</small
                       > -->
@@ -457,7 +430,7 @@
                     />
                     <div>
                       <!-- <small
-                        *ngIf="inforsForm['addressUser'].errors?.['required'] && isSubmit "
+                        *ngIf="_inforsForm['addressUser'].errors?.['required'] && isSubmit "
                         class="p-error"
                         >Địa chỉ không được bỏ trống</small
                       > -->
@@ -477,7 +450,7 @@
                 <div class="partner-text">
                   Công ty
                   <small
-                    *ngIf="inforsForm['companyName'].invalid && isSubmit"
+                    *ngIf="_inforsForm['companyName'].invalid && isSubmit"
                     class="p-error"
                     >không được trống</small
                   >
@@ -504,7 +477,7 @@
                     />
                     <div>
                       <!-- <small
-                        *ngIf="inforsForm['addressCompany'].invalid && isSubmit"
+                        *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
                         class="p-error"
                         >Địa chỉ không được trống</small
                       > -->
@@ -541,3 +514,48 @@
     ></button>
   </ng-template>
 </p-dialog>
+<!-- Confirm dialog -->
+<p-confirmDialog #cd [style]="{ width: '450px', height: '101px' }">
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      {{
+        comebackStatus
+          ? 'Bạn có chắc chắn muốn đống cửa sổ?'
+          : 'Bạn có chắc chắn muốn xoá đối tác này?'
+      }}
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Đóng"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      *ngIf="comebackStatus"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Quay lại"
+      (click)="showDialog(editMode, '', true)"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      *ngIf="!comebackStatus"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Xóa"
+      (click)="cd.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
+<!-- end confirm dialog -->
+<p-toast position="top-right"></p-toast>

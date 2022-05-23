@@ -68,15 +68,15 @@ export class LoginComponent implements OnInit {
           if (error.status === 401) {
             this.messageService.add({
               severity: 'error',
-              summary: 'Unauthorized',
-              detail: 'Email or password incorect',
+              summary: 'Chưa xác thực',
+              detail: 'Tài khoản hoặc mật khẩu không đúng',
             });
           }
           if (error.status === 500) {
             this.messageService.add({
               severity: 'error',
-              summary: 'Unauthorized',
-              detail: 'Email or password incorect',
+              summary: 'Chưa xác thực',
+              detail: 'Tài khoản mật khẩu không đúng',
             });
           }
           this.loading = false;
