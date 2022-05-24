@@ -211,6 +211,34 @@
         }
       }
     }
+    .body-table {
+      .more-vert {
+        position: relative;
+        .icon-more-vert {
+          cursor: pointer;
+        }
+        &-details {
+          &:hover {
+            display: block;
+          }
+          background-color: $white-primary-color;
+          border-radius: 10px;
+          width: 121px;
+          height: 60px;
+          @include box-shadown-grey-secondary;
+          position: absolute;
+          right: 1%;
+          top: 8%;
+          &-content {
+            padding: 6px 0 6px 0;
+            text-align: left;
+            div {
+              padding: 2px 0px 2px 6px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 ::ng-deep {

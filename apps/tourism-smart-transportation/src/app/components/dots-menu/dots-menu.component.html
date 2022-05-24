@@ -1,0 +1,7 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <span (click)="onDetailTransaction(orderId)">Chi tiết giao dịch </span>
+  <span>Thanh toán</span>
+</mat-menu>

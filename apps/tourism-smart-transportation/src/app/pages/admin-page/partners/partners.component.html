@@ -89,7 +89,11 @@
       </ng-template>
       <ng-template pTemplate="body" let-partner let-i="rowIndex">
         <tr>
-          <td class="tb-name">
+          <td
+            class="tb-name"
+            [pTooltip]="partner.firstName + ' ' + partner.lastName"
+            tooltipPosition="bottom"
+          >
             <img
               [src]="
                 partner.photoUrl === '' || partner.photoUrl === null
@@ -102,7 +106,7 @@
               partner.firstName + ' ' + partner.lastName | limitLength: 10
             }}
           </td>
-          <td>
+          <td [pTooltip]="partner?.companyName" tooltipPosition="bottom">
             <!-- {{
               partner?.companyName.length > 10
                 ? (partner?.companyName | slice: 0:10) + '..'
@@ -113,7 +117,9 @@
           <td>{{ partner.gender ? 'Nam' : 'Nữ' }}</td>
           <td>{{ partner.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
           <td>{{ partner.phone }}</td>
-          <td>{{ partner.email | limitLength: 10 }}</td>
+          <td [pTooltip]="partner?.email" tooltipPosition="bottom">
+            {{ partner.email | limitLength: 10 }}
+          </td>
           <td>{{ partner.createdDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ partner.modifiedDate | date: 'dd/MM/yyyy' }}</td>
           <td>

@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { CustomersService } from './../../../../services/customers.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of, Subscription, throwIfEmpty } from 'rxjs';
 import { CustomerResponse } from '../../../../models/CustomerResponse';
 import { AgeCheck } from '../../../../providers/CustomValidators';
@@ -38,13 +38,16 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   currentPhone?: string;
   cusTiersHis: any[] = [];
   transactionHis: Order[] = [];
+
+  more_vertId?: number;
   private subscription?: Subscription;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private customerService: CustomersService,
     private messageService: MessageService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -123,6 +126,12 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         validator: [AgeCheck('dateOfBirth')],
       }
     );
+  }
+  actionDetails(id?: number) {
+    if (!id) {
+      this.more_vertId = -1;
+    }
+    this.more_vertId = id;
   }
   navmenuclick(e: boolean) {
     this.fillterStatus = e;
@@ -247,5 +256,10 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
           this.transactionHis = transRes.body?.items;
         });
     });
+  }
+  onGetDetails(e: any) {
+    console.log(e);
+
+    // this.router.navigate([`danhngu/${e}`]);
   }
 }

@@ -12,6 +12,9 @@
 @mixin box-shadown-grey {
   box-shadow: 0em 0em 2em rgba(0, 0, 0, 0.05);
 }
+@mixin box-shadown-grey-secondary {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.25);
+}
 
 @mixin box-shadown-green {
   box-shadow: 0 3px 6px rgb(74, 214, 151);

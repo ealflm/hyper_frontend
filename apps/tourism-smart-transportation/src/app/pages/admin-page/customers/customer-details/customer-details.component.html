@@ -240,14 +240,11 @@
       <p-table
         #dt
         [value]="cusTiersHis"
-        responsiveLayout="scroll"
-        scrollDirection="both"
         [showCurrentPageReport]="true"
         [rows]="10"
         [rowsPerPageOptions]="[10, 25, 50]"
-        responsiveLayout="scroll"
         [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -283,14 +280,11 @@
       <p-table
         #td
         [value]="transactionHis"
-        responsiveLayout="scroll"
-        scrollDirection="both"
         [rows]="10"
         [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
-        responsiveLayout="scroll"
         [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -300,16 +294,38 @@
             <th>Hành động</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-transaction let-i="index">
+        <ng-template pTemplate="body" let-transaction let-i="rowIndex">
           <tr>
             <td>{{ transaction?.createdDate | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ transaction?.totalPrice | currency: 'VND' }}</td>
+            <td>
+              {{
+                transaction?.totalPrice
+                  | currency: transaction?.totalPrice:'':'.0-0'
+              }}
+              VND
+            </td>
             <td>{{ transaction?.status }}</td>
-            <!-- <td>
-          <div [class]="status[partner.status].class">
-            {{ status[partner.status].lable }}
-          </div>
-        </td> -->
+            <td class="more-vert" style="text-align: center">
+              <!-- <span
+                class="material-icons icon-more-vert"
+                (click)="actionDetails(i)"
+              >
+                more_vert
+              </span>
+              <div
+                class="more-vert-details"
+                [ngStyle]="{ display: more_vertId === i ? 'block' : 'none' }"
+              >
+                <div class="more-vert-details-content">
+                  <div>Chi tiết giao dịch</div>
+                  <div>Thanh Toán</div>
+                </div>
+              </div> -->
+              <tourism-smart-transportation-dots-menu
+                [orderId]="transaction?.id"
+                (GetDetails)="onGetDetails($event)"
+              ></tourism-smart-transportation-dots-menu>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

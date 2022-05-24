@@ -1,0 +1,25 @@
+@import '../../../styles.scss';
+::ng-deep {
+  .cdk-overlay-pane {
+    position: absolute !important;
+    right: 20%;
+    top: -20%;
+    width: 125px;
+    height: 65px;
+    font-size: 14px !important;
+    border-radius: 10px !important;
+
+    .mat-menu-panel {
+      border-radius: 10px !important;
+      background-color: $white-primary-color !important;
+      overflow-y: hidden;
+      .mat-menu-content {
+        span {
+          display: block;
+          padding: 2px 7px 2px 7px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
