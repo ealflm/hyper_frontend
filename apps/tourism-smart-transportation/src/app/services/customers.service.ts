@@ -1,8 +1,12 @@
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { CustomersResponse } from '../models/CustomerResponse';
+import {
+  Customer,
+  CustomerResponse,
+  CustomersResponse,
+} from '../models/CustomerResponse';
 import { PartnersResponse } from '../models/PartnerResponse';
 
 @Injectable({
@@ -10,6 +14,7 @@ import { PartnersResponse } from '../models/PartnerResponse';
 })
 export class CustomersService {
   apiURL = environment.apiURL + 'admin/customers';
+  apiCusTierHis = environment.apiURL + 'admin/cus-tier-his';
   constructor(private http: HttpClient) {}
   getAllCustomers(
     lastName?: string | null,
@@ -45,5 +50,16 @@ export class CustomersService {
 
   deleteCustomerById(id: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/${id}`);
+  }
+  getCustomerById(id: string): Observable<CustomerResponse> {
+    return this.http.get<CustomerResponse>(`${this.apiURL}/${id}`);
+  }
+  updateCustomerById(id: string, formCusData: FormData): Observable<any> {
+    return this.http.put<Customer>(`${this.apiURL}/${id}`, formCusData);
+  }
+  getTierByCustomerId(id: string): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('CustomerId', id ? id : '');
+    return this.http.get(`${this.apiCusTierHis}`, { params: queryParams });
   }
 }

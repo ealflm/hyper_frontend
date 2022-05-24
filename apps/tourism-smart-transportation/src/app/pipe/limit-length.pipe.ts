@@ -11,8 +11,8 @@ export class LimitLengthPipe implements PipeTransform {
     ellipsis = '...'
   ) {
     if (completeWords) {
-      limit = value.substr(0, limit).lastIndexOf(' ');
+      limit = value?.substr(0, limit).lastIndexOf(' ');
     }
-    return value.length > limit ? value.substr(0, limit) + ellipsis : value;
+    return value?.length > limit ? value.substr(0, limit) + ellipsis : value;
   }
 }

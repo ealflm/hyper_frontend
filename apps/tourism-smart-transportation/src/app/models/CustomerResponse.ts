@@ -16,7 +16,7 @@ export abstract class Customer {
   address1?: string;
   address2?: string;
   photoUrl?: string;
-  dateOfBirth?: Date;
+  dateOfBirth!: Date;
   email?: string;
   createdDate?: Date;
   modifiedDate?: Date;
