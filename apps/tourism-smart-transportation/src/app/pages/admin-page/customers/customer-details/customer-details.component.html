@@ -32,14 +32,14 @@
           <div class="col-6 customer-input-short">
             <div class="customer-text">
               Họ
-              <!-- <small
-              *ngIf="
-            _inforsForm['userName'].errors?.['required'] && isSubmit
+              <small
+                *ngIf="
+              _customersEditForm['firstName'].errors?.['required']
           "
-              class="p-error"
-            >
-              không được bỏ trống
-            </small> -->
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
             </div>
             <input
               class="customer-input-text-short"
@@ -51,14 +51,14 @@
           <div class="col-6 customer-input-short" style="margin-left: 15px">
             <div class="customer-text">
               Tên
-              <!-- <small
-              *ngIf="
-            _inforsForm['userName'].errors?.['required'] && isSubmit
+              <small
+                *ngIf="
+              _customersEditForm['lastName'].errors?.['required']
           "
-              class="p-error"
-            >
-              không được bỏ trống
-            </small> -->
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
             </div>
             <input
               class="customer-input-text-short"
@@ -70,20 +70,20 @@
           <div class="col-6 customer-input-short">
             <div class="customer-text">
               Ngày sinh
-              <!-- <small
-              *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
-              class="p-error"
-            >
-              không được bỏ trống</small
-            >
-            <small
-              *ngIf="
-              _inforsForm['dateOfBirth'].errors?.['under18']
+              <small
+                *ngIf="_customersEditForm['dateOfBirth'].errors?.['required'] "
+                class="p-error"
+              >
+                không được bỏ trống</small
+              >
+              <small
+                *ngIf="
+              _customersEditForm['dateOfBirth'].errors?.['under18']
             "
-              class="p-error"
-            >
-              Tuổi phải lớn hơn 18
-            </small> -->
+                class="p-error"
+              >
+                Tuổi phải lớn hơn 18
+              </small>
             </div>
             <div class="input-calendar-custom">
               <p-calendar
@@ -116,18 +116,30 @@
           <div class="col-12 customer-input-long">
             <div class="customer-text">
               Số điện thoại
-              <!-- <small
-              *ngIf="
-            _inforsForm['userName'].errors?.['required'] && isSubmit
+              <small
+                *ngIf="
+              _customersEditForm['phone'].errors?.['required']
           "
-              class="p-error"
-            >
-              không được bỏ trống
-            </small> -->
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
+              <!-- <small
+                *ngIf="_customersEditForm['phone'].hasError('minlength')"
+                class="p-error"
+              >
+                ít nhất 9 số
+              </small>
+              <small
+                *ngIf="_customersEditForm['phone'].hasError('minlength')"
+                class="p-error"
+              >
+                không vượt quá 15 số
+              </small> -->
             </div>
             <input
               class="customer-input-text-long"
-              type="number"
+              type="text"
               pInputText
               formControlName="phone"
             />
@@ -135,14 +147,14 @@
           <div class="col-12 customer-input-long">
             <div class="customer-text">
               Email
-              <!-- <small
-              *ngIf="
-            _inforsForm['userName'].errors?.['required'] && isSubmit
+              <small
+                *ngIf="
+              _customersEditForm['email'].errors?.['required']
           "
-              class="p-error"
-            >
-              không được bỏ trống
-            </small> -->
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
             </div>
             <input
               class="customer-input-text-long"
@@ -154,14 +166,14 @@
           <div class="col-12 customer-input-long">
             <div class="customer-text">
               Địa chỉ
-              <!-- <small
-              *ngIf="
-            _inforsForm['userName'].errors?.['required'] && isSubmit
+              <small
+                *ngIf="
+              _customersEditForm['addressUser'].errors?.['required']
           "
-              class="p-error"
-            >
-              không được bỏ trống
-            </small> -->
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
             </div>
             <input
               class="customer-input-text-long"
@@ -182,14 +194,18 @@
         pRipple
         type="button"
         label="Chỉnh sửa"
+        (click)="onChangeEdit()"
+        *ngIf="!editModeStatus"
       ></button>
-      <!-- <button
+      <button
         [style]="{ width: '57', height: '32px' }"
         class="p-button-outlined p-button-rounded"
         pButton
         pRipple
         type="button"
         label="Hủy"
+        *ngIf="editModeStatus"
+        (click)="onCancleEdit()"
       ></button>
       <button
         [style]="{ width: '57', height: '32px' }"
@@ -198,8 +214,112 @@
         pRipple
         type="button"
         label="Lưu"
-      ></button> -->
+        *ngIf="editModeStatus"
+        (click)="onSaveChange()"
+      ></button>
     </div>
   </div>
-  <div class="footer-detail-customer"></div>
+  <div class="footer-service-customer">
+    <div class="header-status">
+      <div
+        class="status-item"
+        [ngClass]="fillterStatus === true ? 'active' : ''"
+        (click)="navmenuclick(true)"
+      >
+        <span>Dịch vụ đang sử dụng</span>
+      </div>
+      <div
+        class="status-item"
+        [ngClass]="fillterStatus === false ? 'active' : ''"
+        (click)="navmenuclick(false)"
+      >
+        <span>Giao dịch</span>
+      </div>
+    </div>
+    <div class="body-table" *ngIf="fillterStatus">
+      <p-table
+        #dt
+        [value]="cusTiersHis"
+        responsiveLayout="scroll"
+        scrollDirection="both"
+        [showCurrentPageReport]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        responsiveLayout="scroll"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Loại dịch vụ</th>
+            <th>Thời gian bắt đầu</th>
+            <th>Thời gian kết thúc</th>
+            <th>Trạng thái</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-tier>
+          <tr>
+            <td>
+              {{ tier.dateOfBirth | date: 'dd/MM/yyyy' }}
+            </td>
+            <td>{{ tier.createdDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ tier.modifiedDate | date: 'dd/MM/yyyy' }}</td>
+            <!-- <td>
+              <div [class]="status[partner.status].class">
+                {{ status[partner.status].lable }}
+              </div>
+            </td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">Không có nội dung nào để hiển thị.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft"> </ng-template>
+      </p-table>
+    </div>
+    <div class="body-table" *ngIf="!fillterStatus">
+      <p-table
+        #td
+        [value]="transactionHis"
+        responsiveLayout="scroll"
+        scrollDirection="both"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        responsiveLayout="scroll"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Ngày thực hiện giao dịch</th>
+            <th>Tổng giá</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-transaction let-i="index">
+          <tr>
+            <td>{{ transaction?.createdDate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ transaction?.totalPrice | currency: 'VND' }}</td>
+            <td>{{ transaction?.status }}</td>
+            <!-- <td>
+          <div [class]="status[partner.status].class">
+            {{ status[partner.status].lable }}
+          </div>
+        </td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">Không có nội dung nào để hiển thị.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft"> </ng-template>
+      </p-table>
+    </div>
+  </div>
 </div>
+<p-toast position="top-right"></p-toast>

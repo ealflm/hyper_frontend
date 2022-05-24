@@ -113,7 +113,7 @@
           <td>{{ partner.gender ? 'Nam' : 'Nữ' }}</td>
           <td>{{ partner.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
           <td>{{ partner.phone }}</td>
-          <td>{{ partner.email }}</td>
+          <td>{{ partner.email | limitLength: 10 }}</td>
           <td>{{ partner.createdDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ partner.modifiedDate | date: 'dd/MM/yyyy' }}</td>
           <td>
