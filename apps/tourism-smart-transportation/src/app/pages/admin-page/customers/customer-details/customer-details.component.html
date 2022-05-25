@@ -240,14 +240,11 @@
       <p-table
         #dt
         [value]="cusTiersHis"
-        responsiveLayout="scroll"
-        scrollDirection="both"
         [showCurrentPageReport]="true"
         [rows]="10"
         [rowsPerPageOptions]="[10, 25, 50]"
-        responsiveLayout="scroll"
-        [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [paginator]="cusTiersHis.length <= 4 ? false : true"
+        currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -283,14 +280,11 @@
       <p-table
         #td
         [value]="transactionHis"
-        responsiveLayout="scroll"
-        scrollDirection="both"
         [rows]="10"
         [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
-        responsiveLayout="scroll"
         [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
       >
         <ng-template pTemplate="header">
           <tr>
@@ -300,16 +294,28 @@
             <th>Hành động</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-transaction let-i="index">
+        <ng-template pTemplate="body" let-transaction let-i="rowIndex">
           <tr>
             <td>{{ transaction?.createdDate | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ transaction?.totalPrice | currency: 'VND' }}</td>
-            <td>{{ transaction?.status }}</td>
-            <!-- <td>
-          <div [class]="status[partner.status].class">
-            {{ status[partner.status].lable }}
-          </div>
-        </td> -->
+            <td>
+              {{
+                transaction?.totalPrice
+                  | currency: transaction?.totalPrice:'':'.0-0'
+              }}
+              VND
+            </td>
+            <td>
+              <div [class]="transactionStatus[transaction?.status].class">
+                {{ transactionStatus[transaction?.status].lable }}
+              </div>
+            </td>
+            <td class="more-vert" style="text-align: center">
+              <tourism-smart-transportation-dots-menu
+                [orderId]="transaction?.id"
+                (GetOrderDetails)="onGetOrderDetails($event)"
+                (GetPaymentDetails)="onGetPaymentDetails($event)"
+              ></tourism-smart-transportation-dots-menu>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -322,4 +328,80 @@
     </div>
   </div>
 </div>
+<!-- dialog -->
+<p-dialog
+  [header]="paymentDialogStatus ? 'Thanh Toán' : 'Chi tiết đơn hàng'"
+  [(visible)]="displayDialog"
+>
+  <div class="table-dialog">
+    <p-table
+      #td
+      *ngIf="!paymentDialogStatus"
+      [value]="orderDetails"
+      [rows]="2"
+      [rowsPerPageOptions]="[2, 5]"
+      [showCurrentPageReport]="true"
+      [paginator]="orderDetails.length < 2 ? false : true"
+      currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nội dung</th>
+          <th>Đơn giá</th>
+          <th>Số lượng</th>
+          <th>Thành Tiền</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-oderDetail let-i="rowIndex">
+        <tr></tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">Không có nội dung nào để hiển thị.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft"> </ng-template>
+    </p-table>
+
+    <!-- table payment -->
+
+    <p-treeTable
+      #tb
+      [value]="payments"
+      *ngIf="paymentDialogStatus"
+      [rows]="5"
+      [rowsPerPageOptions]="[2, 5]"
+      [showCurrentPageReport]="true"
+      [paginator]="payments.length <= 2 ? false : true"
+      currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nội dung</th>
+          <th>Số tiền</th>
+          <th>Ngày tạo</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+          <td>
+            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            {{ rowData.content }}
+          </td>
+          <td>
+            {{ rowData.amount | currency: rowData?.amount:'':'.0-0' }} VND
+          </td>
+          <td>{{ rowData.createdDate | date: 'dd/MM/yyyy' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">Không có nội dung nào để hiển thị.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft"> </ng-template>
+    </p-treeTable>
+  </div>
+</p-dialog>
+<!-- end dialog -->
 <p-toast position="top-right"></p-toast>

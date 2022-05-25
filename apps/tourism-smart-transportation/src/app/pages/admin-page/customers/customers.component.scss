@@ -197,20 +197,10 @@
   }
 }
 .status-disabled {
-  background-color: $status-tag-color-disable;
-  color: $red-primary;
-  box-shadow: 0rem 0rem 2rem rgb(254, 230, 224);
-  border-radius: 50px;
-  text-align: center;
-  padding: 2px 15px 2px 15px;
+  @include status-disabled;
 }
 .status-active {
-  background-color: $status-tag-color-active;
-  color: $status-tag-text-color-active;
-  box-shadow: 0rem 0rem 2rem rgb(176, 238, 211);
-  border-radius: 50px;
-  text-align: center;
-  padding: 2px 15px 2px 15px;
+  @include status-active;
 }
 // confirm dialog
 ::ng-deep {

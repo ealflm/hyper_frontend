@@ -1,15 +1,17 @@
+import { STATUS_TRANSACTION } from './../../../../constant/status';
+import { PurchaseHistoryService } from './../../../../services/purchase-history.service';
 import { OrdersResponse, Order } from './../../../../models/OrderResponse';
-import { OrderService } from './../../../../services/order.service';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { CustomersService } from './../../../../services/customers.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { of, Subscription, throwIfEmpty } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, of, Subscription, throwIfEmpty } from 'rxjs';
 import { CustomerResponse } from '../../../../models/CustomerResponse';
 import { AgeCheck } from '../../../../providers/CustomValidators';
+import { Payment, PaymentsResponse } from '../../../../models/PaymentResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-customer-details',
@@ -20,9 +22,12 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
   editModeStatus = false;
+  displayDialog?: boolean = false;
+  paymentDialogStatus?: boolean = false;
   //
   fillterStatus?: boolean = true;
   //
+  transactionStatus: any[] = [];
   gender = [
     {
       id: false,
@@ -38,13 +43,17 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   currentPhone?: string;
   cusTiersHis: any[] = [];
   transactionHis: Order[] = [];
+  orderDetails: any[] = [];
+  payments: any[] = [];
+
   private subscription?: Subscription;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private customerService: CustomersService,
     private messageService: MessageService,
-    private orderService: OrderService
+    private purchaseHistoryService: PurchaseHistoryService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +64,16 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     } else {
       this._getOrderByCusId();
     }
+    this._mapPaymentStatus();
+  }
+  _mapPaymentStatus() {
+    this.transactionStatus = Object.keys(STATUS_TRANSACTION).map((key) => {
+      return {
+        id: STATUS_TRANSACTION[key].id,
+        lable: STATUS_TRANSACTION[key].lable,
+        class: STATUS_TRANSACTION[key].class,
+      };
+    });
   }
   _getDetailCustomer() {
     this.subscription = this.route.params.subscribe((params) => {
@@ -241,11 +260,70 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   _getOrderByCusId() {
     this.route.paramMap.subscribe((params) => {
       const idCus = params.get('id');
-      this.orderService
+      this.purchaseHistoryService
         .getOrderByCusId(idCus ? idCus : '')
         .subscribe((transRes: OrdersResponse) => {
           this.transactionHis = transRes.body?.items;
         });
     });
+  }
+  onGetOrderDetails(e: any) {
+    this.displayDialog = true;
+    this.paymentDialogStatus = e.paymentDialogStatus;
+    console.log(e);
+  }
+  onGetPaymentDetails(e: any) {
+    this.displayDialog = true;
+    this.paymentDialogStatus = e.paymentDialogStatus;
+    if (this.paymentDialogStatus) {
+      this.purchaseHistoryService
+        .getPaymentsByOrderId(e.orderId)
+        .pipe(
+          map((data) => {
+            this.payments = data.body.items.map((x: any) => {
+              return {
+                data: {
+                  amount: x.amount,
+                  content: x.content,
+                  createdDate: x.createdDate,
+                },
+                children: x.transactionList.map((element: any) => {
+                  return {
+                    data: {
+                      content: element.content,
+                      amount: element.amount,
+                      createdDate: element.createdDate,
+                    },
+                  };
+                }),
+              };
+            });
+          })
+        )
+        .subscribe();
+    }
+  }
+
+  normalizeToTreeNodeData(res: any) {
+    if (res) {
+      this.payments = res.map((x: any) => {
+        return {
+          data: {
+            amount: x.amount,
+            content: x.content,
+            createdDate: x.createdDate,
+          },
+          children: x.transactionList.map((element: any) => {
+            return {
+              data: {
+                content: element.content,
+                amount: element.amount,
+                createdDate: element.createdDate,
+              },
+            };
+          }),
+        };
+      });
+    }
   }
 }

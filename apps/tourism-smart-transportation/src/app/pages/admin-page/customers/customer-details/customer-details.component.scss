@@ -213,6 +213,63 @@
     }
   }
 }
+.status-unpaid {
+  @include status-unpaid;
+}
+.status-paid {
+  @include status-paid;
+}
+::ng-deep {
+  p-dialog {
+    .table-dialog {
+      border-top: 1px solid $color-line-grey;
+      width: 900px !important;
+      padding: 20px 30px 0 30px;
+      .p-treetable-wrapper {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 0 20px 0 20px;
+        background-color: white;
+        @include box-shadown-grey;
+        th {
+          @include font-Roboto-Regular-Body2;
+          background-color: white !important;
+          font-weight: bold;
+          &:last-child {
+            text-align: center;
+          }
+        }
+        td {
+          @include font-Roboto-Regular-Body2;
+          border: none;
+          color: $black-default;
+        }
+        tr:not(:first-child) {
+          border-top: 1px solid $background-color-grey-secondary;
+        }
+        .p-paginator {
+          margin-top: -2px;
+          border-top-left-radius: none !important;
+          border-top-right-radius: none !important;
+          border-bottom-right-radius: 10px !important;
+          border-bottom-left-radius: 10px !important;
+          box-shadow: 0em 0em 1px rgba(0, 0, 0, 0.05);
+          background-color: white;
+          .p-dropdown {
+            width: 75px;
+            height: 40px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.05);
+            .p-dropdown-trigger-icon {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 ::ng-deep {
   .bottom-divider {
     width: 100%;

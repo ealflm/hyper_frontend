@@ -6,7 +6,7 @@ import { NzZorroAntdModule } from '../../nz-zorro-antd/nz-zorro-antd.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialuiModule } from '../../materialui/materialui.module';
 import { Routes, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminPageComponent } from './admin-page.component';
 import { SideBarComponent } from '../../shared/side-bar/side-bar.component';
@@ -20,6 +20,7 @@ import { FinanceModule } from './finance/finance.module';
 import { MapModule } from './map/map.module';
 import { DiscountComponent } from './discount/discount.component';
 import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
+import { DotsMenuComponent } from '../../components/dots-menu/dots-menu.component';
 const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -75,6 +76,7 @@ const ADMIN_ROUTES: Routes = [
     DiscountComponent,
     LimitLengthPipe,
     CustomerDetailsComponent,
+    DotsMenuComponent,
   ],
   imports: [
     CommonModule,
