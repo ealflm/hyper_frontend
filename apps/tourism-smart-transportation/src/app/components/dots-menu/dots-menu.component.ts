@@ -7,11 +7,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class DotsMenuComponent implements OnInit {
   @Input() orderId: any;
-  @Output() GetDetails: EventEmitter<any> = new EventEmitter<any>();
+  @Output() GetOrderDetails: EventEmitter<any> = new EventEmitter<any>();
+  @Output() GetPaymentDetails: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
 
   ngOnInit(): void {}
   onDetailTransaction(e: any) {
-    this.GetDetails.emit(e);
+    this.GetOrderDetails.emit({
+      orderId: e,
+      paytmentDialogStatus: false,
+    });
+  }
+  onGetPayment(e: any) {
+    this.GetPaymentDetails.emit({
+      orderId: e,
+      paymentDialogStatus: true,
+    });
   }
 }

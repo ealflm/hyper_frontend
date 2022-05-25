@@ -5,7 +5,7 @@ import {
   Customer,
   CustomersResponse,
 } from './../../../models/CustomerResponse';
-import { STATUS_PARTNER } from './../../../constant/status';
+import { STATUS_CUSTOMER } from './../../../constant/status';
 import {
   animate,
   state,
@@ -79,11 +79,11 @@ export class CustomersComponent implements OnInit {
     this._getAllCustomers();
   }
   private _mapStatus() {
-    this.status = Object.keys(STATUS_PARTNER).map((key) => {
+    this.status = Object.keys(STATUS_CUSTOMER).map((key) => {
       return {
         id: key,
-        lable: STATUS_PARTNER[key].lable,
-        class: STATUS_PARTNER[key].class,
+        lable: STATUS_CUSTOMER[key].lable,
+        class: STATUS_CUSTOMER[key].class,
       };
     });
   }

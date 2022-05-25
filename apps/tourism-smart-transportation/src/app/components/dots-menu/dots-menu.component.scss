@@ -19,6 +19,9 @@
           padding: 2px 7px 2px 7px;
           cursor: pointer;
         }
+        span:hover {
+          background-color: $background-color-grey-thirdly;
+        }
       }
     }
   }

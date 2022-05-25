@@ -69,7 +69,7 @@ import { IconDefinition } from '@ant-design/icons-angular';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [],
   exports: [
     NzAffixModule,
     NzAlertModule,

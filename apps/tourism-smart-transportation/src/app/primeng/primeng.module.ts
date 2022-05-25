@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,10 +17,10 @@ import { PasswordModule } from 'primeng/password';
 import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
+import { TreeTableModule } from 'primeng/treetable';
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     CardModule,
     InputTextModule,
     ButtonModule,
@@ -39,6 +38,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CalendarModule,
     ConfirmDialogModule,
     TooltipModule,
+    TreeTableModule,
   ],
   exports: [
     CardModule,
@@ -58,6 +58,7 @@ import { TooltipModule } from 'primeng/tooltip';
     CalendarModule,
     ConfirmDialogModule,
     TooltipModule,
+    TreeTableModule,
   ],
 })
 export class PrimengModule {}

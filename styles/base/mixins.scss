@@ -163,3 +163,43 @@
     box-shadow: none;
   }
 }
+@mixin status-unpaid {
+  @include font-Roboto-Regular-Body2;
+  width: 141px;
+  height: 25px;
+  background-color: $status-tag-color-disable;
+  color: $red-primary;
+  box-shadow: 0rem 0rem 2rem rgb(254, 230, 224);
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+}
+@mixin status-paid {
+  @include font-Roboto-Regular-Body2;
+  width: 121px;
+  height: 25px;
+  background-color: $status-tag-color-active;
+  color: $status-tag-text-color-active;
+  box-shadow: 0rem 0rem 2rem rgb(176, 238, 211);
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+}
+@mixin status-disabled {
+  background-color: $status-tag-color-disable;
+  color: $red-primary;
+  box-shadow: 0rem 0rem 2rem rgb(254, 230, 224);
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+  width: 131px;
+}
+@mixin status-active {
+  background-color: $status-tag-color-active;
+  color: $status-tag-text-color-active;
+  box-shadow: 0rem 0rem 2rem rgb(176, 238, 211);
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+  width: 131px;
+}

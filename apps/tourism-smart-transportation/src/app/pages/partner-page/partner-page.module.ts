@@ -12,6 +12,9 @@ const PARTNER_ROUTES: Routes = [
   {
     path: '',
     component: PartnerPageComponent,
+    data: {
+      role: 'Partner',
+    },
     children: [],
   },
 ];
