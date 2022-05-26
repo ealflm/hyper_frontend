@@ -203,3 +203,12 @@
   padding: 2px 15px 2px 15px;
   width: 131px;
 }
+@mixin status-expried {
+  background-color: $status-tag-color-active;
+  color: $status-tag-text-color-active;
+  box-shadow: 0rem 0rem 2rem rgb(176, 238, 211);
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+  width: 90px;
+}

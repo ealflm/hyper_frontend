@@ -43,7 +43,7 @@ export class CustomersService {
     if (sortBy != null) {
       queryParams = queryParams.append('SortBy', sortBy);
     }
-    return this.http.get<PartnersResponse>(`${this.apiURL}`, {
+    return this.http.get<CustomersResponse>(`${this.apiURL}`, {
       params: queryParams,
     });
   }

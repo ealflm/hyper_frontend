@@ -270,14 +270,18 @@ export class PartnersComponent implements OnInit {
       formData.append('Gender', this._inforsForm['selectedGender'].value);
       formData.append('UploadFile', this._inforsForm['photoUrl'].value);
       formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
-      formData.forEach((values) => {
-        console.log(values);
-      });
+
       if (idPartner != null) {
         this.partnerService
           .updatePartnerById(idPartner, formData)
-          .subscribe((updatePartnerRes: HttpEvent<any>) => {
-            console.log(updatePartnerRes);
+          .subscribe((updatePartnerRes) => {
+            if (updatePartnerRes.statusCode === 201) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Thành công',
+                detail: updatePartnerRes.message,
+              });
+            }
             this._getAllPartners();
             this.editMode = false;
           });
@@ -301,15 +305,17 @@ export class PartnersComponent implements OnInit {
       formData.append('Gender', this._inforsForm['selectedGender'].value);
       formData.append('UploadFile', this._inforsForm['photoUrl'].value);
       formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
-      formData.forEach((e) => {
-        console.log(e);
+
+      this.partnerService.createPartner(formData).subscribe((partnerRes) => {
+        if (partnerRes.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: partnerRes.message,
+          });
+        }
+        this._getAllPartners();
       });
-      this.partnerService
-        .createPartner(formData)
-        .subscribe((partnerRes: HttpEvent<any>) => {
-          console.log(partnerRes);
-          this._getAllPartners();
-        });
     }
   }
 

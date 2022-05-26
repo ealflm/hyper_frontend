@@ -1,4 +1,8 @@
-import { Service } from '../../../models/services';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { STATUS_TIER } from './../../../constant/status';
+import { TierService } from './../../../services/tier.service';
+import { Router } from '@angular/router';
+import { Service } from './../../../models/Services';
 import { Component, OnInit } from '@angular/core';
 import {
   animate,
@@ -7,6 +11,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { Tier, TiersResponse } from '../../../models/TierResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-manager-services',
@@ -32,48 +37,89 @@ import {
   ],
 })
 export class ManagerServicesComponent implements OnInit {
-  selected: any = '1';
   isOpenIconFillter = true;
-  services: Service[] = [
-    {
-      name: 'Đi theo chuyến',
-      code: 'FIXED-XD-1432',
-      createDate: '05/07/2020',
-      userCreate: 'Công Danh',
-      editDate: '09/12/2021',
-      userEdit: 'Đam Mê',
-      status: '1',
-    },
-    {
-      name: 'Đặt xe',
-      code: 'CUST-XD-1432',
-      createDate: '22/07/2021',
-      userCreate: 'Trần Gia Nguyên',
-      editDate: '02/10/2021',
-      userEdit: 'Đam Mê',
-      status: '2',
-    },
-    {
-      name: 'Thuê xe',
-      code: 'RENT-XD-1432',
-      createDate: '02/02/2020',
-      userCreate: 'Thanh Sang',
-      editDate: '01/01/2022',
-      userEdit: 'Đam Mê',
-      status: '3',
-    },
-  ];
+  //
+  packageServices: Tier[] = [];
+  tierStatus: any[] = [];
+  //
+  fillterStatus: number | null = null;
+  fillterByName: any | null;
+  totalItems = 0;
+  //
+  pageIndex?: number = 0;
+  itemsPerPage?: number = 5;
   selectedServices?: Service[];
-  constructor() {}
+  constructor(
+    private router: Router,
+    private tierService: TierService,
+    private confirmService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
-  ngOnInit(): void {}
-  navmenuclick(value: any) {
-    this.selected = value;
+  ngOnInit(): void {
+    this._getAllTiers();
+    this._mapTierStatus();
   }
-  onToggle() {
+  createPackage() {
+    this.router.navigate(['manage-service/create-package']);
+  }
+  _mapTierStatus() {
+    this.tierStatus = Object.keys(STATUS_TIER).map((key) => {
+      return {
+        id: STATUS_TIER[key].id,
+        lable: STATUS_TIER[key].lable,
+        class: STATUS_TIER[key].class,
+      };
+    });
+  }
+  onToggleIconFillter() {
     this.isOpenIconFillter = !this.isOpenIconFillter;
   }
-  onDelete() {
-    console.log(this.selectedServices);
+  onDelete(id?: string) {
+    if (id) {
+      this.confirmService.confirm({
+        accept: () => {
+          this.tierService.deleteTier(id).subscribe((res) => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+            this._getAllTiers();
+          });
+        },
+      });
+    }
+    this._getAllTiers();
+  }
+  _getAllTiers() {
+    this.tierService
+      .getAllTier(
+        this.fillterByName,
+        this.fillterStatus,
+        this.pageIndex,
+        this.itemsPerPage,
+        null
+      )
+      .subscribe((partnersResponse: TiersResponse) => {
+        this.totalItems = partnersResponse.body?.totalItems as number;
+        this.packageServices = partnersResponse.body?.items;
+      });
+  }
+  navmenuclick(value: any) {
+    this.fillterStatus = value;
+    this._getAllTiers();
+  }
+  onChangeFillterByLastName(e: any) {
+    this.fillterByName = e.target.value;
+    this._getAllTiers();
+  }
+  navPackageDetail(id?: string) {
+    this.router.navigate([`manage-service/edit-package/${id}`]);
+  }
+  onPaginate(e: any) {
+    this.pageIndex = e.page + 1;
+    this.itemsPerPage = e.rows;
+    this._getAllTiers();
   }
 }
