@@ -1,0 +1,241 @@
+<div class="tier-details">
+  <div class="header-tier-content">
+    <div class="header-content-item">
+      <div class="header-item-H5">Gói dịch vụ</div>
+      <div class="header-item">|</div>
+      <div class="header-item-H6">Tạo mới gói dịch vụ</div>
+    </div>
+    <div class="right-btn-form">
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Chỉnh sửa"
+        (click)="onChangeEdit()"
+        *ngIf="!editModeStatus"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Hủy"
+        *ngIf="editModeStatus"
+        (click)="onCancleEdit()"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-rounded button-rounded button-background"
+        pButton
+        pRipple
+        type="button"
+        label="Lưu"
+        *ngIf="editModeStatus"
+        (click)="onSaveChange()"
+      ></button>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <form [formGroup]="tierForm">
+    <div class="form-edit">
+      <div class="form-edit-container">
+        <div class="upload-container">
+          <label for="upload" class="thumnail">
+            <img [src]="imagePreview" />
+            <span class="thumnail-text">Tải hình ảnh lên</span>
+            <div class="icon-overplay">
+              <div class="circle-icon">
+                <span class="material-icons-outlined"> photo_camera </span>
+              </div>
+            </div>
+            <div class="image-overlay"></div>
+          </label>
+          <input
+            type="file"
+            id="upload"
+            accept="image/*"
+            (change)="onUpload($event)"
+          />
+        </div>
+        <div class="grid p-fluid form-content">
+          <div class="col-12 tier-input-long">
+            <div class="tier-text">
+              Tên gói
+              <small
+                *ngIf="
+              _tiersForm['tierName'].errors?.['required']
+          "
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
+            </div>
+            <input
+              class="tier-input-text-long"
+              type="text"
+              pInputText
+              formControlName="tierName"
+            />
+          </div>
+          <div class="col-12 tier-input-long">
+            <div class="tier-text">
+              Mô tả
+              <small
+                *ngIf="
+              _tiersForm['description'].errors?.['required']
+          "
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
+            </div>
+            <input
+              class="tier-input-text-long"
+              type="text"
+              pInputText
+              formControlName="description"
+            />
+          </div>
+          <div class="col-12 tier-input-long">
+            <div class="tier-text">
+              Giá
+              <small
+                *ngIf="
+              _tiersForm['price'].errors?.['required']
+          "
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
+            </div>
+            <input
+              class="tier-input-text-long"
+              type="text"
+              pInputText
+              formControlName="price"
+            />
+          </div>
+          <div class="col-12 tier-input-long">
+            <div class="tier-text">
+              Tiêu đề quảng cáo
+              <small
+                *ngIf="
+              _tiersForm['promotedTitle'].errors?.['required']
+          "
+                class="p-error"
+              >
+                không được bỏ trống
+              </small>
+            </div>
+            <input
+              class="tier-input-text-long"
+              type="text"
+              pInputText
+              formControlName="promotedTitle"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-divider class="bottom-divider"></p-divider>
+    <div class="footer-service-tier">
+      <div class="body-table">
+        <table>
+          <tr class="body-table-header">
+            <th>Tên</th>
+            <th>Loại dịch vụ</th>
+            <th>Giới hạn</th>
+            <th>Giá trị</th>
+            <th>Hành động</th>
+          </tr>
+
+          <div style="height: 15px" class="divider-table"></div>
+          <ng-container formArrayName="packages">
+            <ng-container
+              *ngFor="let package of _packagesForm.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <tr class="body-table-data">
+                <td>
+                  <div class="tier-input-long">
+                    <input
+                      class="tier-input-text-long"
+                      type="text"
+                      pInputText
+                      formControlName="packageName"
+                    /><small
+                      *ngIf="
+                        _packagesForm.get('packageName')?.errors?.['required']
+                      "
+                      class="p-error"
+                    >
+                      không được bỏ trống
+                    </small>
+                  </div>
+                </td>
+                <td>
+                  <div class="tier-input-long">
+                    <input
+                      class="tier-input-text-long"
+                      type="text"
+                      pInputText
+                      formControlName="serviceType"
+                    /><small
+                      *ngIf="
+                        _packagesForm.get('serviceType')?.errors?.['required']
+                      "
+                      class="p-error"
+                    >
+                      không được bỏ trống
+                    </small>
+                  </div>
+                </td>
+                <td>
+                  <div class="tier-input-long">
+                    <input
+                      class="tier-input-text-long"
+                      type="text"
+                      pInputText
+                      formControlName="limit"
+                    />
+                    <small
+                      *ngIf="
+                        _packagesForm.get('limit')?.errors?.['required']
+                      "
+                      class="p-error"
+                    >
+                      không được bỏ trống
+                    </small>
+                  </div>
+                </td>
+                <td>
+                  <div class="tier-input-long">
+                    <input
+                      class="tier-input-text-long"
+                      type="text"
+                      pInputText
+                      formControlName="value"
+                    /><small
+                      *ngIf="
+                        _packagesForm.get('value')?.errors?.['required']
+                      "
+                      class="p-error"
+                    >
+                      không được bỏ trống
+                    </small>
+                  </div>
+                </td>
+                <!-- <td (click)="addNewPackgeForm()">+</td> -->
+              </tr>
+            </ng-container>
+          </ng-container>
+        </table>
+      </div>
+    </div>
+  </form>
+</div>
+
+<p-toast position="top-right"></p-toast>

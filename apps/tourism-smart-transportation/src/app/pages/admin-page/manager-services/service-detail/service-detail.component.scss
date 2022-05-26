@@ -1,12 +1,14 @@
 @import '../../../../../styles.scss';
-.customer-details {
+.tier-details {
   background-color: $background-grey;
   @include fixed-scroll-view;
   @include custom-scrollbar;
-  .header-customer-content {
+  .header-tier-content {
+    display: flex;
     padding-left: 30px;
     align-items: center;
     margin-top: 26px;
+    justify-content: space-between;
   }
   .header-content-item {
     display: flex;
@@ -29,7 +31,6 @@
   }
   .form-edit {
     width: 650px;
-    height: 412px;
     margin: 26px auto;
     border-radius: 9px;
     background-color: $white-primary-color;
@@ -143,147 +144,69 @@
         flex: 70%;
         width: 415px;
         height: 305px;
-        .customer-input-long {
+        .tier-input-long {
           width: 413px;
           height: 49px;
-          .customer-input-text-long {
+          .tier-input-text-long {
             width: 413px;
             height: 28px;
           }
         }
-
-        .customer-input-short {
-          margin-top: 15px;
-          width: 200px;
-          height: 49px;
-
-          .customer-input-text-short {
-            width: 200px;
-            height: 28px;
-          }
-        }
-        .customer-subtitle {
-          @include font-Roboto-Medium-Subtitle2;
-          color: $black-default;
-        }
-        .customer-text {
-          @include font-Roboto-Regular-Body2;
-          color: $black-default;
-        }
-        .input-calendar-custom {
-          width: 200px;
-          position: relative;
-        }
-        .input-calendar-icon {
-          position: absolute;
-          right: 4%;
-          top: 7%;
-        }
       }
     }
   }
-
-  .footer-service-customer {
-    .header-status {
-      margin-top: 25px;
-      display: flex;
-      position: relative;
-      padding: 0 30px 0 30px;
-      border-bottom: 1px solid $background-color-grey-secondary;
-      color: $black-default;
-      height: 38px;
-      @include font-Roboto-Light-Status;
-      .active {
-        padding-bottom: 13px;
-        border-bottom: 3px solid $primary-color;
-        @include font-Roboto-Regular-Body2;
-      }
-      .status-item {
-        .status-item-right-title {
-          @include font-Roboto-Regular-Body2;
-        }
-        padding-top: 5px;
-        padding-right: 10px;
-        padding-left: 10px;
-        cursor: pointer;
-        &:hover {
-          background-color: $background-hover-grey !important;
-        }
-      }
-    }
-  }
-}
-.status-unpaid {
-  @include status-unpaid;
-}
-.status-paid {
-  @include status-paid;
 }
 ::ng-deep {
-  p-dialog {
-    .table-dialog {
-      border-top: 1px solid $color-line-grey;
-      width: 900px !important;
-      padding: 20px 30px 0 30px;
-      .p-datatable-wrapper {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        padding: 0 20px 0 20px;
-        background-color: white;
-        @include box-shadown-grey;
+  .footer-service-tier {
+    padding: 26px 30px 0 30px;
+    .body-table {
+      border-radius: 10px;
+      @include box-shadown-grey-secondary;
+      background-color: $white-primary-color;
+    }
+    table {
+      width: 100%;
+      .body-table-header {
+        height: 3.5rem;
+        border-bottom: 1px solid $color-line-grey;
         th {
-          @include font-Roboto-Regular-Body2;
-          background-color: white !important;
-          font-weight: bold;
+          text-align: start;
         }
-        td {
-          @include font-Roboto-Regular-Body2;
-          border: none;
-          color: $black-default;
-        }
-        tr:not(:first-child) {
-          border-top: 1px solid $background-color-grey-secondary;
+        .divider-table {
+          width: 100%;
+          border-bottom: 1px solid $color-line-grey;
         }
       }
-      .p-treetable-wrapper {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        padding: 0 20px 0 20px;
-        background-color: white;
-        @include box-shadown-grey;
-        th {
-          @include font-Roboto-Regular-Body2;
-          background-color: white !important;
-          font-weight: bold;
-        }
+      .body-table-data {
         td {
-          @include font-Roboto-Regular-Body2;
-          border: none;
-          color: $black-default;
-        }
-        tr:not(:first-child) {
-          border-top: 1px solid $background-color-grey-secondary;
-        }
-        .p-paginator {
-          margin-top: -2px;
-          border-top-left-radius: none !important;
-          border-top-right-radius: none !important;
-          border-bottom-right-radius: 10px !important;
-          border-bottom-left-radius: 10px !important;
-          box-shadow: 0em 0em 1px rgba(0, 0, 0, 0.05);
-          background-color: white;
-          .p-dropdown {
-            width: 75px;
-            height: 40px;
-            border-radius: 50px;
-            border: none;
-            box-shadow: 0em 0em 1em rgba(0, 0, 0, 0.05);
-            .p-dropdown-trigger-icon {
-              font-size: 10px;
+          .tier-input-long {
+            width: 95%;
+            height: 49px;
+            .tier-input-text-long {
+              width: 100%;
+              height: 28px;
             }
           }
         }
       }
+    }
+
+    .tier-subtitle {
+      @include font-Roboto-Medium-Subtitle2;
+      color: $black-default;
+    }
+    .tier-text {
+      @include font-Roboto-Regular-Body2;
+      color: $black-default;
+    }
+    .input-calendar-custom {
+      width: 200px;
+      position: relative;
+    }
+    .input-calendar-icon {
+      position: absolute;
+      right: 4%;
+      top: 7%;
     }
   }
 }
@@ -291,14 +214,14 @@
   .bottom-divider {
     width: 100%;
   }
-  .customer-input-short {
+  .tier-input-short {
     .p-dropdown .p-dropdown-label {
       margin-top: -8px;
     }
   }
 }
 ::ng-deep {
-  .bottom-btn-form {
+  .right-btn-form {
     margin-right: 25px;
     display: flex;
     align-items: center;
@@ -336,8 +259,7 @@
   .body-table {
     padding: 20px 30px 0 30px;
     .p-datatable-wrapper {
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
+      border-radius: 10px;
       padding: 0 20px 0 20px;
       background-color: white;
       @include box-shadown-grey;
@@ -353,27 +275,6 @@
       }
       tr:not(:first-child) {
         border-top: 1px solid $background-color-grey-secondary;
-      }
-    }
-  }
-}
-::ng-deep {
-  .p-paginator {
-    margin-top: -2px;
-    border-top-left-radius: none !important;
-    border-top-right-radius: none !important;
-    border-bottom-right-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
-    box-shadow: 0em 0em 0em rgba(0, 0, 0, 0.05);
-    background-color: white;
-    .p-dropdown {
-      width: 75px;
-      height: 40px;
-      border-radius: 50px;
-      border: none;
-      box-shadow: 0em 0em 2em rgba(0, 0, 0, 0.05);
-      .p-dropdown-trigger-icon {
-        font-size: 10px;
       }
     }
   }

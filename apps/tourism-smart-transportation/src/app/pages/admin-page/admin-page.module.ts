@@ -21,6 +21,7 @@ import { MapModule } from './map/map.module';
 import { DiscountComponent } from './discount/discount.component';
 import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
 import { DotsMenuComponent } from '../../components/dots-menu/dots-menu.component';
+import { ServiceDetailComponent } from './manager-services/service-detail/service-detail.component';
 const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -43,6 +44,15 @@ const ADMIN_ROUTES: Routes = [
         component: CustomerDetailsComponent,
       },
       { path: 'manage-service', component: ManagerServicesComponent },
+      {
+        path: 'manage-service/create-package',
+        component: ServiceDetailComponent,
+      },
+      {
+        path: 'manage-service/edit-package/:id',
+        component: ServiceDetailComponent,
+      },
+
       { path: 'discount', component: DiscountComponent },
       // Loading modules UILITY-SERVICES
       {
@@ -77,6 +87,7 @@ const ADMIN_ROUTES: Routes = [
     LimitLengthPipe,
     CustomerDetailsComponent,
     DotsMenuComponent,
+    ServiceDetailComponent,
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,6 @@
+import { OrderDetailsResponse } from './../models/OrderResponse';
 import { OrdersResponse } from '../models/OrderResponse';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -10,9 +11,8 @@ import { PaymentsResponse } from '../models/PaymentResponse';
 })
 export class PurchaseHistoryService {
   apiURL = environment.apiURL + 'admin/order';
-  // đợi đổi tên api
   apiURLPayment = environment.apiURL + 'admin/payment';
-
+  apiURLOderDetail = environment.apiURL + 'admin/order-detail';
   constructor(private http: HttpClient) {}
   getOrderByCusId(idCus: string): Observable<OrdersResponse> {
     let queryParams = new HttpParams();
@@ -23,7 +23,15 @@ export class PurchaseHistoryService {
       params: queryParams,
     });
   }
-  getOrderDetailsByOrderId(orderId: string) {}
+  getOrderDetailsByOrderId(orderId: string): Observable<OrderDetailsResponse> {
+    let queryParams = new HttpParams();
+    if (orderId) {
+      queryParams = queryParams.append('orderId', orderId);
+    }
+    return this.http.get<OrderDetailsResponse>(`${this.apiURLOderDetail}`, {
+      params: queryParams,
+    });
+  }
   getPaymentsByOrderId(orderId: string): Observable<PaymentsResponse> {
     let queryParams = new HttpParams();
     if (orderId) {

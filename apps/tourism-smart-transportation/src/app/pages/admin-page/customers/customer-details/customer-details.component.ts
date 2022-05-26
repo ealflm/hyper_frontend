@@ -1,6 +1,11 @@
-import { STATUS_TRANSACTION } from './../../../../constant/status';
+import { STATUS_TRANSACTION, STATUS_TIER } from './../../../../constant/status';
 import { PurchaseHistoryService } from './../../../../services/purchase-history.service';
-import { OrdersResponse, Order } from './../../../../models/OrderResponse';
+import {
+  OrdersResponse,
+  Order,
+  OrderDetail,
+  OrderDetailsResponse,
+} from './../../../../models/OrderResponse';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
@@ -12,6 +17,7 @@ import { map, of, Subscription, throwIfEmpty } from 'rxjs';
 import { CustomerResponse } from '../../../../models/CustomerResponse';
 import { AgeCheck } from '../../../../providers/CustomValidators';
 import { Payment, PaymentsResponse } from '../../../../models/PaymentResponse';
+import { TiersResponse } from '../../../../models/TierResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-customer-details',
@@ -28,6 +34,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   fillterStatus?: boolean = true;
   //
   transactionStatus: any[] = [];
+  tierStatus: any[] = [];
   gender = [
     {
       id: false,
@@ -43,7 +50,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   currentPhone?: string;
   cusTiersHis: any[] = [];
   transactionHis: Order[] = [];
-  orderDetails: any[] = [];
+  orderDetails: OrderDetail[] = [];
   payments: any[] = [];
 
   private subscription?: Subscription;
@@ -65,9 +72,19 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       this._getOrderByCusId();
     }
     this._mapPaymentStatus();
+    this._mapTierStatus();
   }
   _mapPaymentStatus() {
     this.transactionStatus = Object.keys(STATUS_TRANSACTION).map((key) => {
+      return {
+        id: STATUS_TRANSACTION[key].id,
+        lable: STATUS_TRANSACTION[key].lable,
+        class: STATUS_TRANSACTION[key].class,
+      };
+    });
+  }
+  _mapTierStatus() {
+    this.tierStatus = Object.keys(STATUS_TIER).map((key) => {
       return {
         id: STATUS_TRANSACTION[key].id,
         lable: STATUS_TRANSACTION[key].lable,
@@ -232,7 +249,13 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       .updateCustomerById(this._customersEditForm['id'].value, editFormData)
       .subscribe(
         (res) => {
-          console.log(res);
+          if (res.statusCode === 200) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+          }
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -252,7 +275,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       const idCus = params.get('id');
       this.customerService
         .getTierByCustomerId(idCus ? idCus : '')
-        .subscribe((tiersRes: any) => {
+        .subscribe((tiersRes: TiersResponse) => {
           this.cusTiersHis = tiersRes.body.items;
         });
     });
@@ -270,7 +293,23 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   onGetOrderDetails(e: any) {
     this.displayDialog = true;
     this.paymentDialogStatus = e.paymentDialogStatus;
-    console.log(e);
+    this.purchaseHistoryService
+      .getOrderDetailsByOrderId(e.orderId)
+      .pipe(
+        map((data: OrderDetailsResponse) => {
+          this.orderDetails = data.body.items.map(
+            (orderDetail: OrderDetail) => {
+              return {
+                price: orderDetail.price,
+                quantity: orderDetail.quantity,
+                content: orderDetail.content,
+                totalPrice: orderDetail.quantity * orderDetail.price,
+              };
+            }
+          );
+        })
+      )
+      .subscribe();
   }
   onGetPaymentDetails(e: any) {
     this.displayDialog = true;
