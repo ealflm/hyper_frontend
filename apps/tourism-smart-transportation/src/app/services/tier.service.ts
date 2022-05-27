@@ -41,4 +41,7 @@ export class TierService {
   deleteTier(id: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/${id}`);
   }
+  createTỉer(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiURL}`, formData);
+  }
 }
