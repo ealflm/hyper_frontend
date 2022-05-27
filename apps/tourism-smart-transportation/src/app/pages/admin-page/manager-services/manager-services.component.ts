@@ -2,7 +2,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { STATUS_TIER } from './../../../constant/status';
 import { TierService } from './../../../services/tier.service';
 import { Router } from '@angular/router';
-import { Service } from './../../../models/Services';
+import { Service } from '../../../models/Service';
 import { Component, OnInit } from '@angular/core';
 import {
   animate,
