@@ -57,7 +57,7 @@
             type="file"
             id="upload"
             accept="image/*"
-            (change)="onUpload($event)"
+            (input)="onUpload($event)"
           />
         </div>
         <div class="grid p-fluid form-content">
@@ -166,6 +166,7 @@
                       type="text"
                       pInputText
                       formControlName="packageName"
+                      (input)="onAddRow()"
                     /><small
                       *ngIf="
                         _packagesForm.get('packageName')?.errors?.['required']
@@ -183,6 +184,7 @@
                       type="text"
                       pInputText
                       formControlName="serviceType"
+                      (input)="onAddRow()"
                     /><small
                       *ngIf="
                         _packagesForm.get('serviceType')?.errors?.['required']
@@ -200,6 +202,7 @@
                       type="text"
                       pInputText
                       formControlName="limit"
+                      (input)="onAddRow()"
                     />
                     <small
                       *ngIf="
@@ -218,6 +221,7 @@
                       type="text"
                       pInputText
                       formControlName="value"
+                      (input)="onAddRow()"
                     /><small
                       *ngIf="
                         _packagesForm.get('value')?.errors?.['required']
@@ -228,7 +232,18 @@
                     </small>
                   </div>
                 </td>
-                <!-- <td (click)="addNewPackgeForm()">+</td> -->
+
+                <td
+                  *ngIf="i > 0"
+                  (click)="removePackageForm(i)"
+                  style="
+                    text-align: center;
+                    padding-bottom: 20px;
+                    cursor: pointer;
+                  "
+                >
+                  <span class="material-icons-outlined"> delete </span>
+                </td>
               </tr>
             </ng-container>
           </ng-container>
