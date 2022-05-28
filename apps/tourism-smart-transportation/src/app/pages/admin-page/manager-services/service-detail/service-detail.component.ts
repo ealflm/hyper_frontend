@@ -139,28 +139,32 @@ export class ServiceDetailComponent implements OnInit {
       }
     });
 
-    const dataSend = data.map((res: any) => {
-      return {
-        tierId: null,
+    let result = '';
+    data.map((res: any) => {
+      const obj = {
         serviceTypeId: res.serviceType,
         name: res.packageName,
         limit: res.limit,
         value: res.value,
         status: 1,
       };
+      result += JSON.stringify(obj) + ",";
     });
-    // console.log(dataSend);
-    // const blobOverrides = new Blob([JSON.stringify(dataSend)], {
-    //   type: 'application/json',
-    // });
-    // console.log(blobOverrides);
+    result = result.substring(0, result.length -1);
+    // formData.append("PackageList", `{
+    //   \"serviceTypeId\": \"5168511d-57f1-460a-8c7c-14664e3dbccc\",
+    //   \"name\": \"test1111\",
+    //   \"limit\": 10111,
+    //   \"value\": 101,
+    //   \"status\": 1}, {
+    //     \"serviceTypeId\": \"5168511d-57f1-460a-8c7c-14664e3dbccc\",
+    //     \"name\": \"test1111\",
+    //     \"limit\": 10111,
+    //     \"value\": 101,
+    //     \"status\": 1}`);
 
-    formData.append('PackageList', JSON.stringify(dataSend));
+    formData.append("PackageList", `${result}`);
 
-    // console.log(formData.get('PackageList'));
-    formData.forEach((res) => {
-      console.log(res);
-    });
     this.tierService.createTỉer(formData).subscribe((res) => {
       console.log(res);
     });
