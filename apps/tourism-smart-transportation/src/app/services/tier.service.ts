@@ -42,8 +42,6 @@ export class TierService {
     return this.http.delete(`${this.apiURL}/${id}`);
   }
   createTỉer(formData: FormData): Observable<any> {
-    var headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
-    return this.http.post<any>(`https://localhost:5001/api/v1.0/admin/tier`, formData,  { headers: headers});
+    return this.http.post<any>(`${this.apiURL}`, formData);
   }
 }
