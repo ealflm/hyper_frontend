@@ -2,7 +2,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { STATUS_TIER } from './../../../constant/status';
 import { TierService } from './../../../services/tier.service';
 import { Router } from '@angular/router';
-import { Service } from '../../../models/Service';
+import { Service } from '../../../models/Services';
 import { Component, OnInit } from '@angular/core';
 import {
   animate,
@@ -79,7 +79,7 @@ export class ManagerServicesComponent implements OnInit {
     if (id) {
       this.confirmService.confirm({
         accept: () => {
-          this.tierService.deleteTier(id).subscribe((res) => {
+          this.tierService.deleteTier(id).subscribe((res: any) => {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
