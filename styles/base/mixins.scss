@@ -135,29 +135,29 @@
   color: $color !important;
   width: $width !important;
   height: $height !important;
-  background-color: $color;
+  background-color: $color !important;
   border: none;
   &:enabled:hover {
-    background-color: $color;
-    background: $color;
+    background-color: $color !important;
+    background: $color !important;
     border: none;
   }
   .p-button-label {
     padding: $padding;
     @include font-Roboto-Medium-Button;
-    color: $white-primary-color;
+    color: $white-primary-color !important;
   }
 }
 @mixin button-outlined-primary($width, $height, $padding, $color) {
   width: $width !important;
   height: $height !important;
-  color: $color;
-  border-color: $color;
+  color: $color !important ;
+  border-color: $color !important;
   @include box-shadown-grey;
   .p-button-label {
     padding: $padding;
     @include font-Roboto-Medium-Button;
-    color: $color;
+    color: $color !important;
   }
   &:focus {
     box-shadow: none;

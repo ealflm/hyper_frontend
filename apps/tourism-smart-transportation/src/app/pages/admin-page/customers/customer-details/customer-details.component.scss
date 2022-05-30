@@ -63,6 +63,7 @@
           width: 125px;
           border-radius: 50%;
           border: 2px solid $background-color-grey;
+          object-fit: cover;
         }
 
         .icon-overplay {
@@ -128,6 +129,11 @@
 
         input[type='file'] {
           opacity: 0;
+          width: 125px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
       }
       .upload-container :hover {

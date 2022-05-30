@@ -164,7 +164,35 @@
             </div>
           </div>
         </li>
+
         <li
+          [class]="status ? 'nav-item' : 'nav-item-off'"
+          routerLinkActive="active-link"
+          #standardPrice="routerLinkActive"
+        >
+          <div class="nav-link" routerLink="/standard-price">
+            <mat-icon
+              [ngClass]="
+                standardPrice.isActive
+                  ? 'material-icons'
+                  : 'material-icons-outlined'
+              "
+              >{{
+                standardPrice.isActive
+                  ? 'price_change'
+                  : 'price_change_outlined'
+              }}</mat-icon
+            >
+
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Giá cơ bản
+            </div>
+          </div>
+        </li>
+        <!-- <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           [ngClass]="
             (stg.isActive || stg1.isActive) && !status ? 'active-link' : ''
@@ -195,8 +223,8 @@
               ></i
             ></span>
           </div>
-        </li>
-        <ul [ngClass]="showMoreService ? '' : 'navLinkDar'">
+        </li> -->
+        <!-- <ul [ngClass]="showMoreService ? '' : 'navLinkDar'">
           <li
             class="nav-item-content"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
@@ -215,14 +243,14 @@
             routerLinkActive="active-link-content"
             #stg="routerLinkActive"
           >
-            <div class="nav-link-content" routerLink="/setting/service-type">
-              <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+            <div class="nav-link-content" routerLink="/setting/service-type"> -->
+        <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
+        <!-- <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Loại Dịch vụ
               </div>
             </div>
           </li>
-        </ul>
+        </ul> -->
         <!---->
       </ul>
     </div>

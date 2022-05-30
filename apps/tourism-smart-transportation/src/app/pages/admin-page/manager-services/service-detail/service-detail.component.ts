@@ -1,7 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { ServiceTypeService } from './../../../../services/service-type.service';
+import { ServiceType } from './../../../../models/ServiceType';
 import { TierService } from './../../../../services/tier.service';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { ThisReceiver } from '@angular/compiler';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'tourism-smart-transportation-service-detail',
@@ -12,20 +18,42 @@ export class ServiceDetailComponent implements OnInit {
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
   tierForm!: FormGroup;
-  editModeStatus?: boolean = false;
   isAdded?: boolean = false;
+  isSubmit? = false;
+  serviceTypes: ServiceType[] = [];
+  deleteFile?: string | null;
+  // check button
+  editModeStatus?: boolean = false;
+  editBtnStatus?: boolean = false;
+  createStatus?: boolean = true;
+
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private tierService: TierService
-  ) {}
+    private tierService: TierService,
+    private serviceTypeService: ServiceTypeService,
+    private messageService: MessageService,
+    private location: Location,
+    private confirmationService: ConfirmationService
+  ) {
+    this._getServiceType();
+  }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params: any) => {});
     this._initTierForm();
+    const idTier = this.route.snapshot.paramMap.get('id');
+    if (idTier) {
+      this.createStatus = false;
+      this.editBtnStatus = true;
+      this._getTierId(idTier);
+    } else {
+      this.createStatus = true;
+    }
   }
+
   _initTierForm() {
     this.tierForm = this.fb.group({
+      id: [''],
       tierName: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
@@ -35,19 +63,68 @@ export class ServiceDetailComponent implements OnInit {
       packages: this.fb.array([]),
     });
     this.addNewPackgeForm();
+    this.checkDropDownDisableInput();
   }
+
   get _tiersForm() {
     return this.tierForm.controls;
   }
   get _packagesForm() {
-    return this.tierForm.controls['packages'] as FormArray;
+    return this.tierForm.get('packages') as FormArray;
+  }
+  _getServiceType() {
+    this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
+      this.serviceTypes = serviceTypeRes.body.items;
+    });
+  }
+  _getTierId(id: string) {
+    this.tierService.getTierById(id).subscribe((tierRes) => {
+      this._tiersForm['id'].setValue(tierRes.body.id);
+      this._tiersForm['tierName'].setValue(tierRes.body.name);
+      this._tiersForm['description'].setValue(tierRes.body.description);
+      this._tiersForm['price'].setValue(tierRes.body.price);
+      this._tiersForm['promotedTitle'].setValue(tierRes.body.promotedTitle);
+      this._tiersForm['uploadFile'].setValue(tierRes.body.photoUrl);
+      tierRes.body?.photoUrl == '' || tierRes.body?.photoUrl == null
+        ? (this.imagePreview = '../assets/image/imagePreview.png')
+        : (this.imagePreview = `https://se32.blob.core.windows.net/admin/${tierRes.body?.photoUrl}`);
+      this.deleteFile = tierRes.body?.photoUrl?.trim();
+      tierRes.body.packageList.map((packageValue: any, index: any) => {
+        this.addNewPackgeForm();
+        this._packagesForm
+          .at(index)
+          .get('packageName')
+          ?.setValue(packageValue.name);
+        this._packagesForm
+          .at(index)
+          .get('serviceType')
+          ?.setValue(packageValue.serviceTypeId);
+        this._packagesForm.at(index).get('limit')?.setValue(packageValue.limit);
+        this._packagesForm.at(index).get('value')?.setValue(packageValue.value);
+
+        this._packagesForm.at(index).get('id')?.setValue(packageValue.id);
+        this._packagesForm
+          .at(index)
+          .get('tierId')
+          ?.setValue(packageValue.tierId);
+      });
+      this.disableAllInputForm();
+    });
+  }
+  onChangeServiceType() {
+    this.onAddRow();
   }
   removePackageForm(i: number) {
     this.isAdded = false;
     this._packagesForm.removeAt(i);
   }
+  onClickDeleteItem(i: number) {
+    this._packagesForm.removeAt(i);
+  }
   addNewPackgeForm() {
     const packageForm = this.fb.group({
+      id: [''],
+      tierId: [''],
       packageName: ['', Validators.required],
       serviceType: ['', Validators.required],
       limit: ['', Validators.required],
@@ -124,52 +201,211 @@ export class ServiceDetailComponent implements OnInit {
         this.isAdded = true;
       }
     }
+    // this._packagesForm.value.map((value: any, index: any) => {
+    //   console.log(value);
+    // });
+    this.checkDropDownDisableInput();
   }
-  onUpload($event: any) {}
+  checkDropDownDisableInput() {
+    for (let index = 0; index <= this._packagesForm.length; index++) {
+      if (
+        this._packagesForm.at(index)?.get('serviceType')?.value == null ||
+        this._packagesForm.at(index)?.get('serviceType')?.value == ''
+      ) {
+        this._packagesForm.at(index)?.get('limit')?.disable();
+        this._packagesForm.at(index)?.get('value')?.disable();
+      } else {
+        this._packagesForm.at(index)?.get('limit')?.enable();
+        this._packagesForm.at(index)?.get('value')?.enable();
+      }
+    }
+  }
+  disableAllInputForm() {
+    this._tiersForm['tierName'].disable();
+    this._tiersForm['price'].disable();
+    this._tiersForm['description'].disable();
+    this._tiersForm['promotedTitle'].disable();
+    for (let index = 0; index <= this._packagesForm.length; index++) {
+      this._packagesForm.at(index)?.get('limit')?.disable();
+      this._packagesForm.at(index)?.get('value')?.disable();
+      this._packagesForm.at(index)?.get('packageName')?.disable();
+      this._packagesForm.at(index)?.get('serviceType')?.disable();
+    }
+  }
+  enableAllInputForm() {
+    this._tiersForm['tierName'].enable();
+    this._tiersForm['price'].enable();
+    this._tiersForm['description'].enable();
+    this._tiersForm['promotedTitle'].enable();
+    for (let index = 0; index <= this._packagesForm.length; index++) {
+      this._packagesForm.at(index)?.get('limit')?.enable();
+      this._packagesForm.at(index)?.get('value')?.enable();
+      this._packagesForm.at(index)?.get('packageName')?.enable();
+      this._packagesForm.at(index)?.get('serviceType')?.enable();
+    }
+  }
+  onUpload(event: any) {
+    const avatarFile = event.target.files[0];
+    if (avatarFile) {
+      this.tierForm.patchValue({ image: avatarFile });
+      this._tiersForm['uploadFile'].setValue(avatarFile);
+      this._tiersForm['deleteFile'].setValue(this.deleteFile);
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        this.imagePreview = fileReader.result;
+      };
+      fileReader.readAsDataURL(avatarFile);
+    }
+    // console.log(avatarFile);
+  }
+
+  //change mode
   onChangeEdit() {
-    let data: any = [];
+    this.editModeStatus = true;
+    this.editBtnStatus = true;
+    this.enableAllInputForm();
+  }
+  // edit mode
+  onCancleEdit() {
+    this.editModeStatus = false;
+    this.editBtnStatus = true;
+    this.disableAllInputForm();
+    this.confirmationService.confirm({
+      accept: () => {},
+    });
+  }
+  onUpdate() {
+    this.isSubmit = true;
+    if (this.tierForm.invalid) {
+      return;
+    }
+
     const formData = new FormData();
     formData.append('Name', this._tiersForm['tierName'].value);
     formData.append('Description', this._tiersForm['description'].value);
     formData.append('Price', this._tiersForm['price'].value);
     formData.append('PromotedTitle', this._tiersForm['promotedTitle'].value);
+    formData.append('UploadFile', this._tiersForm['uploadFile'].value);
+    formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
+    this.nomalizeDataPackageList(formData);
+    this.confirmationService.confirm({
+      accept: () => {
+        this.tierService
+          .updateTierbyId(this._tiersForm['id'].value, formData)
+          .subscribe(
+            (res) => {
+              if (res.statusCode === 201) {
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Thành công',
+                  detail: res.message,
+                });
+              }
+            },
+            (error: HttpErrorResponse) => {
+              console.log(error);
+              if (error.status === 400) {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Lỗi',
+                  detail: error.error.message,
+                });
+              }
+            }
+          );
+      },
+    });
+  }
+  nomalizeDataPackageList(formData: FormData) {
+    let data: any = [];
+    const lengthFormArray = this._packagesForm.length;
+    const checkEmptyData =
+      this._packagesForm.controls[lengthFormArray - 1]?.value;
+    let isLastedEmptyDataRow = false;
+    if (
+      !checkEmptyData['packageName'] &&
+      !checkEmptyData['serviceType'] &&
+      !checkEmptyData['limit'] &&
+      !checkEmptyData['value']
+    ) {
+      isLastedEmptyDataRow = true;
+    }
     this._tiersForm['packages'].value.map((x: any, index: number) => {
-      if (index != this._tiersForm['packages'].value.length - 1) {
+      if (
+        index == this._tiersForm['packages'].value.length - 1 &&
+        isLastedEmptyDataRow
+      ) {
+        data = [...data];
+        console.log(data);
+      } else {
         data = [...data, x];
+        console.log(data);
       }
     });
 
     let result = '';
     data.map((res: any) => {
       const obj = {
+        id: res.id,
+        tierId: res.tierId,
         serviceTypeId: res.serviceType,
         name: res.packageName,
         limit: res.limit,
         value: res.value,
         status: 1,
       };
-      result += JSON.stringify(obj) + ",";
+      result += JSON.stringify(obj) + ',';
     });
-    result = result.substring(0, result.length -1);
-    // formData.append("PackageList", `{
-    //   \"serviceTypeId\": \"5168511d-57f1-460a-8c7c-14664e3dbccc\",
-    //   \"name\": \"test1111\",
-    //   \"limit\": 10111,
-    //   \"value\": 101,
-    //   \"status\": 1}, {
-    //     \"serviceTypeId\": \"5168511d-57f1-460a-8c7c-14664e3dbccc\",
-    //     \"name\": \"test1111\",
-    //     \"limit\": 10111,
-    //     \"value\": 101,
-    //     \"status\": 1}`);
+    result = result.substring(0, result.length - 1);
+    console.log(result);
 
-    formData.append("PackageList", `${result}`);
-
-    this.tierService.createTỉer(formData).subscribe((res) => {
-      console.log(res);
+    formData.append('PackageList', `${result}`);
+  }
+  // create mode
+  onCancle() {
+    this.confirmationService.confirm({
+      accept: () => {},
     });
   }
-  onCancleEdit() {}
-  onSaveChange() {}
-  onCheckEmptyData(data: string) {}
+  onSave() {
+    this.isSubmit = true;
+    if (this.tierForm.invalid) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('Name', this._tiersForm['tierName'].value);
+    formData.append('Description', this._tiersForm['description'].value);
+    formData.append('Price', this._tiersForm['price'].value);
+    formData.append('PromotedTitle', this._tiersForm['promotedTitle'].value);
+    formData.append('UploadFile', this._tiersForm['uploadFile'].value);
+    formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
+    this.nomalizeDataPackageList(formData);
+    this.tierService.createTier(formData).subscribe(
+      (res) => {
+        if (res.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: res.message,
+          });
+        }
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+        if (error.status === 400) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Lỗi',
+            detail: error.error.message,
+          });
+        }
+      }
+    );
+  }
+
+  // hủy thay đổi
+  cancleDialog() {
+    this.location.back();
+  }
 }

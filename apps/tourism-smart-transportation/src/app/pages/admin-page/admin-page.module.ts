@@ -15,13 +15,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PartnersComponent } from './partners/partners.component';
 import { CustomersComponent } from './customers/customers.component';
 import { ManagerServicesComponent } from './manager-services/manager-services.component';
-import { UtilityServicesModule } from './utility-services/utility-services.module';
 import { FinanceModule } from './finance/finance.module';
 import { MapModule } from './map/map.module';
 import { DiscountComponent } from './discount/discount.component';
 import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
 import { DotsMenuComponent } from '../../components/dots-menu/dots-menu.component';
 import { ServiceDetailComponent } from './manager-services/service-detail/service-detail.component';
+import { StandardPriceComponent } from './standard-price/standard-price.component';
+
 const ADMIN_ROUTES: Routes = [
   {
     path: '',
@@ -55,18 +56,13 @@ const ADMIN_ROUTES: Routes = [
 
       { path: 'discount', component: DiscountComponent },
       // Loading modules UILITY-SERVICES
-      {
-        path: 'setting',
-        loadChildren: () =>
-          import('./utility-services/utility-services.module').then(
-            (m) => m.UtilityServicesModule
-          ),
-      },
+
       { path: 'map', component: MapPageComponent },
       {
         path: 'map',
         loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
       },
+      { path: 'standard-price', component: StandardPriceComponent },
       {
         path: 'finance',
         loadChildren: () =>
@@ -88,6 +84,7 @@ const ADMIN_ROUTES: Routes = [
     CustomerDetailsComponent,
     DotsMenuComponent,
     ServiceDetailComponent,
+    StandardPriceComponent,
   ],
   imports: [
     CommonModule,
@@ -97,7 +94,6 @@ const ADMIN_ROUTES: Routes = [
     NzZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
-    UtilityServicesModule,
     FinanceModule,
     MapModule,
   ],

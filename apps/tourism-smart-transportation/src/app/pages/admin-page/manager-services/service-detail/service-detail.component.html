@@ -14,7 +14,8 @@
         type="button"
         label="Chỉnh sửa"
         (click)="onChangeEdit()"
-        *ngIf="!editModeStatus"
+        *ngIf="editBtnStatus"
+        [ngClass]="editModeStatus ? 'hidden' : ''"
       ></button>
       <button
         [style]="{ width: '57', height: '32px' }"
@@ -23,7 +24,7 @@
         pRipple
         type="button"
         label="Hủy"
-        *ngIf="editModeStatus"
+        *ngIf="editModeStatus && editBtnStatus"
         (click)="onCancleEdit()"
       ></button>
       <button
@@ -33,8 +34,28 @@
         pRipple
         type="button"
         label="Lưu"
-        *ngIf="editModeStatus"
-        (click)="onSaveChange()"
+        *ngIf="editModeStatus && editBtnStatus"
+        (click)="onUpdate()"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Quay lại"
+        *ngIf="createStatus"
+        (click)="onCancle()"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-rounded button-rounded button-background"
+        pButton
+        pRipple
+        type="button"
+        label="Lưu"
+        *ngIf="createStatus"
+        (click)="onSave()"
       ></button>
     </div>
   </div>
@@ -66,7 +87,7 @@
               Tên gói
               <small
                 *ngIf="
-              _tiersForm['tierName'].errors?.['required']
+              _tiersForm['tierName'].errors?.['required'] && isSubmit
           "
                 class="p-error"
               >
@@ -85,7 +106,7 @@
               Mô tả
               <small
                 *ngIf="
-              _tiersForm['description'].errors?.['required']
+              _tiersForm['description'].errors?.['required']  && isSubmit
           "
                 class="p-error"
               >
@@ -104,26 +125,28 @@
               Giá
               <small
                 *ngIf="
-              _tiersForm['price'].errors?.['required']
+              _tiersForm['price'].errors?.['required']  && isSubmit
           "
                 class="p-error"
               >
                 không được bỏ trống
               </small>
             </div>
-            <input
+            <p-inputNumber
               class="tier-input-text-long"
               type="text"
-              pInputText
+              mode="currency"
+              currency="VND"
+              locale="vi-VN"
               formControlName="price"
-            />
+            ></p-inputNumber>
           </div>
           <div class="col-12 tier-input-long">
             <div class="tier-text">
               Tiêu đề quảng cáo
               <small
                 *ngIf="
-              _tiersForm['promotedTitle'].errors?.['required']
+              _tiersForm['promotedTitle'].errors?.['required']  && isSubmit
           "
                 class="p-error"
               >
@@ -169,7 +192,7 @@
                       (input)="onAddRow()"
                     /><small
                       *ngIf="
-                        _packagesForm.get('packageName')?.errors?.['required']
+                      _packagesForm.controls[i].get('packageName')?.errors?.['required']  && isSubmit
                       "
                       class="p-error"
                     >
@@ -179,34 +202,19 @@
                 </td>
                 <td>
                   <div class="tier-input-long">
-                    <input
-                      class="tier-input-text-long"
-                      type="text"
-                      pInputText
+                    <p-dropdown
+                      class="dropdown"
+                      [style]="{ width: '95%', height: '28px' }"
+                      [options]="serviceTypes"
                       formControlName="serviceType"
-                      (input)="onAddRow()"
-                    /><small
-                      *ngIf="
-                        _packagesForm.get('serviceType')?.errors?.['required']
-                      "
-                      class="p-error"
-                    >
-                      không được bỏ trống
-                    </small>
-                  </div>
-                </td>
-                <td>
-                  <div class="tier-input-long">
-                    <input
-                      class="tier-input-text-long"
-                      type="text"
-                      pInputText
-                      formControlName="limit"
-                      (input)="onAddRow()"
-                    />
+                      optionLabel="name"
+                      optionValue="id"
+                      placeholder="Chọn một dịch vụ"
+                      (onChange)="onChangeServiceType()"
+                    ></p-dropdown>
                     <small
                       *ngIf="
-                        _packagesForm.get('limit')?.errors?.['required']
+                      _packagesForm.controls[i].get('serviceType')?.errors?.['required']  && isSubmit
                       "
                       class="p-error"
                     >
@@ -216,15 +224,47 @@
                 </td>
                 <td>
                   <div class="tier-input-long">
-                    <input
-                      class="tier-input-text-long"
-                      type="text"
-                      pInputText
-                      formControlName="value"
-                      (input)="onAddRow()"
-                    /><small
+                    <div class="input-suffix">
+                      <p-inputNumber
+                        class="tier-input-text-long"
+                        formControlName="limit"
+                      ></p-inputNumber>
+                      <span>{{
+                        _packagesForm.controls[i].get('serviceType')?.value ===
+                        'd3d43e77-1602-4e16-a8d7-485d4f309db7'
+                          ? 'Km'
+                          : 'Lần'
+                      }}</span>
+                    </div>
+                    <small
                       *ngIf="
-                        _packagesForm.get('value')?.errors?.['required']
+                      _packagesForm.controls[i].get('limit')?.errors?.['required']  && isSubmit
+                      "
+                      class="p-error"
+                    >
+                      không được bỏ trống
+                    </small>
+                  </div>
+                </td>
+                <td>
+                  <div class="tier-input-long">
+                    <div class="input-suffix">
+                      <p-inputNumber
+                        class="tier-input-text-long"
+                        formControlName="value"
+                        (input)="onAddRow()"
+                      >
+                      </p-inputNumber>
+                      <span>{{
+                        _packagesForm.controls[i].get('serviceType')?.value ===
+                        'd3d43e77-1602-4e16-a8d7-485d4f309db7'
+                          ? 'Lần'
+                          : '%'
+                      }}</span>
+                    </div>
+                    <small
+                      *ngIf="
+                      _packagesForm.controls[i].get('value')?.errors?.['required']  && isSubmit
                       "
                       class="p-error"
                     >
@@ -234,8 +274,19 @@
                 </td>
 
                 <td
-                  *ngIf="i > 0"
-                  (click)="removePackageForm(i)"
+                  *ngIf="i > 0 && editModeStatus"
+                  (click)="onClickDeleteItem(i)"
+                  style="
+                    text-align: center;
+                    padding-bottom: 20px;
+                    cursor: pointer;
+                  "
+                >
+                  <span class="material-icons-outlined"> delete </span>
+                </td>
+                <td
+                  *ngIf="i > 0 && createStatus"
+                  (click)="onClickDeleteItem(i)"
                   style="
                     text-align: center;
                     padding-bottom: 20px;
@@ -252,5 +303,38 @@
     </div>
   </form>
 </div>
-
+<p-confirmDialog #cd [style]="{ width: '450px', height: '101px' }">
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">Bạn có chắc chắn muốn thoát?</div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Đóng"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy Thay Đổi"
+      (click)="cancleDialog()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Lưu Thay Đổi"
+      (click)="cd.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
 <p-toast position="top-right"></p-toast>

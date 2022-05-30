@@ -41,7 +41,13 @@ export class TierService {
   deleteTier(id: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/${id}`);
   }
-  createTỉer(formData: FormData): Observable<any> {
+  createTier(formData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiURL}`, formData);
+  }
+  getTierById(id: string): Observable<any> {
+    return this.http.get(`${this.apiURL}/${id}`);
+  }
+  updateTierbyId(tierId: string, formData: FormData): Observable<any> {
+    return this.http.put(`${this.apiURL}/${tierId}`, formData);
   }
 }
