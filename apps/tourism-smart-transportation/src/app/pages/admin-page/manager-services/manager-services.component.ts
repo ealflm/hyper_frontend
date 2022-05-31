@@ -17,27 +17,8 @@ import { Tier, TiersResponse } from '../../../models/TierResponse';
   selector: 'tourism-smart-transportation-manager-services',
   templateUrl: './manager-services.component.html',
   styleUrls: ['./manager-services.component.scss'],
-  animations: [
-    trigger('openCloseIcon', [
-      state(
-        'openIcon',
-        style({
-          transform: 'rotate(0deg)',
-        })
-      ),
-      state(
-        'closeIcon',
-        style({
-          transform: 'rotate(90deg)',
-        })
-      ),
-      transition('openIcon => closeIcon', [animate('0.2s')]),
-      transition('closeIcon => openIcon', [animate('0.2s')]),
-    ]),
-  ],
 })
 export class ManagerServicesComponent implements OnInit {
-  isOpenIconFillter = true;
   //
   packageServices: Tier[] = [];
   tierStatus: any[] = [];
@@ -49,6 +30,20 @@ export class ManagerServicesComponent implements OnInit {
   pageIndex?: number = 0;
   itemsPerPage?: number = 5;
   selectedServices?: Service[];
+  menuValue: any = [
+    {
+      value: 1,
+      lable: 'Kích hoạt',
+    },
+    {
+      value: 0,
+      lable: 'Vô hiệu hóa',
+    },
+    {
+      value: null,
+      lable: 'Tất cả',
+    },
+  ];
   constructor(
     private router: Router,
     private tierService: TierService,
@@ -72,9 +67,7 @@ export class ManagerServicesComponent implements OnInit {
       };
     });
   }
-  onToggleIconFillter() {
-    this.isOpenIconFillter = !this.isOpenIconFillter;
-  }
+
   onDelete(id?: string) {
     if (id) {
       this.confirmService.confirm({
@@ -106,10 +99,11 @@ export class ManagerServicesComponent implements OnInit {
         this.packageServices = partnersResponse.body?.items;
       });
   }
-  navmenuclick(value: any) {
+  onGetValueMenu(value: any) {
     this.fillterStatus = value;
     this._getAllTiers();
   }
+
   onChangeFillterByLastName(e: any) {
     this.fillterByName = e.target.value;
     this._getAllTiers();

@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'tourism-smart-transportation-header-status',
@@ -30,11 +30,18 @@ import { Component, OnInit } from '@angular/core';
   ],
 })
 export class HeaderStatusComponent implements OnInit {
-  isOpenIconFillter?: boolean = false;
+  isOpenIconFillter?: boolean = true;
+  fillterStatus?: number = 1;
+  @Input() menuValue: any = [];
+  @Output() GetValueMenu: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
 
   ngOnInit(): void {}
-  onToggle() {
+  onToggleIconFillter() {
     this.isOpenIconFillter = !this.isOpenIconFillter;
+  }
+  navmenuclick(numberValue: any) {
+    this.fillterStatus = numberValue;
+    this.GetValueMenu.emit(numberValue);
   }
 }

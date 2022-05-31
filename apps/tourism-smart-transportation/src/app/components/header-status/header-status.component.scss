@@ -1,3 +1,4 @@
+@import '../../../styles.scss';
 .header-status {
   margin-top: 25px;
   display: flex;
@@ -20,13 +21,6 @@
     padding-right: 10px;
     padding-left: 10px;
     cursor: pointer;
-    // .status-item:after {
-    //   content: '';
-    //   display: block;
-    //   padding-bottom: 13px;
-    //   transition: all 0.2s ease;
-    //   transform: scaleX(0);
-    // }
     &:hover {
       background-color: $background-hover-grey !important;
     }

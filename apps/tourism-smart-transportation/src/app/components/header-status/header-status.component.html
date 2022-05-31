@@ -1,1 +1,35 @@
+<div class="header-status">
+  <div
+    *ngFor="let menu of menuValue"
+    class="status-item"
+    [ngClass]="fillterStatus === menu.value ? 'active' : ''"
+    (click)="navmenuclick(menu.value)"
+  >
+    <span>{{ menu.lable }}</span>
+  </div>
 
+  <!-- <div
+    class="status-item"
+    [ngClass]="fillterStatus === 0 ? 'active' : ''"
+    (click)="navmenuclick(0)"
+  >
+    <span>Vô hiệu hóa</span>
+  </div>
+  <div
+    class="status-item"
+    [ngClass]="fillterStatus === null ? 'active' : ''"
+    (click)="navmenuclick(null)"
+  >
+    <span>Tất cả</span>
+  </div> -->
+  <div class="status-item-right">
+    <span class="status-item-right-title">Hiển thị bộ lọc</span>
+    <i
+      class="material-icons-outlined"
+      (click)="onToggleIconFillter()"
+      [@openCloseIcon]="isOpenIconFillter ? 'openIcon' : 'closeIcon'"
+    >
+      filter_list
+    </i>
+  </div>
+</div>

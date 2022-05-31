@@ -19,28 +19,8 @@ import { Component, OnInit } from '@angular/core';
   selector: 'tourism-smart-transportation-users',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss'],
-  animations: [
-    trigger('openCloseIcon', [
-      state(
-        'openIcon',
-        style({
-          transform: 'rotate(0deg)',
-        })
-      ),
-      state(
-        'closeIcon',
-        style({
-          transform: 'rotate(90deg)',
-        })
-      ),
-      transition('openIcon => closeIcon', [animate('0.3s')]),
-      transition('closeIcon => openIcon', [animate('0.3s')]),
-    ]),
-  ],
 })
 export class CustomersComponent implements OnInit {
-  isOpenIconFillter = true;
-
   //
   customers: Customer[] = [];
   status: any[] = [];
@@ -66,7 +46,20 @@ export class CustomersComponent implements OnInit {
       lable: 'Nam',
     },
   ];
-
+  menuValue: any = [
+    {
+      value: 1,
+      lable: 'Kích hoạt',
+    },
+    {
+      value: 0,
+      lable: 'Vô hiệu hóa',
+    },
+    {
+      value: null,
+      lable: 'Tất cả',
+    },
+  ];
   constructor(
     private customerService: CustomersService,
     private confirmationService: ConfirmationService,
@@ -91,13 +84,11 @@ export class CustomersComponent implements OnInit {
     this.fillterLastName = e.target.value;
     this._getAllCustomers();
   }
-  navmenuclick(value?: any | null) {
-    this.fillterStatus = value;
+  OnGetMenuClick(e: any) {
+    this.fillterStatus = e;
     this._getAllCustomers();
   }
-  onToggleIconFillter() {
-    this.isOpenIconFillter = !this.isOpenIconFillter;
-  }
+
   onPaginate(e: any) {
     this.pageIndex = e.page + 1;
     this.itemsPerPage = e.rows;

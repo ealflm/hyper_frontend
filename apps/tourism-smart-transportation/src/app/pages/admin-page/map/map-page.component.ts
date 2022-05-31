@@ -17,11 +17,11 @@ export class MapPageComponent implements OnInit {
   constructor(private mapboxService: MapService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    // this.mapboxService.initializeMap();
+    this.mapboxService.initializeMap();
     // this.mapboxService.setMarker();
-    // this.mapboxService.getCoordinates().subscribe((res: any) => {
-    //   this.coordinates = res;
-    // });
+    this.mapboxService.getCoordinates().subscribe((res: any) => {
+      this.coordinates = res;
+    });
     // this._initLocationFormArray();
     // this.addMarker();
   }
