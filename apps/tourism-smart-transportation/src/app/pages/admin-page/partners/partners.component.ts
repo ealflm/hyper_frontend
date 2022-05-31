@@ -45,7 +45,6 @@ export class PartnersComponent implements OnInit {
   //
   pageIndex?: number = 0;
   itemsPerPage?: number = 5;
-
   //
   uploadedFiles: any[] = [];
   imagePreview?: string | ArrayBuffer | null =
