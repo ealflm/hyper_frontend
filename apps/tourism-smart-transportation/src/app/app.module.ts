@@ -46,7 +46,6 @@ import { en_US, NZ_I18N, NzI18nModule } from 'ng-zorro-antd/i18n';
     },
     { provide: NZ_I18N, useValue: en_US },
   ],
-  entryComponents: [AppComponent],
 })
 export class AppModule {
   constructor() {}
