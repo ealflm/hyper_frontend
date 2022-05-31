@@ -11,8 +11,8 @@ export class MapService {
   map!: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/streets-v11';
   // style = 'mapbox://styles/mapbox/satellite-v9';
-  lat = 10.215;
-  lng = 103.96;
+  lat = 10.22698;
+  lng = 103.9967;
   zoom = 12;
   coordinates$ = new Subject<any>();
   coordinates = this.coordinates$.asObservable();

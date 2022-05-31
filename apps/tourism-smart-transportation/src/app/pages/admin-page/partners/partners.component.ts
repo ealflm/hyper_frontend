@@ -24,29 +24,11 @@ import { DatePipe } from '@angular/common';
   selector: 'tourism-smart-transportation-partner',
   templateUrl: './partners.component.html',
   styleUrls: ['./partners.component.scss'],
-  animations: [
-    trigger('openCloseIcon', [
-      state(
-        'openIcon',
-        style({
-          transform: 'rotate(0deg)',
-        })
-      ),
-      state(
-        'closeIcon',
-        style({
-          transform: 'rotate(90deg)',
-        })
-      ),
-      transition('openIcon <=> closeIcon', [animate('1s')]),
-    ]),
-  ],
 })
 export class PartnersComponent implements OnInit {
   displayDialog = false;
   loading = false;
   isSubmit = false;
-  isOpenIconFillter = true;
   progress!: number;
   editMode = false;
   comebackStatus = false;
@@ -80,7 +62,20 @@ export class PartnersComponent implements OnInit {
       lable: 'Nam',
     },
   ];
-
+  menuValue: any = [
+    {
+      value: 1,
+      lable: 'Kích hoạt',
+    },
+    {
+      value: 0,
+      lable: 'Vô hiệu hóa',
+    },
+    {
+      value: null,
+      lable: 'Tất cả',
+    },
+  ];
   constructor(
     private partnerService: PartnersService,
     private formBuilder: FormBuilder,
@@ -159,13 +154,11 @@ export class PartnersComponent implements OnInit {
     this.fillterByName = e.target.value;
     this._getAllPartners();
   }
-  navmenuclick(value?: any | null) {
+  OnGetMenuClick(value: any) {
     this.fillterStatus = value;
     this._getAllPartners();
   }
-  onToggle() {
-    this.isOpenIconFillter = !this.isOpenIconFillter;
-  }
+
   cancelDialog(displayDialog: boolean, comebackStatus: boolean) {
     this.displayDialog = displayDialog;
     this.comebackStatus = comebackStatus;

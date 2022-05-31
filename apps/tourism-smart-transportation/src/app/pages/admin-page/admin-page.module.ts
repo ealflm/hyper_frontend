@@ -1,3 +1,4 @@
+import { HeaderStatusComponent } from './../../components/header-status/header-status.component';
 import { DotsMenuComponent } from './../../components/dots-menu/dots-menu.component';
 import { MapComponent } from './../../components/map/map.component';
 import { MapPageComponent } from './map/map-page.component';
@@ -85,6 +86,7 @@ const ADMIN_ROUTES: Routes = [
     ServiceDetailComponent,
     StandardPriceComponent,
     DotsMenuComponent,
+    HeaderStatusComponent,
     MapPageComponent,
     MapComponent,
   ],
