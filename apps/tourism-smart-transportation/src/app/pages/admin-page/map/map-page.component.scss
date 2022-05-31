@@ -1,0 +1,36 @@
+@import '../../../../styles.scss';
+.map-wrap {
+  @include fixed-scroll-view;
+  @include custom-scrollbar;
+  .map-container {
+    position: relative;
+    width: auto;
+    height: 100vh;
+    background-color: $primary-color;
+
+    .map-side-bar-top {
+      position: absolute;
+      right: 2%;
+      top: 3%;
+      width: 300px;
+      height: 30vh;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      @include custom-scrollbar;
+    }
+    .map-side-bar-body {
+      border-radius: 10px;
+      position: absolute;
+      right: 2%;
+      bottom: 3%;
+      width: 300px;
+      height: 62vh;
+      background-color: rgba(255, 255, 255, 0.8);
+      overflow-x: hidden;
+      overflow-y: auto;
+      @include custom-scrollbar;
+    }
+  }
+}

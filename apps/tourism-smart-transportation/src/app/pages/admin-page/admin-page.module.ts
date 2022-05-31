@@ -1,3 +1,5 @@
+import { DotsMenuComponent } from './../../components/dots-menu/dots-menu.component';
+import { MapComponent } from './../../components/map/map.component';
 import { MapPageComponent } from './map/map-page.component';
 import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
 import { MapService } from './../../services/map.service';
@@ -16,10 +18,8 @@ import { PartnersComponent } from './partners/partners.component';
 import { CustomersComponent } from './customers/customers.component';
 import { ManagerServicesComponent } from './manager-services/manager-services.component';
 import { FinanceModule } from './finance/finance.module';
-import { MapModule } from './map/map.module';
 import { DiscountComponent } from './discount/discount.component';
 import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
-import { DotsMenuComponent } from '../../components/dots-menu/dots-menu.component';
 import { ServiceDetailComponent } from './manager-services/service-detail/service-detail.component';
 import { StandardPriceComponent } from './standard-price/standard-price.component';
 
@@ -58,10 +58,10 @@ const ADMIN_ROUTES: Routes = [
       // Loading modules UILITY-SERVICES
 
       { path: 'map', component: MapPageComponent },
-      {
-        path: 'map',
-        loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
-      },
+      // {
+      //   path: 'map',
+      //   loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
+      // },
       { path: 'standard-price', component: StandardPriceComponent },
       {
         path: 'finance',
@@ -82,9 +82,11 @@ const ADMIN_ROUTES: Routes = [
     DiscountComponent,
     LimitLengthPipe,
     CustomerDetailsComponent,
-    DotsMenuComponent,
     ServiceDetailComponent,
     StandardPriceComponent,
+    DotsMenuComponent,
+    MapPageComponent,
+    MapComponent,
   ],
   imports: [
     CommonModule,
@@ -95,7 +97,6 @@ const ADMIN_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FinanceModule,
-    MapModule,
   ],
 })
 export class AdminPageModule {}

@@ -90,7 +90,9 @@ export class ServiceDetailComponent implements OnInit {
         : (this.imagePreview = `https://se32.blob.core.windows.net/admin/${tierRes.body?.photoUrl}`);
       this.deleteFile = tierRes.body?.photoUrl?.trim();
       tierRes.body.packageList.map((packageValue: any, index: any) => {
-        this.addNewPackgeForm();
+        if (index - 1) {
+          this.addNewPackgeForm();
+        }
         this._packagesForm
           .at(index)
           .get('packageName')
@@ -225,7 +227,7 @@ export class ServiceDetailComponent implements OnInit {
     this._tiersForm['price'].disable();
     this._tiersForm['description'].disable();
     this._tiersForm['promotedTitle'].disable();
-    for (let index = 0; index <= this._packagesForm.length; index++) {
+    for (let index = 0; index < this._packagesForm.length; index++) {
       this._packagesForm.at(index)?.get('limit')?.disable();
       this._packagesForm.at(index)?.get('value')?.disable();
       this._packagesForm.at(index)?.get('packageName')?.disable();
@@ -288,33 +290,30 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
     this.nomalizeDataPackageList(formData);
-    this.confirmationService.confirm({
-      accept: () => {
-        this.tierService
-          .updateTierbyId(this._tiersForm['id'].value, formData)
-          .subscribe(
-            (res) => {
-              if (res.statusCode === 201) {
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Thành công',
-                  detail: res.message,
-                });
-              }
-            },
-            (error: HttpErrorResponse) => {
-              console.log(error);
-              if (error.status === 400) {
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Lỗi',
-                  detail: error.error.message,
-                });
-              }
-            }
-          );
-      },
-    });
+    this.tierService
+      .updateTierbyId(this._tiersForm['id'].value, formData)
+      .subscribe(
+        (res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+          }
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+          if (error.status === 400) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Lỗi',
+              detail: error.error.message,
+            });
+          }
+        }
+      );
+    this.location.back();
   }
   nomalizeDataPackageList(formData: FormData) {
     let data: any = [];
@@ -402,6 +401,7 @@ export class ServiceDetailComponent implements OnInit {
         }
       }
     );
+    this.location.back();
   }
 
   // hủy thay đổi

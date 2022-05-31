@@ -30,8 +30,8 @@ export const STATUS_TIER: any = {
 };
 export const STATUS_DISCOUNT: any = {
   0: {
-    lable: 'Đang hoạt động',
-    class: 'status-disabled',
+    lable: 'Chưa kích hoạt',
+    class: 'status-inactive',
   },
   1: {
     lable: 'Kích hoạt',

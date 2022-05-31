@@ -42,7 +42,7 @@ export class ManagerServicesComponent implements OnInit {
   packageServices: Tier[] = [];
   tierStatus: any[] = [];
   //
-  fillterStatus: number | null = null;
+  fillterStatus: number | null = 1;
   fillterByName: any | null;
   totalItems = 0;
   //
