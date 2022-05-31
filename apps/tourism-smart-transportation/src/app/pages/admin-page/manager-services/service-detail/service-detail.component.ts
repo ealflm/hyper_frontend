@@ -273,7 +273,10 @@ export class ServiceDetailComponent implements OnInit {
     this.editBtnStatus = true;
     this.disableAllInputForm();
     this.confirmationService.confirm({
-      accept: () => {},
+      accept: () => {
+        this.enableAllInputForm();
+        this.onUpdate();
+      },
     });
   }
   onUpdate() {
@@ -363,7 +366,10 @@ export class ServiceDetailComponent implements OnInit {
   // create mode
   onCancle() {
     this.confirmationService.confirm({
-      accept: () => {},
+      accept: () => {
+        this.enableAllInputForm();
+        this.onSave();
+      },
     });
   }
   onSave() {
