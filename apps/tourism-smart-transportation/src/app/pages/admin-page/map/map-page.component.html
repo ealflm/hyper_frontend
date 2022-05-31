@@ -1,1 +1,67 @@
-<p>map-page works!</p>
+<div class="map-wrap">
+  <div class="map-container">
+    <tourism-smart-transportation-map></tourism-smart-transportation-map>
+    <div class="map-side-bar-top"></div>
+    <div class="map-side-bar-body"></div>
+  </div>
+  <!-- <div class="location-form">
+    <form [formGroup]="locationForm">
+      <ng-container formArrayName="locations">
+        <ng-container
+          *ngFor="let locaForm of locationsForm.controls; let i = index"
+        >
+          <div class="mt-4 grid p-fluid" [formGroupName]="i">
+            <div class="col-4">
+              <input
+                type="text"
+                pInputText
+                placeholder="Tên Trạm"
+                formControlName="stationName"
+              />
+              <div></div>
+            </div>
+            <div class="col-4">
+              <input
+                type="text"
+                pInputText
+                placeholder="Kinh độ"
+                formControlName="longitude"
+                readonly
+              />
+              <div></div>
+            </div>
+            <div class="mt-3"></div>
+            <div class="col-4">
+              <input
+                type="text"
+                pInputText
+                placeholder="Vĩ độ"
+                formControlName="latitude"
+                readonly
+              />
+              <div>
+                <!-- <small
+                *ngIf="inforsForm['name'].errors?.['required'] && isSubmit"
+                class="p-error"
+                >Tên không được bỏ trống</small
+              > -->
+  <!-- </div>
+            </div>
+          </div>
+        </ng-container>
+        <div class="text-center">
+          <button
+            [hidden]="!locationsForm.invalid"
+            [disabled]="!locationsForm.invalid"
+            pButton
+            pRipple
+            type="button"
+            label="Tạo mới"
+            class="p-button-rounded p-button-success"
+            (click)="onSaveLocation()"
+          ></button>
+        </div>
+      </ng-container>
+    </form>
+  </div>  -->
+</div>

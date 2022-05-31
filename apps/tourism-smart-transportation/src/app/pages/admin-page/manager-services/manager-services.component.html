@@ -35,13 +35,6 @@
   <div class="header-status">
     <div
       class="status-item"
-      [ngClass]="fillterStatus === null ? 'active' : ''"
-      (click)="navmenuclick(null)"
-    >
-      <span>Tất cả</span>
-    </div>
-    <div
-      class="status-item"
       [ngClass]="fillterStatus === 1 ? 'active' : ''"
       (click)="navmenuclick(1)"
     >
@@ -53,6 +46,13 @@
       (click)="navmenuclick(0)"
     >
       <span>Vô hiệu hóa</span>
+    </div>
+    <div
+      class="status-item"
+      [ngClass]="fillterStatus === null ? 'active' : ''"
+      (click)="navmenuclick(null)"
+    >
+      <span>Tất cả</span>
     </div>
     <div class="status-item-right">
       <span class="status-item-right-title">Hiển thị bộ lọc</span>

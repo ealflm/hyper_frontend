@@ -1,4 +1,3 @@
-import { MapModule } from './../admin-page/map/map.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzZorroAntdModule } from './../../nz-zorro-antd/nz-zorro-antd.module';
 import { MaterialuiModule } from './../../materialui/materialui.module';
@@ -28,7 +27,6 @@ const PARTNER_ROUTES: Routes = [
     NzZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
-    MapModule,
   ],
 })
 export class PartnerPageModule {}

@@ -47,7 +47,7 @@ export class CustomersComponent implements OnInit {
 
   //
   fillterLastName?: string | null;
-  fillterStatus?: number | null = null;
+  fillterStatus?: number | null = 1;
   //
   totalItems = 0;
   //
@@ -123,7 +123,6 @@ export class CustomersComponent implements OnInit {
   createCustomer() {}
 
   showConfirmDialog(id: string) {
-    // this.comebackStatus = false;
     if (id) {
       this.confirmationService.confirm({
         accept: () => {

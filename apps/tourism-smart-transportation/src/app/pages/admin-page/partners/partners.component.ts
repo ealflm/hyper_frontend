@@ -52,7 +52,7 @@ export class PartnersComponent implements OnInit {
   comebackStatus = false;
   //
   inforForm!: FormGroup;
-  fillterStatus: number | null = null;
+  fillterStatus: number | null = 1;
   fillterByName: any | null;
   //
   partners: Partner[] = [];

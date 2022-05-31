@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
 import {
   AbstractControl,
   ValidatorFn,
   FormControl,
   FormGroup,
+  ValidationErrors,
 } from '@angular/forms';
 // export class CustomValidators {
 //   constructor() {}
@@ -83,6 +85,26 @@ export function AgeCheck(controlName: string) {
       return;
     } else {
       return control.setErrors(null);
+    }
+  };
+}
+
+export function checkMoreThanTodayValidator(controlName: string) {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    const start: Date = formGroup.controls[controlName].value[0];
+    const time = new Date(start);
+    const today = new Date();
+    if (control?.errors && !control.errors['dateRange']) {
+      return;
+    }
+    if (start) {
+      const isMoreThanTodyValid = time.getTime() - today.getTime() >= 0;
+      if (isMoreThanTodyValid) {
+        return;
+      } else {
+        control.setErrors({ dateRange: true });
+      }
     }
   };
 }
