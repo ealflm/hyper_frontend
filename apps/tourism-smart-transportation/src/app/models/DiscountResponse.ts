@@ -1,9 +1,9 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class DiscountsResponse extends UtilPaging {
+export abstract class DiscountsResponse {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging;
+  body!: UtilPaging<Discount[]>;
 }
 
 export abstract class Discount {

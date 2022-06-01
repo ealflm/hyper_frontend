@@ -7,13 +7,28 @@
     width: auto;
     height: 100vh;
     // background-color: $primary-color;
-
+    .layer-map {
+      position: absolute;
+      right: 4%;
+      top: 1%;
+      width: 42px;
+      height: 42px;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: $black-default;
+      border-radius: 10px;
+      cursor: pointer;
+      span {
+        display: block;
+        text-align: center;
+        margin: 9px auto;
+      }
+    }
     .map-side-bar-top {
       position: absolute;
-      right: 2%;
+      right: 3.5%;
       top: 3%;
       width: 300px;
-      height: 30vh;
+      height: 25vh;
       background-color: rgba(255, 255, 255, 0.8);
       border-radius: 10px;
       overflow-x: hidden;
@@ -23,14 +38,53 @@
     .map-side-bar-body {
       border-radius: 10px;
       position: absolute;
-      right: 2%;
+      right: 3.5%;
       bottom: 3%;
       width: 300px;
-      height: 62vh;
+      height: 67vh;
       background-color: rgba(255, 255, 255, 0.8);
       overflow-x: hidden;
       overflow-y: auto;
-      @include custom-scrollbar;
+      .body-bottom-warp {
+        @include custom-scrollbar;
+        padding: 0 12px;
+      }
+    }
+  }
+}
+::ng-deep {
+  .bottom-side-bar {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    .p-button-rounded {
+      @include button-rounded-primary(57, null, null, $primary-color);
+      height: 32px;
+      margin-left: 10px;
+      color: $primary-color;
+      .p-button-label {
+        @include font-Roboto-Medium-Button;
+        color: $white-primary-color;
+      }
+    }
+  }
+}
+::ng-deep {
+  .container {
+    .header {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 15px 0 18px;
+      .header-text {
+        @include font-Roboto-Medium-Subtitle2;
+        color: $black-default;
+      }
+      .header-iconClose {
+        cursor: pointer;
+      }
+    }
+    .body-warp {
+      padding: 0px 20px 10px 15px;
     }
   }
 }

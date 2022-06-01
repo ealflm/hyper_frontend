@@ -1,0 +1,45 @@
+@import '../../../styles.scss';
+::ng-deep {
+  .header-search {
+    margin-top: 15px;
+    .p-inputtext {
+      border: none;
+      border-radius: 20px;
+      @include box-shadown-grey;
+      &:enabled:focus {
+        outline: none;
+        border-color: #ced4da;
+      }
+      &:enabled:hover {
+        border-color: #ced4da;
+      }
+    }
+    .material-icons-outlined {
+      margin-top: -12px;
+    }
+  }
+}
+::ng-deep {
+  .body-rent-station-content {
+    margin-top: 12px;
+    .body-card {
+      margin-top: 9px;
+      padding: 12px 12px 9px 12px;
+      background-color: $white-primary-color;
+      border-radius: 9px;
+      .card-header {
+        display: flex;
+        div {
+          margin: auto 0px;
+          margin-left: 0px;
+          @include font-Roboto-Regular-Body2;
+          color: $black-default;
+        }
+      }
+      .card-body {
+        @include font-Roboto-Regular-Caption;
+        color: $color-grey-text-placeholder;
+      }
+    }
+  }
+}

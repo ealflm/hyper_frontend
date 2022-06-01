@@ -1,4 +1,5 @@
 import { Transaction } from './TransactionResponse';
+import { UtilPaging } from './UtilPaging';
 export abstract class Payment {
   id?: string;
   orderId?: string;
@@ -8,15 +9,11 @@ export abstract class Payment {
   transactionList?: Transaction[];
   status?: number;
 }
-abstract class UtilPaging {
-  pageSize?: number;
-  totalItems?: number;
-  items!: Payment[];
-}
-export abstract class PaymentsResponse extends UtilPaging {
+
+export abstract class PaymentsResponse {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging;
+  body!: UtilPaging<Payment[]>;
 }
 export abstract class PaymentResponse extends Transaction {
   statusCode?: number;

@@ -1,5 +1,5 @@
 import { environment } from './../../../environments/environment';
-import { MapService } from './../../services/map.service';
+import { MapBoxService } from '../../services/map-box.service';
 import {
   Component,
   OnDestroy,
@@ -15,7 +15,7 @@ import * as mapboxgl from 'mapbox-gl';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, OnDestroy, AfterViewChecked {
-  constructor(private mapboxService: MapService) {}
+  constructor(private mapboxService: MapBoxService) {}
 
   ngOnInit(): void {}
   ngOnDestroy(): void {}

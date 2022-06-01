@@ -1,8 +1,117 @@
 <div class="map-wrap">
   <div class="map-container">
     <tourism-smart-transportation-map></tourism-smart-transportation-map>
-    <div class="map-side-bar-top"></div>
-    <div class="map-side-bar-body"></div>
+    <div
+      class="layer-map animate__animated"
+      [ngClass]="!showRightSideBarStatus ? 'animate__flipInY' : ' '"
+      *ngIf="!showRightSideBarStatus"
+      (click)="showRightSideBar()"
+    >
+      <span class="material-icons-outlined"> layers </span>
+    </div>
+    <ng-container *ngIf="showRightSideBarStatus">
+      <div
+        class="map-side-bar-top animate__animated"
+        [ngClass]="
+          showRightSideBarStatus
+            ? ' animate__fadeInRight'
+            : 'animate__fadeOutRight'
+        "
+      >
+        <div class="container">
+          <div class="header">
+            <div class="header-text">Dữ liệu bản đồ</div>
+            <div class="header-iconClose" (click)="showRightSideBar()">
+              <span
+                class="material-icons animate__animated"
+                [ngClass]="showRightSideBarStatus ? 'animate__rotateIn' : ' '"
+              >
+                close
+              </span>
+            </div>
+          </div>
+          <div class="body-warp">
+            <tourism-smart-transportation-data-map
+              [DataMapValue]="headerMenu"
+              (GetFillterValue)="onGetFillterMenu($event)"
+              (GetValueCheckBox)="onGetValueCheckBox($event)"
+            ></tourism-smart-transportation-data-map>
+          </div>
+        </div>
+      </div>
+      <div
+        class="map-side-bar-body animate__animated"
+        [ngClass]="
+          showRightSideBarStatus
+            ? ' animate__fadeInRight'
+            : ' animate__fadeOutRight'
+        "
+      >
+        <div class="container">
+          <div class="header">
+            <div class="header-text" *ngIf="fillterMenu === 'driver'">
+              Danh sách tài xế
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'route'">
+              Danh sách tuyến
+            </div>
+            <div
+              class="header-text"
+              *ngIf="
+                fillterMenu === 'bus-station' || fillterMenu === 'rent-station'
+              "
+            >
+              Danh sách trạm
+            </div>
+            <div class="header-iconClose">
+              <span
+                class="material-icons animate__animated"
+                [ngClass]="showRightSideBarStatus ? 'animate__rotateIn' : ' '"
+              >
+                close
+              </span>
+            </div>
+          </div>
+          <div class="body-bottom-warp">
+            <tourism-smart-transportation-list-drivers
+              *ngIf="fillterMenu === 'driver'"
+              [drivers]="drivers"
+              (GetFillterDriverName)="onFillterDriverByName($event)"
+            ></tourism-smart-transportation-list-drivers>
+            <!--  -->
+
+            <tourism-smart-transportation-list-stations
+              *ngIf="fillterMenu === 'bus-station'"
+              [stations]="stations"
+              (FillterStation)="onFillterStationByName($event)"
+            >
+            </tourism-smart-transportation-list-stations>
+            <!--  -->
+            <tourism-smart-transportation-list-rent-stations
+              *ngIf="fillterMenu === 'rent-station'"
+              [rent_stations]="rent_stations"
+              (GetFillterRentStation)="onFillterRentStationByName($event)"
+            ></tourism-smart-transportation-list-rent-stations>
+            <!--  -->
+            <tourism-smart-transportation-list-routes
+              *ngIf="fillterMenu === 'route'"
+              [routes]="routes"
+              (GetFillterRoute)="onFillterRouteByName($event)"
+            ></tourism-smart-transportation-list-routes>
+          </div>
+        </div>
+        <div class="bottom-side-bar" *ngIf="fillterMenu === 'bus-station'">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Tạo mới"
+            (click)="createStation()"
+            class="p-button-rounded button-background"
+          ></button>
+        </div>
+      </div>
+    </ng-container>
   </div>
   <!-- <div class="location-form">
     <form [formGroup]="locationForm">
