@@ -1,7 +1,8 @@
-import { MapService } from './../../../services/map.service';
+import { MapBoxService } from '../../../services/map-box.service';
 import { Validators, FormArray, FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 
 @Component({
   selector: 'tourism-smart-transportation-map-page',
@@ -14,11 +15,47 @@ export class MapPageComponent implements OnInit {
   markers: any[] = [];
   markerIndex = 1;
   markerArray: any[] = [];
-  constructor(private mapboxService: MapService, private fb: FormBuilder) {}
+  headerMenu: any = [
+    {
+      name: 'driver',
+      class: '',
+      hiddenCheckbox: false,
+      icon: 'person',
+      lable: 'Tài xế',
+    },
+    {
+      name: 'bus-station',
+      class: '',
+      hiddenCheckbox: false,
+      icon: 'directions_bus_filled',
+      lable: 'Trạm xe bus',
+    },
+    {
+      name: 'rent-station',
+      class: '',
+      hiddenCheckbox: false,
+      icon: 'car_rental',
+      lable: 'Trạm thuê xe',
+    },
+    {
+      name: 'route',
+      class: '',
+      hiddenCheckbox: true,
+      icon: 'route',
+      lable: 'Tuyến',
+    },
+  ];
+  fillterMenu?: string = 'driver';
+  showRightSideBarStatus = true;
+  drivers: any = [];
+  stations: any = [];
+  rent_stations: any = [];
+  routes: any = [];
+  constructor(private mapboxService: MapBoxService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.mapboxService.initializeMap();
-    // this.mapboxService.setMarker();
+    this.mapboxService.setMarker();
     this.mapboxService.getCoordinates().subscribe((res: any) => {
       this.coordinates = res;
     });
@@ -85,6 +122,26 @@ export class MapPageComponent implements OnInit {
     return result;
   }
 
+  // recive data form child components
+  onGetFillterMenu(event: any) {
+    this.fillterMenu = event;
+    console.log(this.fillterMenu);
+  }
+  onGetValueCheckBox(event: any) {
+    console.log(event);
+  }
+  // show right side bar
+  showRightSideBar() {
+    this.showRightSideBarStatus = !this.showRightSideBarStatus;
+  }
+  onFillterDriverByName(e: any) {
+    console.log(e);
+  }
+  createStation() {}
+  onChangeFillterMapDriver(e: any) {}
+  onFillterStationByName(e: any) {}
+  onFillterRentStationByName(e: any) {}
+  onFillterRouteByName(e: any) {}
   addMarker() {
     this.mapboxService.map.on('click', (e) => {
       const el = document.createElement('div');

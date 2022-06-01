@@ -1,4 +1,4 @@
-import { MapService } from './../../services/map.service';
+import { MapBoxService } from './../../services/map-box.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './../../auth/localstorage.service';
 import {
@@ -28,7 +28,7 @@ export class SideBarComponent implements OnInit {
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
-    private mapService: MapService
+    private mapboxService: MapBoxService
   ) {}
 
   ngOnInit(): void {}

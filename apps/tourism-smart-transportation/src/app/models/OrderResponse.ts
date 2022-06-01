@@ -17,10 +17,10 @@ export class OrderDetail {
   status?: number;
   totalPrice?: number;
 }
-export class OrdersResponse extends UtilPaging {
+export class OrdersResponse {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging;
+  body!: UtilPaging<Order[]>;
 }
 
 export class OrderResponse extends Order {
@@ -31,5 +31,5 @@ export class OrderResponse extends Order {
 export class OrderDetailsResponse extends OrderDetail {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging;
+  body!: UtilPaging<OrderDetail[]>;
 }

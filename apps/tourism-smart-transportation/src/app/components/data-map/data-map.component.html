@@ -1,0 +1,22 @@
+<!-- body -->
+<div
+  *ngFor="let menu of DataMapValue"
+  class="body"
+  [ngClass]="fillterValue === menu.name ? 'active' : ''"
+  (click)="onChangeFillterValue(menu.name)"
+>
+  <div class="body-content">
+    <span class="material-icons-outlined"> {{ menu.icon }} </span>
+    <div class="body-text">{{ menu.lable }}</div>
+  </div>
+  <div class="body-checkbox" [ngClass]="menu.hiddenCheckbox ? 'hidden' : ''">
+    <p-checkbox
+      class="input-checkbox"
+      type="checkbox"
+      name="groupcheckbox"
+      [value]="menu.name"
+      (onChange)="onChangeCheckBox()"
+      [(ngModel)]="selectedCheckBox"
+    ></p-checkbox>
+  </div>
+</div>

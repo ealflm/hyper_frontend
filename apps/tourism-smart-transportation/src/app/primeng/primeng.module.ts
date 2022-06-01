@@ -19,6 +19,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeTableModule } from 'primeng/treetable';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [],
@@ -42,6 +43,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     TooltipModule,
     TreeTableModule,
     InputNumberModule,
+    CheckboxModule,
   ],
   exports: [
     CardModule,
@@ -63,6 +65,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     TooltipModule,
     TreeTableModule,
     InputNumberModule,
+    CheckboxModule,
   ],
 })
 export class PrimengModule {}

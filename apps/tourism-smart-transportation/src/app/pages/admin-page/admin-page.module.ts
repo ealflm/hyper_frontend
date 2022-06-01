@@ -1,9 +1,9 @@
+import { DataMapComponent } from './../../components/data-map/data-map.component';
 import { HeaderStatusComponent } from './../../components/header-status/header-status.component';
 import { DotsMenuComponent } from './../../components/dots-menu/dots-menu.component';
 import { MapComponent } from './../../components/map/map.component';
 import { MapPageComponent } from './map/map-page.component';
 import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
-import { MapService } from './../../services/map.service';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { NzZorroAntdModule } from '../../nz-zorro-antd/nz-zorro-antd.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,10 @@ import { DiscountComponent } from './discount/discount.component';
 import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
 import { ServiceDetailComponent } from './manager-services/service-detail/service-detail.component';
 import { StandardPriceComponent } from './standard-price/standard-price.component';
+import { ListDriversComponent } from '../../components/list-drivers/list-drivers.component';
+import { ListStationsComponent } from '../../components/list-stations/list-stations.component';
+import { ListRentStationsComponent } from '../../components/list-rent-stations/list-rent-stations.component';
+import { ListRoutesComponent } from '../../components/list-routes/list-routes.component';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -89,6 +93,11 @@ const ADMIN_ROUTES: Routes = [
     HeaderStatusComponent,
     MapPageComponent,
     MapComponent,
+    DataMapComponent,
+    ListDriversComponent,
+    ListStationsComponent,
+    ListRentStationsComponent,
+    ListRoutesComponent,
   ],
   imports: [
     CommonModule,

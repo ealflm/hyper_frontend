@@ -1,11 +1,5 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class CustomersResponse extends UtilPaging {
-  statusCode?: number;
-  message?: string;
-  body?: UtilPaging;
-}
-
 export abstract class Customer {
   id?: string;
   tierId?: string;
@@ -21,6 +15,11 @@ export abstract class Customer {
   createdDate?: Date;
   modifiedDate?: Date;
   status?: number;
+}
+export abstract class CustomersResponse {
+  statusCode?: number;
+  message?: string;
+  body!: UtilPaging<Customer[]>;
 }
 export abstract class CustomerResponse extends Customer {
   statusCode?: number;

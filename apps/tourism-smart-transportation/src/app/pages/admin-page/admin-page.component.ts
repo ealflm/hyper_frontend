@@ -1,4 +1,4 @@
-import { MapService } from '../../services/map.service';
+import { MapBoxService } from '../../services/map-box.service';
 import {
   Component,
   OnInit,
@@ -12,7 +12,7 @@ import {
   styleUrls: ['./admin-page.component.scss'],
 })
 export class AdminPageComponent implements OnInit, AfterViewInit {
-  constructor(private mapService: MapService) {}
+  constructor(private mapBoxService: MapBoxService) {}
   ngAfterViewInit(): void {}
 
   ngOnInit(): void {}

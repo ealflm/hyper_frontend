@@ -18,10 +18,10 @@ export abstract class Partner {
   status?: number;
   companyName?: string;
 }
-export abstract class PartnersResponse extends UtilPaging {
+export abstract class PartnersResponse {
   statusCode?: number;
   message?: string;
-  body?: UtilPaging;
+  body!: UtilPaging<Partner[]>;
 }
 export abstract class PartnerResponse extends Partner {
   statusCode?: number;

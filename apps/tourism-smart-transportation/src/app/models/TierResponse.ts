@@ -1,3 +1,5 @@
+import { UtilPaging } from './UtilPaging';
+
 export abstract class Tier {
   id?: string;
   customerId?: string;
@@ -8,15 +10,11 @@ export abstract class Tier {
   timeEnd?: Date;
   status?: number;
 }
-abstract class UtilPaging {
-  pageSize?: number;
-  totalItems?: number;
-  items!: Tier[];
-}
-export abstract class TiersResponse extends UtilPaging {
+
+export abstract class TiersResponse {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging;
+  body!: UtilPaging<Tier[]>;
 }
 export abstract class TierResponse extends Tier {
   statusCode?: number;

@@ -1,0 +1,46 @@
+@import '../../../styles.scss';
+.body {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 20px 7px 7px;
+
+  &-content {
+    display: flex;
+
+    .material-icons {
+      color: $black-default;
+    }
+    .body-text {
+      @include font-Roboto-Regular-Body2;
+      color: $black-default;
+      padding: 2px 0 0 12px;
+    }
+  }
+  cursor: pointer;
+}
+.body:hover {
+  background-color: $background-color-grey;
+  border-radius: 9px;
+}
+.active {
+  background-color: $background-color-grey;
+  border-radius: 9px;
+}
+
+:host::ng-deep {
+  .body-checkbox {
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+      border-color: #000000;
+    }
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+      box-shadow: none;
+    }
+    .p-highlight {
+      border-color: black !important;
+      background: black !important;
+    }
+    .p-focus {
+      border-color: black !important;
+    }
+  }
+}
