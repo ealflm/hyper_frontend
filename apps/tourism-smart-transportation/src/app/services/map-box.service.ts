@@ -9,7 +9,7 @@ import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 })
 export class MapBoxService {
   map!: mapboxgl.Map;
-  map2!: mapboxgl.Map;
+  miniMap!: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/streets-v11';
   // style = 'mapbox://styles/mapbox/satellite-v9';
   lat = 10.22698;
@@ -17,7 +17,7 @@ export class MapBoxService {
   zoom = 12;
   coordinates$ = new Subject<any>();
   coordinates = this.coordinates$.asObservable();
-
+  initView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor() {
     (mapboxgl as typeof mapboxgl).accessToken = environment.mapbox.accessToken;
   }
@@ -30,25 +30,17 @@ export class MapBoxService {
       center: [this.lng, this.lat],
     });
     // this.map.addControl(new mapboxgl.NavigationControl());
-    this.map.on('style.load', function () {
-      // Possible position values are 'bottom-left', 'bottom-right', 'top-left', 'top-right'
-    });
     this.map.on('mousemove', (e) => {
       const geo = JSON.stringify(e.lngLat.wrap());
       this.coordinates$.next(geo);
     });
   }
-  initializeMap2() {
-    this.map2 = new mapboxgl.Map({
-      container: 'map2',
+  initializeMiniMap() {
+    this.miniMap = new mapboxgl.Map({
+      container: 'mini-map',
       style: this.style,
       zoom: this.zoom,
       center: [this.lng, this.lat],
-    });
-    // this.map.addControl(new mapboxgl.NavigationControl());
-    this.map2.on('mousemove', (e) => {
-      const geo = JSON.stringify(e.lngLat.wrap());
-      this.coordinates$.next(geo);
     });
   }
   getCoordinates() {
