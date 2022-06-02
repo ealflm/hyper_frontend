@@ -14,12 +14,14 @@ import * as mapboxgl from 'mapbox-gl';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class MapComponent
+  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked
+{
   constructor(private mapboxService: MapBoxService) {}
 
   ngOnInit(): void {}
   ngOnDestroy(): void {}
-  ngAfterViewChecked(): void {
-    this.mapboxService.map.resize();
-  }
+  ngAfterViewInit(): void {}
+
+  ngAfterViewChecked(): void {}
 }

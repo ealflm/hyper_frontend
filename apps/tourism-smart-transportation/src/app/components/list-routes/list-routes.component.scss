@@ -44,5 +44,8 @@
         color: $color-grey-text-placeholder;
       }
     }
+    .body-card:hover {
+      background-color: $hover-bg-color;
+    }
   }
 }

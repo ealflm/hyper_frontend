@@ -1,0 +1,32 @@
+.station-form {
+  .station-input-long {
+    width: 413px;
+    height: 49px;
+    .station-input-text-long {
+      width: 413px;
+      height: 28px;
+    }
+  }
+
+  .station-input-short {
+    margin-top: 15px;
+    width: 200px;
+    height: 49px;
+
+    .station-input-text-short {
+      width: 200px;
+      height: 28px;
+    }
+  }
+  .map-box-container {
+    position: relative;
+    width: 413px;
+    height: 300px;
+    .map-container {
+      border-radius: 9px;
+      margin-top: 5px;
+      width: auto;
+      height: 312px;
+    }
+  }
+}
