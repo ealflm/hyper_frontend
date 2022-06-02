@@ -1,3 +1,4 @@
+import { MatDialogModule } from '@angular/material/dialog';
 import { DataMapComponent } from './../../components/data-map/data-map.component';
 import { HeaderStatusComponent } from './../../components/header-status/header-status.component';
 import { DotsMenuComponent } from './../../components/dots-menu/dots-menu.component';
@@ -27,6 +28,7 @@ import { ListDriversComponent } from '../../components/list-drivers/list-drivers
 import { ListStationsComponent } from '../../components/list-stations/list-stations.component';
 import { ListRentStationsComponent } from '../../components/list-rent-stations/list-rent-stations.component';
 import { ListRoutesComponent } from '../../components/list-routes/list-routes.component';
+import { FormStationComponent } from './map/form-station/form-station.component';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -98,6 +100,7 @@ const ADMIN_ROUTES: Routes = [
     ListStationsComponent,
     ListRentStationsComponent,
     ListRoutesComponent,
+    FormStationComponent,
   ],
   imports: [
     CommonModule,
@@ -108,6 +111,7 @@ const ADMIN_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FinanceModule,
+    MatDialogModule,
   ],
 })
 export class AdminPageModule {}

@@ -7,11 +7,19 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class ListDriversComponent implements OnInit {
   @Input() drivers: any = [];
+
   @Output() GetFillterDriverName: EventEmitter<any> = new EventEmitter<any>();
+  @Output() GetIdDriver: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
 
   ngOnInit(): void {}
   onChangeFillterMapDriver(e: any) {
     this.GetFillterDriverName.emit(e.event.tagert);
+  }
+  showDetail(id?: string) {
+    this.GetIdDriver.emit({
+      showDetailStatus: true,
+      id: id,
+    });
   }
 }

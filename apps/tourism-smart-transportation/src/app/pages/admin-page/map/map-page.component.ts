@@ -1,15 +1,22 @@
 import { MapBoxService } from '../../../services/map-box.service';
 import { Validators, FormArray, FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewChecked,
+} from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 
 @Component({
   selector: 'tourism-smart-transportation-map-page',
   templateUrl: './map-page.component.html',
   styleUrls: ['./map-page.component.scss'],
 })
-export class MapPageComponent implements OnInit {
+export class MapPageComponent
+  implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked
+{
   coordinates: any;
   locationForm!: FormGroup;
   markers: any[] = [];
@@ -46,7 +53,13 @@ export class MapPageComponent implements OnInit {
     },
   ];
   fillterMenu?: string = 'driver';
+  //
   showRightSideBarStatus = true;
+  showSideBarList = false;
+  showSideBarDetail = true;
+  //
+  showDialog = false;
+  //
   drivers: any = [];
   stations: any = [];
   rent_stations: any = [];
@@ -54,13 +67,21 @@ export class MapPageComponent implements OnInit {
   constructor(private mapboxService: MapBoxService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.mapboxService.initializeMap();
-    this.mapboxService.setMarker();
-    this.mapboxService.getCoordinates().subscribe((res: any) => {
-      this.coordinates = res;
-    });
     // this._initLocationFormArray();
     // this.addMarker();
+  }
+  ngAfterViewInit() {
+    this.mapboxService.initializeMap();
+    this.mapboxService.setMarker();
+    // this.mapboxService.getCoordinates().subscribe((res: any) => {
+    //   this.coordinates = res;
+    // });
+  }
+  ngAfterViewChecked(): void {
+    this.mapboxService.map.resize();
+  }
+  ngOnDestroy() {
+    this.mapboxService.map?.remove();
   }
   _initLocationFormArray() {
     this.locationForm = this.fb.group({
@@ -121,27 +142,39 @@ export class MapPageComponent implements OnInit {
 
     return result;
   }
-
-  // recive data form child components
-  onGetFillterMenu(event: any) {
-    this.fillterMenu = event;
-    console.log(this.fillterMenu);
-  }
-  onGetValueCheckBox(event: any) {
-    console.log(event);
-  }
   // show right side bar
   showRightSideBar() {
     this.showRightSideBarStatus = !this.showRightSideBarStatus;
   }
-  onFillterDriverByName(e: any) {
-    console.log(e);
+  // show or hidden each sidebar
+  onCloseSibarList() {
+    this.showSideBarList = false;
   }
-  createStation() {}
-  onChangeFillterMapDriver(e: any) {}
-  onFillterStationByName(e: any) {}
-  onFillterRentStationByName(e: any) {}
-  onFillterRouteByName(e: any) {}
+  onHiddenSideBarDetail() {
+    this.showSideBarDetail = false;
+  }
+  onShowSideBarList() {
+    this.showSideBarList = true;
+    this.showSideBarDetail = false;
+  }
+  // recive data menu form child components
+  onGetFillterMenu(event: any) {
+    this.fillterMenu = event;
+    console.log(this.fillterMenu);
+    this.showSideBarList = true;
+    this.showSideBarDetail = false;
+  }
+  onGetValueCheckBox(event: any) {
+    console.log(event);
+  }
+
+  createStation() {
+    this.showDialog = true;
+  }
+  onHiddenDialog() {
+    this.showDialog = false;
+  }
+
   addMarker() {
     this.mapboxService.map.on('click', (e) => {
       const el = document.createElement('div');
@@ -222,5 +255,33 @@ export class MapPageComponent implements OnInit {
       });
       this.markerIndex++;
     });
+  }
+  // fillter function
+  onFillterDriverByName(e: any) {
+    console.log(e);
+  }
+  onFillterStationByName(e: any) {}
+  onFillterRentStationByName(e: any) {}
+  onFillterRouteByName(e: any) {}
+  // Get detail function
+  getDetailRoute(event: any) {
+    this.showSideBarList = false;
+    this.showSideBarDetail = true;
+    console.log(event);
+  }
+  getDetailDriver(event: any) {
+    this.showSideBarList = false;
+    this.showSideBarDetail = true;
+    console.log(event);
+  }
+  getDetailStation(event: any) {
+    this.showSideBarList = false;
+    this.showSideBarDetail = true;
+    console.log(event);
+  }
+  getDetailRentStation(event: any) {
+    this.showSideBarList = false;
+    this.showSideBarDetail = true;
+    console.log(event);
   }
 }

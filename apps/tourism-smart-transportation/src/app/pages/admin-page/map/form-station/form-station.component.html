@@ -1,0 +1,83 @@
+<p-dialog
+  header="Tạo mới trạm xe buýt"
+  [(visible)]="showDialog"
+  [blockScroll]="false"
+  [modal]="true"
+  [style]="{ width: '674px', height: '670px' }"
+  [contentStyle]="{
+    'overflow-y': 'auto',
+    'overflow-x': 'hidden',
+    'max-height': '70vh',
+    'min-height': '25vh'
+  }"
+>
+  <div class="station-form">
+    <div class="mt-4 grid p-fluid">
+      <!-- Vị trí trạm -->
+      <div class="col-12">
+        <div class="grid">
+          <div class="col-4" (click)="onCloseDialog()">Vị trí trạm</div>
+          <div class="col-8">
+            <div class="grid">
+              <div class="col-6 station-input-short" style="margin-top: 0px">
+                <div class="discount-text">
+                  Kinh độ
+                  <!-- <small
+                  *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                >
+                  không được bỏ trống</small
+                > -->
+                </div>
+
+                <input
+                  [style]="{
+                    width: '100%',
+                    height: '28px'
+                  }"
+                  class="station-input-text-short"
+                  type="text"
+                  pInputText
+                  (keyup.enter)="onSaveStation()"
+                />
+              </div>
+              <div class="col-6 station-input-short" style="margin-top: 0px">
+                <div class="discount-text">
+                  Vĩ độ
+                  <!-- <small
+                  *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                >
+                  không được bỏ trống</small
+                > -->
+                </div>
+
+                <input
+                  [style]="{
+                    width: '100%',
+                    height: '28px'
+                  }"
+                  class="station-input-text-short"
+                  type="text"
+                  pInputText
+                  (keyup.enter)="onSaveStation()"
+                />
+              </div>
+              <!-- map -->
+              <div class="col-12">
+                <div class="map-box-container" *ngIf="showDialog">
+                  <div #mapChild id="map2" class="map-container"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- thông tin chi tiết -->
+        <div class="grid">
+          <div class="col-4">Thông tin chi tiết</div>
+          <div class="col-8"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>
