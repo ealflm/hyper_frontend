@@ -3,81 +3,148 @@
   [(visible)]="showDialog"
   [blockScroll]="false"
   [modal]="true"
-  [style]="{ width: '674px', height: '670px' }"
+  [style]="{ width: '674px', height: '680px' }"
   [contentStyle]="{
     'overflow-y': 'auto',
     'overflow-x': 'hidden',
-    'max-height': '70vh',
+    'max-height': '80vh',
     'min-height': '25vh'
   }"
+  [closable]="false"
+  [draggable]="false"
 >
+  <div class="header-icon" (click)="onCloseDialog()">
+    <span class="material-icons"> close </span>
+  </div>
   <div class="station-form">
     <div class="mt-4 grid p-fluid">
       <!-- Vị trí trạm -->
-      <div class="col-12">
-        <div class="grid">
-          <div class="col-4" (click)="onCloseDialog()">Vị trí trạm</div>
-          <div class="col-8">
-            <div class="grid">
-              <div class="col-6 station-input-short" style="margin-top: 0px">
-                <div class="discount-text">
-                  Kinh độ
-                  <!-- <small
+      <form [formGroup]="locationForm">
+        <div class="col-12">
+          <div class="grid location-body">
+            <div class="col-4 header-text">Vị trí trạm</div>
+            <div class="col-8">
+              <div class="grid">
+                <div class="col-6 station-input-short" style="margin-top: 0px">
+                  <div class="station-text">
+                    Kinh độ
+                    <!-- <small
                   *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
                   không được bỏ trống</small
                 > -->
-                </div>
+                  </div>
 
-                <input
-                  [style]="{
-                    width: '100%',
-                    height: '28px'
-                  }"
-                  class="station-input-text-short"
-                  type="text"
-                  pInputText
-                  (keyup.enter)="onSaveStation()"
-                />
-              </div>
-              <div class="col-6 station-input-short" style="margin-top: 0px">
-                <div class="discount-text">
-                  Vĩ độ
-                  <!-- <small
+                  <input
+                    class="station-input-text-short"
+                    type="text"
+                    pInputText
+                    formControlName="longitude"
+                    (keyup.enter)="onSaveStation()"
+                  />
+                </div>
+                <div
+                  class="col-6 station-input-short"
+                  style="margin-top: 0px; margin-left: 12px"
+                >
+                  <div class="station-text">
+                    Vĩ độ
+                    <!-- <small
                   *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
                   không được bỏ trống</small
                 > -->
-                </div>
+                  </div>
 
-                <input
-                  [style]="{
-                    width: '100%',
-                    height: '28px'
-                  }"
-                  class="station-input-text-short"
-                  type="text"
-                  pInputText
-                  (keyup.enter)="onSaveStation()"
-                />
-              </div>
-              <!-- map -->
-              <div class="col-12">
-                <div class="map-box-container" *ngIf="showDialog">
-                  <div #mapChild id="map2" class="map-container"></div>
+                  <input
+                    class="station-input-text-short"
+                    type="text"
+                    pInputText
+                    formControlName="latitude"
+                    (keyup.enter)="onSaveStation()"
+                  />
+                </div>
+                <!-- map -->
+                <div class="col-12">
+                  <div class="map-box-container" *ngIf="showDialog">
+                    <div #mapChild id="mini-map" class="map-container"></div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- thông tin chi tiết -->
+          <div class="grid">
+            <div class="col-4 header-text">Thông tin chi tiết</div>
+            <div class="col-8">
+              <div class="col-12 station-input-long">
+                <div class="station-text">
+                  Tên
+                  <!-- <small
+                  *ngIf="
+                _customersEditForm['phone'].errors?.['required']
+            "
+                  class="p-error"
+                >
+                  không được bỏ trống
+                </small> -->
+                </div>
+                <input class="station-input-text-long" type="text" pInputText />
+              </div>
+              <div class="col-12 station-input-long">
+                <div class="station-text">
+                  Mô tả
+                  <!-- <small
+                  *ngIf="
+                _customersEditForm['phone'].errors?.['required']
+            "
+                  class="p-error"
+                >
+                  không được bỏ trống
+                </small> -->
+                </div>
+                <input class="station-input-text-long" type="text" pInputText />
+              </div>
+              <div class="col-12 station-input-long">
+                <div class="station-text">
+                  Địa chỉ
+                  <!-- <small
+                  *ngIf="
+                _customersEditForm['phone'].errors?.['required']
+            "
+                  class="p-error"
+                >
+                  không được bỏ trống
+                </small> -->
+                </div>
+                <input class="station-input-text-long" type="text" pInputText />
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- thông tin chi tiết -->
-        <div class="grid">
-          <div class="col-4">Thông tin chi tiết</div>
-          <div class="col-8"></div>
-        </div>
-      </div>
+      </form>
+    </div>
+    <div class="footer">
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Hủy"
+        (click)="cancelDialog()"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-rounded button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Lưu"
+        (click)="onSaveStation()"
+      ></button>
     </div>
   </div>
 </p-dialog>

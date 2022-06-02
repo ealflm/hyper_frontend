@@ -1,9 +1,11 @@
+@import '../../../../../styles.scss';
 .station-form {
+  margin-top: -20px;
   .station-input-long {
-    width: 413px;
+    width: 405px;
     height: 49px;
     .station-input-text-long {
-      width: 413px;
+      width: 405px;
       height: 28px;
     }
   }
@@ -17,6 +19,10 @@
       width: 200px;
       height: 28px;
     }
+    .station-text {
+      @include font-Roboto-Regular-Body2;
+      color: $black-default;
+    }
   }
   .map-box-container {
     position: relative;
@@ -26,7 +32,46 @@
       border-radius: 9px;
       margin-top: 5px;
       width: auto;
-      height: 312px;
+      height: 300px;
+    }
+  }
+  .location-body {
+    border-top: 1px solid $color-line-grey;
+    border-bottom: 1px solid $color-line-grey;
+  }
+  .header-text {
+    @include font-Roboto-Medium-Subtitle2;
+    color: $black-default;
+  }
+}
+.header-icon {
+  position: absolute;
+  right: 5%;
+  top: 3%;
+  cursor: pointer;
+}
+::ng-deep {
+  .p-dialog {
+    border-radius: 9px;
+    .p-dialog-content {
+      padding: 0 1.5rem 0 1.5rem;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+    }
+  }
+
+  .footer {
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid $color-line-grey;
+    display: flex;
+    justify-content: end;
+    .p-button-outlined {
+      @include button-outlined-primary(66, 32, null, $primary-color);
+      margin-right: 5px;
+    }
+    .button-rounded {
+      @include button-rounded-primary(57, 32, null, $primary-color);
     }
   }
 }
