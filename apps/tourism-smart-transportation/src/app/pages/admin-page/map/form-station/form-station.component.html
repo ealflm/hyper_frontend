@@ -1,5 +1,5 @@
 <p-dialog
-  header="Tạo mới trạm xe buýt"
+  [header]="editMode ? 'Chỉnh sửa trạm xe buýt' : 'Tạo mới trạm xe buýt'"
   [(visible)]="showDialog"
   [blockScroll]="false"
   [modal]="true"
@@ -81,45 +81,63 @@
             <div class="col-8">
               <div class="col-12 station-input-long">
                 <div class="station-text">
-                  Tên
-                  <!-- <small
-                  *ngIf="
-                _customersEditForm['phone'].errors?.['required']
+                  Tên Trạm
+                  <small
+                    *ngIf="
+                _locationForm['title'].errors?.['required']
             "
-                  class="p-error"
-                >
-                  không được bỏ trống
-                </small> -->
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
                 </div>
-                <input class="station-input-text-long" type="text" pInputText />
+                <input
+                  class="station-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="title"
+                  (keyup.enter)="onSaveStation()"
+                />
               </div>
               <div class="col-12 station-input-long">
                 <div class="station-text">
                   Mô tả
-                  <!-- <small
-                  *ngIf="
-                _customersEditForm['phone'].errors?.['required']
+                  <small
+                    *ngIf="
+                _locationForm['description'].errors?.['required']
             "
-                  class="p-error"
-                >
-                  không được bỏ trống
-                </small> -->
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
                 </div>
-                <input class="station-input-text-long" type="text" pInputText />
+                <input
+                  class="station-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="description"
+                  (keyup.enter)="onSaveStation()"
+                />
               </div>
               <div class="col-12 station-input-long">
                 <div class="station-text">
                   Địa chỉ
-                  <!-- <small
-                  *ngIf="
-                _customersEditForm['phone'].errors?.['required']
+                  <small
+                    *ngIf="
+                _locationForm['address'].errors?.['required']
             "
-                  class="p-error"
-                >
-                  không được bỏ trống
-                </small> -->
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
                 </div>
-                <input class="station-input-text-long" type="text" pInputText />
+                <input
+                  class="station-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="address"
+                  (keyup.enter)="onSaveStation()"
+                />
               </div>
             </div>
           </div>
@@ -148,3 +166,4 @@
     </div>
   </div>
 </p-dialog>
+<p-toast position="top-right"></p-toast>

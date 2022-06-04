@@ -29,6 +29,10 @@ import { ListStationsComponent } from '../../components/list-stations/list-stati
 import { ListRentStationsComponent } from '../../components/list-rent-stations/list-rent-stations.component';
 import { ListRoutesComponent } from '../../components/list-routes/list-routes.component';
 import { FormStationComponent } from './map/form-station/form-station.component';
+import { StationDetailComponent } from '../../components/station-detail/station-detail.component';
+import { RentStationDetailComponent } from '../../components/rent-station-detail/rent-station-detail.component';
+import { DriverDetailComponent } from '../../components/driver-detail/driver-detail.component';
+import { RouteDetailComponent } from '../../components/route-detail/route-detail.component';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -101,6 +105,10 @@ const ADMIN_ROUTES: Routes = [
     ListRentStationsComponent,
     ListRoutesComponent,
     FormStationComponent,
+    StationDetailComponent,
+    RentStationDetailComponent,
+    DriverDetailComponent,
+    RouteDetailComponent,
   ],
   imports: [
     CommonModule,

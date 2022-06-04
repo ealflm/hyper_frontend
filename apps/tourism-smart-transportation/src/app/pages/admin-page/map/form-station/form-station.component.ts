@@ -1,3 +1,6 @@
+import { MessageService } from 'primeng/api';
+import { MapService } from './../../../../services/map.service';
+import { Station, StationResponse } from './../../../../models/Station';
 import { map } from 'rxjs';
 import { FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
 import { environment } from './../../../../../environments/environment.prod';
@@ -28,14 +31,9 @@ export class FormStationComponent
 {
   private _dialog = false;
   afterViewInit = false;
+  @Input() idStation?: string;
   @Input() set showDialog(value: boolean) {
-    // console.log('this.value ', value);
-    // console.log('after', this.afterViewInit);
-
-    // if (value && this.afterViewInit) {
     this._dialog = value;
-    // console.log('this   ppp   ', value);
-    // }
   }
   get showDialog(): boolean {
     return this._dialog;
@@ -49,28 +47,48 @@ export class FormStationComponent
   markerArray: any[] = [];
   //
   locationForm!: FormGroup;
-  constructor(private mapboxService: MapBoxService, private fb: FormBuilder) {
-    // console.log('contructor');
-  }
+  editMode = false;
+  constructor(
+    private mapboxService: MapBoxService,
+    private fb: FormBuilder,
+    private mapService: MapService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
-    // console.log('OnInit');
-    // this.mapboxService.setMarker();
-
     this._initLocationForm();
   }
   // khoi tao dom
-  ngAfterViewInit() {
-    // console.log('form after view init');
-    // this.afterViewInit = true;
-  }
+  ngAfterViewInit() {}
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.initView$.value) {
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
-      this.addMarker();
 
+      if (this.idStation) {
+        this.editMode = true;
+        this.mapService
+          .getStationById(this.idStation)
+          .subscribe((stationRes: StationResponse) => {
+            this._locationForm['id'].setValue(stationRes.body.id);
+            this._locationForm['longitude'].setValue(stationRes.body.longitude);
+            this._locationForm['latitude'].setValue(stationRes.body.latitude);
+            this._locationForm['title'].setValue(stationRes.body.title);
+            this._locationForm['description'].setValue(
+              stationRes.body.description
+            );
+            this._locationForm['address'].setValue(stationRes.body.address);
+            if (stationRes.body.longitude && stationRes.body.latitude) {
+              this.setSationMarker(
+                stationRes.body.longitude,
+                stationRes.body.latitude
+              );
+            }
+          });
+      } else if (!this.idStation) {
+        this.addMarker();
+      }
       this.mapboxService.initView$.next(true);
     }
   }
@@ -84,18 +102,19 @@ export class FormStationComponent
     this.hiddenDialog.emit();
     this._dialog = false;
   }
-  onSaveStation() {}
-
   _initLocationForm() {
     this.locationForm = this.fb.group({
-      longitude: ['', [Validators.required]],
-      latitude: ['', [Validators.required]],
+      id: [''],
+      title: ['', [Validators.required]],
+      description: [''],
+      address: ['', Validators.required],
+      longitude: [{ value: '', disabled: true }, [Validators.required]],
+      latitude: [{ value: '', disabled: true }, [Validators.required]],
     });
   }
   get _locationForm() {
     return this.locationForm.controls;
   }
-
   addMarker() {
     const el = document.createElement('div');
     const width = 40;
@@ -119,6 +138,75 @@ export class FormStationComponent
         this._locationForm['latitude'].setValue(lngLat.lat);
       });
     });
+  }
+  setSationMarker(longitude: number, latitude: number) {
+    const el = document.createElement('div');
+    const width = 40;
+    const height = 40;
+    el.className = 'marker';
+    el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+    el.style.width = `${width}px`;
+    el.style.height = `${height}px`;
+    el.style.backgroundSize = '100%';
+    el.style.cursor = 'pointer';
+    const marker = new mapboxgl.Marker(el, { draggable: true })
+      .setLngLat([longitude, latitude])
+      .addTo(this.mapboxService.miniMap);
+    marker.on('dragend', () => {
+      const lngLat = marker.getLngLat();
+      this._locationForm['longitude'].setValue(lngLat.lng);
+      this._locationForm['latitude'].setValue(lngLat.lat);
+    });
+  }
+  onSaveStation() {
+    this._locationForm['longitude'].enable();
+    this._locationForm['latitude'].enable();
+    if (this.locationForm.invalid) return;
+    if (this.editMode) {
+      const station: Station = {
+        id: this._locationForm['id'].value,
+        title: this._locationForm['title'].value,
+        description: this._locationForm['description'].value,
+        address: this._locationForm['address'].value,
+        longitude: this._locationForm['longitude'].value,
+        latitude: this._locationForm['latitude'].value,
+        status: 1,
+      };
+      this.mapService
+        .updateStation(station.id, station)
+        .subscribe((response) => {
+          if (response.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: response.message,
+            });
+          }
+        });
+    } else {
+      const station: Station = {
+        id: '',
+        title: this._locationForm['title'].value,
+        description: this._locationForm['description'].value,
+        address: this._locationForm['address'].value,
+        longitude: this._locationForm['longitude'].value,
+        latitude: this._locationForm['latitude'].value,
+        status: 1,
+      };
+      this.mapService.createStation(station).subscribe((stationRes) => {
+        // console.log(stationRes);
+        if (stationRes.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: stationRes.message,
+          });
+        }
+      });
+    }
+    this._locationForm['longitude'].disable();
+    this._locationForm['latitude'].disable();
+    this.onCloseDialog();
   }
   // FORM ARRAY
   // _initLocationFormArray() {

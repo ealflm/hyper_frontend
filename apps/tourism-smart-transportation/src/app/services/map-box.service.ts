@@ -1,4 +1,10 @@
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import {
+  StationsResponse,
+  Station,
+  StationResponse,
+} from './../models/Station';
+import { MapService } from './map.service';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import * as mapboxgl from 'mapbox-gl';
@@ -18,7 +24,8 @@ export class MapBoxService {
   coordinates$ = new Subject<any>();
   coordinates = this.coordinates$.asObservable();
   initView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  constructor() {
+  currentBusStationMarkers: any = [];
+  constructor(private mapService: MapService) {
     (mapboxgl as typeof mapboxgl).accessToken = environment.mapbox.accessToken;
   }
 
@@ -128,25 +135,35 @@ export class MapBoxService {
       });
     });
   }
-  setMarkerDriver() {
-    this.getMarkers().map((marker) => {
-      console.log(marker);
-      const el = document.createElement('div');
+
+  setBusStationMarkers(busStations: Station[]) {
+    busStations.map((marker) => {
+      // console.log(marker);
+      const elStationMarker = document.createElement('div');
+      elStationMarker.id = marker.id;
       const width = 40;
       const height = 40;
-      el.className = 'marker';
-      el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
-      el.style.width = `${width}px`;
-      el.style.height = `${height}px`;
-      el.style.backgroundSize = '100%';
-      el.style.cursor = 'pointer';
+      elStationMarker.className = 'marker';
+      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      elStationMarker.style.width = `${width}px`;
+      elStationMarker.style.height = `${height}px`;
+      elStationMarker.style.backgroundSize = '100%';
+      elStationMarker.style.cursor = 'pointer';
 
-      const markerDiv = new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates as [number, number])
+      const markerDiv = new mapboxgl.Marker(elStationMarker)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
         .addTo(this.map);
       markerDiv.getElement().addEventListener('click', () => {
         alert('clicked');
       });
+      this.currentBusStationMarkers.push(markerDiv);
     });
+  }
+  removeBusStationMarker() {
+    if (this.currentBusStationMarkers !== null) {
+      for (let i = this.currentBusStationMarkers.length - 1; i >= 0; i--) {
+        this.currentBusStationMarkers[i].remove();
+      }
+    }
   }
 }

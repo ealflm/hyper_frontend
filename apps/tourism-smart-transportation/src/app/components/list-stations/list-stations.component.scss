@@ -8,19 +8,29 @@
       @include box-shadown-grey;
       &:enabled:focus {
         outline: none;
-        border-color: #ced4da;
+        border-color: none;
       }
       &:enabled:hover {
-        border-color: #ced4da;
+        border-color: none;
       }
     }
+
     .material-icons-outlined {
       margin-top: -12px;
     }
   }
 }
 ::ng-deep {
+  .p-inputtext:enabled:focus {
+    outline: none;
+    border-color: none !important;
+  }
+}
+::ng-deep {
   .body-station-content {
+    @include custom-scrollbar;
+    overflow: auto;
+    height: 50vh;
     margin-top: 12px;
     .body-card {
       cursor: pointer;

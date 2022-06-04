@@ -41,13 +41,11 @@
             <div class="header-text" *ngIf="fillterMenu === 'route'">
               Danh sách tuyến
             </div>
-            <div
-              class="header-text"
-              *ngIf="
-                fillterMenu === 'bus-station' || fillterMenu === 'rent-station'
-              "
-            >
+            <div class="header-text" *ngIf="fillterMenu === 'bus-station'">
               Danh sách trạm
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'rent-station'">
+              Danh sách trạm thuê xe
             </div>
             <div class="header-iconClose" (click)="onCloseSibarList()">
               <span
@@ -119,19 +117,23 @@
               </span>
               <div>Chi tiết tài xế</div>
             </div>
-            <div
-              class="header-text"
-              *ngIf="
-                fillterMenu === 'rent-station' || fillterMenu === 'bus-station'
-              "
-            >
+            <div class="header-text" *ngIf="fillterMenu === 'bus-station'">
               <span
                 class="material-icons-outlined"
                 (click)="onShowSideBarList()"
               >
                 navigate_before
               </span>
-              <div>Chi tiết trạm</div>
+              <div>Chi tiết trạm xe buýt</div>
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'rent-station'">
+              <span
+                class="material-icons-outlined"
+                (click)="onShowSideBarList()"
+              >
+                navigate_before
+              </span>
+              <div>Chi tiết trạm thuê xe</div>
             </div>
             <div class="header-text" *ngIf="fillterMenu === 'route'">
               <span
@@ -159,14 +161,31 @@
           </div>
 
           <!-- tạo 4 component for detail 4 cái -->
+          <tourism-smart-transportation-station-detail
+            *ngIf="fillterMenu === 'bus-station' && showSideBarDetail"
+            [StationDetail]="stationDetail"
+            (GetStationId)="onEditStation($event)"
+          ></tourism-smart-transportation-station-detail>
           <!--  -->
+          <tourism-smart-transportation-rent-station-detail
+            *ngIf="fillterMenu === 'rent-station' && showSideBarDetail"
+          ></tourism-smart-transportation-rent-station-detail>
           <!--  -->
           <!--  -->
         </div>
       </div>
     </ng-container>
   </div>
-  <!-- <div class="location-form">
+</div>
+
+<tourism-smart-transportation-form-station
+  [showDialog]="showDialog"
+  (hiddenDialog)="onHiddenDialog()"
+  [idStation]="idStation"
+></tourism-smart-transportation-form-station>
+<p-toast position="top-right"></p-toast>
+
+<!-- <div class="location-form">
     <form [formGroup]="locationForm">
       <ng-container formArrayName="locations">
         <ng-container
@@ -207,7 +226,7 @@
                 class="p-error"
                 >Tên không được bỏ trống</small
               > -->
-  <!-- </div>
+<!-- </div>
             </div>
           </div>
         </ng-container>
@@ -226,9 +245,3 @@
       </ng-container>
     </form>
   </div>  -->
-</div>
-
-<tourism-smart-transportation-form-station
-  [showDialog]="showDialog"
-  (hiddenDialog)="onHiddenDialog()"
-></tourism-smart-transportation-form-station>

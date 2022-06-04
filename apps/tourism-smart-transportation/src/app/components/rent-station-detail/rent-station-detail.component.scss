@@ -1,0 +1,17 @@
+@import '../../../styles.scss';
+::ng-deep {
+  .rent-station-detail {
+    margin-bottom: 12px;
+    .rent-station-container {
+      margin-left: 22px;
+      margin-right: 22px;
+      display: flex;
+      .rent-station-title {
+        flex: 27%;
+      }
+      .rent-station-content {
+        text-align: end;
+      }
+    }
+  }
+}
