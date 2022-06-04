@@ -14,7 +14,7 @@ export class ListDriversComponent implements OnInit {
 
   ngOnInit(): void {}
   onChangeFillterMapDriver(e: any) {
-    this.GetFillterDriverName.emit(e.event.tagert);
+    this.GetFillterDriverName.emit(e.target.value);
   }
   showDetail(id?: string) {
     this.GetIdDriver.emit({

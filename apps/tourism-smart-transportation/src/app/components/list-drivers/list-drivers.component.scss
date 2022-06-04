@@ -1,6 +1,7 @@
 @import '../../../styles.scss';
 ::ng-deep {
   .header-search {
+    overflow: hidden;
     margin-top: 15px;
     .p-inputtext {
       border: none;
@@ -21,6 +22,9 @@
 }
 ::ng-deep {
   .body-bottom-content {
+    @include custom-scrollbar;
+    overflow: auto;
+    height: 55vh;
     margin-top: 12px;
     .body-card {
       cursor: pointer;

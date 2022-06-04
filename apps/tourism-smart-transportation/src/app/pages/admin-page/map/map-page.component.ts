@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { MapBoxService } from '../../../services/map-box.service';
 import { Validators, FormArray, FormGroup, FormBuilder } from '@angular/forms';
 import {
@@ -8,6 +9,8 @@ import {
   AfterViewChecked,
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { MapService } from '../../../services/map.service';
+import { Station, StationsResponse } from '../../../models/Station';
 
 @Component({
   selector: 'tourism-smart-transportation-map-page',
@@ -51,25 +54,40 @@ export class MapPageComponent
   ];
   fillterMenu?: string = 'driver';
   //
+  // fillterDriverName = '';
+  // fillterStationTitle = '';
+  //
   showRightSideBarStatus = true;
   showSideBarList = true;
   showSideBarDetail = false;
   //
   showDialog = false;
   //
+  busStations: Station[] = [];
+
+  //
   drivers: any = [];
   stations: any = [];
   rent_stations: any = [];
   routes: any = [];
-  constructor(private mapboxService: MapBoxService, private fb: FormBuilder) {}
+  //
+  stationDetail!: Station;
+  //
+  idStation = '';
+  constructor(
+    private mapboxService: MapBoxService,
+    private fb: FormBuilder,
+    private mapService: MapService
+  ) {}
 
   ngOnInit(): void {
     // this._initLocationFormArray();
     // this.addMarker();
+    this.getBusStationMarkers();
   }
   ngAfterViewInit() {
     this.mapboxService.initializeMap();
-    this.mapboxService.setMarker();
+    // this.mapboxService.setMarker();
     // console.log('map page after view init');
     // this.mapboxService.getCoordinates().subscribe((res: any) => {
     //   this.coordinates = res;
@@ -137,29 +155,64 @@ export class MapPageComponent
   // recive data menu form child components
   onGetFillterMenu(event: any) {
     this.fillterMenu = event;
-    console.log(this.fillterMenu);
     this.showSideBarList = true;
     this.showSideBarDetail = false;
+    // console.log(this.fillterMenu);
+    if (this.fillterMenu === 'bus-station') {
+      this.getAllStations();
+    }
   }
-  onGetValueCheckBox(event: any) {
-    console.log(event);
-  }
+  onGetValueCheckBox(vakueCheckbox: any) {
+    if (vakueCheckbox.length === 0) {
+      this.mapboxService.removeBusStationMarker();
+    } else {
+      this.getBusStationMarkers();
+      vakueCheckbox.find((element: any) => {
+        console.log(element);
 
+        if (element === 'bus-station') {
+          this.mapboxService.setBusStationMarkers(this.busStations);
+        } else if (element !== 'bus-station' || element == []) {
+          this.mapboxService.removeBusStationMarker();
+        }
+        if (element === 'rent-station') {
+          console.log('rent-station == true');
+        } else if (element !== 'rent-station' || element == []) {
+          console.log('rent-station == false');
+        }
+        if (element === 'driver') {
+          console.log('driver == true');
+        } else if (element !== 'rent-station' || element == []) {
+          console.log('driver == false');
+        }
+      });
+    }
+
+    // this.mapboxService.setBusStationMarkers();
+  }
+  // action in form child components
   createStation() {
     this.showDialog = true;
     this.mapboxService.initView$.next(false);
   }
+  onEditStation(stationId: string) {
+    this.showDialog = true;
+    this.mapboxService.initView$.next(false);
+    this.idStation = stationId;
+  }
   onHiddenDialog() {
     this.showDialog = false;
+    this.onShowSideBarList();
   }
 
   // fillter function
-  onFillterDriverByName(e: any) {
-    console.log(e);
+  onFillterDriverByName(name: any) {}
+  onFillterStationByName(title: any) {
+    this.getAllStations(title);
   }
-  onFillterStationByName(e: any) {}
   onFillterRentStationByName(e: any) {}
   onFillterRouteByName(e: any) {}
+
   // Get detail function
   getDetailRoute(event: any) {
     this.showSideBarList = false;
@@ -174,11 +227,43 @@ export class MapPageComponent
   getDetailStation(event: any) {
     this.showSideBarList = false;
     this.showSideBarDetail = true;
-    console.log(event);
+    this.mapService.getStationById(event.id).subscribe((stationRes) => {
+      this.stationDetail = stationRes.body;
+    });
   }
   getDetailRentStation(event: any) {
     this.showSideBarList = false;
     this.showSideBarDetail = true;
     console.log(event);
+  }
+
+  //Call API
+  getBusStationMarkers() {
+    this.mapService
+      .getStationOnMap()
+      .pipe(
+        map((stationRes: StationsResponse) => {
+          this.busStations = stationRes.body.items.map((station: Station) => {
+            return {
+              id: station.id,
+              title: station.title,
+              description: station.description,
+              address: station.address,
+              longitude: station.longitude,
+              latitude: station.latitude,
+              status: station.status,
+            };
+          });
+        })
+      )
+      .subscribe();
+  }
+  //
+  getAllStations(fillterTitle?: string) {
+    this.mapService
+      .getAllStation(fillterTitle)
+      .subscribe((stationsRes: StationsResponse) => {
+        this.stations = stationsRes.body.items;
+      });
   }
 }

@@ -1,0 +1,22 @@
+@import '../../../styles.scss';
+::ng-deep {
+  .station-detail {
+    .station-container {
+      margin-left: 22px;
+      margin-right: 22px;
+      display: flex;
+      .station-title {
+        flex: 27%;
+      }
+      .station-content {
+        text-align: end;
+      }
+    }
+    .station-footer {
+      padding: 12px;
+      text-align: end;
+      @include button-outlined-primary(67, 32, null, $primary-color);
+      box-shadow: none;
+    }
+  }
+}

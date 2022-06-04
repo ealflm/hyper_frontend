@@ -17,6 +17,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.mapboxService.initializeMap2();
   }
   ngOnDestroy(): void {
-    this.mapboxService.map.remove();
+    // this.mapboxService.map.remove();
   }
 }

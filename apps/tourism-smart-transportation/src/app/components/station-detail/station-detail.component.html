@@ -1,0 +1,55 @@
+<div class="station-detail">
+  <div style="margin-top: 10px"></div>
+  <div class="station-container">
+    <div class="station-title">
+      <div>Tên</div>
+    </div>
+    <div class="station-content">
+      <div>{{ StationDetail?.title }}</div>
+    </div>
+  </div>
+  <div class="station-container">
+    <div class="station-title">
+      <div>Mô tả</div>
+    </div>
+    <div class="station-content">
+      <div>{{ StationDetail?.description }}</div>
+    </div>
+  </div>
+  <div class="station-container">
+    <div class="station-title">
+      <div>Địa chỉ</div>
+    </div>
+    <div class="station-content">
+      <div>{{ StationDetail?.address }}</div>
+    </div>
+  </div>
+  <div class="station-container">
+    <div class="station-title">
+      <div>Kinh độ</div>
+    </div>
+    <div class="station-content">
+      <div>{{ StationDetail?.longitude }}</div>
+    </div>
+  </div>
+
+  <div class="station-container">
+    <div class="station-title">
+      <div>Vĩ độ</div>
+    </div>
+    <div class="station-content">
+      <div>{{ StationDetail?.latitude }}</div>
+    </div>
+  </div>
+  <div class="station-footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Chỉnh sửa"
+      (click)="editStation(StationDetail!.id)"
+    ></button>
+  </div>
+</div>

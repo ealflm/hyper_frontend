@@ -12,13 +12,16 @@
 </div>
 
 <div class="body-station-content">
-  <div class="body-card" (click)="showDetail()">
+  <div
+    *ngFor="let station of stations"
+    class="body-card"
+    (click)="showDetail(station.id)"
+  >
     <div class="card-header">
-      <div>Trạm dừng số 8</div>
+      <div>{{ station.title }}</div>
     </div>
     <div class="card-body">
-      <div>89,Suối Mây, Phú Quốc</div>
+      <div>{{ station.address }}</div>
     </div>
   </div>
-  <!--  -->
 </div>
