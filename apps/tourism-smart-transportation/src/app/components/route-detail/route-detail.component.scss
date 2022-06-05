@@ -1,0 +1,21 @@
+@import '../../../styles.scss';
+::ng-deep {
+  .route-detail {
+    margin-bottom: 12px;
+    .route-container {
+      margin-left: 22px;
+      margin-right: 22px;
+      display: flex;
+      .route-title {
+        @include font-Roboto-Regular-Body2;
+        color: $black-default;
+        flex: 27%;
+      }
+      .route-content {
+        @include font-Roboto-Regular-Body2;
+        color: $color-grey-text-placeholder;
+        text-align: end;
+      }
+    }
+  }
+}

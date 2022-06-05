@@ -1,4 +1,4 @@
-import { Station } from './../../models/Station';
+import { Station } from './../../models/StationResponse';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({

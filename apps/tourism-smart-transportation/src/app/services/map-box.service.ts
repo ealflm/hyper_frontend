@@ -1,8 +1,9 @@
+import { RentStation } from './../models/RentStationResponse';
 import {
   StationsResponse,
   Station,
   StationResponse,
-} from './../models/Station';
+} from './../models/StationResponse';
 import { MapService } from './map.service';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -25,16 +26,17 @@ export class MapBoxService {
   coordinates = this.coordinates$.asObservable();
   initView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentBusStationMarkers: any = [];
+  currentRentStationMarkers: any = [];
   constructor(private mapService: MapService) {
     (mapboxgl as typeof mapboxgl).accessToken = environment.mapbox.accessToken;
   }
 
-  initializeMap() {
+  initializeMap(longitude: number, latitude: number, zoom: number) {
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
-      zoom: this.zoom,
-      center: [this.lng, this.lat],
+      zoom: zoom,
+      center: [longitude, latitude],
     });
     // this.map.addControl(new mapboxgl.NavigationControl());
     this.map.on('mousemove', (e) => {
@@ -48,6 +50,13 @@ export class MapBoxService {
       style: this.style,
       zoom: this.zoom,
       center: [this.lng, this.lat],
+    });
+  }
+  flyToMarker(longitude: number, latitude: number) {
+    this.map.flyTo({
+      zoom: 17,
+      center: [longitude, latitude],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
   }
   getCoordinates() {
@@ -108,34 +117,38 @@ export class MapBoxService {
     ];
     return geoJson;
   }
-  setMarker() {
-    this.getMarkers().map((marker) => {
+  setRentStationMarkers(rentStations: RentStation[]) {
+    rentStations.map((marker) => {
       const el = document.createElement('div');
+      el.id = marker.id;
       const width = 40;
       const height = 40;
       el.className = 'marker';
-      el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      el.style.backgroundImage = `url('../../../assets/image/rent-station.png')`;
       el.style.width = `${width}px`;
       el.style.height = `${height}px`;
       el.style.backgroundSize = '100%';
       el.style.cursor = 'pointer';
 
       const markerDiv = new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates as [number, number])
-        .addTo(this.map)
-        .setPopup(
-          new mapboxgl.Popup({ offset: 25 }).setHTML(`
-        <h3>${marker.properties.title}</h3>
-        <p>${marker.properties.description}</p>
-        `)
-        );
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.map);
       markerDiv.getElement().addEventListener('click', () => {
-        markerDiv.togglePopup();
-        alert('clicked');
+        if (marker.longitude && marker.latitude) {
+          this.flyToMarker(marker.longitude, marker.latitude);
+        }
       });
+      this.currentRentStationMarkers.push(markerDiv);
     });
   }
-
+  removeRentStationMarker() {
+    if (this.currentRentStationMarkers !== null) {
+      for (let i = this.currentRentStationMarkers.length - 1; i >= 0; i--) {
+        this.currentRentStationMarkers[i].remove();
+      }
+    }
+  }
+  // bus stations
   setBusStationMarkers(busStations: Station[]) {
     busStations.map((marker) => {
       // console.log(marker);
@@ -152,9 +165,21 @@ export class MapBoxService {
 
       const markerDiv = new mapboxgl.Marker(elStationMarker)
         .setLngLat([marker.longitude, marker.latitude] as [number, number])
-        .addTo(this.map);
+        .addTo(this.map)
+        .setPopup(
+          new mapboxgl.Popup({ offset: 25 }).setHTML(`
+        <h3>${marker.title}</h3>
+        <p>${marker.description}</p>
+        `)
+        );
+      // markerDiv.getElement().addEventListener('mouseenter', () => {
+      //   markerDiv.togglePopup();
+      // });
       markerDiv.getElement().addEventListener('click', () => {
-        alert('clicked');
+        if (marker.longitude && marker.latitude) {
+          this.flyToMarker(marker.longitude, marker.latitude);
+          markerDiv.getPopup();
+        }
       });
       this.currentBusStationMarkers.push(markerDiv);
     });

@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class DataMapComponent implements OnInit {
   @Input() DataMapValue: any = [];
+  @Input() CheckBoxValue: string[] = [];
   @Output() GetFillterValue: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetValueCheckBox: EventEmitter<any> = new EventEmitter<any>();
   selectedCheckBox: string[] = [];
@@ -15,6 +16,7 @@ export class DataMapComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.selectedCheckBox);
+    this.selectedCheckBox = this.CheckBoxValue;
   }
   onChangeFillterValue(value: string) {
     this.fillterValue = value;

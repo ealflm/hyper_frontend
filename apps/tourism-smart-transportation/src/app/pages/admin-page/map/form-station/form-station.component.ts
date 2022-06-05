@@ -1,6 +1,6 @@
 import { MessageService } from 'primeng/api';
 import { MapService } from './../../../../services/map.service';
-import { Station, StationResponse } from './../../../../models/Station';
+import { Station, StationResponse } from './../../../../models/StationResponse';
 import { map } from 'rxjs';
 import { FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
 import { environment } from './../../../../../environments/environment.prod';
@@ -87,6 +87,8 @@ export class FormStationComponent
             }
           });
       } else if (!this.idStation) {
+        this.editMode = false;
+        this.setEmtyInitForm();
         this.addMarker();
       }
       this.mapboxService.initView$.next(true);
@@ -95,10 +97,21 @@ export class FormStationComponent
   ngOnDestroy(): void {
     // this.mapboxService.initView$.unsubscribe();
   }
+  setEmtyInitForm() {
+    this._locationForm['id'].setValue('');
+    this._locationForm['longitude'].setValue('');
+    this._locationForm['latitude'].setValue('');
+    this._locationForm['title'].setValue('');
+    this._locationForm['description'].setValue('');
+    this._locationForm['address'].setValue('');
+  }
   cancelDialog() {
+    this.setEmtyInitForm();
     this.onCloseDialog();
   }
   onCloseDialog() {
+    this.setEmtyInitForm();
+
     this.hiddenDialog.emit();
     this._dialog = false;
   }

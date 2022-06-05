@@ -1,7 +1,7 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class Station {
-  id?: string;
+export class Station {
+  id!: string;
   title?: string;
   description?: string;
   address?: string;

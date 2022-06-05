@@ -1,8 +1,13 @@
 import {
+  RentStation,
+  RentStationResponse,
+  RentStationsResponse,
+} from './../models/RentStationResponse';
+import {
   Station,
   StationResponse,
   StationsResponse,
-} from './../models/Station';
+} from './../models/StationResponse';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../environments/environment.prod';
@@ -44,16 +49,21 @@ export class MapService {
     );
   }
   // rent-station
-  getAllRentStation(title?: string): Observable<any> {
+  getAllRentStation(title?: string): Observable<RentStationsResponse> {
     let queryParams = new HttpParams();
     if (title) {
       queryParams = queryParams.append('Title', title);
     }
-    return this.http.get<any>(`${this.rentStationApiUrl}`, {
+    return this.http.get<RentStationsResponse>(`${this.rentStationApiUrl}`, {
       params: queryParams,
     });
   }
-  getRentStationOnMap(): Observable<any> {
-    return this.http.get<any>(`${this.stationApiURL}`);
+  getRentStationOnMap(): Observable<RentStationsResponse> {
+    return this.http.get<RentStationsResponse>(`${this.rentStationApiUrl}`);
+  }
+  getRentStationById(id: string): Observable<RentStationResponse> {
+    return this.http.get<RentStationResponse>(
+      `${this.rentStationApiUrl}/${id}`
+    );
   }
 }

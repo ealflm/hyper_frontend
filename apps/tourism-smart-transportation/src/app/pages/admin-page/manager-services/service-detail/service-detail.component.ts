@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ServiceTypeService } from './../../../../services/service-type.service';
-import { ServiceType } from './../../../../models/ServiceType';
+import { ServiceType } from '../../../../models/ServiceTypeResponse';
 import { TierService } from './../../../../services/tier.service';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';

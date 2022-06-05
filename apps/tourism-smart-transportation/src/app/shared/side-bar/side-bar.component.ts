@@ -51,10 +51,8 @@ export class SideBarComponent implements OnInit {
     } else if (this.locked == false) {
       this.status = true;
       if (this.statusLink) {
-        setTimeout(() => {
-          this.statusLink = false;
-          this.displayAvatar = true;
-        }, 200);
+        this.statusLink = false;
+        this.displayAvatar = true;
       }
     }
     console.log(this.status);
@@ -69,7 +67,6 @@ export class SideBarComponent implements OnInit {
         this.displayAvatar = false;
       }
     }
-    console.log(this.status);
   }
   onClickAvatar() {
     this.displayAvatar = !this.displayAvatar;
