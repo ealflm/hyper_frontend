@@ -6,9 +6,13 @@
       margin-right: 22px;
       display: flex;
       .station-title {
+        @include font-Roboto-Regular-Body2;
+        color: $black-default;
         flex: 27%;
       }
       .station-content {
+        @include font-Roboto-Regular-Body2;
+        color: $color-grey-text-placeholder;
         text-align: end;
       }
     }

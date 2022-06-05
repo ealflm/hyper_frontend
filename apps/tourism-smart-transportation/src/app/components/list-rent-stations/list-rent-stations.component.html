@@ -12,13 +12,17 @@
 </div>
 
 <div class="body-rent-station-content">
-  <div class="body-card" (click)="showDetail()">
+  <div
+    *ngFor="let rentStation of rent_stations"
+    class="body-card"
+    (click)="showDetail(rentStation.id)"
+  >
     <div class="card-header">
-      <div>Trạm thuê số 1</div>
+      <div>{{ rentStation.title }}</div>
     </div>
     <div class="card-body">
-      <div>89,Suối Mây, Phú Quốc</div>
-      <div>CTY TNHH vận tải Gia Nguyên</div>
+      <div>{{ rentStation.address }}</div>
+      <div>{{ rentStation.companyName }}</div>
     </div>
   </div>
 </div>

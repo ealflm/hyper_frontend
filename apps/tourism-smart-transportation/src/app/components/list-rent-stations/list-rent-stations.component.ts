@@ -1,3 +1,4 @@
+import { RentStation } from './../../models/RentStationResponse';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./list-rent-stations.component.scss'],
 })
 export class ListRentStationsComponent implements OnInit {
-  @Input() rent_stations: any = [];
+  @Input() rent_stations: RentStation[] = [];
   @Output() GetFillterRentStation: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetIdRentStation: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}

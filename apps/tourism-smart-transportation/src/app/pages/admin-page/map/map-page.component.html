@@ -28,6 +28,7 @@
               [DataMapValue]="headerMenu"
               (GetFillterValue)="onGetFillterMenu($event)"
               (GetValueCheckBox)="onGetValueCheckBox($event)"
+              [CheckBoxValue]="checkBoxValue"
             ></tourism-smart-transportation-data-map>
           </div>
         </div>
@@ -169,9 +170,17 @@
           <!--  -->
           <tourism-smart-transportation-rent-station-detail
             *ngIf="fillterMenu === 'rent-station' && showSideBarDetail"
+            [RentStation]="rentStationDetail"
           ></tourism-smart-transportation-rent-station-detail>
           <!--  -->
+          <tourism-smart-transportation-route-detail
+            *ngIf="fillterMenu === 'route' && showSideBarDetail"
+          ></tourism-smart-transportation-route-detail>
           <!--  -->
+          <tourism-smart-transportation-driver-detail
+            *ngIf="fillterMenu === 'driver' && showSideBarDetail"
+          >
+          </tourism-smart-transportation-driver-detail>
         </div>
       </div>
     </ng-container>

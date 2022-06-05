@@ -7,9 +7,13 @@
       margin-right: 22px;
       display: flex;
       .rent-station-title {
+        @include font-Roboto-Regular-Body2;
+        color: $black-default;
         flex: 27%;
       }
       .rent-station-content {
+        @include font-Roboto-Regular-Body2;
+        color: $color-grey-text-placeholder;
         text-align: end;
       }
     }

@@ -1,3 +1,7 @@
+import {
+  RentStation,
+  RentStationResponse,
+} from './../../../models/RentStationResponse';
 import { map } from 'rxjs';
 import { MapBoxService } from '../../../services/map-box.service';
 import { Validators, FormArray, FormGroup, FormBuilder } from '@angular/forms';
@@ -10,7 +14,8 @@ import {
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { MapService } from '../../../services/map.service';
-import { Station, StationsResponse } from '../../../models/Station';
+import { StationsResponse, Station } from '../../../models/StationResponse';
+import { RentStationsResponse } from '../../../models/RentStationResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-map-page',
@@ -63,17 +68,20 @@ export class MapPageComponent
   //
   showDialog = false;
   //
-  busStations: Station[] = [];
+  busStationsOnMap: Station[] = [];
+  rentStationsOnMap: RentStation[] = [];
 
   //
   drivers: any = [];
-  stations: any = [];
-  rent_stations: any = [];
+  stations: Station[] = [];
+  rent_stations: RentStation[] = [];
   routes: any = [];
   //
   stationDetail!: Station;
+  rentStationDetail!: RentStation;
   //
   idStation = '';
+  checkBoxValue = [];
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -84,9 +92,10 @@ export class MapPageComponent
     // this._initLocationFormArray();
     // this.addMarker();
     this.getBusStationMarkers();
+    this.getRentStationMarkers();
   }
   ngAfterViewInit() {
-    this.mapboxService.initializeMap();
+    this.mapboxService.initializeMap(103.9967, 10.22698, 12);
     // this.mapboxService.setMarker();
     // console.log('map page after view init');
     // this.mapboxService.getCoordinates().subscribe((res: any) => {
@@ -158,40 +167,71 @@ export class MapPageComponent
     this.showSideBarList = true;
     this.showSideBarDetail = false;
     // console.log(this.fillterMenu);
+
     if (this.fillterMenu === 'bus-station') {
       this.getAllStations();
+    } else if (this.fillterMenu === 'rent-station') {
+      this.getAllRentStations();
+    } else if (this.fillterMenu === 'driver') {
+      console.log('............');
+    } else if (this.fillterMenu === 'route') {
+      console.log('............');
     }
   }
-  onGetValueCheckBox(vakueCheckbox: any) {
-    if (vakueCheckbox.length === 0) {
+  onGetValueCheckBox(valueCheckbox: []) {
+    this.checkBoxValue = valueCheckbox;
+    if (valueCheckbox.length <= 0) {
       this.mapboxService.removeBusStationMarker();
-    } else {
+      this.mapboxService.removeRentStationMarker();
+    } else if (valueCheckbox.length > 0) {
       this.getBusStationMarkers();
-      vakueCheckbox.find((element: any) => {
-        console.log(element);
-
-        if (element === 'bus-station') {
-          this.mapboxService.setBusStationMarkers(this.busStations);
-        } else if (element !== 'bus-station' || element == []) {
+      this.getRentStationMarkers();
+      switch (valueCheckbox.sort().join('-')) {
+        case 'driver':
+          console.log('driver');
           this.mapboxService.removeBusStationMarker();
-        }
-        if (element === 'rent-station') {
-          console.log('rent-station == true');
-        } else if (element !== 'rent-station' || element == []) {
-          console.log('rent-station == false');
-        }
-        if (element === 'driver') {
-          console.log('driver == true');
-        } else if (element !== 'rent-station' || element == []) {
-          console.log('driver == false');
-        }
-      });
-    }
+          this.mapboxService.removeRentStationMarker();
+          break;
+        case 'bus-station':
+          this.mapboxService.removeBusStationMarker();
 
-    // this.mapboxService.setBusStationMarkers();
+          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
+          this.mapboxService.removeRentStationMarker();
+          break;
+        case 'rent-station':
+          this.mapboxService.removeRentStationMarker();
+
+          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
+          this.mapboxService.removeBusStationMarker();
+          break;
+        case 'driver-rent-station':
+          this.mapboxService.removeBusStationMarker();
+          console.log('1');
+          break;
+        case 'bus-station-driver':
+          this.mapboxService.removeRentStationMarker();
+          console.log('2');
+          break;
+        case 'bus-station-rent-station':
+          this.mapboxService.removeRentStationMarker();
+          this.mapboxService.removeBusStationMarker();
+
+          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
+          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
+          break;
+        case 'bus-station-driver-rent-station':
+          console.log('4');
+          break;
+        default:
+          this.mapboxService.removeBusStationMarker();
+          this.mapboxService.removeRentStationMarker();
+          break;
+      }
+    }
   }
   // action in form child components
   createStation() {
+    this.idStation = '';
     this.showDialog = true;
     this.mapboxService.initView$.next(false);
   }
@@ -201,8 +241,10 @@ export class MapPageComponent
     this.idStation = stationId;
   }
   onHiddenDialog() {
+    this.idStation = '';
     this.showDialog = false;
     this.onShowSideBarList();
+    this.getAllStations();
   }
 
   // fillter function
@@ -210,7 +252,9 @@ export class MapPageComponent
   onFillterStationByName(title: any) {
     this.getAllStations(title);
   }
-  onFillterRentStationByName(e: any) {}
+  onFillterRentStationByName(title: any) {
+    this.getAllRentStations(title);
+  }
   onFillterRouteByName(e: any) {}
 
   // Get detail function
@@ -229,31 +273,47 @@ export class MapPageComponent
     this.showSideBarDetail = true;
     this.mapService.getStationById(event.id).subscribe((stationRes) => {
       this.stationDetail = stationRes.body;
+      if (stationRes.body.longitude && stationRes.body.latitude)
+        this.mapboxService.flyToMarker(
+          stationRes.body.longitude,
+          stationRes.body.latitude
+        );
     });
   }
   getDetailRentStation(event: any) {
     this.showSideBarList = false;
     this.showSideBarDetail = true;
-    console.log(event);
+    this.mapService
+      .getRentStationById(event.id)
+      .subscribe((rentStations: RentStationResponse) => {
+        this.rentStationDetail = rentStations.body;
+        if (rentStations.body.longitude && rentStations.body.latitude)
+          this.mapboxService.flyToMarker(
+            rentStations.body.longitude,
+            rentStations.body.latitude
+          );
+      });
   }
 
-  //Call API
+  //Call API Station
   getBusStationMarkers() {
     this.mapService
       .getStationOnMap()
       .pipe(
         map((stationRes: StationsResponse) => {
-          this.busStations = stationRes.body.items.map((station: Station) => {
-            return {
-              id: station.id,
-              title: station.title,
-              description: station.description,
-              address: station.address,
-              longitude: station.longitude,
-              latitude: station.latitude,
-              status: station.status,
-            };
-          });
+          this.busStationsOnMap = stationRes.body.items.map(
+            (station: Station) => {
+              return {
+                id: station.id,
+                title: station.title,
+                description: station.description,
+                address: station.address,
+                longitude: station.longitude,
+                latitude: station.latitude,
+                status: station.status,
+              };
+            }
+          );
         })
       )
       .subscribe();
@@ -265,5 +325,37 @@ export class MapPageComponent
       .subscribe((stationsRes: StationsResponse) => {
         this.stations = stationsRes.body.items;
       });
+  }
+
+  // call API rent-station
+  getAllRentStations(fillterTitle?: string) {
+    this.mapService
+      .getAllRentStation(fillterTitle)
+      .subscribe((rentStationRes: RentStationsResponse) => {
+        this.rent_stations = rentStationRes.body.items;
+      });
+  }
+  getRentStationMarkers() {
+    this.mapService
+      .getRentStationOnMap()
+      .pipe(
+        map((rentStationRes: RentStationsResponse) => {
+          this.rentStationsOnMap = rentStationRes.body.items.map(
+            (rentStation: RentStation) => {
+              return {
+                id: rentStation.id,
+                address: rentStation.address,
+                companyName: rentStation.companyName,
+                longitude: rentStation.longitude,
+                latitude: rentStation.latitude,
+                partnerId: rentStation.partnerId,
+                status: rentStation.status,
+                title: rentStation.title,
+              };
+            }
+          );
+        })
+      )
+      .subscribe();
   }
 }

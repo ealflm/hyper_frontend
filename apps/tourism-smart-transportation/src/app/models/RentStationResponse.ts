@@ -1,21 +1,21 @@
 import { UtilPaging } from './UtilPaging';
-export class Station {
+export class RentStation {
   id!: string;
   title?: string;
-  description?: string;
   address?: string;
+  partnerId?: string;
+  companyName?: string;
   longitude?: number;
   latitude?: number;
   status?: number;
 }
-
-export class StationsResponse {
+export abstract class RentStationsResponse {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging<Station[]>;
+  body!: UtilPaging<RentStation[]>;
 }
-export class StationResponse {
+export abstract class RentStationResponse extends RentStation {
   statusCode?: number;
   message?: string;
-  body!: Station;
+  body!: RentStation;
 }
