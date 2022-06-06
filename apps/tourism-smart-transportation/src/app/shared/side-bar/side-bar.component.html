@@ -165,7 +165,7 @@
           </div>
         </li>
 
-        <li
+        <!-- <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           routerLinkActive="active-link"
           #standardPrice="routerLinkActive"
@@ -191,17 +191,19 @@
               Giá cơ bản
             </div>
           </div>
-        </li>
-        <!-- <li
+        </li> -->
+        <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           [ngClass]="
-            (stg.isActive || stg1.isActive) && !status ? 'active-link' : ''
+            (price.isActive || price1.isActive || price2.isActive) && !status
+              ? 'active-link'
+              : ''
           "
         >
           <div class="nav-link relative" (click)="onShowMoreSetting()">
             <mat-icon
               [ngClass]="
-                stg.isActive || stg1.isActive
+                price.isActive || price1.isActive || price2.isActive
                   ? 'material-icons'
                   : 'material-icons-outlined'
               "
@@ -223,17 +225,18 @@
               ></i
             ></span>
           </div>
-        </li> -->
-        <!-- <ul [ngClass]="showMoreService ? '' : 'navLinkDar'">
+        </li>
+
+        <ul [ngClass]="showMoreService ? '' : 'navLinkDar'">
           <li
             class="nav-item-content"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
             routerLinkActive="active-link-content"
-            #stg1="routerLinkActive"
+            #price="routerLinkActive"
           >
-            <div class="nav-link-content" routerLink="/setting/price-default">
+            <div class="nav-link-content" routerLink="/setting/bus-price">
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
-                Giá cơ bản
+                Giá xe buýt
               </div>
             </div>
           </li>
@@ -241,17 +244,33 @@
             class="nav-item-content"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
             routerLinkActive="active-link-content"
-            #stg="routerLinkActive"
+            #price1="routerLinkActive"
           >
-            <div class="nav-link-content" routerLink="/setting/service-type"> -->
-        <!-- <span class="navIcon"> <i class="fas fa-user"></i></span> -->
-        <!-- <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
-                Loại Dịch vụ
+            <div
+              class="nav-link-content"
+              routerLink="/setting/vehicle-booking-price"
+            >
+              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+                Giá đặt xe
               </div>
             </div>
           </li>
-        </ul> -->
-        <!---->
+          <li
+            class="nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link-content"
+            #price2="routerLinkActive"
+          >
+            <div
+              class="nav-link-content"
+              routerLink="/setting/vehicle-renting-price"
+            >
+              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+                Giá thuê xe
+              </div>
+            </div>
+          </li>
+        </ul>
       </ul>
     </div>
   </div>
