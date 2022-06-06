@@ -1,8 +1,6 @@
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ComponentsModule } from './../../components/components.module';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DataMapComponent } from './../../components/data-map/data-map.component';
-import { HeaderStatusComponent } from './../../components/header-status/header-status.component';
-import { DotsMenuComponent } from './../../components/dots-menu/dots-menu.component';
-import { MapComponent } from './../../components/map/map.component';
 import { MapPageComponent } from './map/map-page.component';
 import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
 import { AuthGuardService } from './../../auth/auth.guard';
@@ -23,16 +21,8 @@ import { FinanceModule } from './finance/finance.module';
 import { DiscountComponent } from './discount/discount.component';
 import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
 import { ServiceDetailComponent } from './manager-services/service-detail/service-detail.component';
-import { StandardPriceComponent } from './standard-price/standard-price.component';
-import { ListDriversComponent } from '../../components/list-drivers/list-drivers.component';
-import { ListStationsComponent } from '../../components/list-stations/list-stations.component';
-import { ListRentStationsComponent } from '../../components/list-rent-stations/list-rent-stations.component';
-import { ListRoutesComponent } from '../../components/list-routes/list-routes.component';
 import { FormStationComponent } from './map/form-station/form-station.component';
-import { StationDetailComponent } from '../../components/station-detail/station-detail.component';
-import { RentStationDetailComponent } from '../../components/rent-station-detail/rent-station-detail.component';
-import { DriverDetailComponent } from '../../components/driver-detail/driver-detail.component';
-import { RouteDetailComponent } from '../../components/route-detail/route-detail.component';
+import { SettingModule } from './setting/setting.module';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -69,16 +59,16 @@ const ADMIN_ROUTES: Routes = [
       // Loading modules UILITY-SERVICES
 
       { path: 'map', component: MapPageComponent },
-      // {
-      //   path: 'map',
-      //   loadChildren: () => import('./map/map.module').then((m) => m.MapModule),
-      // },
-      { path: 'standard-price', component: StandardPriceComponent },
       {
-        path: 'finance',
+        path: 'setting',
         loadChildren: () =>
-          import('./finance/finance.module').then((m) => m.FinanceModule),
+          import('./setting/setting.module').then((m) => m.SettingModule),
       },
+      // {
+      //   path: 'finance',
+      //   loadChildren: () =>
+      //     import('./finance/finance.module').then((m) => m.FinanceModule),
+      // },
     ],
   },
 ];
@@ -94,21 +84,8 @@ const ADMIN_ROUTES: Routes = [
     LimitLengthPipe,
     CustomerDetailsComponent,
     ServiceDetailComponent,
-    StandardPriceComponent,
-    DotsMenuComponent,
-    HeaderStatusComponent,
-    MapPageComponent,
-    MapComponent,
-    DataMapComponent,
-    ListDriversComponent,
-    ListStationsComponent,
-    ListRentStationsComponent,
-    ListRoutesComponent,
     FormStationComponent,
-    StationDetailComponent,
-    RentStationDetailComponent,
-    DriverDetailComponent,
-    RouteDetailComponent,
+    MapPageComponent,
   ],
   imports: [
     CommonModule,
@@ -120,6 +97,8 @@ const ADMIN_ROUTES: Routes = [
     ReactiveFormsModule,
     FinanceModule,
     MatDialogModule,
+    SettingModule,
+    ComponentsModule,
   ],
 })
 export class AdminPageModule {}

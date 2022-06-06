@@ -56,3 +56,33 @@ export const STATUS_TRANSACTION: any = {
     class: 'status-paid',
   },
 };
+export const STATUS_BUS_PRICE: any = {
+  0: {
+    lable: 'Vô hiệu hóa',
+    class: 'status-disabled',
+  },
+  1: {
+    lable: 'Kích hoạt',
+    class: 'status-active',
+  },
+};
+export const STATUS_VEHICLE_RENTING_PRICE: any = {
+  0: {
+    lable: 'Vô hiệu hóa',
+    class: 'status-disabled',
+  },
+  1: {
+    lable: 'Kích hoạt',
+    class: 'status-active',
+  },
+};
+export const STATUS_VEHICLE_BOOKING_PRICE: any = {
+  0: {
+    lable: 'Vô hiệu hóa',
+    class: 'status-disabled',
+  },
+  1: {
+    lable: 'Kích hoạt',
+    class: 'status-active',
+  },
+};
