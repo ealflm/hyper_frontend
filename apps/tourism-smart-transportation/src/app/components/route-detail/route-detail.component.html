@@ -5,7 +5,7 @@
       <div>Tên</div>
     </div>
     <div class="route-content">
-      <div>{{ RouteDetail?.title }}</div>
+      <div>{{ RouteDetail?.name }}</div>
     </div>
   </div>
   <div class="route-container">
@@ -21,7 +21,7 @@
       <div>Số trạm</div>
     </div>
     <div class="route-content">
-      <div>{{ RouteDetail?.numberOfStation }}</div>
+      <div>{{ RouteDetail?.totalStation }}</div>
     </div>
   </div>
   <div class="route-container">
@@ -29,9 +29,9 @@
       <div>Danh sách trạm</div>
     </div>
     <div class="route-content">
-      <div>Trạm dừng số 8</div>
-      <div>Trạm dừng số 9</div>
-      <div>Trạm dừng số 10</div>
+      <div *ngFor="let station of RouteDetail?.stationList">
+        {{ station?.title }}
+      </div>
     </div>
   </div>
 </div>

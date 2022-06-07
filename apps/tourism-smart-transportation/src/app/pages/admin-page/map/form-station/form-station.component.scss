@@ -51,12 +51,14 @@
   cursor: pointer;
 }
 ::ng-deep {
-  .p-dialog {
-    border-radius: 9px;
-    .p-dialog-content {
-      padding: 0 1.5rem 0 1.5rem;
-      border-bottom-left-radius: 9px;
-      border-bottom-right-radius: 9px;
+  .station-dialog {
+    .p-dialog {
+      border-radius: 9px;
+      .p-dialog-content {
+        padding: 0 1.5rem 0 1.5rem;
+        border-bottom-left-radius: 9px;
+        border-bottom-right-radius: 9px;
+      }
     }
   }
 
@@ -65,7 +67,7 @@
     padding-top: 12px;
     border-top: 1px solid $color-line-grey;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     .p-button-outlined {
       @include button-outlined-primary(66, 32, null, $primary-color);
       margin-right: 5px;

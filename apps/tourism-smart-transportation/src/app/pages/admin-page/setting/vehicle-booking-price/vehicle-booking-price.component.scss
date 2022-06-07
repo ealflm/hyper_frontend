@@ -211,6 +211,9 @@
 ::ng-deep {
   .p-dialog {
     .p-dialog-content {
+      border-bottom-left-radius: none !important;
+      border-bottom-right-radius: none !important;
+
       .divider {
         border-top: 1px solid $color-line-grey;
       }

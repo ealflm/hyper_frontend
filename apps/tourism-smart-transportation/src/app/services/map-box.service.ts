@@ -7,7 +7,6 @@ import {
 import { MapService } from './map.service';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment.prod';
 import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
@@ -44,6 +43,44 @@ export class MapBoxService {
       this.coordinates$.next(geo);
     });
   }
+  getRoute(routeRes: any) {
+    const data = routeRes;
+    const route = data.geometry.coordinates;
+    const geojson: any = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates: route,
+      },
+    };
+    // if the route already exists on the map, we'll reset it using setData
+    if (this.map.getLayer('route')) {
+      this.map.removeLayer('route');
+    }
+    if (this.map.getSource('route')) {
+      this.map.removeSource('route');
+    }
+
+    this.map.addLayer({
+      id: 'route',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: geojson,
+      },
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': '#3887be',
+        'line-width': 5,
+        'line-opacity': 0.75,
+      },
+    });
+  }
+
   initializeMiniMap() {
     this.miniMap = new mapboxgl.Map({
       container: 'mini-map',
