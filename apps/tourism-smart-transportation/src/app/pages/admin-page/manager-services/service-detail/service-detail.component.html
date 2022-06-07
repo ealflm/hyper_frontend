@@ -189,7 +189,6 @@
                       type="text"
                       pInputText
                       formControlName="packageName"
-                      (input)="onAddRow()"
                     /><small
                       *ngIf="
                       _packagesForm.controls[i].get('packageName')?.errors?.['required']  && isSubmit
@@ -252,7 +251,6 @@
                       <p-inputNumber
                         class="tier-input-text-long"
                         formControlName="value"
-                        (input)="onAddRow()"
                       >
                       </p-inputNumber>
                       <span>{{
@@ -274,18 +272,6 @@
                 </td>
 
                 <td
-                  *ngIf="i > 0 && editModeStatus"
-                  (click)="onClickDeleteItem(i)"
-                  style="
-                    text-align: center;
-                    padding-bottom: 20px;
-                    cursor: pointer;
-                  "
-                >
-                  <span class="material-icons-outlined"> delete </span>
-                </td>
-                <td
-                  *ngIf="i > 0 && createStatus"
                   (click)="onClickDeleteItem(i)"
                   style="
                     text-align: center;
@@ -299,6 +285,30 @@
             </ng-container>
           </ng-container>
         </table>
+        <div class="footer-table" *ngIf="createStatus">
+          <button
+            [style]="{ width: '57', height: '32px' }"
+            class="p-button-outlined p-button-rounded btn-create"
+            pButton
+            pRipple
+            type="button"
+            (click)="addNewPackgeForm()"
+          >
+            Tạo mới <span class="material-icons"> add </span>
+          </button>
+        </div>
+        <div class="footer-table" *ngIf="editModeStatus">
+          <button
+            [style]="{ width: '57', height: '32px' }"
+            class="p-button-outlined p-button-rounded btn-create"
+            pButton
+            pRipple
+            type="button"
+            (click)="addNewPackgeForm()"
+          >
+            Tạo mới <span class="material-icons"> add </span>
+          </button>
+        </div>
       </div>
     </div>
   </form>

@@ -1,3 +1,4 @@
+import { RouteResponse, RoutesResponse } from './../models/RouteResponse';
 import {
   RentStation,
   RentStationResponse,
@@ -64,6 +65,25 @@ export class MapService {
   getRentStationById(id: string): Observable<RentStationResponse> {
     return this.http.get<RentStationResponse>(
       `${this.rentStationApiUrl}/${id}`
+    );
+  }
+
+  // get all route
+  getAllRoutes(name?: string): Observable<RoutesResponse> {
+    let queryParams = new HttpParams();
+    if (name) {
+      queryParams = queryParams.append('Name', name);
+    }
+    return this.http.get<RentStationsResponse>(`${this.routeApiUrl}`, {
+      params: queryParams,
+    });
+  }
+  getRouteById(routeId: string): Observable<RouteResponse> {
+    return this.http.get<RouteResponse>(`${this.routeApiUrl}/${routeId}`);
+  }
+  getRouteDirection(coordinates: string): Observable<any> {
+    return this.http.get<any>(
+      `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${environment.mapbox.accessToken}`
     );
   }
 }

@@ -114,7 +114,8 @@ export class ServiceDetailComponent implements OnInit {
     });
   }
   onChangeServiceType() {
-    this.onAddRow();
+    this.checkDropDownDisableInput();
+    // this.onAddRow();
   }
   removePackageForm(i: number) {
     this.isAdded = false;
@@ -133,6 +134,7 @@ export class ServiceDetailComponent implements OnInit {
       value: ['', Validators.required],
     });
     this._packagesForm.push(packageForm);
+    this.checkDropDownDisableInput();
   }
   onAddRow() {
     const lengthFormArray = this._packagesForm.length;

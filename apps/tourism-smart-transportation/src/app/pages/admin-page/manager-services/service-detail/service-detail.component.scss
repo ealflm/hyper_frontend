@@ -169,6 +169,13 @@
       border-radius: 10px;
       @include box-shadown-grey-secondary;
       background-color: $white-primary-color;
+      .footer-table {
+        display: flex;
+        justify-content: center;
+        .btn-create {
+          margin-bottom: 15px;
+        }
+      }
     }
     table {
       width: 100%;

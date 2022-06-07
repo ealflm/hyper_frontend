@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Route } from '../../models/RouteResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-route-detail',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./route-detail.component.scss'],
 })
 export class RouteDetailComponent implements OnInit {
-  @Input() RouteDetail: any = [];
+  @Input() RouteDetail!: Route;
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,4 +1,9 @@
 import {
+  Route,
+  RoutesResponse,
+  RouteResponse,
+} from './../../../models/RouteResponse';
+import {
   RentStation,
   RentStationResponse,
 } from './../../../models/RentStationResponse';
@@ -75,10 +80,11 @@ export class MapPageComponent
   drivers: any = [];
   stations: Station[] = [];
   rent_stations: RentStation[] = [];
-  routes: any = [];
+  routes: Route[] = [];
   //
   stationDetail!: Station;
   rentStationDetail!: RentStation;
+  routeDetail!: Route;
   //
   idStation = '';
   checkBoxValue = [];
@@ -175,7 +181,7 @@ export class MapPageComponent
     } else if (this.fillterMenu === 'driver') {
       console.log('............');
     } else if (this.fillterMenu === 'route') {
-      console.log('............');
+      this.getAllRoutes();
     }
   }
   onGetValueCheckBox(valueCheckbox: []) {
@@ -255,13 +261,29 @@ export class MapPageComponent
   onFillterRentStationByName(title: any) {
     this.getAllRentStations(title);
   }
-  onFillterRouteByName(e: any) {}
+  onFillterRouteByName(name: any) {
+    this.getAllRoutes(name);
+  }
 
   // Get detail function
   getDetailRoute(event: any) {
     this.showSideBarList = false;
     this.showSideBarDetail = true;
-    console.log(event);
+    this.mapService
+      .getRouteById(event.id)
+      .subscribe((routeRes: RouteResponse) => {
+        this.routeDetail = routeRes.body;
+        let stationList: any = [];
+        routeRes.body.stationList?.map((stations: Station) => {
+          const lnglat = stations.longitude + ',' + stations.latitude;
+          stationList = [...stationList, lnglat];
+        });
+        const coordinates = stationList.join(';');
+        this.mapService.getRouteDirection(coordinates).subscribe((res) => {
+          console.log(res.routes[0]);
+          this.mapboxService.getRoute(res.routes[0]);
+        });
+      });
   }
   getDetailDriver(event: any) {
     this.showSideBarList = false;
@@ -357,5 +379,12 @@ export class MapPageComponent
         })
       )
       .subscribe();
+  }
+
+  // call API routes
+  getAllRoutes(fillterName?: string) {
+    this.mapService.getAllRoutes().subscribe((routeRes: RoutesResponse) => {
+      this.routes = routeRes.body.items;
+    });
   }
 }

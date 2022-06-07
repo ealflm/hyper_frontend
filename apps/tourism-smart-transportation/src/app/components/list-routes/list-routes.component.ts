@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Route } from '../../models/RouteResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-list-routes',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./list-routes.component.scss'],
 })
 export class ListRoutesComponent implements OnInit {
-  @Input() routes: any = [];
+  @Input() routes: Route[] = [];
   @Output() GetFillterRoute: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetIdRoute: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
