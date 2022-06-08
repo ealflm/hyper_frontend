@@ -1,7 +1,7 @@
-<div class="header-vehicle-book-service">
-  <div class="header-vehicle-book-service-content">
+<div class="header-publish-year-service">
+  <div class="header-publish-year-service-content">
     <div class="header-content-item">
-      <div class="header-item-H5"><div>Gói dịch vụ</div></div>
+      <div class="header-item-H5"><div>Loại xe</div></div>
       <div class="header-item">
         <button
           pButton
@@ -15,7 +15,7 @@
           pRipple
           type="button"
           label="Tạo mới"
-          (click)="createBookingPrice()"
+          (click)="createVehicleYearOfPublish()"
           class="p-button-rounded button-background"
         ></button>
       </div>
@@ -40,7 +40,7 @@
   <div class="body-table">
     <p-table
       #dt
-      [value]="bookingPrices"
+      [value]="VehicleYearOfPublishes"
       responsiveLayout="scroll"
       scrollDirection="both"
       [rows]="5"
@@ -51,44 +51,46 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Loại xe</th>
-          <th>Khoảng cách cố định (Km)</th>
-          <th>Giá cố định</th>
-          <th>Giá mõi Km</th>
+          <th>Tên</th>
+          <th>Mô tả</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-bookingPrice let-i="rowIndex">
+      <ng-template pTemplate="body" let-VehicleYearOfPublish let-i="rowIndex">
         <tr>
-          <td>{{ bookingPrice.vehicleType }}</td>
-          <td>{{ bookingPrice?.distanceDefault }}</td>
-          <td>{{ bookingPrice?.priceFixed }}</td>
-          <td>{{ bookingPrice?.pricePerKm }}</td>
+          <td>{{ VehicleYearOfPublish.name }}</td>
+          <td>{{ VehicleYearOfPublish?.description }}</td>
           <td>
-            <div [class]="vehicleBookingPriceStatus[bookingPrice.status].class">
-              {{ vehicleBookingPriceStatus[bookingPrice.status].lable }}
+            <div
+              [class]="
+                vehicleYearOfPublishStatus[VehicleYearOfPublish.status].class
+              "
+            >
+              {{
+                vehicleYearOfPublishStatus[VehicleYearOfPublish.status].lable
+              }}
             </div>
           </td>
           <td style="text-align: center">
             <span
               class="material-icons-outlined enable"
               style="margin-right: 10px"
-              (click)="onDeleteBookingPrice(bookingPrice.id, true)"
-              *ngIf="bookingPrice.status !== 0"
+              (click)="onDeleteVehicleearOfPublish(VehicleYearOfPublish.id)"
+              *ngIf="VehicleYearOfPublish.status !== 0"
             >
               delete
             </span>
             <span
               class="material-icons-outlined disable"
               style="margin-right: 10px"
-              *ngIf="bookingPrice.status === 0"
+              *ngIf="VehicleYearOfPublish.status === 0"
             >
               delete
             </span>
             <span
               class="material-icons-outlined iconEdit"
-              (click)="updateBookingPrice(true, bookingPrice.id)"
+              (click)="updateVehicleYearOfPublish(VehicleYearOfPublish.id)"
             >
               edit
             </span>
@@ -107,7 +109,7 @@
 <p-confirmDialog #cd [style]="{ width: '450px', height: '101px' }">
   <ng-template pTemplate="header">
     <div class="confirm-dialog-subtitle">
-      Bạn có chắc chắn muốn tắt giá này?
+      Bạn có chắc chắn muốn khóa loại xe này?
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
@@ -133,67 +135,38 @@
 </p-confirmDialog>
 <!-- dialog -->
 <p-dialog
-  [header]="editMode ? 'Chỉnh sửa giá thuê xe' : 'Tạo mới giá đặt xe'"
+  [header]="editMode ? 'Chỉnh sửa phân khúc xe' : 'Tạo mới phân khúc xe'"
   [(visible)]="displayDialog"
-  [style]="{ width: '464px', height: '450px' }"
+  [style]="{ width: '464px', height: '320px' }"
   [contentStyle]="{
     'overflow-y': 'auto',
-    'overflow-x': 'hidden',
-    'max-height': '70vh',
-    'min-height': '25vh'
+    'overflow-x': 'hidden'
   }"
   [blockScroll]="true"
   [resizable]="true"
   [modal]="true"
 >
   <div class="divider"></div>
-  <form class="vehicle-book-form">
+  <form class="publish-year-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
-        <div class="vehicle-book-text">Loại xe</div>
-        <p-dropdown
-          class="dropdown"
+        <div class="publish-year-text">Tên</div>
+        <input
           [style]="{ width: '420px', height: '28px' }"
-          optionLabel="lable"
-          optionValue="id"
-        ></p-dropdown>
-      </div>
-      <div class="col-12">
-        <div class="vehicle-book-text">Khoảng cách cố định</div>
-        <div class="input-custom">
-          <input
-            [style]="{ width: '420px', height: '28px' }"
-            (keyup.enter)="onSaveBookingPrice()"
-            pInputText
-          />
-          <span class="input-icon">Km</span>
-        </div>
+          (keyup.enter)="onSaveVehicleYearOfPublish()"
+          pInputText
+        />
 
         <div></div>
       </div>
-      <div class="col-12">
-        <div class="vehicle-book-text">Giá cố định</div>
-        <div class="input-custom">
-          <input
-            [style]="{ width: '420px', height: '28px' }"
-            (keyup.enter)="onSaveBookingPrice()"
-            pInputText
-          />
-          <span class="input-icon">VND</span>
-        </div>
 
-        <div></div>
-      </div>
       <div class="col-12">
-        <div class="vehicle-book-text">Giá mỗi Km</div>
-        <div class="input-custom">
-          <input
-            [style]="{ width: '420px', height: '28px' }"
-            (keyup.enter)="onSaveBookingPrice()"
-            pInputText
-          />
-          <span class="input-icon">VND</span>
-        </div>
+        <div class="publish-year-text">Mô tả</div>
+        <input
+          [style]="{ width: '420px', height: '28px' }"
+          (keyup.enter)="onSaveVehicleYearOfPublish()"
+          pInputText
+        />
 
         <div></div>
       </div>
@@ -217,7 +190,7 @@
       pRipple
       type="button"
       label="Lưu"
-      (click)="onSaveBookingPrice()"
+      (click)="onSaveVehicleYearOfPublish()"
     ></button>
   </ng-template>
 </p-dialog>

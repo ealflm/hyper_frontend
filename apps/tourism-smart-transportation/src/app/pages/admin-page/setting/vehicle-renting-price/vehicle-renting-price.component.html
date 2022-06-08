@@ -15,7 +15,7 @@
           pRipple
           type="button"
           label="Tạo mới"
-          (click)="createRentingPrice(false)"
+          (click)="createRentingPrice()"
           class="p-button-rounded button-background"
         ></button>
       </div>
@@ -43,6 +43,11 @@
       [value]="rentingPrices"
       responsiveLayout="scroll"
       scrollDirection="both"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 25, 50]"
+      [paginator]="true"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -75,7 +80,7 @@
             <span
               class="material-icons-outlined enable"
               style="margin-right: 10px"
-              (click)="onDeleteRentingPrice(rentingPrice.id, true)"
+              (click)="onDeleteRentingPrice(rentingPrice.id)"
               *ngIf="rentingPrice.status !== 0"
             >
               delete
@@ -89,7 +94,7 @@
             </span>
             <span
               class="material-icons-outlined iconEdit"
-              (click)="updateRentingPrice(true, rentingPrice.id)"
+              (click)="updateRentingPrice(rentingPrice.id)"
             >
               edit
             </span>
@@ -102,16 +107,6 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator
-      [showCurrentPageReport]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 25, 50]"
-      [totalRecords]="totalItems"
-      currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {{
-        totalItems
-      }} mục"
-      (onPageChange)="onPaginate($event)"
-    ></p-paginator>
   </div>
 </div>
 
@@ -274,7 +269,7 @@
       pRipple
       type="button"
       label="Hủy"
-      (click)="cancelDialog(false, true)"
+      (click)="cancelDialog()"
     ></button>
     <button
       [style]="{ width: '57', height: '32px' }"

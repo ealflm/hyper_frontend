@@ -15,7 +15,7 @@
           pRipple
           type="button"
           label="Tạo mới"
-          (click)="createBusPrice(false)"
+          (click)="createBusPrice()"
           class="p-button-rounded button-background"
         ></button>
       </div>
@@ -43,6 +43,11 @@
       [value]="busPrices"
       responsiveLayout="scroll"
       scrollDirection="both"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 25, 50]"
+      [paginator]="true"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -57,11 +62,27 @@
       </ng-template>
       <ng-template pTemplate="body" let-busPrice let-i="rowIndex">
         <tr>
-          <td>{{ busPrice.route }}</td>
-          <td>{{ busPrice?.distance }}</td>
-          <td>{{ busPrice?.numberOfStation }}</td>
-          <td>{{ busPrice?.price }}</td>
-          <td>{{ busPrice?.mode }}</td>
+          <td>
+            {{ busPrice.minRouteDistance }}-{{ busPrice.maxRouteDistance }}
+          </td>
+          <td>
+            {{
+              busPrice?.mode === 'distance'
+                ? busPrice?.minDistance + '-' + busPrice?.maxDistance
+                : '-'
+            }}
+          </td>
+          <td>
+            {{
+              busPrice?.mode === 'station'
+                ? busPrice?.minStation + '-' + busPrice?.maxStation
+                : '-'
+            }}
+          </td>
+          <td>
+            {{ busPrice?.price | currency: busPrice?.price:'':'.0-0' }} VND
+          </td>
+          <td>{{ busPrice?.mode === 'distance' ? 'Khoảng cách' : 'Trạm' }}</td>
 
           <td>
             <div [class]="busPriceStatus[busPrice.status].class">
@@ -72,7 +93,7 @@
             <span
               class="material-icons-outlined enable"
               style="margin-right: 10px"
-              (click)="onDeleteBusPrice(busPrice.id, true)"
+              (click)="onDeleteBusPrice(busPrice.id)"
               *ngIf="busPrice.status !== 0"
             >
               delete
@@ -86,7 +107,7 @@
             </span>
             <span
               class="material-icons-outlined iconEdit"
-              (click)="updateBusPrice(true, busPrice.id)"
+              (click)="updateBusPrice(busPrice.id)"
             >
               edit
             </span>
@@ -99,23 +120,13 @@
         </tr>
       </ng-template>
     </p-table>
-    <p-paginator
-      [showCurrentPageReport]="true"
-      [rows]="5"
-      [rowsPerPageOptions]="[5, 25, 50]"
-      [totalRecords]="totalItems"
-      currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {{
-        totalItems
-      }} mục"
-      (onPageChange)="onPaginate($event)"
-    ></p-paginator>
   </div>
 </div>
 
 <p-confirmDialog #cd [style]="{ width: '450px', height: '101px' }">
   <ng-template pTemplate="header">
     <div class="confirm-dialog-subtitle">
-      Bạn có chắc chắn muốn tắt giá này?
+      Bạn có chắc chắn muốn khóa giá này?
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
@@ -142,20 +153,20 @@
 <!-- dialog -->
 <p-dialog
   [header]="editMode ? 'Chỉnh sửa giá xe buýt' : 'Tạo mới giá xe buýt'"
-  [(visible)]="displayBusPriceDialog"
-  [style]="{ width: '464px', height: '530px' }"
+  [(visible)]="displayDialog"
+  [style]="{ width: '464px', height: '470px' }"
   [contentStyle]="{
     'overflow-y': 'auto',
     'overflow-x': 'hidden',
-    'max-height': '70vh',
-    'min-height': '25vh'
+    'max-height': '50vh',
+    'min-height': '30vh'
   }"
   [blockScroll]="true"
   [resizable]="true"
   [modal]="true"
 >
   <div class="divider"></div>
-  <form class="bus-price-form">
+  <form [formGroup]="busPriceForm" class="bus-price-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
         <div class="bus-price-text">Chế độ</div>
@@ -163,111 +174,142 @@
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
           optionLabel="lable"
-          optionValue="id"
+          [options]="mode"
+          optionValue="name"
+          formControlName="mode"
+          (onChange)="onChangeMode()"
         ></p-dropdown>
       </div>
       <div class="col-12">
-        <div class="bus-price-text">Tuyến đường</div>
+        <div class="bus-price-text">
+          Tuyến đường
+          <small
+            class="p-error"
+            *ngIf="(_busPriceForms['minRouteDistance'].errors?.['required'] || _busPriceForms['maxRouteDistance'].errors?.['required']) && isSubmit"
+          >
+            Không được trống</small
+          >
+        </div>
+
         <div class="grid">
           <div class="col-6">
             <div class="input-custom">
-              <input
+              <p-inputNumber
                 [style]="{
                   width: '202px',
                   height: '28px'
                 }"
-                type="text"
-                pInputText
+                formControlName="minRouteDistance"
                 (keyup.enter)="onSaveBusPrice()"
-              />
+              ></p-inputNumber>
               <span class="input-icon">Km</span>
             </div>
           </div>
           <div class="col-6">
             <div class="input-custom">
-              <input
+              <p-inputNumber
                 [style]="{
                   width: '202px',
                   height: '28px'
                 }"
-                type="text"
-                pInputText
+                formControlName="maxRouteDistance"
                 (keyup.enter)="onSaveBusPrice()"
-              />
+              ></p-inputNumber>
               <span class="input-icon">Km</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="bus-price-text">Khoảng cách</div>
+      <div class="col-12" *ngIf="_busPriceForms['mode'].value === 'distance'">
+        <div class="bus-price-text">
+          Khoảng cách
+          <small
+            class="p-error"
+            *ngIf="(_busPriceForms['minDistance'].errors?.['required'] || _busPriceForms['maxDistance'].errors?.['required']) && isSubmit"
+            >Không được trống</small
+          >
+        </div>
+
         <div class="grid">
           <div class="col-6">
             <div class="input-custom">
-              <input
+              <p-inputNumber
                 [style]="{
                   width: '202px',
                   height: '28px'
                 }"
-                type="text"
-                pInputText
+                formControlName="minDistance"
                 (keyup.enter)="onSaveBusPrice()"
-              />
+              ></p-inputNumber>
               <span class="input-icon">Km</span>
             </div>
           </div>
           <div class="col-6">
             <div class="input-custom">
-              <input
+              <p-inputNumber
                 [style]="{
                   width: '202px',
                   height: '28px'
                 }"
-                type="text"
-                pInputText
+                formControlName="maxDistance"
                 (keyup.enter)="onSaveBusPrice()"
-              />
+              ></p-inputNumber>
               <span class="input-icon">Km</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="bus-price-text">Số trạm</div>
+      <div class="col-12" *ngIf="_busPriceForms['mode'].value === 'station'">
+        <div class="bus-price-text">
+          Số trạm
+
+          <small
+            class="p-error"
+            *ngIf="(_busPriceForms['minStation'].errors?.['required'] || _busPriceForms['maxStation'].errors?.['required']) && isSubmit"
+            >Không được trống</small
+          >
+        </div>
+
         <div class="grid">
           <div class="col-6">
-            <input
+            <p-inputNumber
               [style]="{
                 width: '202px',
                 height: '28px'
               }"
-              type="text"
-              pInputText
+              formControlName="minStation"
               (keyup.enter)="onSaveBusPrice()"
-            />
+            ></p-inputNumber>
           </div>
           <div class="col-6">
-            <input
+            <p-inputNumber
               [style]="{
                 width: '202px',
                 height: '28px'
               }"
-              type="text"
-              pInputText
+              formControlName="maxStation"
               (keyup.enter)="onSaveBusPrice()"
-            />
+            ></p-inputNumber>
           </div>
         </div>
       </div>
 
       <div class="col-12">
-        <div class="bus-price-text">Giá</div>
+        <div class="bus-price-text">
+          Giá
+          <small
+            class="p-error"
+            *ngIf="(_busPriceForms['price'].errors?.['required'])&&isSubmit"
+            >Không được trống</small
+          >
+        </div>
+
         <div class="input-custom">
-          <input
+          <p-inputNumber
             [style]="{ width: '420px', height: '28px' }"
             (keyup.enter)="onSaveBusPrice()"
-            pInputText
-          />
+            formControlName="price"
+          ></p-inputNumber>
           <span class="input-icon">VND</span>
         </div>
 
@@ -284,7 +326,7 @@
       pRipple
       type="button"
       label="Hủy"
-      (click)="cancelDialog(false, true)"
+      (click)="cancelDialog()"
     ></button>
     <button
       [style]="{ width: '57', height: '32px' }"

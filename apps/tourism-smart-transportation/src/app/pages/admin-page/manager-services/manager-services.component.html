@@ -58,7 +58,7 @@
         <tr>
           <td>{{ package.name }}</td>
           <td>{{ package.description }}</td>
-          <td>{{ package.price }}</td>
+          <td>{{ package.price | currency: package?.price:'':'.0-0' }} VND</td>
           <td>{{ package.promotedTitle }}</td>
           <td>
             <div [class]="tierStatus[package.status].class">
