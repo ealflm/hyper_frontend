@@ -60,8 +60,8 @@ export class VehicleBookingPriceComponent implements OnInit {
       };
     });
   }
-  createBookingPrice(editMode: boolean) {
-    this.editMode = editMode;
+  createBookingPrice() {
+    this.editMode = false;
     this.displayDialog = true;
   }
   onChangeFillterByName(e: any) {}
@@ -70,7 +70,7 @@ export class VehicleBookingPriceComponent implements OnInit {
     this.confirmationService.confirm({});
   }
   updateBookingPrice(editMode: boolean, id: string) {}
-  cancelDialog(displayDialog: boolean, comebackStatus: boolean) {
+  cancelDialog() {
     this.displayDialog = false;
   }
   onSaveBookingPrice() {}

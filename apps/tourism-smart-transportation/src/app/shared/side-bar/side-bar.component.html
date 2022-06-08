@@ -195,7 +195,13 @@
         <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           [ngClass]="
-            (price.isActive || price1.isActive || price2.isActive) && !status
+            (price.isActive ||
+              price1.isActive ||
+              price2.isActive ||
+              price3.isActive ||
+              price4.isActive ||
+              price5.isActive) &&
+            !status
               ? 'active-link'
               : ''
           "
@@ -203,7 +209,12 @@
           <div class="nav-link relative" (click)="onShowMoreSetting()">
             <mat-icon
               [ngClass]="
-                price.isActive || price1.isActive || price2.isActive
+                price.isActive ||
+                price1.isActive ||
+                price2.isActive ||
+                price3.isActive ||
+                price4.isActive ||
+                price5.isActive
                   ? 'material-icons'
                   : 'material-icons-outlined'
               "
@@ -228,6 +239,45 @@
         </li>
 
         <ul [ngClass]="showMoreService ? '' : 'navLinkDar'">
+          <li
+            class="nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link-content"
+            #price3="routerLinkActive"
+          >
+            <div class="nav-link-content" routerLink="/setting/vehicle-type">
+              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+                Loại xe
+              </div>
+            </div>
+          </li>
+          <li
+            class="nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link-content"
+            #price4="routerLinkActive"
+          >
+            <div class="nav-link-content" routerLink="/setting/vehicle-class">
+              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+                Phân khúc xe
+              </div>
+            </div>
+          </li>
+          <li
+            class="nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link-content"
+            #price5="routerLinkActive"
+          >
+            <div
+              class="nav-link-content"
+              routerLink="/setting/vehicle-manufacture-year"
+            >
+              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+                Năm sản xuất xe
+              </div>
+            </div>
+          </li>
           <li
             class="nav-item-content"
             [ngClass]="statusLink ? 'navLinkDar' : ''"

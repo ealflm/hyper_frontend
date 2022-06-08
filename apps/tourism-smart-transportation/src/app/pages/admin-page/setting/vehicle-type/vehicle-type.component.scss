@@ -1,6 +1,6 @@
 @import '../../../../../styles.scss';
 
-.header-bus-price-service {
+.header-vehicle-type-service {
   @include fixed-scroll-view;
   @include custom-scrollbar;
   &-content {
@@ -30,7 +30,7 @@
       }
     }
   }
-  .header-bus-price-service-content {
+  .header-vehicle-type-service-content {
     display: flex;
     padding-left: 30px;
     align-items: center;
@@ -214,8 +214,8 @@
       .divider {
         border-top: 1px solid $color-line-grey;
       }
-      .bus-price-form {
-        .bus-price-text {
+      .vehicle-type-form {
+        .vehicle-type-text {
           @include font-Roboto-Regular-Body2;
           color: $black-default;
         }

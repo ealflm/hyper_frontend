@@ -63,17 +63,19 @@ export class VehicleRentingPriceComponent implements OnInit {
       };
     });
   }
-  createRentingPrice(editMode: boolean) {
-    this.editMode = editMode;
+  createRentingPrice() {
+    this.editMode = false;
     this.displayDialog = true;
   }
   onChangeFillterByName(e: any) {}
   onGetValueMenu(e: any) {}
-  onDeleteRentingPrice(id: string, deleteStatus: boolean) {
+  onDeleteRentingPrice(id: string) {
     this.confirmationService.confirm({});
   }
-  updateRentingPrice(editMode: boolean, id: string) {}
-  cancelDialog(displayDialog: boolean, comebackStatus: boolean) {
+  updateRentingPrice(id: string) {
+    this.editMode = true;
+  }
+  cancelDialog() {
     this.displayDialog = false;
   }
   onSaveRentingPrice() {}

@@ -383,8 +383,10 @@ export class MapPageComponent
 
   // call API routes
   getAllRoutes(fillterName?: string) {
-    this.mapService.getAllRoutes().subscribe((routeRes: RoutesResponse) => {
-      this.routes = routeRes.body.items;
-    });
+    this.mapService
+      .getAllRoutes(fillterName)
+      .subscribe((routeRes: RoutesResponse) => {
+        this.routes = routeRes.body.items;
+      });
   }
 }
