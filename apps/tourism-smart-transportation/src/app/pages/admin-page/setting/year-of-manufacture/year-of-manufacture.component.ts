@@ -86,10 +86,10 @@ export class YearOfManufactureComponent implements OnInit {
     this.displayDialog = true;
     this.editMode = true;
     this.publishYearService.getPublishYearById(id).subscribe((res) => {
-      console.log(res);
+      // console.log(res);
 
       const timesplit = res.body.name?.split(' - ');
-      console.log(timesplit);
+      // console.log(timesplit);
       const time = new Date(timesplit ? timesplit[0] : '');
       const time2 = new Date(timesplit ? timesplit[1] : '');
       const timeCompleted = [time, time2];

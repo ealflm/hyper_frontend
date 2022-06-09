@@ -148,6 +148,7 @@
       </ng-template>
     </p-table>
     <p-paginator
+      *ngIf="discounts.length > 0"
       [showCurrentPageReport]="true"
       [rows]="5"
       [rowsPerPageOptions]="[5, 25, 50]"

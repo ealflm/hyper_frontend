@@ -106,8 +106,6 @@ export class BusPriceComponent implements OnInit {
   }
   onChangeFillterByName(e: any) {}
   onGetValueMenu(e: number) {
-    console.log(e);
-
     this.fillterByStatus = e;
     this.getAllBusPrice();
   }
