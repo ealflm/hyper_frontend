@@ -1,4 +1,4 @@
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BusConfigService } from './../../../../services/bus-config.service';
 import {
@@ -169,9 +169,8 @@ export class BusPriceComponent implements OnInit {
         maxStation: this._busPriceForms['maxStation'].value,
         price: this._busPriceForms['price'].value,
       };
-      this.busConfigService
-        .updateBusPrice(id, busPriceUpdate)
-        .subscribe((busPriceRes: any) => {
+      this.busConfigService.updateBusPrice(id, busPriceUpdate).subscribe(
+        (busPriceRes: any) => {
           if (busPriceRes?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -180,7 +179,18 @@ export class BusPriceComponent implements OnInit {
             });
           }
           this.getAllBusPrice();
-        });
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.status);
+          if (error.status === 400) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Thất bại',
+              detail: error.error.message,
+            });
+          }
+        }
+      );
     } else if (this.isSubmit && !this.editMode) {
       const busPrice: BusPrice = {
         id: '',
@@ -193,9 +203,8 @@ export class BusPriceComponent implements OnInit {
         maxStation: this._busPriceForms['maxStation'].value,
         price: this._busPriceForms['price'].value,
       };
-      this.busConfigService
-        .createBusPrice(busPrice)
-        .subscribe((busPriceRes: any) => {
+      this.busConfigService.createBusPrice(busPrice).subscribe(
+        (busPriceRes: any) => {
           if (busPriceRes?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -204,7 +213,18 @@ export class BusPriceComponent implements OnInit {
             });
           }
           this.getAllBusPrice();
-        });
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.status);
+          if (error.status === 400) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Thất bại',
+              detail: error.error.message,
+            });
+          }
+        }
+      );
     }
     this.editMode = false;
     this.displayDialog = false;

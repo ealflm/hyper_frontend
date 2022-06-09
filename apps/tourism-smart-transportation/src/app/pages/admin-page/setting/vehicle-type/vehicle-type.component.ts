@@ -46,6 +46,7 @@ export class VehicleTypeComponent implements OnInit {
   editMode = false;
   filterVehicleTypeStatus = 1;
   vehicleTypeForm!: FormGroup;
+  filterByLabel = '';
   isSubmit = false;
   constructor(
     private vehicleTypeService: VehicleTypesService,
@@ -87,7 +88,10 @@ export class VehicleTypeComponent implements OnInit {
     this._vehicleTypeForm['seats'].setValue('');
     this._vehicleTypeForm['fuel'].setValue('');
   }
-  onChangeFillterByName(name: any) {}
+  onChangeFillterByName(e: any) {
+    this.filterByLabel = e.target.value;
+    this.getAllVehicleType();
+  }
   onGetValueMenu(value: number) {
     this.filterVehicleTypeStatus = value;
     this.getAllVehicleType();
@@ -169,7 +173,7 @@ export class VehicleTypeComponent implements OnInit {
   }
   getAllVehicleType() {
     this.vehicleTypeService
-      .getAllVehicleType(this.filterVehicleTypeStatus)
+      .getAllVehicleType(this.filterByLabel, this.filterVehicleTypeStatus)
       .subscribe((vehicleTypeRes: VehicleTypesResponse) => {
         this.vehicleTypes = vehicleTypeRes.body;
       });

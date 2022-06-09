@@ -14,10 +14,16 @@ import { Injectable } from '@angular/core';
 export class VehicleTypesService {
   apiURL = environment.apiURL + 'admin/vehicles/types';
   constructor(private http: HttpClient) {}
-  getAllVehicleType(status?: number | null): Observable<VehicleTypesResponse> {
+  getAllVehicleType(
+    label?: string,
+    status?: number | null
+  ): Observable<VehicleTypesResponse> {
     let queryParams = new HttpParams();
     if (status != null) {
       queryParams = queryParams.append('Status', status);
+    }
+    if (label != null) {
+      queryParams = queryParams.append('Label', label);
     }
     return this.http.get<VehicleTypesResponse>(`${this.apiURL}`, {
       params: queryParams,

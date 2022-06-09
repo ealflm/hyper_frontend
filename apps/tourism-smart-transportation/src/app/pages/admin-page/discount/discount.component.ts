@@ -63,6 +63,20 @@ export class DiscountComponent implements OnInit {
   //
   pageIndex?: number = 0;
   itemsPerPage?: number = 5;
+  menuValue: any = [
+    {
+      value: 1,
+      lable: 'Kích hoạt',
+    },
+    {
+      value: 0,
+      lable: 'Vô hiệu hóa',
+    },
+    {
+      value: null,
+      lable: 'Tất cả',
+    },
+  ];
   constructor(
     private discountService: DiscountService,
     private fb: FormBuilder,
@@ -134,10 +148,11 @@ export class DiscountComponent implements OnInit {
     this.itemsPerPage = e.rows;
     this._getAllDiscount();
   }
-  navmenuclick(value: any) {
+  OnGetMenuClick(value: any) {
     this.fillterStatus = value;
     this._getAllDiscount();
   }
+
   onUpload(event: any) {
     const avatarFile = event.target.files[0];
     if (avatarFile) {
