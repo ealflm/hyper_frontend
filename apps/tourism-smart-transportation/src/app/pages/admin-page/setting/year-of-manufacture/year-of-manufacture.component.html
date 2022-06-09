@@ -1,7 +1,7 @@
 <div class="header-publish-year-service">
   <div class="header-publish-year-service-content">
     <div class="header-content-item">
-      <div class="header-item-H5"><div>Loại xe</div></div>
+      <div class="header-item-H5"><div>Năm sản xuất xe</div></div>
       <div class="header-item">
         <button
           pButton
@@ -51,7 +51,7 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Tên</th>
+          <th>Đời xe</th>
           <th>Mô tả</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
@@ -62,14 +62,8 @@
           <td>{{ VehicleYearOfPublish.name }}</td>
           <td>{{ VehicleYearOfPublish?.description }}</td>
           <td>
-            <div
-              [class]="
-                vehicleYearOfPublishStatus[VehicleYearOfPublish.status].class
-              "
-            >
-              {{
-                vehicleYearOfPublishStatus[VehicleYearOfPublish.status].lable
-              }}
+            <div [class]="status[VehicleYearOfPublish.status].class">
+              {{ status[VehicleYearOfPublish.status].lable }}
             </div>
           </td>
           <td style="text-align: center">
@@ -137,33 +131,52 @@
 <p-dialog
   [header]="editMode ? 'Chỉnh sửa phân khúc xe' : 'Tạo mới phân khúc xe'"
   [(visible)]="displayDialog"
-  [style]="{ width: '464px', height: '320px' }"
+  [style]="{ width: '464px', height: 'auto' }"
   [contentStyle]="{
     'overflow-y': 'auto',
-    'overflow-x': 'hidden'
+    'overflow-x': 'hidden',
+    overflow: 'overlay'
   }"
   [blockScroll]="true"
   [resizable]="true"
   [modal]="true"
 >
   <div class="divider"></div>
-  <form class="publish-year-form">
+  <form [formGroup]="publishYearForm" class="publish-year-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
-        <div class="publish-year-text">Tên</div>
-        <input
+        <div class="publish-year-text">
+          Đời xe
+          <small
+            class="p-error"
+            *ngIf="_publishYearForm['name'].errors?.['required']&& isSubmit"
+            >Không được trống</small
+          >
+        </div>
+        <p-calendar
           [style]="{ width: '420px', height: '28px' }"
-          (keyup.enter)="onSaveVehicleYearOfPublish()"
-          pInputText
-        />
+          formControlName="name"
+          view="year"
+          selectionMode="range"
+          dateFormat="yy"
+          inputId="yearpicker"
+        ></p-calendar>
 
         <div></div>
       </div>
 
       <div class="col-12">
-        <div class="publish-year-text">Mô tả</div>
+        <div class="publish-year-text">
+          Mô tả
+          <small
+            class="p-error"
+            *ngIf="_publishYearForm['description'].errors?.['required'] && isSubmit"
+            >Không được trống</small
+          >
+        </div>
         <input
           [style]="{ width: '420px', height: '28px' }"
+          formControlName="description"
           (keyup.enter)="onSaveVehicleYearOfPublish()"
           pInputText
         />
