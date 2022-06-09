@@ -59,7 +59,7 @@ export class MapPageComponent
       class: '',
       hiddenCheckbox: true,
       icon: 'route',
-      lable: 'Tuyến',
+      lable: 'Tuyến xe buýt',
     },
   ];
   fillterMenu?: string = 'driver';
@@ -87,7 +87,7 @@ export class MapPageComponent
   routeDetail!: Route;
   //
   idStation = '';
-  checkBoxValue = [];
+  checkBoxValue: string[] = [];
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -166,6 +166,7 @@ export class MapPageComponent
   onShowSideBarList() {
     this.showSideBarList = true;
     this.showSideBarDetail = false;
+    this.mapboxService.removeRoute();
   }
   // recive data menu form child components
   onGetFillterMenu(event: any) {
@@ -186,6 +187,8 @@ export class MapPageComponent
   }
   onGetValueCheckBox(valueCheckbox: []) {
     this.checkBoxValue = valueCheckbox;
+    // console.log(this.checkBoxValue);
+
     if (valueCheckbox.length <= 0) {
       this.mapboxService.removeBusStationMarker();
       this.mapboxService.removeRentStationMarker();

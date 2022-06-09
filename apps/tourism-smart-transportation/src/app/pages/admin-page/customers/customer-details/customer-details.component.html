@@ -243,7 +243,7 @@
         [showCurrentPageReport]="true"
         [rows]="2"
         [rowsPerPageOptions]="[2, 5, 10]"
-        [paginator]="cusTiersHis.length <= 2 ? false : true"
+        [paginator]="cusTiersHis.length > 0 ? true : false"
         currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
       >
         <ng-template pTemplate="header">
@@ -283,7 +283,7 @@
         [rows]="10"
         [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[10, 25, 50]"
-        [paginator]="true"
+        [paginator]="transactionHis.length > 0 ? true : false"
         currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
       >
         <ng-template pTemplate="header">
@@ -344,7 +344,7 @@
       [rows]="2"
       [rowsPerPageOptions]="[2, 5]"
       [showCurrentPageReport]="true"
-      [paginator]="orderDetails.length < 2 ? false : true"
+      [paginator]="orderDetails.length > 0 ? true : false"
       currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
     >
       <ng-template pTemplate="header">
@@ -363,9 +363,7 @@
           </td>
           <td>{{ oderDetail.quantity }}</td>
           <td>
-            {{
-              oderDetail.totalPrice | currency: oderDetail.price:'':'.0-0'
-            }}
+            {{ oderDetail.totalPrice | currency: oderDetail.price:'':'.0-0' }}
             VND
           </td>
         </tr>
@@ -387,7 +385,7 @@
       [rows]="5"
       [rowsPerPageOptions]="[2, 5]"
       [showCurrentPageReport]="true"
-      [paginator]="payments.length <= 2 ? false : true"
+      [paginator]="payments.length > 0 ? true : false"
       currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
     >
       <ng-template pTemplate="header">

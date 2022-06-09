@@ -43,6 +43,14 @@ export class MapBoxService {
       this.coordinates$.next(geo);
     });
   }
+  removeRoute() {
+    if (this.map.getLayer('route')) {
+      this.map.removeLayer('route');
+    }
+    if (this.map.getSource('route')) {
+      this.map.removeSource('route');
+    }
+  }
   getRoute(routeRes: any) {
     const data = routeRes;
     const route = data.geometry.coordinates;
@@ -55,12 +63,7 @@ export class MapBoxService {
       },
     };
     // if the route already exists on the map, we'll reset it using setData
-    if (this.map.getLayer('route')) {
-      this.map.removeLayer('route');
-    }
-    if (this.map.getSource('route')) {
-      this.map.removeSource('route');
-    }
+    this.removeRoute();
 
     this.map.addLayer({
       id: 'route',

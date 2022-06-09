@@ -256,6 +256,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
               detail: res.message,
             });
           }
+          this.onCancleEdit();
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -266,6 +267,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
               detail: error.error.message,
             });
           }
+          this.onCancleEdit();
         }
       );
     this.editModeStatus = false;

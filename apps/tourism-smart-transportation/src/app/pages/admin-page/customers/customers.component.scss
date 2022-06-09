@@ -123,27 +123,7 @@
     }
   }
   ::ng-deep {
-    .p-paginator {
-      margin-top: 10px;
-      justify-content: end;
-      border-top-left-radius: none !important;
-      border-top-right-radius: none !important;
-
-      border-bottom-right-radius: 10px;
-      border-bottom-left-radius: 10px;
-      box-shadow: 0em 0em 2em rgba(0, 0, 0, 0.05);
-      background-color: white;
-    }
-    .p-dropdown {
-      width: 75px;
-      height: 40px;
-      border-radius: 50px;
-      border: none;
-      box-shadow: 0em 0em 2em rgba(0, 0, 0, 0.05);
-      .p-dropdown-trigger-icon {
-        font-size: 10px;
-      }
-    }
+    @include paginator-custom;
   }
   ::ng-deep {
     .body-table {

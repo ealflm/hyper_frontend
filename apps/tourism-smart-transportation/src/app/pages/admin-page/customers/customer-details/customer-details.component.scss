@@ -374,12 +374,15 @@
     background-color: white;
     .p-dropdown {
       width: 75px;
-      height: 40px;
+      height: 33px;
       border-radius: 50px;
       border: none;
-      box-shadow: 0em 0em 2em rgba(0, 0, 0, 0.05);
+      box-shadow: 0em 1px 4px rgba(0, 0, 0, 0.25);
       .p-dropdown-trigger-icon {
         font-size: 10px;
+      }
+      .p-dropdown-label {
+        padding-top: 7px;
       }
     }
   }

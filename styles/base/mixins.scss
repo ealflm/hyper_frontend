@@ -227,3 +227,38 @@
   padding: 2px 15px 2px 15px;
   width: 90px;
 }
+@mixin paginator-custom {
+  .p-paginator {
+    margin-top: 10px;
+    justify-content: end;
+    border-top-left-radius: none !important;
+    border-top-right-radius: none !important;
+
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: 0px 0em 2em rgba(0, 0, 0, 0.05);
+    background-color: white;
+    .p-paginator-current {
+      color: $black-default;
+    }
+  }
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-page,
+  .p-paginator-next,
+  .p-paginator-last {
+    color: $black-default;
+  }
+  .p-dropdown {
+    width: 75px;
+    height: 33px;
+    border-radius: 50px;
+    border: 1px solid $color-grey-text-placeholder;
+    .p-dropdown-trigger-icon {
+      font-size: 10px;
+    }
+    .p-dropdown-label {
+      padding-top: 5px;
+    }
+  }
+}
