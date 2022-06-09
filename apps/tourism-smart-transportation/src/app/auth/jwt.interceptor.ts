@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { environment } from './../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import {
@@ -14,7 +15,10 @@ import { LocalStorageService } from './localstorage.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private localstorageService: LocalStorageService) {}
+  constructor(
+    private localstorageService: LocalStorageService,
+    private messageService: MessageService
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
@@ -35,6 +39,20 @@ export class JwtInterceptor implements HttpInterceptor {
           if (error.status === 401) {
             console.log(error);
             this.localstorageService.removeToken();
+          }
+          if (error.status === 400) {
+            console.log(error);
+            // this.messageService.add({
+            //   severity: 'error',
+            //   summary: 'Thất bại',
+            //   detail: error.error.message,
+            // });
+          }
+          if (error.status === 500) {
+            console.log(error);
+          }
+          if (error.status === 404) {
+            console.log(error);
           }
         }
         return throwError(error);

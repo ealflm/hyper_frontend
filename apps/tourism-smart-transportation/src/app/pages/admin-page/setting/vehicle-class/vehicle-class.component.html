@@ -62,8 +62,8 @@
           <td>{{ vehicleClass.name }}</td>
           <td>{{ vehicleClass?.description }}</td>
           <td>
-            <div [class]="vehicleClassStatus[vehicleClass.status].class">
-              {{ vehicleClassStatus[vehicleClass.status].lable }}
+            <div [class]="status[vehicleClass.status].class">
+              {{ status[vehicleClass.status].lable }}
             </div>
           </td>
           <td style="text-align: center">
@@ -141,13 +141,22 @@
   [modal]="true"
 >
   <div class="divider"></div>
-  <form class="vehicle-class-form">
+  <form [formGroup]="categoryForm" class="vehicle-class-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
-        <div class="vehicle-class-text">Tên</div>
+        <div class="vehicle-class-text">
+          Tên
+          <small
+            class="p-error"
+            *ngIf="_categoryForm['name'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <input
           [style]="{ width: '420px', height: '28px' }"
           (keyup.enter)="onSaveVehicleClass()"
+          formControlName="name"
           pInputText
         />
 
@@ -155,10 +164,19 @@
       </div>
 
       <div class="col-12">
-        <div class="vehicle-class-text">Mô tả</div>
+        <div class="vehicle-class-text">
+          Mô tả
+          <small
+            class="p-error"
+            *ngIf="_categoryForm['description'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <input
           [style]="{ width: '420px', height: '28px' }"
           (keyup.enter)="onSaveVehicleClass()"
+          formControlName="description"
           pInputText
         />
 
