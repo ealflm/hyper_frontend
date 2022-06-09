@@ -64,7 +64,7 @@ export class SideBarComponent implements OnInit {
       this.status = false;
       if (!this.statusLink) {
         this.statusLink = true;
-        // this.displayAvatar = false;
+        this.displayAvatar = false;
       }
     }
   }
