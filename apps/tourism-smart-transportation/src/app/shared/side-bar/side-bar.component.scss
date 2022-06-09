@@ -212,17 +212,19 @@ ul {
 
 .navLinkDar {
   display: none;
+  animation: ease;
+  animation-duration: 5s;
 }
 
 .showName {
   display: block;
-  visibility: visible;
+  animation: ease-out;
+  animation-duration: 5s;
 }
 
 .avatar-fade-up {
-  animation: slideUp;
-  animation-timing-function: ease-out;
-  animation-duration: 0.3s;
+  animation: ease;
+  animation-duration: 5s;
 }
 
 .footer-avatar {
@@ -249,8 +251,8 @@ ul {
   }
   .footer-content-block {
     display: block;
-    animation-timing-function: ease-out;
-    animation-duration: 0.3s;
+    animation: ease;
+    animation-duration: 2s;
   }
   &-name {
     padding: 12px;

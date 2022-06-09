@@ -45,7 +45,7 @@ export class MapPageComponent
       class: '',
       hiddenCheckbox: false,
       icon: 'directions_bus_filled',
-      lable: 'Trạm xe bus',
+      lable: 'Trạm xe buýt',
     },
     {
       name: 'rent-station',

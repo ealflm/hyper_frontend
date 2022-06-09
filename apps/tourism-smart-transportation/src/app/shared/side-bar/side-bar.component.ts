@@ -52,10 +52,10 @@ export class SideBarComponent implements OnInit {
       this.status = true;
       if (this.statusLink) {
         this.statusLink = false;
-        this.displayAvatar = true;
+        // this.displayAvatar = true;
       }
     }
-    console.log(this.status);
+    // console.log(this.status);
   }
   mouseLeave() {
     if (this.locked) {
@@ -64,7 +64,7 @@ export class SideBarComponent implements OnInit {
       this.status = false;
       if (!this.statusLink) {
         this.statusLink = true;
-        this.displayAvatar = false;
+        // this.displayAvatar = false;
       }
     }
   }
