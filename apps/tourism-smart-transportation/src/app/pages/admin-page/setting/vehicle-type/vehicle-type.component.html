@@ -60,13 +60,13 @@
       </ng-template>
       <ng-template pTemplate="body" let-vehicleType let-i="rowIndex">
         <tr>
-          <td>{{ vehicleType.route }}</td>
-          <td>{{ vehicleType?.distance }}</td>
-          <td>{{ vehicleType?.numberOfStation }}</td>
+          <td>{{ vehicleType.label }}</td>
+          <td>{{ vehicleType?.seats }}</td>
+          <td>{{ vehicleType?.fuel }}</td>
 
           <td>
-            <div [class]="vehicleTypeStatus[vehicleType.status].class">
-              {{ vehicleTypeStatus[vehicleType.status].lable }}
+            <div [class]="status[vehicleType?.status]?.class">
+              {{ status[vehicleType?.status]?.lable }}
             </div>
           </td>
           <td style="text-align: center">
@@ -87,7 +87,7 @@
             </span>
             <span
               class="material-icons-outlined iconEdit"
-              (click)="updateBusPrice(vehicleType.id)"
+              (click)="updateVehicleType(vehicleType.id)"
             >
               edit
             </span>
@@ -144,31 +144,58 @@
   [modal]="true"
 >
   <div class="divider"></div>
-  <form class="vehicle-type-form">
+  <form [formGroup]="vehicleTypeForm" class="vehicle-type-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
-        <div class="vehicle-type-text">Nhãn hiệu</div>
+        <div class="vehicle-type-text">
+          Nhãn hiệu
+          <small
+            class="p-error"
+            *ngIf="_vehicleTypeForm['label'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <input
           [style]="{ width: '420px', height: '28px' }"
           (keyup.enter)="onSaveVehicleType()"
+          formControlName="label"
           pInputText
         />
 
         <div></div>
       </div>
       <div class="col-12">
-        <div class="vehicle-type-text">Nhiên liệu</div>
+        <div class="vehicle-type-text">
+          Nhiên liệu
+          <small
+            class="p-error"
+            *ngIf="_vehicleTypeForm['fuel'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <p-dropdown
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
           [options]="fuel"
+          formControlName="fuel"
           optionLabel="lable"
           optionValue="name"
         ></p-dropdown>
       </div>
       <div class="col-12">
-        <div class="vehicle-type-text">Số ghế</div>
+        <div class="vehicle-type-text">
+          Số ghế
+          <small
+            class="p-error"
+            *ngIf="_vehicleTypeForm['seats'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <p-inputNumber
+          formControlName="seats"
           [style]="{ width: '420px', height: '28px' }"
           (keyup.enter)="onSaveVehicleType()"
         ></p-inputNumber>

@@ -25,6 +25,7 @@ export class SideBarComponent implements OnInit {
   showMoreFinance = false;
   showMoreMap = false;
   displayAvatar = false;
+  statusName = true;
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
@@ -52,7 +53,11 @@ export class SideBarComponent implements OnInit {
       this.status = true;
       if (this.statusLink) {
         this.statusLink = false;
-        // this.displayAvatar = true;
+        if (this.status) {
+          setTimeout(() => {
+            this.statusName = true;
+          }, 100);
+        }
       }
     }
     // console.log(this.status);
@@ -65,6 +70,7 @@ export class SideBarComponent implements OnInit {
       if (!this.statusLink) {
         this.statusLink = true;
         this.displayAvatar = false;
+        this.statusName = false;
       }
     }
   }
