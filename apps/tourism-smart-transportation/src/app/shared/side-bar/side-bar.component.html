@@ -336,17 +336,20 @@
         src="../../../assets/image/avatar.jpg"
         alt=""
       />
-      <span
-        class="footer-avatar-name"
+
+      <div
+        class="footer-name"
         [ngClass]="statusLink ? 'navLinkDar' : 'showName'"
       >
-        Sang Đẹp Trai
-      </span>
-      <i
-        class="{{ displayAvatar ? 'pi pi-chevron-down' : 'pi pi-chevron-up' }}"
-        [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '"
-      ></i>
+        <span> Sang Đẹp Trai </span>
+        <i
+          class="{{
+            displayAvatar ? 'pi pi-chevron-down' : 'pi pi-chevron-up'
+          }}"
+        ></i>
+      </div>
     </div>
+
     <div
       class="footer"
       [ngClass]="displayAvatar ? 'footer-content-block' : 'footer-content'"

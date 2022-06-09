@@ -2,6 +2,8 @@
 .side-bar {
   @include fixed-scroll-view;
   @include box-shadown-grey;
+  display: flex;
+  flex-direction: column;
   width: 250px;
   position: relative;
 }
@@ -211,13 +213,14 @@ ul {
 }
 
 .navLinkDar {
-  display: none;
+  opacity: 0;
+  display: none !important;
   animation: ease;
   animation-duration: 5s;
 }
 
 .showName {
-  display: block;
+  opacity: 1;
   animation: ease-out;
   animation-duration: 5s;
 }
@@ -228,9 +231,9 @@ ul {
 }
 
 .footer-avatar {
-  position: absolute;
   width: 100%;
-  bottom: 15px;
+  padding-bottom: 9px;
+  margin-top: auto;
   cursor: pointer;
   .footer {
     color: var(--text-color);
@@ -238,7 +241,7 @@ ul {
       &:hover {
         background-color: $background-hover-grey;
       }
-      padding: 8px 20px 8px 20px;
+      padding: 8px 20px;
       text-align: center;
       &-name {
         padding-left: 20px;
@@ -255,13 +258,15 @@ ul {
     animation-duration: 2s;
   }
   &-name {
-    padding: 12px;
+    margin: auto 0;
+    margin-left: 12px;
     color: var(--text-color);
   }
   .footer-avatar-content {
     display: flex;
-    position: relative;
-    padding: 2px;
+    align-items: center;
+    justify-content: flex-start;
+
     &:hover {
       background-color: $background-hover-grey;
     }
@@ -288,18 +293,34 @@ ul {
       background-size: cover;
       object-fit: cover;
     }
-    div {
-      position: absolute;
-      right: 40%;
-      top: 30%;
-      color: var(--text-color);
+    .footer-name {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      justify-content: space-around;
+      animation: ease-out;
+      animation-duration: 2s;
+      span {
+        display: block;
+      }
+      i {
+        display: block;
+      }
     }
-    i {
-      position: absolute;
-      right: 10%;
-      top: 30%;
-      color: var(--text-color);
-    }
+    // div {
+    //   position: absolute;
+    //   right: 40%;
+    //   top: 30%;
+    //   color: var(--text-color);
+    // }
+    // i {
+    //   position: absolute;
+    //   right: 10%;
+    //   top: 30%;
+    //   color: var(--text-color);
+    // }
   }
 }
 @keyframes slideUp {
