@@ -42,17 +42,27 @@ export class JwtInterceptor implements HttpInterceptor {
           }
           if (error.status === 400) {
             console.log(error);
-            // this.messageService.add({
-            //   severity: 'error',
-            //   summary: 'Thất bại',
-            //   detail: error.error.message,
-            // });
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Thất bại',
+              detail: error.error.message,
+            });
           }
           if (error.status === 500) {
             console.log(error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Thất bại',
+              detail: error.error.message,
+            });
           }
           if (error.status === 404) {
             console.log(error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Thất bại',
+              detail: error.error.message,
+            });
           }
         }
         return throwError(error);

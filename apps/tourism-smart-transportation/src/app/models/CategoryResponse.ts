@@ -14,5 +14,5 @@ export class CategoryResponse {
 export class CategorysResponse {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging<Category>;
+  body!: UtilPaging<Category[]>;
 }

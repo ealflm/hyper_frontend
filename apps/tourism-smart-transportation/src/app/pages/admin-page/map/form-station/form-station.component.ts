@@ -27,7 +27,7 @@ import * as mapboxgl from 'mapbox-gl';
   styleUrls: ['./form-station.component.scss'],
 })
 export class FormStationComponent
-  implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy
+  implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy, OnChanges
 {
   private _dialog = false;
   afterViewInit = false;
@@ -54,7 +54,15 @@ export class FormStationComponent
     private mapService: MapService,
     private messageService: MessageService
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log(changes);
 
+    if (this.idStation) {
+      this.editMode = true;
+    } else {
+      this.editMode = false;
+    }
+  }
   ngOnInit(): void {
     this._initLocationForm();
   }
@@ -65,7 +73,6 @@ export class FormStationComponent
     if (this._dialog && !this.mapboxService.initView$.value) {
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
-
       if (this.idStation) {
         this.editMode = true;
         this.mapService
@@ -87,9 +94,9 @@ export class FormStationComponent
             }
           });
       } else if (!this.idStation) {
-        this.editMode = false;
         this.setEmtyInitForm();
         this.addMarker();
+        this.editMode = false;
       }
       this.mapboxService.initView$.next(true);
     }
@@ -108,6 +115,7 @@ export class FormStationComponent
   cancelDialog() {
     this.setEmtyInitForm();
     this.onCloseDialog();
+    this.editMode = false;
   }
   onCloseDialog() {
     this.setEmtyInitForm();
@@ -195,6 +203,7 @@ export class FormStationComponent
               detail: response.message,
             });
           }
+          this.editMode = false;
         });
     } else {
       const station: Station = {
@@ -216,6 +225,7 @@ export class FormStationComponent
           });
         }
       });
+      this.editMode = false;
     }
     this._locationForm['longitude'].disable();
     this._locationForm['latitude'].disable();

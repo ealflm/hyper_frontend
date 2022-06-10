@@ -257,18 +257,18 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
             });
           }
           this.onCancleEdit();
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-          if (error.status === 400) {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Lỗi',
-              detail: error.error.message,
-            });
-          }
-          this.onCancleEdit();
         }
+        // (error: HttpErrorResponse) => {
+        //   console.log(error);
+        //   if (error.status === 400) {
+        //     this.messageService.add({
+        //       severity: 'error',
+        //       summary: 'Lỗi',
+        //       detail: error.error.message,
+        //     });
+        //   }
+        //   this.onCancleEdit();
+        // }
       );
     this.editModeStatus = false;
   }

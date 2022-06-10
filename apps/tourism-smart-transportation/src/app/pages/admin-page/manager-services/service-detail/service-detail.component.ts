@@ -306,17 +306,17 @@ export class ServiceDetailComponent implements OnInit {
               detail: res.message,
             });
           }
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error);
-          if (error.status === 400) {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Lỗi',
-              detail: error.error.message,
-            });
-          }
         }
+        // (error: HttpErrorResponse) => {
+        //   console.log(error);
+        //   if (error.status === 400) {
+        //     this.messageService.add({
+        //       severity: 'error',
+        //       summary: 'Lỗi',
+        //       detail: error.error.message,
+        //     });
+        //   }
+        // }
       );
     this.location.back();
   }
@@ -397,17 +397,17 @@ export class ServiceDetailComponent implements OnInit {
             detail: res.message,
           });
         }
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-        if (error.status === 400) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Lỗi',
-            detail: error.error.message,
-          });
-        }
       }
+      // (error: HttpErrorResponse) => {
+      //   console.log(error);
+      //   if (error.status === 400) {
+      //     this.messageService.add({
+      //       severity: 'error',
+      //       summary: 'Lỗi',
+      //       detail: error.error.message,
+      //     });
+      //   }
+      // }
     );
     this.location.back();
   }
