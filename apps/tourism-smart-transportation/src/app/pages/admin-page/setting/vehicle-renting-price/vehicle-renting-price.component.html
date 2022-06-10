@@ -53,9 +53,9 @@
         <tr>
           <th>Năm sản xuất</th>
           <th>Phân loại</th>
+          <th>Giá cơ bản (VND)</th>
           <th>Thời gian (giờ)</th>
           <th>Giá theo giờ</th>
-          <th>Giá cơ bản (VND)</th>
           <th>Giá cuối tuần (VND)</th>
           <th>Giá ngày lễ (VND)</th>
           <th>Trạng thái</th>
@@ -64,16 +64,36 @@
       </ng-template>
       <ng-template pTemplate="body" let-rentingPrice let-i="rowIndex">
         <tr>
-          <td>{{ rentingPrice.publishYear }}</td>
-          <td>{{ rentingPrice?.vehicleType }}</td>
-          <td>{{ rentingPrice?.timePerHours }}</td>
-          <td>{{ rentingPrice?.timePricePerHours }}</td>
-          <td>{{ rentingPrice?.priceFixed }}</td>
-          <td>{{ rentingPrice?.priceWeekend }}</td>
-          <td>{{ rentingPrice?.priceHoliday }}</td>
+          <td>{{ rentingPrice.publishYearName }}</td>
+          <td>{{ rentingPrice?.categoryName }}</td>
           <td>
-            <div [class]="vehicleRentingPriceStatus[rentingPrice.status].class">
-              {{ vehicleRentingPriceStatus[rentingPrice.status].lable }}
+            {{
+              rentingPrice?.pricePerHour
+                | currency: rentingPrice?.pricePerHour:'':'.0-0'
+            }}
+          </td>
+          <td>{{ rentingPrice?.minTime + ' - ' + rentingPrice?.maxTime }}</td>
+          <td>
+            {{
+              rentingPrice?.fixedPrice
+                | currency: rentingPrice?.fixedPrice:'':'.0-0'
+            }}
+          </td>
+          <td>
+            {{
+              rentingPrice?.weekendPrice
+                | currency: rentingPrice?.weekendPrice:'':'.0-0'
+            }}
+          </td>
+          <td>
+            {{
+              rentingPrice?.holidayPrice
+                | currency: rentingPrice?.holidayPrice:'':'.0-0'
+            }}
+          </td>
+          <td>
+            <div [class]="status[rentingPrice.status].class">
+              {{ status[rentingPrice.status].lable }}
             </div>
           </td>
           <td style="text-align: center">
@@ -153,106 +173,178 @@
   [modal]="true"
 >
   <div class="divider"></div>
-  <form class="vehicle-renting-form">
+  <form [formGroup]="rentingPriceForm" class="vehicle-renting-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
-        <div class="vehicle-renting-text">Năm sản xuất</div>
+        <div class="vehicle-renting-text">
+          Năm sản xuất
+          <small
+            class="p-error"
+            *ngIf="_rentingForms['publishYearId'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <p-dropdown
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
-          optionLabel="lable"
+          [options]="publishYear"
+          optionLabel="name"
           optionValue="id"
+          placeholder="Chọn năm sản xuất"
+          formControlName="publishYearId"
         ></p-dropdown>
       </div>
       <div class="col-12">
-        <div class="vehicle-renting-text">Phân loại</div>
+        <div class="vehicle-renting-text">
+          Phân loại
+          <small
+            class="p-error"
+            *ngIf="_rentingForms['categoryId'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <p-dropdown
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
-          optionLabel="lable"
+          [options]="category"
+          optionLabel="name"
           optionValue="id"
+          placeholder="Chọn loại xe"
+          formControlName="categoryId"
         ></p-dropdown>
       </div>
       <div class="col-12">
-        <div class="bus-price-text">Khoảng thời gian</div>
+        <div class="bus-price-text">
+          Khoảng thời gian
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['minTime'].errors?.['required'] && isSubmit) || (_rentingForms['maxTime'].errors?.['required'] && isSubmit)"
+          >
+            Không được trống
+          </small>
+        </div>
         <div class="grid">
           <div class="col-6">
             <div class="input-custom">
-              <input
+              <p-inputNumber
                 [style]="{
                   width: '202px',
                   height: '28px'
                 }"
-                type="text"
-                pInputText
+                formControlName="minTime"
                 (keyup.enter)="onSaveRentingPrice()"
-              />
+              ></p-inputNumber>
               <span class="input-icon">Giờ</span>
             </div>
           </div>
           <div class="col-6">
             <div class="input-custom">
-              <input
+              <p-inputNumber
                 [style]="{
                   width: '202px',
                   height: '28px'
                 }"
-                type="text"
-                pInputText
+                formControlName="maxTime"
                 (keyup.enter)="onSaveRentingPrice()"
-              />
+              ></p-inputNumber>
               <span class="input-icon">Giờ</span>
             </div>
           </div>
         </div>
       </div>
       <div class="col-12">
-        <div class="vehicle-renting-text">Giá theo giờ</div>
+        <div class="vehicle-renting-text">
+          Giá theo giờ
+          <small
+            class="p-error"
+            *ngIf="_rentingForms['pricePerHour'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <div class="input-custom">
-          <input
-            [style]="{ width: '420px', height: '28px' }"
+          <p-inputNumber
+            [style]="{
+              width: '420px',
+              height: '28px'
+            }"
+            formControlName="pricePerHour"
             (keyup.enter)="onSaveRentingPrice()"
-            pInputText
-          />
+          ></p-inputNumber>
           <span class="input-icon">VND</span>
         </div>
 
         <div></div>
       </div>
       <div class="col-12">
-        <div class="vehicle-renting-text">Giá cơ bản</div>
+        <div class="vehicle-renting-text">
+          Giá cơ bản
+          <small
+            class="p-error"
+            *ngIf="_rentingForms['fixedPrice'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <div class="input-custom">
-          <input
-            [style]="{ width: '420px', height: '28px' }"
+          <p-inputNumber
+            [style]="{
+              width: '420px',
+              height: '28px'
+            }"
+            formControlName="fixedPrice"
             (keyup.enter)="onSaveRentingPrice()"
-            pInputText
-          />
+          ></p-inputNumber>
           <span class="input-icon">VND</span>
         </div>
 
         <div></div>
       </div>
       <div class="col-12">
-        <div class="vehicle-renting-text">Giá cuối tuần</div>
+        <div class="vehicle-renting-text">
+          Giá cuối tuần
+          <small
+            class="p-error"
+            *ngIf="_rentingForms['weekendPrice'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <div class="input-custom">
-          <input
-            [style]="{ width: '420px', height: '28px' }"
+          <p-inputNumber
+            [style]="{
+              width: '420px',
+              height: '28px'
+            }"
+            formControlName="weekendPrice"
             (keyup.enter)="onSaveRentingPrice()"
-            pInputText
-          />
+          ></p-inputNumber>
           <span class="input-icon">VND</span>
         </div>
 
         <div></div>
       </div>
       <div class="col-12">
-        <div class="vehicle-renting-text">Giá ngày lễ</div>
+        <div class="vehicle-renting-text">
+          Giá ngày lễ
+          <small
+            class="p-error"
+            *ngIf="_rentingForms['holidayPrice'].errors?.['required'] && isSubmit"
+          >
+            Không được trống
+          </small>
+        </div>
         <div class="input-custom">
-          <input
-            [style]="{ width: '420px', height: '28px' }"
+          <p-inputNumber
+            [style]="{
+              width: '420px',
+              height: '28px'
+            }"
+            formControlName="holidayPrice"
             (keyup.enter)="onSaveRentingPrice()"
-            pInputText
-          />
+          ></p-inputNumber>
           <span class="input-icon">VND</span>
         </div>
 

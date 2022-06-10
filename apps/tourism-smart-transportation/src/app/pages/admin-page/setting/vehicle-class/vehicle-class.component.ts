@@ -120,56 +120,32 @@ export class VehicleClassComponent implements OnInit {
         description: this._categoryForm['description'].value,
         status: 1,
       };
-      this.categoryService.updateCategory(id, vehicleType).subscribe(
-        (res) => {
-          if (res?.statusCode === 201) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Thành công',
-              detail: res.message,
-            });
-          }
-          this.getAllCategory();
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.status);
-          if (error.status === 400) {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Thất bại',
-              detail: error.error.message,
-            });
-          }
+      this.categoryService.updateCategory(id, vehicleType).subscribe((res) => {
+        if (res?.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: res.message,
+          });
         }
-      );
+        this.getAllCategory();
+      });
     } else if (this.isSubmit && !this.editMode) {
       const vehicleType: Category = {
         name: this._categoryForm['name'].value,
         description: this._categoryForm['description'].value,
         status: 1,
       };
-      this.categoryService.createCategory(vehicleType).subscribe(
-        (res) => {
-          if (res?.statusCode === 201) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Thành công',
-              detail: res.message,
-            });
-          }
-          this.getAllCategory();
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.status);
-          if (error.status === 400) {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Thất bại',
-              detail: error.error.message,
-            });
-          }
+      this.categoryService.createCategory(vehicleType).subscribe((res) => {
+        if (res?.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: res.message,
+          });
         }
-      );
+        this.getAllCategory();
+      });
     }
     this.editMode = false;
     this.displayDialog = false;

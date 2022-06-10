@@ -61,20 +61,20 @@
       </ng-template>
       <ng-template pTemplate="body" let-bookingPrice let-i="rowIndex">
         <tr>
-          <td>{{ bookingPrice.vehicleType }}</td>
-          <td>{{ bookingPrice?.distanceDefault }}</td>
-          <td>{{ bookingPrice?.priceFixed }}</td>
-          <td>{{ bookingPrice?.pricePerKm }}</td>
+          <td>{{ bookingPrice.vehicleTypeName }}</td>
+          <td>{{ bookingPrice?.fixedDistance }}</td>
+          <td>{{ bookingPrice?.fixedPrice }}</td>
+          <td>{{ bookingPrice?.pricePerKilometer }}</td>
           <td>
-            <div [class]="vehicleBookingPriceStatus[bookingPrice.status].class">
-              {{ vehicleBookingPriceStatus[bookingPrice.status].lable }}
+            <div [class]="status[bookingPrice.status].class">
+              {{ status[bookingPrice.status].lable }}
             </div>
           </td>
           <td style="text-align: center">
             <span
               class="material-icons-outlined enable"
               style="margin-right: 10px"
-              (click)="onDeleteBookingPrice(bookingPrice.id, true)"
+              (click)="onDeleteBookingPrice(bookingPrice.id)"
               *ngIf="bookingPrice.status !== 0"
             >
               delete
@@ -88,7 +88,7 @@
             </span>
             <span
               class="material-icons-outlined iconEdit"
-              (click)="updateBookingPrice(true, bookingPrice.id)"
+              (click)="updateBookingPrice(bookingPrice.id)"
             >
               edit
             </span>
@@ -147,55 +147,93 @@
   [modal]="true"
 >
   <div class="divider"></div>
-  <form class="vehicle-book-form">
+  <form [formGroup]="bookingPriceForm" class="vehicle-book-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
-        <div class="vehicle-book-text">Loại xe</div>
+        <div class="vehicle-book-text">
+          Loại xe
+
+          <small
+            class="p-error"
+            *ngIf="_bookingForms['vehicleTypeId'].errors?.['required'] && isSubmit"
+            >Không được trống</small
+          >
+        </div>
+        <!-- <p-dropdown
+          [options]="category"
+          placeholder="Chọn loại xe"
+          [group]="true"
+          [style]="{ width: '420px', height: '28px' }"
+        >
+          <ng-template let-group pTemplate="group">
+            <div class="flex align-items-center">
+              <span>{{ group.name + '-' + group.description }}</span>
+            </div>
+          </ng-template>
+        </p-dropdown> -->
         <p-dropdown
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
-          optionLabel="lable"
+          [options]="vehicleType"
+          optionLabel="label"
           optionValue="id"
+          placeholder="Chọn loại xe"
+          formControlName="vehicleTypeId"
         ></p-dropdown>
       </div>
       <div class="col-12">
-        <div class="vehicle-book-text">Khoảng cách cố định</div>
+        <div class="vehicle-book-text">
+          Khoảng cách cố định
+          <small
+            class="p-error"
+            *ngIf="_bookingForms['fixedDistance'].errors?.['required'] && isSubmit"
+            >Không được trống</small
+          >
+        </div>
         <div class="input-custom">
-          <input
+          <p-inputNumber
             [style]="{ width: '420px', height: '28px' }"
             (keyup.enter)="onSaveBookingPrice()"
-            pInputText
-          />
+            formControlName="fixedDistance"
+          ></p-inputNumber>
           <span class="input-icon">Km</span>
         </div>
-
-        <div></div>
       </div>
       <div class="col-12">
-        <div class="vehicle-book-text">Giá cố định</div>
+        <div class="vehicle-book-text">
+          Giá cố định
+          <small
+            class="p-error"
+            *ngIf="_bookingForms['fixedPrice'].errors?.['required'] && isSubmit"
+            >Không được trống</small
+          >
+        </div>
         <div class="input-custom">
-          <input
+          <p-inputNumber
             [style]="{ width: '420px', height: '28px' }"
+            formControlName="fixedPrice"
             (keyup.enter)="onSaveBookingPrice()"
-            pInputText
-          />
+          ></p-inputNumber>
           <span class="input-icon">VND</span>
         </div>
-
-        <div></div>
       </div>
       <div class="col-12">
-        <div class="vehicle-book-text">Giá mỗi Km</div>
+        <div class="vehicle-book-text">
+          Giá mỗi Km
+          <small
+            class="p-error"
+            *ngIf="_bookingForms['pricePerKilometer'].errors?.['required'] && isSubmit"
+            >Không được trống</small
+          >
+        </div>
         <div class="input-custom">
-          <input
+          <p-inputNumber
             [style]="{ width: '420px', height: '28px' }"
+            formControlName="pricePerKilometer"
             (keyup.enter)="onSaveBookingPrice()"
-            pInputText
-          />
+          ></p-inputNumber>
           <span class="input-icon">VND</span>
         </div>
-
-        <div></div>
       </div>
     </div>
   </form>

@@ -262,3 +262,11 @@
     }
   }
 }
+
+@mixin custom-dropdown {
+  .dropdown {
+    .p-dropdown-label {
+      margin-top: -8px;
+    }
+  }
+}

@@ -179,17 +179,17 @@ export class BusPriceComponent implements OnInit {
             });
           }
           this.getAllBusPrice();
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.status);
-          if (error.status === 400) {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Thất bại',
-              detail: error.error.message,
-            });
-          }
         }
+        // (error: HttpErrorResponse) => {
+        //   console.log(error.status);
+        //   if (error.status === 400) {
+        //     this.messageService.add({
+        //       severity: 'error',
+        //       summary: 'Thất bại',
+        //       detail: error.error.message,
+        //     });
+        //   }
+        // }
       );
     } else if (this.isSubmit && !this.editMode) {
       const busPrice: BusPrice = {
@@ -213,17 +213,17 @@ export class BusPriceComponent implements OnInit {
             });
           }
           this.getAllBusPrice();
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.status);
-          if (error.status === 400) {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Thất bại',
-              detail: error.error.message,
-            });
-          }
         }
+        // (error: HttpErrorResponse) => {
+        //   console.log(error.status);
+        //   if (error.status === 400) {
+        //     this.messageService.add({
+        //       severity: 'error',
+        //       summary: 'Thất bại',
+        //       detail: error.error.message,
+        //     });
+        //   }
+        // }
       );
     }
     this.editMode = false;

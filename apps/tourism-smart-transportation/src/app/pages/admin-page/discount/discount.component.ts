@@ -263,14 +263,14 @@ export class DiscountComponent implements OnInit {
             }
             this._getAllDiscount();
             this.editMode = false;
-          },
-          (error: HttpErrorResponse) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Thất bại',
-              detail: error.error.message,
-            });
           }
+          // (error: HttpErrorResponse) => {
+          //   this.messageService.add({
+          //     severity: 'error',
+          //     summary: 'Thất bại',
+          //     detail: error.error.message,
+          //   });
+          // }
         );
       }
     } else if (!this.editMode) {
@@ -307,14 +307,14 @@ export class DiscountComponent implements OnInit {
             });
           }
           this._getAllDiscount();
-        },
-        (error: HttpErrorResponse) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Thất bại',
-            detail: error.error.message,
-          });
         }
+        // (error: HttpErrorResponse) => {
+        //   this.messageService.add({
+        //     severity: 'error',
+        //     summary: 'Thất bại',
+        //     detail: error.error.message,
+        //   });
+        // }
       );
     }
   }
