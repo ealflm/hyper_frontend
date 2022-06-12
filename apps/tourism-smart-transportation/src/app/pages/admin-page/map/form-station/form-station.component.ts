@@ -91,6 +91,10 @@ export class FormStationComponent
                 stationRes.body.longitude,
                 stationRes.body.latitude
               );
+              this.mapboxService.flyToMarkerMiniMap(
+                stationRes.body.longitude,
+                stationRes.body.latitude
+              );
             }
           });
       } else if (!this.idStation) {
