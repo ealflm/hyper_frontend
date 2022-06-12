@@ -316,33 +316,47 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   onGetPaymentDetails(e: any) {
     this.displayDialog = true;
     this.paymentDialogStatus = e.paymentDialogStatus;
-    if (this.paymentDialogStatus) {
-      this.purchaseHistoryService
-        .getPaymentsByOrderId(e.orderId)
-        .pipe(
-          map((data) => {
-            this.payments = data.body.items.map((x: any) => {
-              return {
-                data: {
-                  amount: x.amount,
-                  content: x.content,
-                  createdDate: x.createdDate,
-                },
-                children: x.transactionList.map((element: any) => {
-                  return {
-                    data: {
-                      content: element.content,
-                      amount: element.amount,
-                      createdDate: element.createdDate,
-                    },
-                  };
-                }),
-              };
-            });
-          })
-        )
-        .subscribe();
-    }
+    // this.purchaseHistoryService
+    //   .getPaymentsByOrderId(e.orderId)
+    //   .pipe(
+    //     map((data) => {
+    //       this.payments = data.body.items.map((x: any) => {
+    //         return {
+    //           data: {
+    //             amount: x.amount,
+    //             content: x.content,
+    //             createdDate: x.createdDate,
+    //           },
+    //           children: x.transactionList.map((element: any) => {
+    //             return {
+    //               data: {
+    //                 content: element.content,
+    //                 amount: element.amount,
+    //                 createdDate: element.createdDate,
+    //               },
+    //             };
+    //           }),
+    //         };
+    //       });
+    //     })
+    //   )
+    //   .subscribe();
+    this.displayDialog = true;
+    this.paymentDialogStatus = e.paymentDialogStatus;
+    this.purchaseHistoryService
+      .getPaymentsByOrderId(e.orderId)
+      .pipe(
+        map((data) => {
+          this.payments = data.body.items.map((x: any) => {
+            return {
+              amount: x.amount,
+              content: x.content,
+              createdDate: x.createdDate,
+            };
+          });
+        })
+      )
+      .subscribe();
   }
 
   normalizeToTreeNodeData(res: any) {

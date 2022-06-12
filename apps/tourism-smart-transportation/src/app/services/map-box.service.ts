@@ -99,6 +99,13 @@ export class MapBoxService {
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
   }
+  flyToMarkerMiniMap(longitude: number, latitude: number) {
+    this.miniMap.flyTo({
+      zoom: 17,
+      center: [longitude, latitude],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  }
   getCoordinates() {
     return this.coordinates;
   }
