@@ -106,7 +106,11 @@ export class CardComponent implements OnInit {
   }
   onInput(uiCard: any) {
     this.cardsForm['uiCard'].setValue('');
-    if (!isNaN(uiCard)) {
+    const uid = uiCard.replace(/(\r\n|\n|\r)/gm, '');
+    console.log(uiCard);
+    console.log(uid);
+
+    if (!isNaN(uid.trim())) {
       this.uiCard = uiCard;
       this.isNumber = true;
     } else {

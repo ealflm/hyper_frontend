@@ -1,0 +1,33 @@
+@import '../../../styles.scss';
+::ng-deep {
+  .driver-detail {
+    .driver-avatar {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      img {
+        object-fit: cover;
+        margin: 0 auto;
+        display: block;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+    }
+    margin-bottom: 12px;
+    .driver-container {
+      margin-left: 22px;
+      margin-right: 22px;
+      display: flex;
+      .driver-title {
+        @include font-Roboto-Regular-Body2;
+        color: $black-default;
+        flex: 27%;
+      }
+      .driver-content {
+        @include font-Roboto-Regular-Body2;
+        color: $color-grey-text-placeholder;
+        text-align: end;
+      }
+    }
+  }
+}

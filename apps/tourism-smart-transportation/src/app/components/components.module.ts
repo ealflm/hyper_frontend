@@ -15,6 +15,8 @@ import { RouteDetailComponent } from './route-detail/route-detail.component';
 import { StationDetailComponent } from './station-detail/station-detail.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ListVehicleComponent } from './list-vehicle/list-vehicle.component';
+import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { CommonModule } from '@angular/common';
     DriverDetailComponent,
     DotsMenuComponent,
     DataMapComponent,
+    ListVehicleComponent,
+    VehicleDetailComponent,
   ],
   exports: [
     StationDetailComponent,
@@ -46,6 +50,8 @@ import { CommonModule } from '@angular/common';
     DriverDetailComponent,
     DotsMenuComponent,
     DataMapComponent,
+    ListVehicleComponent,
+    VehicleDetailComponent,
   ],
   imports: [CommonModule, PrimengModule, MaterialuiModule],
 })
