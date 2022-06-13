@@ -34,6 +34,7 @@ export class CardComponent implements OnInit {
   @ViewChild('cardInput') cardInputEle: any;
   cardForm!: FormGroup;
   checked = false;
+  uiCard = '';
   constructor(
     private cardService: CardService,
     private confirmationService: ConfirmationService,
@@ -60,6 +61,8 @@ export class CardComponent implements OnInit {
   }
   createCard() {
     this.displayDialog = true;
+    this.checked = false;
+    this.cardsForm['uiCard'].setValue('');
   }
   cardElementClick() {
     if (this.cardInputEle) {
@@ -86,21 +89,34 @@ export class CardComponent implements OnInit {
     });
   }
   cancelDialog() {}
-  onSaveCard() {
-    console.log(this.checked);
-
-    console.log(this.cardsForm['uiCard'].value);
+  onPasteCard() {
     if (
       this.cardsForm['uiCard'].value !== null ||
       this.cardsForm['uiCard'].value !== ''
     ) {
-      this.checked = true;
-      console.log(this.checked);
-      console.log(this.cardsForm['uiCard'].value);
+      setTimeout(() => {
+        this.checked = true;
+      }, 1000);
     }
   }
-  onInput(uiCard: string) {
-    console.log(uiCard);
+  onInput(uiCard: any) {
+    this.uiCard = uiCard;
+  }
+  onSaveCard() {
+    const formData = new FormData();
+    if (this.uiCard !== null || this.uiCard !== '') {
+      formData.append('uid', this.uiCard);
+      this.cardService.createCard(formData).subscribe((res) => {
+        if (res.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: res.message,
+          });
+          this.getListCards();
+        }
+      });
+    }
   }
   // navCardDetail(id: string) {}
 }

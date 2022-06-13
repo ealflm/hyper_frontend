@@ -16,7 +16,7 @@ export class CardService {
   getCardById(id: string): Observable<CardResponse> {
     return this.http.get<CardResponse>(`${this.apiURL}/${id}`);
   }
-  createCard(Card: Card): Observable<any> {
+  createCard(Card: FormData): Observable<any> {
     return this.http.post<Card>(`${this.apiURL}`, Card);
   }
   updateCard(id: string, Card: Card): Observable<any> {
