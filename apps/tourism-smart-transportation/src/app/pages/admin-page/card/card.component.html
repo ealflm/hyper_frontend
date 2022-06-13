@@ -227,7 +227,7 @@
           type="text"
           formControlName="uiCard"
           autofocus
-          (paste)="onSaveCard()"
+          (paste)="onPasteCard()"
           (input)="onInput(cardInput.value)"
         />
         <div>Quẹt thẻ để tiếp tục</div>
@@ -239,7 +239,7 @@
       </div>
       <div class="scanned-content">
         <div>Quẹt thành công</div>
-        <div>Mã số thẻ là : 00067686868</div>
+        <div>Mã số thẻ là : {{ uiCard }}</div>
       </div>
     </div>
   </ng-template>
@@ -261,6 +261,7 @@
       pRipple
       type="button"
       label="Lưu"
+      (click)="onSaveCard()"
     ></button>
   </ng-template>
 </p-dialog>
