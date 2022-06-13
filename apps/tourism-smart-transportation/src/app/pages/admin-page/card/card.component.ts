@@ -111,7 +111,7 @@ export class CardComponent implements OnInit {
     console.log(uid);
 
     if (!isNaN(uid.trim())) {
-      this.uiCard = uiCard;
+      this.uiCard = uid;
       this.isNumber = true;
     } else {
       this.isNumber = false;
