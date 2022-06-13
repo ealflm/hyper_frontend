@@ -37,6 +37,11 @@
       [value]="cards"
       responsiveLayout="scroll"
       scrollDirection="both"
+      [showCurrentPageReport]="true"
+      [rows]="2"
+      [rowsPerPageOptions]="[2, 5, 10]"
+      [paginator]="cards.length > 0 ? true : false"
+      currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -50,7 +55,7 @@
         <tr>
           <td
             class="tb-name"
-            [pTooltip]="card.firstName + ' ' + card.lastName"
+            [pTooltip]="card.customerName"
             tooltipPosition="bottom"
           >
             <img
@@ -229,7 +234,6 @@
           type="text"
           formControlName="uiCard"
           autofocus
-          (paste)="onPasteCard()"
           (input)="onInput(cardInput.value)"
         />
       </div>
@@ -274,6 +278,7 @@
       (click)="scanAgain()"
     ></button>
     <button
+      *ngIf="checked"
       [style]="{ width: '57', height: '32px' }"
       class="p-button-rounded button-rounded"
       pButton

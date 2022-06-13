@@ -1,3 +1,5 @@
+import { ServiceTypeService } from './../../../services/service-type.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AgeCheck, MustMatch } from '../../../providers/CustomValidators';
 import {
@@ -19,6 +21,7 @@ import {
 } from '@angular/animations';
 import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { ServiceType } from '../../../models/ServiceTypeResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-partner',
@@ -75,17 +78,21 @@ export class PartnersComponent implements OnInit {
       lable: 'Tất cả',
     },
   ];
+  serviceTypes: ServiceType[] = [];
   constructor(
     private partnerService: PartnersService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router,
+    private serviceTypeService: ServiceTypeService
   ) {}
 
   ngOnInit(): void {
     this._getAllPartners();
     this._initForm();
     this._mapStatus();
+    this._getServiceType();
     // console.log(this.status);
   }
   private _mapStatus() {
@@ -97,19 +104,24 @@ export class PartnersComponent implements OnInit {
       };
     });
   }
-
+  private _getServiceType() {
+    this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
+      this.serviceTypes = serviceTypeRes.body.items;
+    });
+  }
   private _initForm() {
     this.inforForm = this.formBuilder.group(
       {
         id: [''],
-        userName: ['', Validators.required],
+        // userName: ['', Validators.required],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         companyName: ['', Validators.required],
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required],
+        // password: ['', Validators.required],
+        // confirmPassword: ['', Validators.required],
         addressUser: [''],
         addressCompany: [''],
+        serviceType: ['', Validators.required],
         phone: [''],
         email: [''],
         dateOfBirth: ['', Validators.required],
@@ -119,7 +131,7 @@ export class PartnersComponent implements OnInit {
       },
       {
         validator: [
-          MustMatch('password', 'confirmPassword'),
+          // MustMatch('password', 'confirmPassword'),
           AgeCheck('dateOfBirth'),
         ],
       }
@@ -173,13 +185,13 @@ export class PartnersComponent implements OnInit {
         .getPartnerById(id)
         .subscribe((partnerResponse: PartnerResponse) => {
           this._inforsForm['id'].setValue(partnerResponse.body?.id);
-          this._inforsForm['userName'].setValue(partnerResponse.body?.username);
+          // this._inforsForm['userName'].setValue(partnerResponse.body?.username);
           this._inforsForm['firstName'].setValue(
             partnerResponse.body?.firstName
           );
           this._inforsForm['lastName'].setValue(partnerResponse.body?.lastName);
-          this._inforsForm['password'].setValue('..');
-          this._inforsForm['confirmPassword'].setValue('..');
+          // this._inforsForm['password'].setValue('..');
+          // this._inforsForm['confirmPassword'].setValue('..');
           const dobRes = new Date(partnerResponse.body.dateOfBirth.toString());
           const pipe = new DatePipe('en-US');
           const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
@@ -210,9 +222,9 @@ export class PartnersComponent implements OnInit {
     } else if (!editMode && !comebackStatus) {
       this.isSubmit = false;
       this._inforsForm['id'].setValue('');
-      this._inforsForm['userName'].setValue('');
-      this._inforsForm['password'].setValue('');
-      this._inforsForm['confirmPassword'].setValue('');
+      // this._inforsForm['userName'].setValue('');
+      // this._inforsForm['password'].setValue('');
+      // this._inforsForm['confirmPassword'].setValue('');
       this._inforsForm['firstName'].setValue('');
       this._inforsForm['lastName'].setValue('');
       this._inforsForm['dateOfBirth'].setValue('');
@@ -281,8 +293,8 @@ export class PartnersComponent implements OnInit {
     } else if (!this.editMode) {
       this.isSubmit = false;
       this.displayDialog = false;
-      formData.append('Username', this._inforsForm['userName'].value);
-      formData.append('Password', this._inforsForm['password'].value);
+      // formData.append('Username', this._inforsForm['userName'].value);
+      // formData.append('Password', this._inforsForm['password'].value);
       formData.append('FirstName', this._inforsForm['firstName'].value);
       formData.append('LastName', this._inforsForm['lastName'].value);
       formData.append('CompanyName', this._inforsForm['companyName'].value);
@@ -327,5 +339,29 @@ export class PartnersComponent implements OnInit {
         },
       });
     }
+  }
+  restorePartner(id: string) {
+    const formData = new FormData();
+    formData.append('Status', '1');
+    this.confirmationService.confirm({
+      key: 'restoreConfirm',
+      accept: () => {
+        this.partnerService
+          .updatePartnerById(id, formData)
+          .subscribe((updatePartnerRes) => {
+            if (updatePartnerRes.statusCode === 201) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Thành công',
+                detail: updatePartnerRes.message,
+              });
+            }
+            this._getAllPartners();
+          });
+      },
+    });
+  }
+  navigatePartnerDetail(id: string) {
+    this.router.navigate([`account-partners/${id}`]);
   }
 }

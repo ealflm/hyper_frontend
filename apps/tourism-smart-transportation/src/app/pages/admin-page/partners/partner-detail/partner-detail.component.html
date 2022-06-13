@@ -1,0 +1,412 @@
+<div class="partner-details">
+  <div class="header-partner-content">
+    <div class="header-content-item">
+      <div class="header-item-H5">Đối tác</div>
+      <div class="header-item">|</div>
+      <div class="header-item-H6">Chi tiết đối tác</div>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <div class="form-edit">
+    <form [formGroup]="inforForm">
+      <div class="mt-4 grid p-fluid" style="padding: 20px">
+        <div class="col-2" style="margin: auto">
+          <div class="upload-container">
+            <label for="upload" class="thumnail">
+              <img [src]="imagePreview" />
+              <span class="thumnail-text">Tải hình ảnh lên</span>
+              <div class="icon-overplay">
+                <div class="circle-icon">
+                  <span class="material-icons-outlined"> photo_camera </span>
+                </div>
+              </div>
+              <div class="image-overlay"></div>
+            </label>
+            <input
+              type="file"
+              id="upload"
+              accept="image/*"
+              (change)="onUpload($event)"
+            />
+          </div>
+          <div class="username" style="text-align: center">
+            {{ usernameBiding }}
+          </div>
+          <div [class]="status[statusBiding!].class">
+            {{ status[statusBiding!].lable }}
+          </div>
+        </div>
+        <!-- end thông tin đăng nhập -->
+        <div class="col-5">
+          <!-- thông tin người đại diện -->
+          <div class="grid">
+            <div class="col-12">
+              <div class="partner-subtitle">Thông tin người đại diện</div>
+            </div>
+            <div class="col-6 partner-input-short">
+              <div class="partner-text">
+                Họ
+                <small
+                  *ngIf="_inforsForm['firstName'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+              </div>
+              <input
+                class="partner-input-text-short"
+                type="text"
+                pInputText
+                formControlName="firstName"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+            <div class="col-6 partner-input-short">
+              <div class="partner-text">
+                Tên
+                <small
+                  *ngIf="_inforsForm['lastName'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+              </div>
+              <input
+                class="partner-input-text-short"
+                type="text"
+                pInputText
+                formControlName="lastName"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+            <div class="col-6 partner-input-short">
+              <div class="partner-text">
+                Ngày sinh
+                <small
+                  *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                >
+                  không được bỏ trống</small
+                >
+                <small
+                  *ngIf="
+          _inforsForm['dateOfBirth'].errors?.['under18']
+        "
+                  class="p-error"
+                >
+                  Tuổi phải lớn hơn 18
+                </small>
+              </div>
+              <div class="input-calendar-custom">
+                <p-calendar
+                  inputId="basic"
+                  formControlName="dateOfBirth"
+                  dateFormat="dd/mm/yy"
+                  [style]="{
+                    height: '28px'
+                  }"
+                >
+                </p-calendar>
+                <span class="material-icons-outlined input-calendar-icon">
+                  calendar_month
+                </span>
+              </div>
+              <div></div>
+            </div>
+            <div class="col-6 partner-input-short">
+              <div class="partner-text">Giới tính</div>
+              <p-dropdown
+                class="dropdown"
+                [style]="{ height: '28px' }"
+                [options]="gender"
+                formControlName="selectedGender"
+                optionLabel="lable"
+                optionValue="id"
+              ></p-dropdown>
+            </div>
+
+            <div class="col-12 partner-input-long" style="margin-top: 10px">
+              <div class="partner-text">Số điện thoại</div>
+              <input
+                class="partner-input-text-long"
+                type="text"
+                pInputText
+                formControlName="phone"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div>
+                <!-- <small
+          *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
+          class="p-error"
+          >Số điện thoại không được bỏ trống</small
+        > -->
+              </div>
+            </div>
+            <div class="col-12 partner-input-long" style="margin-top: 10px">
+              <div class="partner-text">Email</div>
+              <input
+                class="partner-input-text-long"
+                type="email"
+                pInputText
+                formControlName="email"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div>
+                <!-- <small
+          *ngIf="_inforsForm['email'].errors?.['required'] && isSubmit"
+          class="p-error"
+          >Tên không được bỏ trống</small
+        > -->
+              </div>
+            </div>
+            <div class="col-12 partner-input-long" style="margin-top: 10px">
+              <div class="partner-text">Địa chỉ</div>
+              <input
+                class="partner-input-text-long"
+                type="text"
+                pInputText
+                formControlName="addressUser"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div>
+                <!-- <small
+          *ngIf="_inforsForm['addressUser'].errors?.['required'] && isSubmit "
+          class="p-error"
+          >Địa chỉ không được bỏ trống</small
+        > -->
+              </div>
+            </div>
+          </div>
+          <!-- </div> -->
+          <!-- end thông tin người đại diện -->
+        </div>
+        <div class="col-5">
+          <!-- start thông tin công ty -->
+
+          <div class="grid">
+            <div class="col-12">
+              <div class="partner-subtitle">Thông tin công ty</div>
+            </div>
+            <div class="col-12 partner-input-long" style="margin-top: 10px">
+              <div class="partner-text">
+                Công ty
+                <small
+                  *ngIf="_inforsForm['companyName'].invalid && isSubmit"
+                  class="p-error"
+                  >không được trống</small
+                >
+              </div>
+              <input
+                class="partner-input-text-long"
+                type="text"
+                pInputText
+                formControlName="companyName"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+            <div class="col-12 partner-input-long" style="margin-top: 10px">
+              <div class="partner-text">Địa chỉ</div>
+              <input
+                class="partner-input-text-long"
+                type="text"
+                pInputText
+                formControlName="addressCompany"
+                (keyup.enter)="onSaveInfor()"
+              />
+
+              <!-- <div> -->
+              <!-- <small
+                      *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
+                      class="p-error"
+                      >Địa chỉ không được trống</small
+                      > -->
+              <!-- </div> -->
+            </div>
+            <!-- end thông tin công ty -->
+            <div class="col-12" style="margin-top: 10px">
+              <div class="partner-subtitle">Thông tin loại dịch vụ</div>
+            </div>
+            <div class="col-12 partner-input-long">
+              <div class="partner-text">
+                Loại dịch vụ
+                <small
+                  *ngIf="_inforsForm['serviceType'].invalid && isSubmit"
+                  class="p-error"
+                  >không được trống</small
+                >
+              </div>
+              <p-multiSelect
+                [showToggleAll]="false"
+                class="dropdown"
+                [filter]="false"
+                [style]="{ height: '28px' }"
+                [options]="serviceTypes"
+                formControlName="serviceType"
+                optionLabel="name"
+                optionValue="id"
+                (keyup.enter)="onSaveInfor()"
+              ></p-multiSelect>
+            </div>
+            <!-- start thông tin công ty -->
+            <div class="col-12" style="margin-top: 15px">
+              <div class="partner-subtitle">Thông tin khác</div>
+            </div>
+            <div class="col-12 partner-input-long">
+              <div class="partner-text">Ngày tạo</div>
+              <div class="col-12 partner-input-long">
+                <input
+                  class="partner-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="createdDate"
+                />
+                <div></div>
+              </div>
+            </div>
+            <div class="col-12 partner-input-long" style="margin-top: 10px">
+              <div class="partner-text">Ngày Sửa</div>
+              <div class="col-12 partner-input-long">
+                <input
+                  class="partner-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="modifiedDate"
+                />
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="bottom-btn-form">
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Chỉnh sửa"
+        (click)="onChangeEdit()"
+        *ngIf="!editModeStatus"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Hủy"
+        *ngIf="editModeStatus"
+        (click)="onCancleEdit()"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-rounded button-rounded button-background"
+        pButton
+        pRipple
+        type="button"
+        label="Lưu"
+        *ngIf="editModeStatus"
+        (click)="onSaveChange()"
+      ></button>
+    </div>
+  </div>
+  <div class="footer-service-partner">
+    <tourism-smart-transportation-header-status
+      [menuValue]="menuValue"
+      (GetValueMenu)="OnGetMenuClick($event)"
+    ></tourism-smart-transportation-header-status>
+    <div class="body-table" *ngIf="fillterStatus === 1">
+      <p-table
+        #dt
+        [value]="drivers"
+        [showCurrentPageReport]="true"
+        [rows]="2"
+        [rowsPerPageOptions]="[2, 5, 10]"
+        [paginator]="drivers.length > 0 ? true : false"
+        currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Họ và tên</th>
+            <th>Phương tiện</th>
+            <th>Giới tính</th>
+            <th>Ngày sinh</th>
+            <th>Số điện thoại</th>
+            <th>Ngày tạo</th>
+            <th>Ngày sửa</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-driver>
+          <tr>
+            <td>
+              {{ driver.firstName + ' ' + driver.lastName }}
+            </td>
+            <td>
+              {{ driver.vehicleId }}
+            </td>
+            <td>
+              {{ driver.gender ? 'Nam' : 'Nữ' }}
+            </td>
+            <td>
+              {{ driver.dateOfBirth | date: 'dd/MM/yyyy' }}
+            </td>
+            <td>
+              {{ driver.phone }}
+            </td>
+            <td>{{ driver.createdDate | date: 'dd/MM/yyyy, h:mm a' }}</td>
+            <td>{{ driver.modifiedDate | date: 'dd/MM/yyyy, h:mm a' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">Không có nội dung nào để hiển thị.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft"> </ng-template>
+      </p-table>
+    </div>
+    <div class="body-table" *ngIf="fillterStatus === 0">
+      <p-table
+        #td
+        [value]="vehicles"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [paginator]="vehicles.length > 0 ? true : false"
+        currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Tên</th>
+            <th>Số hiệu</th>
+            <th>Màu</th>
+            <th>Loại xe</th>
+            <th>Loại dịch vụ</th>
+            <th>Tọa độ</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vehicle let-i="rowIndex">
+          <tr>
+            <td>{{ vehicle?.name }}</td>
+            <td>{{ vehicle?.licensePlates }}</td>
+            <td>{{ vehicle?.color }}</td>
+            <td>{{ vehicle?.vehicleTypeId }}</td>
+            <td>{{ vehicle?.serviceTypeName }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8">Không có nội dung nào để hiển thị.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft"> </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<!-- dialog -->
+
+<p-toast position="top-right"></p-toast>

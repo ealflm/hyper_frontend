@@ -8,7 +8,7 @@ import {
   RentStation,
   RentStationResponse,
 } from './../../../models/RentStationResponse';
-import { map } from 'rxjs';
+import { map, Subscription } from 'rxjs';
 import { MapBoxService } from '../../../services/map-box.service';
 import { Validators, FormArray, FormGroup, FormBuilder } from '@angular/forms';
 import {
@@ -94,6 +94,7 @@ export class MapPageComponent
 
   currentRentStationMarkers: any = [];
   currentBusStationMarkers: any = [];
+  private subscription?: Subscription;
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -118,8 +119,11 @@ export class MapPageComponent
   ngAfterViewChecked(): void {
     this.mapboxService.map.resize();
   }
-  ngOnDestroy() {}
-
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   onSaveLocation() {
     // console.log(this.locationForm.get('locations')?.value);
     // this.locationForm
@@ -427,6 +431,7 @@ export class MapPageComponent
     );
   }
 
+  // Map
   setRentStationMarkers(rentStations: RentStation[]) {
     rentStations.map((marker) => {
       const el = document.createElement('div');
@@ -439,7 +444,6 @@ export class MapPageComponent
       el.style.height = `${height}px`;
       el.style.backgroundSize = '100%';
       el.style.cursor = 'pointer';
-
       const markerDiv = new mapboxgl.Marker(el)
         .setLngLat([marker.longitude, marker.latitude] as [number, number])
         .addTo(this.mapboxService.map);
@@ -476,15 +480,6 @@ export class MapPageComponent
       const markerDiv = new mapboxgl.Marker(elStationMarker)
         .setLngLat([marker.longitude, marker.latitude] as [number, number])
         .addTo(this.mapboxService.map);
-      // .setPopup(
-      //   new mapboxgl.Popup({ offset: 25 }).setHTML(`
-      // <h3>${marker.title}</h3>
-      // <p>${marker.description}</p>
-      // `)
-      // );
-      // markerDiv.getElement().addEventListener('mouseenter', () => {
-      //   markerDiv.togglePopup();
-      // });
       markerDiv.getElement().addEventListener('click', () => {
         this.getDetailStation({ id: marker.id });
         if (marker.longitude && marker.latitude) {

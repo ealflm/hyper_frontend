@@ -121,7 +121,7 @@
       padding: 0 30px 0 30px;
       .p-datatable-wrapper {
         border-radius: 10px;
-        padding: 0 20px 0 20px;
+        // padding: 0 20px 0 20px;
         @include box-shadown-grey;
         th {
           @include font-Roboto-Regular-Body2;

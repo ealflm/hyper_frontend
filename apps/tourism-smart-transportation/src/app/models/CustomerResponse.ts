@@ -10,6 +10,7 @@ export abstract class Customer {
   address1?: string;
   address2?: string;
   photoUrl?: string;
+  cardUid?: string;
   dateOfBirth!: Date;
   email?: string;
   createdDate?: Date;

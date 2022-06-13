@@ -100,12 +100,13 @@
           </td>
           <td style="text-align: center">
             <span
-              class="material-icons-outlined iconEdit"
-              (click)="showDialog(true, partner.id)"
+              *ngIf="partner.status === 0"
+              class="material-icons-outlined enable"
+              style="cursor: pointer"
+              (click)="restorePartner(partner.id)"
             >
-              edit
+              restore
             </span>
-
             <span
               class="material-icons-outlined enable"
               style="margin-left: 5px"
@@ -115,18 +116,18 @@
               delete
             </span>
             <span
-              class="material-icons-outlined disable"
-              style="margin-left: 5px"
-              *ngIf="partner.status === 0"
+              class="material-icons-outlined enable"
+              style="margin-left: 5px; cursor: pointer"
+              (click)="navigatePartnerDetail(partner.id)"
             >
-              delete
+              visibility
             </span>
           </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="8">Không có nội dung nào để hiển thị.</td>
+          <td colspan="10">Không có nội dung nào để hiển thị.</td>
         </tr>
       </ng-template>
     </p-table>
@@ -148,23 +149,27 @@
 <p-dialog
   [header]="editMode ? 'Chỉnh sửa đối tác' : 'Tạo mới đối tác'"
   [(visible)]="displayDialog"
-  [style]="{ width: '674px', height: '864px' }"
+  [style]="{ width: '1000px', height: '520px' }"
   [contentStyle]="{
-    'overflow-y': 'auto',
+    'overflow-y': 'hidden',
     'overflow-x': 'hidden',
     'max-height': '90vh',
-    'min-height': '25vh'
+    'min-height': '25vh',
+    overflow: 'overlay'
   }"
   [blockScroll]="true"
   [resizable]="true"
   [modal]="true"
+  [closable]="false"
 >
-  <p-divider></p-divider>
+  <div class="header-close-icon" (click)="cancelDialog(false, true)">
+    <span class="material-icons"> close </span>
+  </div>
   <ng-template pTemplate="content">
     <div class="infor-form">
       <form [formGroup]="inforForm">
         <div class="mt-4 grid p-fluid">
-          <div class="col-12" style="margin-top: -15px">
+          <div class="col-2" style="margin: auto">
             <div class="upload-container">
               <label for="upload" class="thumnail">
                 <img [src]="imagePreview" />
@@ -184,14 +189,13 @@
               />
             </div>
           </div>
-          <p-divider class="col-12"></p-divider>
-          <div class="col-12">
-            <!-- thông tin đăng nhập -->
+          <!-- thông tin đăng nhập -->
+          <!-- <div class="col-5">
             <div class="grid" style="margin-top: -25px" *ngIf="!editMode">
-              <div class="col-4">
+              <div class="col-12">
                 <div class="partner-subtitle">Thông tin đăng nhập</div>
               </div>
-              <div class="col-8">
+              <div class="col-12">
                 <div class="grid">
                   <div class="col-12 partner-input-long">
                     <div class="partner-text">
@@ -254,177 +258,159 @@
                 </div>
               </div>
             </div>
-            <!-- end thông tin đăng nhập -->
-
-            <p-divider *ngIf="!editMode"></p-divider>
+          </div> -->
+          <!-- end thông tin đăng nhập -->
+          <div class="col-5">
             <!-- thông tin người đại diện -->
-
             <div class="grid">
-              <div class="col-4">
+              <div class="col-12">
                 <div class="partner-subtitle">Thông tin người đại diện</div>
               </div>
-              <div class="col-8" style="margin-top: -25px">
-                <div class="grid">
-                  <div
-                    class="col-6 partner-input-short"
-                    style="margin-right: 15px"
+              <div class="col-6 partner-input-short">
+                <div class="partner-text">
+                  Họ
+                  <small
+                    *ngIf="_inforsForm['firstName'].errors?.['required'] && isSubmit"
+                    class="p-error"
+                    >không được bỏ trống</small
                   >
-                    <div class="partner-text">
-                      Họ
-                      <small
-                        *ngIf="_inforsForm['firstName'].errors?.['required'] && isSubmit"
-                        class="p-error"
-                        >không được bỏ trống</small
-                      >
-                    </div>
-                    <input
-                      class="partner-input-text-short"
-                      type="text"
-                      pInputText
-                      formControlName="firstName"
-                      (keyup.enter)="onSaveInfor()"
-                    />
-                    <div></div>
-                  </div>
-                  <div class="col-6 partner-input-short">
-                    <div class="partner-text">
-                      Tên
-                      <small
-                        *ngIf="_inforsForm['lastName'].errors?.['required'] && isSubmit"
-                        class="p-error"
-                        >không được bỏ trống</small
-                      >
-                    </div>
-                    <input
-                      class="partner-input-text-short"
-                      type="text"
-                      pInputText
-                      formControlName="lastName"
-                      (keyup.enter)="onSaveInfor()"
-                    />
-                    <div></div>
-                  </div>
-                  <div class="col-6 partner-input-short">
-                    <div class="partner-text">
-                      Ngày sinh
-                      <small
-                        *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
-                        class="p-error"
-                      >
-                        không được bỏ trống</small
-                      >
-                      <small
-                        *ngIf="
-                        _inforsForm['dateOfBirth'].errors?.['under18']
-                      "
-                        class="p-error"
-                      >
-                        Tuổi phải lớn hơn 18
-                      </small>
-                    </div>
-                    <div class="input-calendar-custom">
-                      <p-calendar
-                        inputId="basic"
-                        formControlName="dateOfBirth"
-                        dateFormat="dd/mm/yy"
-                        [style]="{
-                          width: '200px',
-                          height: '28px'
-                        }"
-                      >
-                      </p-calendar>
-                      <span class="material-icons-outlined input-calendar-icon">
-                        calendar_month
-                      </span>
-                    </div>
-                    <div></div>
-                  </div>
-                  <div
-                    class="col-6 partner-input-short"
-                    style="margin-left: 15px"
+                </div>
+                <input
+                  class="partner-input-text-short"
+                  type="text"
+                  pInputText
+                  formControlName="firstName"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div></div>
+              </div>
+              <div class="col-6 partner-input-short">
+                <div class="partner-text">
+                  Tên
+                  <small
+                    *ngIf="_inforsForm['lastName'].errors?.['required'] && isSubmit"
+                    class="p-error"
+                    >không được bỏ trống</small
                   >
-                    <div class="partner-text">Giới tính</div>
-                    <p-dropdown
-                      class="dropdown"
-                      [style]="{ width: '200px', height: '28px' }"
-                      [options]="gender"
-                      formControlName="selectedGender"
-                      optionLabel="lable"
-                      optionValue="id"
-                    ></p-dropdown>
-                  </div>
+                </div>
+                <input
+                  class="partner-input-text-short"
+                  type="text"
+                  pInputText
+                  formControlName="lastName"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div></div>
+              </div>
+              <div class="col-6 partner-input-short">
+                <div class="partner-text">
+                  Ngày sinh
+                  <small
+                    *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
+                    class="p-error"
+                  >
+                    không được bỏ trống</small
+                  >
+                  <small
+                    *ngIf="
+            _inforsForm['dateOfBirth'].errors?.['under18']
+          "
+                    class="p-error"
+                  >
+                    Tuổi phải lớn hơn 18
+                  </small>
+                </div>
+                <div class="input-calendar-custom">
+                  <p-calendar
+                    inputId="basic"
+                    formControlName="dateOfBirth"
+                    dateFormat="dd/mm/yy"
+                    [style]="{
+                      height: '28px'
+                    }"
+                  >
+                  </p-calendar>
+                  <span class="material-icons-outlined input-calendar-icon">
+                    calendar_month
+                  </span>
+                </div>
+                <div></div>
+              </div>
+              <div class="col-6 partner-input-short">
+                <div class="partner-text">Giới tính</div>
+                <p-dropdown
+                  class="dropdown"
+                  [style]="{ height: '28px' }"
+                  [options]="gender"
+                  formControlName="selectedGender"
+                  optionLabel="lable"
+                  optionValue="id"
+                ></p-dropdown>
+              </div>
 
-                  <div
-                    class="col-12 partner-input-long"
-                    style="margin-top: 15px"
-                  >
-                    <div class="partner-text">Số điện thoại</div>
-                    <input
-                      class="partner-input-text-long"
-                      type="text"
-                      pInputText
-                      formControlName="phone"
-                      (keyup.enter)="onSaveInfor()"
-                    />
-                    <div>
-                      <!-- <small
-                        *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
-                        class="p-error"
-                        >Số điện thoại không được bỏ trống</small
-                      > -->
-                    </div>
-                  </div>
-                  <div
-                    class="col-12 partner-input-long"
-                    style="margin-top: 15px"
-                  >
-                    <div class="partner-text">Email</div>
-                    <input
-                      class="partner-input-text-long"
-                      type="email"
-                      pInputText
-                      formControlName="email"
-                      (keyup.enter)="onSaveInfor()"
-                    />
-                    <div>
-                      <!-- <small
-                        *ngIf="_inforsForm['email'].errors?.['required'] && isSubmit"
-                        class="p-error"
-                        >Tên không được bỏ trống</small
-                      > -->
-                    </div>
-                  </div>
-                  <div
-                    class="col-12 partner-input-long"
-                    style="margin-top: 15px"
-                  >
-                    <div class="partner-text">Địa chỉ</div>
-                    <input
-                      class="partner-input-text-long"
-                      type="text"
-                      pInputText
-                      formControlName="addressUser"
-                      (keyup.enter)="onSaveInfor()"
-                    />
-                    <div>
-                      <!-- <small
-                        *ngIf="_inforsForm['addressUser'].errors?.['required'] && isSubmit "
-                        class="p-error"
-                        >Địa chỉ không được bỏ trống</small
-                      > -->
-                    </div>
-                  </div>
+              <div class="col-12 partner-input-long" style="margin-top: 10px">
+                <div class="partner-text">Số điện thoại</div>
+                <input
+                  class="partner-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="phone"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div>
+                  <!-- <small
+            *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
+            class="p-error"
+            >Số điện thoại không được bỏ trống</small
+          > -->
+                </div>
+              </div>
+              <div class="col-12 partner-input-long" style="margin-top: 10px">
+                <div class="partner-text">Email</div>
+                <input
+                  class="partner-input-text-long"
+                  type="email"
+                  pInputText
+                  formControlName="email"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div>
+                  <!-- <small
+            *ngIf="_inforsForm['email'].errors?.['required'] && isSubmit"
+            class="p-error"
+            >Tên không được bỏ trống</small
+          > -->
+                </div>
+              </div>
+              <div class="col-12 partner-input-long" style="margin-top: 10px">
+                <div class="partner-text">Địa chỉ</div>
+                <input
+                  class="partner-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="addressUser"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div>
+                  <!-- <small
+            *ngIf="_inforsForm['addressUser'].errors?.['required'] && isSubmit "
+            class="p-error"
+            >Địa chỉ không được bỏ trống</small
+          > -->
                 </div>
               </div>
             </div>
+            <!-- </div> -->
             <!-- end thông tin người đại diện -->
-            <p-divider></p-divider>
+          </div>
+          <div class="col-5">
             <!-- start thông tin công ty -->
-            <div class="grid" style="margin-top: -10px">
-              <div class="col-4">
+
+            <div class="grid">
+              <div class="col-12">
                 <div class="partner-subtitle">Thông tin công ty</div>
               </div>
-              <div class="col-8">
+              <div class="col-12 partner-input-long" style="margin-top: 10px">
                 <div class="partner-text">
                   Công ty
                   <small
@@ -433,38 +419,63 @@
                     >không được trống</small
                   >
                 </div>
-                <div class="grid">
-                  <div class="col-12 partner-input-long">
-                    <input
-                      class="partner-input-text-long"
-                      type="text"
-                      pInputText
-                      formControlName="companyName"
-                      (keyup.enter)="onSaveInfor()"
-                    />
-                    <div></div>
-                  </div>
-                  <div class="col-12 partner-input-long">
-                    <div class="partner-text">Địa chỉ</div>
-                    <input
-                      class="partner-input-text-long"
-                      type="text"
-                      pInputText
-                      formControlName="addressCompany"
-                      (keyup.enter)="onSaveInfor()"
-                    />
-                    <div>
-                      <!-- <small
+                <input
+                  class="partner-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="companyName"
+                  (keyup.enter)="onSaveInfor()"
+                />
+                <div></div>
+              </div>
+              <div class="col-12 partner-input-long" style="margin-top: 10px">
+                <div class="partner-text">Địa chỉ</div>
+                <input
+                  class="partner-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="addressCompany"
+                  (keyup.enter)="onSaveInfor()"
+                />
+
+                <!-- <div> -->
+                <!-- <small
                         *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
                         class="p-error"
                         >Địa chỉ không được trống</small
-                      > -->
-                    </div>
-                  </div>
+                        > -->
+                <!-- </div> -->
+              </div>
+              <!-- end thông tin công ty -->
+              <div class="col-12" style="margin-top: 26px">
+                <div class="partner-subtitle">Thông tin loại dịch vụ</div>
+              </div>
+              <div class="col-12 partner-input-long">
+                <div class="partner-text">
+                  Loại dịch vụ
+                  <small
+                    *ngIf="_inforsForm['serviceType'].invalid && isSubmit"
+                    class="p-error"
+                    >không được trống</small
+                  >
+                </div>
+                <div class="col-12 partner-input-long">
+                  <p-multiSelect
+                    [showToggleAll]="false"
+                    class="dropdown"
+                    [filter]="false"
+                    [style]="{ height: '28px' }"
+                    [options]="serviceTypes"
+                    formControlName="serviceType"
+                    optionLabel="name"
+                    optionValue="id"
+                    (keyup.enter)="onSaveInfor()"
+                  ></p-multiSelect>
+                  <div></div>
                 </div>
               </div>
+              <!-- start thông tin công ty -->
             </div>
-            <!-- end thông tin công ty -->
           </div>
         </div>
       </form>
@@ -532,6 +543,37 @@
       type="button"
       label="Xóa"
       (click)="cd.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
+<p-confirmDialog
+  key="restoreConfirm"
+  #rs
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      Bạn có chắc chắn muốn khôi phục đối tác này?
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Đóng"
+      (click)="rs.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Khôi phục"
+      (click)="rs.accept()"
     ></button>
   </ng-template>
 </p-confirmDialog>

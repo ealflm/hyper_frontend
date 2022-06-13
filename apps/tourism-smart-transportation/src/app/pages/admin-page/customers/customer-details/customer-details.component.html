@@ -27,163 +27,185 @@
             accept="image/*"
             (change)="onUpload($event)"
           />
+          <div [class]="status[statusBiding!].class" style="margin-top: 150px">
+            {{ status[statusBiding!].lable }}
+          </div>
         </div>
+
         <div class="grid p-fluid form-content">
-          <div class="col-6 customer-input-short">
-            <div class="customer-text">
-              Họ
-              <small
-                *ngIf="
-              _customersEditForm['firstName'].errors?.['required']
-          "
-                class="p-error"
-              >
-                không được bỏ trống
-              </small>
+          <div class="col-6">
+            <div class="customer-title">Thông tin khách hàng</div>
+            <div class="grid">
+              <div class="col-6 customer-input-short">
+                <div class="customer-text">
+                  Họ
+                  <small
+                    *ngIf="
+                  _customersEditForm['firstName'].errors?.['required']
+              "
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
+                </div>
+                <input
+                  class="customer-input-text-short"
+                  type="text"
+                  pInputText
+                  formControlName="firstName"
+                />
+              </div>
+              <div class="col-6 customer-input-short">
+                <div class="customer-text">
+                  Tên
+                  <small
+                    *ngIf="
+                  _customersEditForm['lastName'].errors?.['required']
+              "
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
+                </div>
+                <input
+                  class="customer-input-text-short"
+                  type="text"
+                  pInputText
+                  formControlName="lastName"
+                />
+              </div>
+              <div class="col-6 customer-input-short">
+                <div class="customer-text">
+                  Ngày sinh
+                  <small
+                    *ngIf="_customersEditForm['dateOfBirth'].errors?.['required'] "
+                    class="p-error"
+                  >
+                    không được bỏ trống</small
+                  >
+                  <small
+                    *ngIf="
+                  _customersEditForm['dateOfBirth'].errors?.['under18']
+                "
+                    class="p-error"
+                  >
+                    Tuổi phải lớn hơn 18
+                  </small>
+                </div>
+                <div class="input-calendar-custom">
+                  <p-calendar
+                    inputId="basic"
+                    formControlName="dateOfBirth"
+                    dateFormat="dd/mm/yy"
+                    [style]="{
+                      width: '200px',
+                      height: '28px'
+                    }"
+                  >
+                  </p-calendar>
+                  <span class="material-icons-outlined input-calendar-icon">
+                    calendar_month
+                  </span>
+                </div>
+                <div></div>
+              </div>
+              <div class="col-6 customer-input-short">
+                <div class="customer-text">Giới tính</div>
+                <p-dropdown
+                  class="dropdown"
+                  [style]="{ height: '28px' }"
+                  [options]="gender"
+                  formControlName="selectedGender"
+                  optionLabel="lable"
+                  optionValue="id"
+                ></p-dropdown>
+              </div>
+              <div class="col-12 customer-input-long">
+                <div class="customer-text">
+                  Số điện thoại
+                  <small
+                    *ngIf="
+                  _customersEditForm['phone'].errors?.['required']
+              "
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
+                  <!-- <small
+                    *ngIf="_customersEditForm['phone'].hasError('minlength')"
+                    class="p-error"
+                  >
+                    ít nhất 9 số
+                  </small>
+                  <small
+                    *ngIf="_customersEditForm['phone'].hasError('minlength')"
+                    class="p-error"
+                  >
+                    không vượt quá 15 số
+                  </small> -->
+                </div>
+                <input
+                  class="customer-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="phone"
+                />
+              </div>
+              <div class="col-12 customer-input-long">
+                <div class="customer-text">
+                  Email
+                  <small
+                    *ngIf="
+                  _customersEditForm['email'].errors?.['required']
+              "
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
+                </div>
+                <input
+                  class="customer-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="email"
+                />
+              </div>
+              <div class="col-12 customer-input-long">
+                <div class="customer-text">
+                  Địa chỉ
+                  <small
+                    *ngIf="
+                  _customersEditForm['addressUser'].errors?.['required']
+              "
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small>
+                </div>
+                <input
+                  class="customer-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="addressUser"
+                />
+              </div>
             </div>
-            <input
-              class="customer-input-text-short"
-              type="text"
-              pInputText
-              formControlName="firstName"
-            />
           </div>
-          <div class="col-6 customer-input-short" style="margin-left: 15px">
-            <div class="customer-text">
-              Tên
-              <small
-                *ngIf="
-              _customersEditForm['lastName'].errors?.['required']
-          "
-                class="p-error"
-              >
-                không được bỏ trống
-              </small>
+          <div class="col-6">
+            <div class="customer-title">Thông tin thẻ</div>
+            <div class="grid">
+              <div class="col-12 customer-input-long" style="margin-top: 14px">
+                <div class="customer-text">Mã thẻ</div>
+                <input
+                  class="customer-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="cardUid"
+                />
+              </div>
             </div>
-            <input
-              class="customer-input-text-short"
-              type="text"
-              pInputText
-              formControlName="lastName"
-            />
-          </div>
-          <div class="col-6 customer-input-short">
-            <div class="customer-text">
-              Ngày sinh
-              <small
-                *ngIf="_customersEditForm['dateOfBirth'].errors?.['required'] "
-                class="p-error"
-              >
-                không được bỏ trống</small
-              >
-              <small
-                *ngIf="
-              _customersEditForm['dateOfBirth'].errors?.['under18']
-            "
-                class="p-error"
-              >
-                Tuổi phải lớn hơn 18
-              </small>
-            </div>
-            <div class="input-calendar-custom">
-              <p-calendar
-                inputId="basic"
-                formControlName="dateOfBirth"
-                dateFormat="dd/mm/yy"
-                [style]="{
-                  width: '200px',
-                  height: '28px'
-                }"
-              >
-              </p-calendar>
-              <span class="material-icons-outlined input-calendar-icon">
-                calendar_month
-              </span>
-            </div>
-            <div></div>
-          </div>
-          <div class="col-6 customer-input-short" style="margin-left: 15px">
-            <div class="customer-text">Giới tính</div>
-            <p-dropdown
-              class="dropdown"
-              [style]="{ width: '200px', height: '28px' }"
-              [options]="gender"
-              formControlName="selectedGender"
-              optionLabel="lable"
-              optionValue="id"
-            ></p-dropdown>
-          </div>
-          <div class="col-12 customer-input-long">
-            <div class="customer-text">
-              Số điện thoại
-              <small
-                *ngIf="
-              _customersEditForm['phone'].errors?.['required']
-          "
-                class="p-error"
-              >
-                không được bỏ trống
-              </small>
-              <!-- <small
-                *ngIf="_customersEditForm['phone'].hasError('minlength')"
-                class="p-error"
-              >
-                ít nhất 9 số
-              </small>
-              <small
-                *ngIf="_customersEditForm['phone'].hasError('minlength')"
-                class="p-error"
-              >
-                không vượt quá 15 số
-              </small> -->
-            </div>
-            <input
-              class="customer-input-text-long"
-              type="text"
-              pInputText
-              formControlName="phone"
-            />
-          </div>
-          <div class="col-12 customer-input-long">
-            <div class="customer-text">
-              Email
-              <small
-                *ngIf="
-              _customersEditForm['email'].errors?.['required']
-          "
-                class="p-error"
-              >
-                không được bỏ trống
-              </small>
-            </div>
-            <input
-              class="customer-input-text-long"
-              type="text"
-              pInputText
-              formControlName="email"
-            />
-          </div>
-          <div class="col-12 customer-input-long">
-            <div class="customer-text">
-              Địa chỉ
-              <small
-                *ngIf="
-              _customersEditForm['addressUser'].errors?.['required']
-          "
-                class="p-error"
-              >
-                không được bỏ trống
-              </small>
-            </div>
-            <input
-              class="customer-input-text-long"
-              type="text"
-              pInputText
-              formControlName="addressUser"
-            />
           </div>
         </div>
-        <p-divider class="bottom-divider"></p-divider>
       </div>
     </form>
     <div class="bottom-btn-form">

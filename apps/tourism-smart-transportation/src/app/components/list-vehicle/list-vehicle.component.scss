@@ -1,23 +1,21 @@
 @import '../../../styles.scss';
-::ng-deep {
-  .header-search {
-    overflow: hidden;
-    margin-top: 15px;
-    .p-inputtext {
-      border: none;
-      border-radius: 20px;
-      @include box-shadown-grey;
-      &:enabled:focus {
-        outline: none;
-        border-color: #ced4da;
-      }
-      &:enabled:hover {
-        border-color: #ced4da;
-      }
+.header-search-vehicle {
+  overflow: hidden;
+  margin-top: 15px;
+  .p-inputtext {
+    border: none;
+    border-radius: 20px;
+    @include box-shadown-grey;
+    &:enabled:focus {
+      outline: none;
+      border-color: #ced4da;
     }
-    .material-icons-outlined {
-      margin-top: -12px;
+    &:enabled:hover {
+      border-color: #ced4da;
     }
+  }
+  .material-icons-outlined {
+    margin-top: -12px;
   }
 }
 ::ng-deep {
