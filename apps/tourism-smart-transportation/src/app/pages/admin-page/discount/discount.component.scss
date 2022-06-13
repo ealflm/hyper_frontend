@@ -182,7 +182,7 @@
   @include status-used;
 }
 .status-expired {
-  @include status-expired;
+  @include status-expried;
 }
 ::ng-deep {
   .discount-input-short {

@@ -73,6 +73,14 @@ export class DiscountComponent implements OnInit {
       lable: 'Vô hiệu hóa',
     },
     {
+      value: 2,
+      lable: 'Đã sử dụng',
+    },
+    {
+      value: 3,
+      lable: 'Hết hạn',
+    },
+    {
       value: null,
       lable: 'Tất cả',
     },

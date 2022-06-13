@@ -1,0 +1,174 @@
+@import '../../../../styles.scss';
+
+.header-card {
+  @include fixed-scroll-view;
+  @include custom-scrollbar;
+  &-content {
+    display: flex;
+    position: relative;
+    .header-search {
+      padding-right: 20px;
+      position: absolute;
+      height: 32px;
+      right: 1%;
+      .p-inputtext,
+      .p-dropdown {
+        border: none;
+        border-radius: 20px;
+        width: 352px;
+        @include box-shadown-grey;
+        &:enabled:focus {
+          outline: none;
+          border-color: #ced4da;
+        }
+        &:enabled:hover {
+          border-color: #ced4da;
+        }
+      }
+      .material-icons-outlined {
+        margin-top: -12px;
+      }
+    }
+  }
+  .header-card-content {
+    display: flex;
+    padding-left: 30px;
+    align-items: center;
+    margin-top: 26px;
+  }
+  .header-content-item {
+    display: flex;
+    align-items: center;
+  }
+  ::ng-deep {
+    .header-item-H5 {
+      @include font-Roboto-Regular-H5;
+      color: $black-default;
+    }
+    .header-item {
+      .p-button-rounded {
+        height: 32px;
+        margin-left: 10px;
+        .p-button-label {
+          @include font-Roboto-Medium-Button;
+          color: $white-primary-color;
+        }
+      }
+      .p-button-outlined {
+        @include box-shadown-grey;
+        margin-left: 30px;
+        .p-button-label {
+          @include font-Roboto-Medium-Button;
+          color: $primary-color;
+        }
+        &:focus {
+          box-shadow: none;
+        }
+      }
+      .button-background {
+        background-color: $primary-color;
+        border: none;
+        &:hover {
+          @include box-shadown-green;
+        }
+      }
+    }
+  }
+  ::ng-deep {
+    @include paginator-custom;
+  }
+  ::ng-deep {
+    .body-table {
+      padding: 0 30px 0 30px;
+      .p-datatable-wrapper {
+        border-radius: 10px;
+        padding: 0 20px 0 20px;
+        @include box-shadown-grey;
+        th {
+          @include font-Roboto-Regular-Body2;
+          background-color: white;
+          font-weight: bold;
+          &:last-child {
+            text-align: center;
+          }
+        }
+        .tb-name {
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+        td {
+          @include font-Roboto-Regular-Body2;
+          border: none;
+          color: $black-default;
+          .iconVisit:hover {
+            cursor: pointer;
+            color: $primary-color;
+          }
+          .enable:hover {
+            cursor: pointer;
+            color: $primary-color;
+          }
+          .disable {
+            color: rgba(0, 0, 0, 0.3);
+            cursor: no-drop;
+          }
+          &:last-child {
+            .material-icons-outlined {
+              font-size: 20px;
+            }
+          }
+        }
+        tr:not(:first-child) {
+          border-top: 1px solid $background-color-grey-secondary;
+        }
+      }
+    }
+  }
+}
+.status-disabled {
+  @include status-disabled;
+}
+.status-active {
+  @include status-active;
+}
+.status-linked {
+  @include status-linked;
+}
+.status-unlinked {
+  @include status-unlinked;
+}
+::ng-deep {
+  p-dialog {
+    .card-form {
+      display: block;
+      text-align: center;
+    }
+    .completed-scan {
+      height: 100%;
+    }
+    .scanned {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .scanned-content {
+      text-align: center;
+    }
+  }
+}
+// confirm dialog
+::ng-deep {
+  .confirm-dialog-subtitle {
+    @include font-Roboto-Regular-Subtitle1;
+  }
+  .p-button-outlined {
+    @include button-outlined-primary(66, 32, null, $primary-color);
+  }
+  .button-rounded {
+    @include button-rounded-primary(57, 32, null, $primary-color);
+  }
+}

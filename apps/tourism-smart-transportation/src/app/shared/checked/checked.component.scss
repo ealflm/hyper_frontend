@@ -1,0 +1,38 @@
+@import '../../../styles.scss';
+$size: 117px;
+$color: $primary-color;
+
+svg {
+  display: block;
+  height: $size;
+  width: $size;
+  color: $color; /* SVG path use currentColor to inherit this */
+}
+
+.circle {
+  stroke-dasharray: 76;
+  stroke-dashoffset: 76;
+  animation: draw 1s forwards;
+}
+
+.tick {
+  stroke-dasharray: 18;
+  stroke-dashoffset: 18;
+  animation: draw 1s forwards 1s;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* For styling demo, not required */
+
+body {
+  background-color: $white-primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}

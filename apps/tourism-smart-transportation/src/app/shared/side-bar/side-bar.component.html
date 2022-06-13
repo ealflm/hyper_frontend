@@ -142,6 +142,28 @@
             </div>
           </div>
         </li>
+        <!-- Card  -->
+        <li
+          [class]="status ? 'nav-item' : 'nav-item-off'"
+          routerLinkActive="active-link"
+          #card="routerLinkActive"
+        >
+          <div class="nav-link" routerLink="/card">
+            <mat-icon
+              [ngClass]="
+                card.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{ card.isActive ? 'payment_outlined' : 'payment' }}</mat-icon
+            >
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Card
+            </div>
+          </div>
+        </li>
+        <!-- End Card -->
         <!-- Bản đồ -->
         <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
