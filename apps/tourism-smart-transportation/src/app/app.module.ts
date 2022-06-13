@@ -18,6 +18,7 @@ import { JwtInterceptor } from './auth/jwt.interceptor';
 import { NzZorroAntdModule } from './nz-zorro-antd/nz-zorro-antd.module';
 import { en_US, NZ_I18N, NzI18nModule } from 'ng-zorro-antd/i18n';
 import { SettingModule } from './pages/admin-page/setting/setting.module';
+import { CheckedComponent } from './shared/checked/checked.component';
 
 @NgModule({
   declarations: [AppComponent],

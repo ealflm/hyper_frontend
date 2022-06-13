@@ -1,0 +1,267 @@
+<div class="header-card">
+  <div class="header-card-content">
+    <div class="header-content-item">
+      <div class="header-item-H5"><div>Thẻ</div></div>
+      <div class="header-item">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Tạo mới"
+          (click)="createCard()"
+          class="p-button-rounded button-background"
+        ></button>
+      </div>
+    </div>
+    <div class="header-search">
+      <span class="p-input-icon-left">
+        <i class="material-icons-outlined"> search </i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Tìm kiếm theo tên, mã,…"
+          (keydown)="onChangeFilterByLastName($event)"
+        />
+      </span>
+    </div>
+  </div>
+
+  <tourism-smart-transportation-header-status
+    [menuValue]="menuValue"
+    (GetValueMenu)="OnGetMenuClick($event)"
+  ></tourism-smart-transportation-header-status>
+  <div class="mt-5"></div>
+  <div class="body-table">
+    <p-table
+      #dt
+      [value]="cards"
+      responsiveLayout="scroll"
+      scrollDirection="both"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Khách hàng</th>
+          <th>Mã thẻ</th>
+          <th>Trạng thái</th>
+          <th>Hành động</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-card let-i="rowIndex">
+        <tr>
+          <td
+            class="tb-name"
+            [pTooltip]="card.firstName + ' ' + card.lastName"
+            tooltipPosition="bottom"
+          >
+            <img
+              [src]="
+                card.photoUrl === '' || card.photoUrl === null
+                  ? '../assets/image/imagePreview.png'
+                  : 'https://se32.blob.core.windows.net/card/' + card.photoUrl
+              "
+              alt=""
+            />&nbsp;{{ card.customerName | limitLength: 10 }}
+          </td>
+          <td>{{ card.uid }}</td>
+          <td>
+            <div [class]="status[card.status]?.class">
+              {{ status[card.status]?.lable }}
+            </div>
+          </td>
+          <td style="text-align: center">
+            <span
+              class="material-icons-outlined enable"
+              (click)="deleteCard(card.id)"
+              *ngIf="card.status !== 0"
+            >
+              delete
+            </span>
+            <span
+              class="material-icons-outlined disable"
+              *ngIf="card.status === 0"
+            >
+              delete
+            </span>
+
+            <!-- <span
+              class="material-icons-outlined iconVisit"
+              style="margin-left: 10px"
+              (click)="navCardDetail(card.id)"
+            >
+              visibility
+            </span> -->
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">Không có nội dung nào để hiển thị.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+<p-confirmDialog
+  key="deleteConfirm"
+  #cd
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      Bạn có chắc chắn muốn xoá thẻ này?
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Đóng"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Xóa"
+      (click)="cd.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
+<!--  -->
+<p-dialog
+  #cardElement
+  (click)="cardElementClick()"
+  header="Tạo mới thẻ"
+  [(visible)]="displayDialog"
+  [style]="{ width: '654px', height: '400px' }"
+  [contentStyle]="{
+    'overflow-y': 'auto',
+    'overflow-x': 'hidden',
+    'max-height': '70vh',
+    'min-height': '25vh'
+  }"
+  [blockScroll]="true"
+  [draggable]="false"
+  [modal]="true"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="cardForm">
+      <div class="card-form" *ngIf="!checked">
+        <svg
+          width="280"
+          height="210"
+          viewBox="0 0 280 210"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_1044_64362)">
+            <path
+              d="M189.029 174.365C188.691 174.365 188.368 174.365 188.055 174.365C185.433 174.256 182.857 173.646 180.468 172.569L157.167 162.175L157.054 162.109C149.764 157.853 147.4 150.837 150.722 143.337L155.116 145.266C153.491 148.934 152.917 154.093 159.371 157.925L182.59 168.288C182.964 168.471 192.064 172.88 200.862 164.619L204.158 168.094C198.713 173.181 193.079 174.365 189.029 174.365Z"
+              fill="#231F20"
+            />
+            <path
+              d="M192.028 156.716C189.797 156.705 187.583 156.326 185.476 155.593L185.317 155.527L167.779 147.363L169.804 143.036L187.235 151.129C187.748 151.302 191.336 152.476 194.674 151.593L195.909 156.185C194.644 156.529 193.34 156.707 192.028 156.716Z"
+              fill="#231F20"
+            />
+            <path
+              d="M276.772 166.762L279.5 162.828C265.094 153.368 257.588 139.592 249.637 125.025C246.115 118.565 242.46 111.886 238.153 105.508C233.416 98.5124 224.373 93.3845 215.119 92.4457L185.23 89.4199L184.743 94.1703L214.632 97.196C222.527 97.9971 230.196 102.298 234.175 108.176C238.368 114.366 241.952 120.932 245.418 127.3C253.282 141.725 261.413 156.639 276.772 166.762Z"
+              fill="#231F20"
+            />
+            <path
+              d="M178.714 147.562H72.8428C70.6306 147.559 68.5098 146.683 66.946 145.125C65.3821 143.568 64.5031 141.457 64.5017 139.255V71.2755C64.5031 69.0737 65.3821 66.9624 66.946 65.405C68.5098 63.8476 70.6306 62.9715 72.8428 62.9688H178.714C180.927 62.9715 183.047 63.8476 184.611 65.405C186.175 66.9624 187.054 69.0737 187.055 71.2755V101.058H182.257V71.2755C182.257 70.3404 181.884 69.4436 181.219 68.7824C180.555 68.1212 179.654 67.7497 178.714 67.7497H72.8428C71.9033 67.7497 71.0022 68.1212 70.3379 68.7824C69.6735 69.4436 69.3003 70.3404 69.3003 71.2755V139.255C69.3017 140.19 69.6753 141.086 70.3394 141.747C71.0035 142.407 71.9037 142.779 72.8428 142.781H178.714C179.653 142.779 180.554 142.407 181.218 141.747C181.882 141.086 182.255 140.19 182.257 139.255V133.765H187.055V139.255C187.054 141.457 186.175 143.568 184.611 145.125C183.047 146.683 180.927 147.559 178.714 147.562Z"
+              fill="#231F20"
+            />
+            <path
+              d="M190.89 188.743C189.974 188.751 189.059 188.69 188.153 188.56L187.86 188.509L164.001 178.146C160.494 176.615 158.305 174.334 157.49 171.364C156.034 166.099 159.761 160.843 159.925 160.649L163.821 163.43L161.873 162.037L163.826 163.425C163.114 164.446 161.412 167.604 162.119 170.145C162.545 171.676 163.791 172.859 165.928 173.793L189.204 183.906C190.742 184.085 198.252 184.605 203.251 178.467L203.358 178.345C203.358 178.345 205.778 175.661 205.327 172.916L210.059 172.14C210.854 176.916 207.496 180.916 206.937 181.523C201.79 187.779 194.725 188.743 190.89 188.743Z"
+              fill="#231F20"
+            />
+            <path
+              d="M230.191 189.891C210.577 181.574 199.477 167.242 193.617 156.685C190.068 150.377 187.415 143.609 185.733 136.576L150.676 116.289C149.933 115.855 132.82 105.65 138.885 94.6139C143.642 85.9398 153.716 87.2665 158.443 89.2054L217.087 109.829L215.488 114.335L156.7 93.67L156.639 93.6445C156.254 93.4863 146.98 89.7922 143.084 96.9049C139.295 103.819 152.958 112.09 153.101 112.171L190.039 133.55L190.229 134.642C190.229 134.734 191.9 143.776 197.919 154.542C205.911 168.864 217.4 179.283 232.088 185.508L230.191 189.891Z"
+              fill="#231F20"
+            />
+            <path
+              d="M249.524 206.066C243.218 201.193 234.703 198.413 223.019 197.392C220.112 197.142 217.159 196.984 214.304 196.836C207.306 196.474 200.697 196.132 194.248 194.433C184.107 191.764 176.592 185.703 174.151 178.217L169.583 179.697C172.536 188.733 181.298 195.969 193.023 199.05C199.949 200.872 207.121 201.244 214.042 201.602C216.857 201.75 219.764 201.903 222.588 202.148C233.452 203.097 241.209 205.602 246.781 209.99L249.524 206.066Z"
+              fill="#231F20"
+            />
+            <path
+              d="M43.5898 61.4537C43.5898 61.6323 43.5898 61.8058 43.5898 61.9639H51.0082C51.0082 61.7853 51.0082 61.6119 51.0082 61.4537C51.019 58.4909 52.2096 55.6532 54.3189 53.5624C56.4282 51.4717 59.2843 50.2984 62.2613 50.2998C62.6174 50.2988 62.9733 50.3158 63.3276 50.3508V42.9217C62.9739 42.9217 62.6201 42.8911 62.2613 42.8911C57.3129 42.8911 52.5668 44.8462 49.0658 48.3267C45.5648 51.8073 43.5953 56.5287 43.5898 61.4537Z"
+              fill="#F69320"
+            />
+            <path
+              d="M29.2249 61.4533C29.2249 61.6319 29.2249 61.8054 29.2249 61.9635H36.6586C36.6586 61.7849 36.6586 61.6115 36.6586 61.4533C36.6681 54.6986 39.3687 48.2233 44.1682 43.4474C48.9678 38.6716 55.4744 35.985 62.2613 35.9769C62.6202 35.9769 62.9739 35.9769 63.3276 35.9769V28.6193C62.9739 28.6193 62.6202 28.5938 62.2613 28.5938C53.5043 28.5978 45.1068 32.0604 38.9127 38.2213C32.7187 44.3822 29.2344 52.7378 29.2249 61.4533Z"
+              fill="#F69320"
+            />
+            <path
+              d="M14.865 61.4537C14.865 61.6272 14.865 61.8058 14.865 61.9639H22.2731C22.2731 61.7853 22.2731 61.6068 22.2731 61.4537C22.2731 50.8984 26.4861 40.7754 33.9854 33.3117C41.4846 25.8479 51.6558 21.6549 62.2613 21.6549C62.6202 21.6549 62.9739 21.6549 63.3277 21.6549V14.3125C62.9739 14.3125 62.6202 14.3125 62.2613 14.3125C49.6993 14.3219 37.654 19.2907 28.7684 28.1284C19.8828 36.9662 14.8826 48.9512 14.865 61.4537Z"
+              fill="#F69320"
+            />
+            <path
+              d="M0.5 61.4533C0.5 61.6268 0.5 61.8054 0.5 61.9635H7.91833C7.91833 61.7849 7.91833 61.6064 7.91833 61.4533C7.93055 47.1126 13.6599 33.3628 23.8485 23.2224C34.0372 13.0821 47.8524 7.37987 62.2613 7.36771C62.6202 7.36771 62.9739 7.36771 63.3277 7.36771V0.0151367C62.9739 0.0151367 62.6202 0.0151367 62.2613 0.0151367C45.8907 0.0286358 30.194 6.50492 18.6153 18.023C7.03665 29.5411 0.521719 45.1602 0.5 61.4533Z"
+              fill="#F69320"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_1044_64362">
+              <rect
+                width="279"
+                height="210"
+                fill="white"
+                transform="translate(0.5)"
+              />
+            </clipPath>
+          </defs>
+        </svg>
+        <input
+          style="opacity: 0"
+          #cardInput
+          [style]="{
+            width: '100%',
+            height: '28px'
+          }"
+          pInputText
+          type="text"
+          formControlName="uiCard"
+          autofocus
+          (paste)="onSaveCard()"
+          (input)="onInput(cardInput.value)"
+        />
+        <div>Quẹt thẻ để tiếp tục</div>
+      </div>
+    </form>
+    <div class="completed-scan" *ngIf="checked">
+      <div class="scanned">
+        <tourism-smart-transportation-checked></tourism-smart-transportation-checked>
+      </div>
+      <div class="scanned-content">
+        <div>Quẹt thành công</div>
+        <div>Mã số thẻ là : 00067686868</div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      (click)="cancelDialog()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Lưu"
+    ></button>
+  </ng-template>
+</p-dialog>
+<p-toast position="top-right"></p-toast>

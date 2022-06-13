@@ -204,10 +204,13 @@
   width: 131px;
 }
 @mixin status-used {
-  @include status-inactive();
-}
-@mixin status-expired {
-  @include status-inactive();
+  background-color: $expired-grey;
+  color: $color-grey-text-placeholder;
+  box-shadow: 0rem 0rem 2rem rgb(201, 201, 201);
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+  width: 131px;
 }
 @mixin status-active {
   background-color: $status-tag-color-active;
@@ -219,13 +222,19 @@
   width: 131px;
 }
 @mixin status-expried {
-  background-color: $status-tag-color-active;
-  color: $status-tag-text-color-active;
-  box-shadow: 0rem 0rem 2rem rgb(176, 238, 211);
+  background-color: $status-tag-color-expired;
+  color: $hard-yellow;
+  box-shadow: 0rem 0rem 2rem rgb(255, 241, 202);
   border-radius: 50px;
   text-align: center;
   padding: 2px 15px 2px 15px;
   width: 90px;
+}
+@mixin status-unlinked {
+  @include status-expried();
+}
+@mixin status-linked {
+  @include status-active();
 }
 @mixin paginator-custom {
   .p-paginator {

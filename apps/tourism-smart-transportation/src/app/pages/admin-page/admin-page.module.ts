@@ -1,3 +1,4 @@
+import { CheckedComponent } from './../../shared/checked/checked.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ComponentsModule } from './../../components/components.module';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -23,6 +24,7 @@ import { CustomerDetailsComponent } from './customers/customer-details/customer-
 import { ServiceDetailComponent } from './manager-services/service-detail/service-detail.component';
 import { FormStationComponent } from './map/form-station/form-station.component';
 import { SettingModule } from './setting/setting.module';
+import { CardComponent } from './card/card.component';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -56,6 +58,8 @@ const ADMIN_ROUTES: Routes = [
       },
 
       { path: 'discount', component: DiscountComponent },
+      { path: 'card', component: CardComponent },
+
       // Loading modules UILITY-SERVICES
 
       { path: 'map', component: MapPageComponent },
@@ -86,6 +90,8 @@ const ADMIN_ROUTES: Routes = [
     ServiceDetailComponent,
     FormStationComponent,
     MapPageComponent,
+    CheckedComponent,
+    CardComponent,
   ],
   imports: [
     CommonModule,

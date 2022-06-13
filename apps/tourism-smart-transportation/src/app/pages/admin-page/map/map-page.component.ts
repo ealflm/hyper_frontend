@@ -37,15 +37,8 @@ export class MapPageComponent
       name: 'driver',
       class: '',
       hiddenCheckbox: false,
-      icon: 'person',
-      lable: 'Tài xế',
-    },
-    {
-      name: 'bus-station',
-      class: '',
-      hiddenCheckbox: false,
-      icon: 'directions_bus_filled',
-      lable: 'Trạm xe buýt',
+      icon: 'directions_car',
+      lable: 'Phương tiện',
     },
     {
       name: 'rent-station',
@@ -53,6 +46,13 @@ export class MapPageComponent
       hiddenCheckbox: false,
       icon: 'car_rental',
       lable: 'Trạm thuê xe',
+    },
+    {
+      name: 'bus-station',
+      class: '',
+      hiddenCheckbox: false,
+      icon: 'directions_bus',
+      lable: 'Trạm xe buýt',
     },
     {
       name: 'route',
