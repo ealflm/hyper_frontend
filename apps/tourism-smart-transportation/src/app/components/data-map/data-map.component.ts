@@ -19,7 +19,7 @@ export class DataMapComponent implements OnInit, OnChanges {
   @Output() GetFillterValue: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetValueCheckBox: EventEmitter<any> = new EventEmitter<any>();
   selectedCheckBox: string[] = [];
-  fillterValue?: string = 'driver';
+  fillterValue?: string = 'vehicle';
   constructor() {}
 
   ngOnInit(): void {

@@ -34,7 +34,7 @@ export class MapPageComponent
 
   headerMenu: any = [
     {
-      name: 'driver',
+      name: 'vehicle',
       class: '',
       hiddenCheckbox: false,
       icon: 'directions_car',
@@ -62,7 +62,7 @@ export class MapPageComponent
       lable: 'Tuyến xe buýt',
     },
   ];
-  fillterMenu?: string = 'driver';
+  fillterMenu?: string = 'vehicle';
   //
   // fillterDriverName = '';
   // fillterStationTitle = '';
@@ -77,7 +77,8 @@ export class MapPageComponent
   rentStationsOnMap: RentStation[] = [];
 
   //
-  drivers: any = [];
+  // drivers: any = [];
+  vehicles: any = [];
   stations: Station[] = [];
   rent_stations: RentStation[] = [];
   routes: Route[] = [];
@@ -179,7 +180,7 @@ export class MapPageComponent
       this.getAllStations();
     } else if (this.fillterMenu === 'rent-station') {
       this.getAllRentStations();
-    } else if (this.fillterMenu === 'driver') {
+    } else if (this.fillterMenu === 'vehicle') {
       console.log('............');
     } else if (this.fillterMenu === 'route') {
       this.getAllRoutes();
@@ -187,7 +188,6 @@ export class MapPageComponent
   }
   onGetValueCheckBox(valueCheckbox: []) {
     this.checkBoxValue = valueCheckbox;
-    // console.log(this.checkBoxValue);
 
     if (valueCheckbox.length <= 0) {
       this.mapboxService.removeBusStationMarker();
@@ -196,8 +196,8 @@ export class MapPageComponent
       this.getBusStationMarkers();
       this.getRentStationMarkers();
       switch (valueCheckbox.sort().join('-')) {
-        case 'driver':
-          console.log('driver');
+        case 'vehicle':
+          console.log('vehicle');
           this.mapboxService.removeBusStationMarker();
           this.mapboxService.removeRentStationMarker();
           break;
@@ -213,12 +213,15 @@ export class MapPageComponent
           this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
           this.mapboxService.removeBusStationMarker();
           break;
-        case 'driver-rent-station':
+        case 'rent-station-vehicle':
           this.mapboxService.removeBusStationMarker();
+          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
           console.log('1');
           break;
-        case 'bus-station-driver':
+        case 'bus-station-vehicle':
           this.mapboxService.removeRentStationMarker();
+          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
+
           console.log('2');
           break;
         case 'bus-station-rent-station':
@@ -228,7 +231,9 @@ export class MapPageComponent
           this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
           this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
           break;
-        case 'bus-station-driver-rent-station':
+        case 'bus-station-rent-station-vehicle':
+          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
+          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
           console.log('4');
           break;
         default:
@@ -257,7 +262,8 @@ export class MapPageComponent
   }
 
   // fillter function
-  onFillterDriverByName(name: any) {}
+  // onFillterDriverByName(name: any) {}
+  onFillterVehicleByName(name: any) {}
   onFillterStationByName(title: any) {
     this.getAllStations(title);
   }
@@ -288,7 +294,12 @@ export class MapPageComponent
         });
       });
   }
-  getDetailDriver(event: any) {
+  // getDetailDriver(event: any) {
+  //   this.showSideBarList = false;
+  //   this.showSideBarDetail = true;
+  //   console.log(event);
+  // }
+  getDetailVehicle(event: any) {
     this.showSideBarList = false;
     this.showSideBarDetail = true;
     console.log(event);

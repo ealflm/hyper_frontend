@@ -1,0 +1,62 @@
+@import '../../../styles.scss';
+::ng-deep {
+  .header-search {
+    overflow: hidden;
+    margin-top: 15px;
+    .p-inputtext {
+      border: none;
+      border-radius: 20px;
+      @include box-shadown-grey;
+      &:enabled:focus {
+        outline: none;
+        border-color: #ced4da;
+      }
+      &:enabled:hover {
+        border-color: #ced4da;
+      }
+    }
+    .material-icons-outlined {
+      margin-top: -12px;
+    }
+  }
+}
+::ng-deep {
+  .body-bottom-content {
+    @include custom-scrollbar;
+    overflow: auto;
+    height: 55vh;
+    margin-top: 12px;
+    .body-card {
+      cursor: pointer;
+      margin-top: 9px;
+      padding: 12px 12px 9px 12px;
+      background-color: $white-primary-color;
+      border-radius: 9px;
+      .card-header {
+        display: flex;
+        img {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          border-radius: 50%;
+          display: block;
+        }
+        div {
+          margin: auto 0px;
+          @include font-Roboto-Regular-Body2;
+          color: $black-default;
+        }
+      }
+      .card-body {
+        margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+        @include font-Roboto-Regular-Caption;
+        color: $color-grey-text-placeholder;
+      }
+    }
+    .body-card:hover {
+      background-color: $hover-bg-color;
+    }
+  }
+}

@@ -36,7 +36,7 @@
       <div class="map-side-bar-body animate__animated" *ngIf="showSideBarList">
         <div class="container">
           <div class="header">
-            <div class="header-text" *ngIf="fillterMenu === 'driver'">
+            <div class="header-text" *ngIf="fillterMenu === 'vehicle'">
               Danh sách tài xế
             </div>
             <div class="header-text" *ngIf="fillterMenu === 'route'">
@@ -64,12 +64,18 @@
             </div>
           </div>
           <div class="body-bottom-warp">
-            <tourism-smart-transportation-list-drivers
-              *ngIf="fillterMenu === 'driver'"
+            <!-- <tourism-smart-transportation-list-drivers
+              *ngIf="fillterMenu === 'vehicle'"
               [drivers]="drivers"
               (GetFillterDriverName)="onFillterDriverByName($event)"
               (GetIdDriver)="getDetailDriver($event)"
-            ></tourism-smart-transportation-list-drivers>
+            ></tourism-smart-transportation-list-drivers> -->
+            <tourism-smart-transportation-list-vehicle
+              *ngIf="fillterMenu === 'vehicle'"
+              [vehicles]="vehicles"
+              (GetFillterVehicleName)="onFillterVehicleByName($event)"
+              (GetIdVehicle)="getDetailVehicle($event)"
+            ></tourism-smart-transportation-list-vehicle>
             <!--  -->
 
             <tourism-smart-transportation-list-stations
@@ -109,7 +115,7 @@
       <div class="map-sidebar-detail" *ngIf="showSideBarDetail">
         <div class="container">
           <div class="header">
-            <div class="header-text" *ngIf="fillterMenu === 'driver'">
+            <div class="header-text" *ngIf="fillterMenu === 'vehicle'">
               <span
                 class="material-icons-outlined"
                 (click)="onShowSideBarList()"
@@ -178,10 +184,13 @@
             [RouteDetail]="routeDetail"
           ></tourism-smart-transportation-route-detail>
           <!--  -->
-          <tourism-smart-transportation-driver-detail
+          <tourism-smart-transportation-vehicle-detail
+            *ngIf="fillterMenu === 'vehicle' && showSideBarDetail"
+          ></tourism-smart-transportation-vehicle-detail>
+          <!-- <tourism-smart-transportation-driver-detail
             *ngIf="fillterMenu === 'driver' && showSideBarDetail"
           >
-          </tourism-smart-transportation-driver-detail>
+          </tourism-smart-transportation-driver-detail> -->
         </div>
       </div>
     </ng-container>
