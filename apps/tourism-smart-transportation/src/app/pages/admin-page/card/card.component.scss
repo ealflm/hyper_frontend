@@ -146,6 +146,7 @@
     .card-form {
       display: block;
       text-align: center;
+      border-bottom: 1px solid $color-line-grey;
     }
     .completed-scan {
       height: 100%;
@@ -155,8 +156,18 @@
       justify-content: center;
       align-items: center;
     }
+    .scan-title {
+      @include font-Roboto-Regular-Subtitle1;
+    }
     .scanned-content {
       text-align: center;
+      div:first-child {
+        @include font-Roboto-Regular-Subtitle1;
+        color: $black-default;
+      }
+      div:last-child {
+        @include font-Roboto-Regular-Subtitle1;
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CardService } from './../../../services/card.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -35,6 +35,7 @@ export class CardComponent implements OnInit {
   cardForm!: FormGroup;
   checked = false;
   uiCard = '';
+  isNumber = false;
   constructor(
     private cardService: CardService,
     private confirmationService: ConfirmationService,
@@ -48,7 +49,7 @@ export class CardComponent implements OnInit {
   }
   _initCardForm() {
     this.cardForm = this.fb.group({
-      uiCard: [''],
+      uiCard: ['', [Validators.required]],
     });
   }
   get cardsForm() {
@@ -88,7 +89,11 @@ export class CardComponent implements OnInit {
       },
     });
   }
-  cancelDialog() {}
+  cancelDialog() {
+    this.displayDialog = false;
+    this.checked = false;
+    this.cardsForm['uiCard'].setValue('');
+  }
   onPasteCard() {
     if (
       this.cardsForm['uiCard'].value !== null ||
@@ -96,15 +101,25 @@ export class CardComponent implements OnInit {
     ) {
       setTimeout(() => {
         this.checked = true;
-      }, 1000);
+      }, 500);
     }
   }
   onInput(uiCard: any) {
-    this.uiCard = uiCard;
+    this.cardsForm['uiCard'].setValue('');
+    if (!isNaN(uiCard)) {
+      this.uiCard = uiCard;
+      this.isNumber = true;
+    } else {
+      this.isNumber = false;
+    }
   }
   onSaveCard() {
     const formData = new FormData();
-    if (this.uiCard !== null || this.uiCard !== '') {
+    if (
+      (this.uiCard !== null || this.uiCard !== '') &&
+      this.isNumber &&
+      this.checked
+    ) {
       formData.append('uid', this.uiCard);
       this.cardService.createCard(formData).subscribe((res) => {
         if (res.statusCode === 201) {
@@ -113,10 +128,17 @@ export class CardComponent implements OnInit {
             summary: 'Thành công',
             detail: res.message,
           });
+          this.displayDialog = false;
+          this.checked = false;
           this.getListCards();
         }
       });
     }
+  }
+  scanAgain() {
+    this.checked = false;
+    this.uiCard = '';
+    this.cardsForm['uiCard'].setValue('');
   }
   // navCardDetail(id: string) {}
 }

@@ -57,7 +57,8 @@
               [src]="
                 card.photoUrl === '' || card.photoUrl === null
                   ? '../assets/image/imagePreview.png'
-                  : 'https://se32.blob.core.windows.net/card/' + card.photoUrl
+                  : 'https://se32.blob.core.windows.net/customer/' +
+                    card.photoUrl
               "
               alt=""
             />&nbsp;{{ card.customerName | limitLength: 10 }}
@@ -140,7 +141,7 @@
   [(visible)]="displayDialog"
   [style]="{ width: '654px', height: '400px' }"
   [contentStyle]="{
-    'overflow-y': 'auto',
+    'overflow-y': 'hidden',
     'overflow-x': 'hidden',
     'max-height': '70vh',
     'min-height': '25vh'
@@ -216,6 +217,7 @@
             </clipPath>
           </defs>
         </svg>
+        <div class="scan-title">Quẹt thẻ để tiếp tục</div>
         <input
           style="opacity: 0"
           #cardInput
@@ -230,16 +232,23 @@
           (paste)="onPasteCard()"
           (input)="onInput(cardInput.value)"
         />
-        <div>Quẹt thẻ để tiếp tục</div>
       </div>
     </form>
-    <div class="completed-scan" *ngIf="checked">
+    <div class="completed-scan" *ngIf="checked && isNumber">
       <div class="scanned">
         <tourism-smart-transportation-checked></tourism-smart-transportation-checked>
       </div>
-      <div class="scanned-content">
+      <div class="scanned-content" style="margin-top: 25px">
         <div>Quẹt thành công</div>
         <div>Mã số thẻ là : {{ uiCard }}</div>
+      </div>
+    </div>
+    <div class="completed-scan" *ngIf="checked && !isNumber">
+      <div class="scanned">
+        <tourism-smart-transportation-failure></tourism-smart-transportation-failure>
+      </div>
+      <div class="scanned-content">
+        <div>Quẹt Thất bại</div>
       </div>
     </div>
   </ng-template>
@@ -255,10 +264,21 @@
       (click)="cancelDialog()"
     ></button>
     <button
+      *ngIf="checked"
+      [style]="{ width: '67', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Quẹt lại"
+      (click)="scanAgain()"
+    ></button>
+    <button
       [style]="{ width: '57', height: '32px' }"
       class="p-button-rounded button-rounded"
       pButton
       pRipple
+      [disabled]="checked && !isNumber"
       type="button"
       label="Lưu"
       (click)="onSaveCard()"
