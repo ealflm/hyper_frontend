@@ -1,3 +1,4 @@
+import { STATUS_CARD } from './../../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CardService } from './../../../services/card.service';
@@ -36,6 +37,7 @@ export class CardComponent implements OnInit {
   checked = false;
   uiCard = '';
   isNumber = false;
+  filterByStatus = 1;
   constructor(
     private cardService: CardService,
     private confirmationService: ConfirmationService,
@@ -46,6 +48,7 @@ export class CardComponent implements OnInit {
   ngOnInit(): void {
     this.getListCards();
     this._initCardForm();
+    this._mapStatus();
   }
   _initCardForm() {
     this.cardForm = this.fb.group({
@@ -55,8 +58,17 @@ export class CardComponent implements OnInit {
   get cardsForm() {
     return this.cardForm.controls;
   }
+  private _mapStatus() {
+    this.status = Object.keys(STATUS_CARD).map((key) => {
+      return {
+        id: key,
+        lable: STATUS_CARD[key].lable,
+        class: STATUS_CARD[key].class,
+      };
+    });
+  }
   getListCards() {
-    this.cardService.getListCard().subscribe((res) => {
+    this.cardService.getListCard(this.filterByStatus).subscribe((res) => {
       this.cards = res.body;
     });
   }
@@ -70,8 +82,18 @@ export class CardComponent implements OnInit {
       this.cardInputEle.nativeElement.focus();
     }
   }
-  onChangeFilterByLastName(e: any) {}
-  OnGetMenuClick(e: any) {}
+  onChangeFilterByLastName(e: any) {
+    this.cards = this.cards.filter(
+      (el: any) =>
+        el?.customerName
+          ?.toLowerCase()
+          .indexOf(e.target.value.toLowerCase()) !== -1
+    );
+  }
+  OnGetMenuClick(value: any) {
+    this.filterByStatus = value;
+    this.getListCards();
+  }
   deleteCard(id: string) {
     this.confirmationService.confirm({
       key: 'deleteConfirm',
@@ -94,32 +116,16 @@ export class CardComponent implements OnInit {
     this.checked = false;
     this.cardsForm['uiCard'].setValue('');
   }
-  onPasteCard() {
-    if (
-      this.cardsForm['uiCard'].value !== null ||
-      this.cardsForm['uiCard'].value !== ''
-    ) {
-      setTimeout(() => {
+  onInput(uiCard: any) {
+    this.uiCard = uiCard;
+    if (this.uiCard.length == 10) {
+      if (this.uiCard.match(/^[0-9]+$/) != null) {
         this.checked = true;
-      }, 500);
-    }
-  }
-  onInput(uiCard: string) {
-    this.cardsForm['uiCard'].setValue('');
-    // const uid = uiCard.toString().trim();
-    // const checkIsNumber = !isNaN(parseInt(uid));
-
-    // if (checkIsNumber) {
-    //   this.uiCard = uiCard;
-    //   this.isNumber = true;
-    // } else if (!checkIsNumber) {
-    //   this.isNumber = false;
-    // }
-    if (uiCard.match(/^[0-9]+$/) != null) {
-      this.uiCard = uiCard;
-      this.isNumber = true;
-    } else {
-      this.isNumber = false;
+        this.isNumber = true;
+      } else {
+        this.isNumber = false;
+        this.checked = true;
+      }
     }
   }
   onSaveCard() {

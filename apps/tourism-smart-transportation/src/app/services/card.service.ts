@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Card, CardResponse, CardsResponse } from './../models/CardResponse';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 
@@ -10,8 +10,14 @@ import { Injectable } from '@angular/core';
 export class CardService {
   apiURL = environment.apiURL + 'admin/card';
   constructor(private http: HttpClient) {}
-  getListCard(): Observable<CardsResponse> {
-    return this.http.get<CardsResponse>(`${this.apiURL}`);
+  getListCard(status?: number | null): Observable<CardsResponse> {
+    let queryParams = new HttpParams();
+    if (status != null) {
+      queryParams = queryParams.append('Status', status);
+    }
+    return this.http.get<CardsResponse>(`${this.apiURL}`, {
+      params: queryParams,
+    });
   }
   getCardById(id: string): Observable<CardResponse> {
     return this.http.get<CardResponse>(`${this.apiURL}/${id}`);

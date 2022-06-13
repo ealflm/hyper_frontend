@@ -81,34 +81,32 @@
     }
   }
 }
-::ng-deep {
-  .container {
-    .header {
+.container {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px 0 18px;
+    .header-text {
       display: flex;
-      justify-content: space-between;
-      padding: 12px 15px 0 18px;
-      .header-text {
-        display: flex;
-        @include font-Roboto-Medium-Subtitle2;
-        color: $black-default;
-        span {
-          display: block;
-          margin: auto 0;
-          cursor: pointer;
-          &:hover {
-            background-color: $hover-bg-color;
-          }
-        }
-        div {
-          margin: auto 0;
-        }
-      }
-      .header-iconClose {
+      @include font-Roboto-Medium-Subtitle2;
+      color: $black-default;
+      span {
+        display: block;
+        margin: auto 0;
         cursor: pointer;
+        &:hover {
+          background-color: $hover-bg-color;
+        }
+      }
+      div {
+        margin: auto 0;
       }
     }
-    .body-warp {
-      padding: 0px 20px 10px 15px;
+    .header-iconClose {
+      cursor: pointer;
     }
+  }
+  .body-warp {
+    padding: 0px 20px 10px 15px;
   }
 }

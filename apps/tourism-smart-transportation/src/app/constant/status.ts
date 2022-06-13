@@ -46,6 +46,24 @@ export const STATUS_DISCOUNT: any = {
     class: 'status-expired',
   },
 };
+export const STATUS_CARD: any = {
+  0: {
+    lable: 'Vô hiệu hóa',
+    class: 'status-inactive',
+  },
+  1: {
+    lable: 'Đã liên kết',
+    class: 'status-linked',
+  },
+  2: {
+    lable: 'Chưa liên kết',
+    class: 'status-unlinked',
+  },
+  3: {
+    lable: 'Hết hạn',
+    class: 'status-expired',
+  },
+};
 export const STATUS_TRANSACTION: any = {
   0: {
     lable: 'Chưa thanh toán',

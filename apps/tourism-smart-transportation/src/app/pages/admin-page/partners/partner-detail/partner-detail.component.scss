@@ -1,9 +1,9 @@
 @import '../../../../../styles.scss';
-.customer-details {
+.partner-details {
   background-color: $background-grey;
   @include fixed-scroll-view;
   @include custom-scrollbar;
-  .header-customer-content {
+  .header-partner-content {
     padding-left: 30px;
     align-items: center;
     margin-top: 26px;
@@ -29,168 +29,155 @@
   }
   .form-edit {
     width: 1000px;
-    height: 440px;
+    height: 550px;
     margin: 26px auto;
     border-radius: 9px;
     background-color: $white-primary-color;
     display: flex;
     flex-direction: column;
     @include box-shadown-grey;
-    &-container {
-      padding: 20px 25px 0px 25px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
 
-      .upload-container {
-        position: relative;
-        flex: 20%;
-        margin: 0 auto;
-        width: 125px;
-        height: 125px;
-        .thumbnail {
-          background: #eee;
-          display: table-cell;
-          vertical-align: middle;
-          position: relative;
-        }
-        img {
-          position: absolute;
-          background-position: center;
-          background-size: cover;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          height: 125px;
-          width: 125px;
-          border-radius: 50%;
-          border: 2px solid $background-color-grey;
-          object-fit: cover;
-        }
-
-        .icon-overplay {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          border-radius: 50%;
-          height: 125px;
-          width: 125px;
-          font-size: 12px;
-          cursor: pointer;
-          transition: opacity ease 0.5s;
-          text-align: center;
-        }
-        .circle-icon {
-          border-radius: 50%;
-          position: absolute;
-          bottom: 2%;
-          right: 9%;
-          background: $primary-color;
-          border: 2px solid $white-primary-color;
-          border-radius: 50%;
-          width: 22px;
-          height: 22px;
-        }
-
-        .circle-icon span {
-          color: $white-primary-color;
-          position: absolute;
-          font-size: 14px;
-          height: 14px;
-          width: 14px;
-          right: 2px;
-          bottom: 2px;
-          z-index: 2;
-        }
-        .image-overlay {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          border-radius: 50%;
-          opacity: 0;
-          background: rgba(0, 0, 0, 0.1);
-          color: $black-default;
-          height: 125px;
-          width: 125px;
-          font-size: 12px;
-          cursor: pointer;
-          transition: opacity ease 0.5s;
-          text-align: center;
-          z-index: 1;
-        }
-        .thumnail-text {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          font-size: 12px;
-          opacity: 0;
-        }
-
-        input[type='file'] {
-          opacity: 0;
-          width: 125px;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
+    .partner-input-long {
+      height: 49px;
+      .p-multiselect .p-multiselect-label {
+        margin-top: -8px;
       }
-      .upload-container :hover {
-        .image-overlay {
-          opacity: 1;
-          z-index: 1;
-        }
-        .thumnail-text {
-          opacity: 1;
-        }
+      .partner-input-text-long {
+        height: 28px;
       }
-      .form-content {
-        flex: 80%;
-        width: 415px;
-        height: 305px;
-        .customer-input-long {
-          height: 49px;
-          .customer-input-text-long {
-            height: 28px;
-          }
-        }
-        .customer-title {
-          @include font-Roboto-Medium-Subtitle2;
-          font-size: 16px;
-          color: $black-default;
-        }
-        .customer-input-short {
-          margin-top: 15px;
-          height: 49px;
+    }
 
-          .customer-input-text-short {
-            height: 28px;
-          }
-        }
-        .customer-subtitle {
-          @include font-Roboto-Medium-Subtitle2;
-          color: $black-default;
-        }
-        .customer-text {
-          @include font-Roboto-Regular-Body2;
-          color: $black-default;
-        }
-        .input-calendar-custom {
-          position: relative;
-        }
-        .input-calendar-icon {
-          position: absolute;
-          right: 4%;
-          top: 7%;
-        }
+    .partner-input-short {
+      margin-top: 10px;
+      height: 49px;
+      .partner-input-text-short {
+        height: 28px;
       }
+    }
+
+    .upload-container {
+      height: 95px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .thumbnail {
+      background: #eee;
+      display: table-cell;
+      vertical-align: middle;
+      position: relative;
+    }
+    img {
+      position: absolute;
+      background-position: center;
+      background-size: cover;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 125px;
+      width: 125px;
+      border-radius: 50%;
+      border: 2px solid $background-color-grey;
+      object-fit: cover;
+    }
+
+    .icon-overplay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      height: 125px;
+      width: 125px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: opacity ease 0.5s;
+      text-align: center;
+    }
+    .circle-icon {
+      border-radius: 50%;
+      position: absolute;
+      bottom: 2%;
+      right: 9%;
+      background: $primary-color;
+      border: 2px solid $white-primary-color;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+    }
+
+    .circle-icon span {
+      color: $white-primary-color;
+      position: absolute;
+      font-size: 14px;
+      height: 14px;
+      width: 14px;
+      right: 2px;
+      bottom: 2px;
+      z-index: 2;
+    }
+    .image-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      opacity: 0;
+      background: rgba(0, 0, 0, 0.1);
+      color: $black-default;
+      height: 125px;
+      width: 125px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: opacity ease 0.5s;
+      text-align: center;
+      z-index: 1;
+    }
+    .thumnail-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      opacity: 0;
+    }
+    .upload-container :hover {
+      .image-overlay {
+        opacity: 1;
+        z-index: 1;
+      }
+      .thumnail-text {
+        opacity: 1;
+      }
+    }
+    input[type='file'] {
+      opacity: 0;
+      width: 125px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .partner-subtitle {
+      @include font-Roboto-Medium-Subtitle2;
+      color: $black-default;
+    }
+    .partner-text {
+      @include font-Roboto-Regular-Body2;
+      color: $black-default;
+    }
+    .input-calendar-custom {
+      position: relative;
+    }
+    .input-calendar-icon {
+      position: absolute;
+      right: 4%;
+      top: 7%;
     }
   }
 
-  .footer-service-customer {
+  .footer-service-partner {
     .header-status {
       margin-top: 25px;
       display: flex;
@@ -220,24 +207,14 @@
     }
   }
 }
+
 .status-unpaid {
   @include status-unpaid;
 }
 .status-paid {
   @include status-paid;
 }
-.status-disabled {
-  @include status-disabled;
 
-  margin-left: 33px;
-  margin-top: 10px;
-}
-.status-active {
-  @include status-active;
-
-  margin-left: 33px;
-  margin-top: 10px;
-}
 ::ng-deep {
   p-dialog {
     .table-dialog {
@@ -310,7 +287,7 @@
   .bottom-divider {
     width: 100%;
   }
-  .customer-input-short {
+  .partner-input-short {
     .p-dropdown .p-dropdown-label {
       margin-top: -8px;
     }
@@ -381,7 +358,22 @@
     }
   }
 }
+.status-disabled {
+  @include status-disabled;
+  margin-left: 12px;
+  margin-top: 10px;
+}
+.status-active {
+  @include status-active;
+  margin-left: 12px;
+  margin-top: 10px;
+}
 ::ng-deep {
+  .partner-input-long {
+    .p-multiselect .p-multiselect-label {
+      margin-top: -8px;
+    }
+  }
   .p-paginator {
     margin-top: -2px;
     border-top-left-radius: none !important;

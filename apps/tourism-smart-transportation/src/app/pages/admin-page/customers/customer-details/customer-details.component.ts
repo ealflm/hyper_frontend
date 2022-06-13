@@ -1,4 +1,8 @@
-import { STATUS_TRANSACTION, STATUS_TIER } from './../../../../constant/status';
+import {
+  STATUS_TRANSACTION,
+  STATUS_TIER,
+  STATUS_CUSTOMER,
+} from './../../../../constant/status';
 import { PurchaseHistoryService } from './../../../../services/purchase-history.service';
 import {
   OrdersResponse,
@@ -52,7 +56,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   transactionHis: Order[] = [];
   orderDetails: OrderDetail[] = [];
   payments: any[] = [];
-
+  status: any = [];
+  statusBiding? = 1;
   private subscription?: Subscription;
   constructor(
     private fb: FormBuilder,
@@ -73,8 +78,18 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     }
     this._mapPaymentStatus();
     this._mapTierStatus();
+    this._mapStatus();
   }
-  _mapPaymentStatus() {
+  private _mapStatus() {
+    this.status = Object.keys(STATUS_CUSTOMER).map((key) => {
+      return {
+        id: key,
+        lable: STATUS_CUSTOMER[key].lable,
+        class: STATUS_CUSTOMER[key].class,
+      };
+    });
+  }
+  private _mapPaymentStatus() {
     this.transactionStatus = Object.keys(STATUS_TRANSACTION).map((key) => {
       return {
         id: STATUS_TRANSACTION[key].id,
@@ -83,7 +98,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       };
     });
   }
-  _mapTierStatus() {
+  private _mapTierStatus() {
     this.tierStatus = Object.keys(STATUS_TIER).map((key) => {
       return {
         id: STATUS_TRANSACTION[key].id,
@@ -117,6 +132,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
               cusRes.body.gender
             );
             this._customersEditForm['phone'].setValue(cusRes.body.phone);
+            this._customersEditForm['cardUid'].setValue(cusRes.body.cardUid);
+
             this.currentPhone = cusRes.body.phone;
             this._customersEditForm['email'].setValue(cusRes.body.email);
             this._customersEditForm['addressUser'].setValue(
@@ -127,6 +144,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
               ? (this.imagePreview = '../assets/image/imagePreview.png')
               : (this.imagePreview = `https://se32.blob.core.windows.net/customer/${cusRes.body?.photoUrl}`);
             this.deleteFile = cusRes.body?.photoUrl?.trim();
+            this.statusBiding = cusRes.body?.status;
           });
       }
     });
@@ -150,6 +168,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
           // Validators.minLength(9),
           // Validators.maxLength(15),
         ],
+        cardUid: [{ value: '', disabled: true }],
         email: [{ value: '', disabled: true }, [Validators.required]],
         addressUser: [{ value: '', disabled: true }, Validators.required],
         photoUrl: [''],
