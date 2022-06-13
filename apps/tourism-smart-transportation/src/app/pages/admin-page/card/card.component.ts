@@ -34,7 +34,7 @@ export class CardComponent implements OnInit {
   @ViewChild('cardInput') cardInputEle: any;
   cardForm!: FormGroup;
   checked = false;
-  uiCard = '';
+  uiCard: any;
   isNumber = false;
   constructor(
     private cardService: CardService,
@@ -104,14 +104,19 @@ export class CardComponent implements OnInit {
       }, 500);
     }
   }
-  onInput(uiCard: any) {
+  onInput(uiCard: string) {
     this.cardsForm['uiCard'].setValue('');
-    const uid = uiCard.replace(/(\r\n|\n|\r)/gm, '');
-    console.log(uiCard);
-    console.log(uid);
+    // const uid = uiCard.toString().trim();
+    // const checkIsNumber = !isNaN(parseInt(uid));
 
-    if (!isNaN(uid.trim())) {
-      this.uiCard = uid;
+    // if (checkIsNumber) {
+    //   this.uiCard = uiCard;
+    //   this.isNumber = true;
+    // } else if (!checkIsNumber) {
+    //   this.isNumber = false;
+    // }
+    if (uiCard.match(/^[0-9]+$/) != null) {
+      this.uiCard = uiCard;
       this.isNumber = true;
     } else {
       this.isNumber = false;
@@ -141,7 +146,7 @@ export class CardComponent implements OnInit {
   }
   scanAgain() {
     this.checked = false;
-    this.uiCard = '';
+    this.uiCard = null;
     this.cardsForm['uiCard'].setValue('');
   }
   // navCardDetail(id: string) {}
