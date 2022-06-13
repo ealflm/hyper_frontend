@@ -24,8 +24,8 @@ export class MapBoxService {
   coordinates$ = new Subject<any>();
   coordinates = this.coordinates$.asObservable();
   initView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  currentBusStationMarkers: any = [];
-  currentRentStationMarkers: any = [];
+  // currentBusStationMarkers: any = [];
+  // currentRentStationMarkers: any = [];
   constructor(private mapService: MapService) {
     (mapboxgl as typeof mapboxgl).accessToken = environment.mapbox.accessToken;
   }
@@ -164,78 +164,78 @@ export class MapBoxService {
     ];
     return geoJson;
   }
-  setRentStationMarkers(rentStations: RentStation[]) {
-    rentStations.map((marker) => {
-      const el = document.createElement('div');
-      el.id = marker.id;
-      const width = 40;
-      const height = 40;
-      el.className = 'marker';
-      el.style.backgroundImage = `url('../../../assets/image/rent-station.png')`;
-      el.style.width = `${width}px`;
-      el.style.height = `${height}px`;
-      el.style.backgroundSize = '100%';
-      el.style.cursor = 'pointer';
+  // setRentStationMarkers(rentStations: RentStation[]) {
+  //   rentStations.map((marker) => {
+  //     const el = document.createElement('div');
+  //     el.id = marker.id;
+  //     const width = 40;
+  //     const height = 40;
+  //     el.className = 'marker';
+  //     el.style.backgroundImage = `url('../../../assets/image/rent-station.png')`;
+  //     el.style.width = `${width}px`;
+  //     el.style.height = `${height}px`;
+  //     el.style.backgroundSize = '100%';
+  //     el.style.cursor = 'pointer';
 
-      const markerDiv = new mapboxgl.Marker(el)
-        .setLngLat([marker.longitude, marker.latitude] as [number, number])
-        .addTo(this.map);
-      markerDiv.getElement().addEventListener('click', () => {
-        if (marker.longitude && marker.latitude) {
-          this.flyToMarker(marker.longitude, marker.latitude);
-        }
-      });
-      this.currentRentStationMarkers.push(markerDiv);
-    });
-  }
-  removeRentStationMarker() {
-    if (this.currentRentStationMarkers !== null) {
-      for (let i = this.currentRentStationMarkers.length - 1; i >= 0; i--) {
-        this.currentRentStationMarkers[i].remove();
-      }
-    }
-  }
+  //     const markerDiv = new mapboxgl.Marker(el)
+  //       .setLngLat([marker.longitude, marker.latitude] as [number, number])
+  //       .addTo(this.map);
+  //     markerDiv.getElement().addEventListener('click', () => {
+  //       if (marker.longitude && marker.latitude) {
+  //         this.flyToMarker(marker.longitude, marker.latitude);
+  //       }
+  //     });
+  //     this.currentRentStationMarkers.push(markerDiv);
+  //   });
+  // }
+  // removeRentStationMarker() {
+  //   if (this.currentRentStationMarkers !== null) {
+  //     for (let i = this.currentRentStationMarkers.length - 1; i >= 0; i--) {
+  //       this.currentRentStationMarkers[i].remove();
+  //     }
+  //   }
+  // }
   // bus stations
-  setBusStationMarkers(busStations: Station[]) {
-    busStations.map((marker) => {
-      // console.log(marker);
-      const elStationMarker = document.createElement('div');
-      elStationMarker.id = marker.id;
-      const width = 40;
-      const height = 40;
-      elStationMarker.className = 'marker';
-      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
-      elStationMarker.style.width = `${width}px`;
-      elStationMarker.style.height = `${height}px`;
-      elStationMarker.style.backgroundSize = '100%';
-      elStationMarker.style.cursor = 'pointer';
+  // setBusStationMarkers(busStations: Station[]) {
+  //   busStations.map((marker) => {
+  //     // console.log(marker);
+  //     const elStationMarker = document.createElement('div');
+  //     elStationMarker.id = marker.id;
+  //     const width = 40;
+  //     const height = 40;
+  //     elStationMarker.className = 'marker';
+  //     elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+  //     elStationMarker.style.width = `${width}px`;
+  //     elStationMarker.style.height = `${height}px`;
+  //     elStationMarker.style.backgroundSize = '100%';
+  //     elStationMarker.style.cursor = 'pointer';
 
-      const markerDiv = new mapboxgl.Marker(elStationMarker)
-        .setLngLat([marker.longitude, marker.latitude] as [number, number])
-        .addTo(this.map)
-        .setPopup(
-          new mapboxgl.Popup({ offset: 25 }).setHTML(`
-        <h3>${marker.title}</h3>
-        <p>${marker.description}</p>
-        `)
-        );
-      // markerDiv.getElement().addEventListener('mouseenter', () => {
-      //   markerDiv.togglePopup();
-      // });
-      markerDiv.getElement().addEventListener('click', () => {
-        if (marker.longitude && marker.latitude) {
-          this.flyToMarker(marker.longitude, marker.latitude);
-          markerDiv.getPopup();
-        }
-      });
-      this.currentBusStationMarkers.push(markerDiv);
-    });
-  }
-  removeBusStationMarker() {
-    if (this.currentBusStationMarkers !== null) {
-      for (let i = this.currentBusStationMarkers.length - 1; i >= 0; i--) {
-        this.currentBusStationMarkers[i].remove();
-      }
-    }
-  }
+  //     const markerDiv = new mapboxgl.Marker(elStationMarker)
+  //       .setLngLat([marker.longitude, marker.latitude] as [number, number])
+  //       .addTo(this.map)
+  //       .setPopup(
+  //         new mapboxgl.Popup({ offset: 25 }).setHTML(`
+  //       <h3>${marker.title}</h3>
+  //       <p>${marker.description}</p>
+  //       `)
+  //       );
+  //     // markerDiv.getElement().addEventListener('mouseenter', () => {
+  //     //   markerDiv.togglePopup();
+  //     // });
+  //     markerDiv.getElement().addEventListener('click', () => {
+  //       if (marker.longitude && marker.latitude) {
+  //         this.flyToMarker(marker.longitude, marker.latitude);
+  //         markerDiv.getPopup();
+  //       }
+  //     });
+  //     this.currentBusStationMarkers.push(markerDiv);
+  //   });
+  // }
+  // removeBusStationMarker() {
+  //   if (this.currentBusStationMarkers !== null) {
+  //     for (let i = this.currentBusStationMarkers.length - 1; i >= 0; i--) {
+  //       this.currentBusStationMarkers[i].remove();
+  //     }
+  //   }
+  // }
 }

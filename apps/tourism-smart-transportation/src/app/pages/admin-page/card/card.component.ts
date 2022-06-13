@@ -34,7 +34,7 @@ export class CardComponent implements OnInit {
   @ViewChild('cardInput') cardInputEle: any;
   cardForm!: FormGroup;
   checked = false;
-  uiCard: any;
+  uiCard = '';
   isNumber = false;
   constructor(
     private cardService: CardService,
@@ -146,7 +146,7 @@ export class CardComponent implements OnInit {
   }
   scanAgain() {
     this.checked = false;
-    this.uiCard = null;
+    this.uiCard = '';
     this.cardsForm['uiCard'].setValue('');
   }
   // navCardDetail(id: string) {}

@@ -1,3 +1,4 @@
+import { VehicleService } from './../../../services/vehicle.service';
 import {
   Route,
   RoutesResponse,
@@ -21,6 +22,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { MapService } from '../../../services/map.service';
 import { StationsResponse, Station } from '../../../models/StationResponse';
 import { RentStationsResponse } from '../../../models/RentStationResponse';
+import { ReturnStatement } from '@angular/compiler';
 
 @Component({
   selector: 'tourism-smart-transportation-map-page',
@@ -89,10 +91,14 @@ export class MapPageComponent
   //
   idStation = '';
   checkBoxValue: string[] = [];
+
+  currentRentStationMarkers: any = [];
+  currentBusStationMarkers: any = [];
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
-    private mapService: MapService
+    private mapService: MapService,
+    private vehicleService: VehicleService
   ) {}
 
   ngOnInit(): void {
@@ -181,7 +187,7 @@ export class MapPageComponent
     } else if (this.fillterMenu === 'rent-station') {
       this.getAllRentStations();
     } else if (this.fillterMenu === 'vehicle') {
-      console.log('............');
+      this.getAllVehicle();
     } else if (this.fillterMenu === 'route') {
       this.getAllRoutes();
     }
@@ -190,55 +196,53 @@ export class MapPageComponent
     this.checkBoxValue = valueCheckbox;
 
     if (valueCheckbox.length <= 0) {
-      this.mapboxService.removeBusStationMarker();
-      this.mapboxService.removeRentStationMarker();
+      this.removeBusStationMarker();
+      this.removeRentStationMarker();
     } else if (valueCheckbox.length > 0) {
       this.getBusStationMarkers();
       this.getRentStationMarkers();
       switch (valueCheckbox.sort().join('-')) {
         case 'vehicle':
           console.log('vehicle');
-          this.mapboxService.removeBusStationMarker();
-          this.mapboxService.removeRentStationMarker();
+          this.removeBusStationMarker();
+          this.removeRentStationMarker();
           break;
         case 'bus-station':
-          this.mapboxService.removeBusStationMarker();
-
-          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
-          this.mapboxService.removeRentStationMarker();
+          this.removeBusStationMarker();
+          this.setBusStationMarkers(this.busStationsOnMap);
+          this.removeRentStationMarker();
           break;
         case 'rent-station':
-          this.mapboxService.removeRentStationMarker();
-
-          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
-          this.mapboxService.removeBusStationMarker();
+          this.removeRentStationMarker();
+          this.setRentStationMarkers(this.rentStationsOnMap);
+          this.removeBusStationMarker();
           break;
         case 'rent-station-vehicle':
-          this.mapboxService.removeBusStationMarker();
-          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
+          this.removeBusStationMarker();
+          this.setRentStationMarkers(this.rentStationsOnMap);
           console.log('1');
           break;
         case 'bus-station-vehicle':
-          this.mapboxService.removeRentStationMarker();
-          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
+          this.removeRentStationMarker();
+          this.setBusStationMarkers(this.busStationsOnMap);
 
           console.log('2');
           break;
         case 'bus-station-rent-station':
-          this.mapboxService.removeRentStationMarker();
-          this.mapboxService.removeBusStationMarker();
+          this.removeRentStationMarker();
+          this.removeBusStationMarker();
 
-          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
-          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
+          this.setBusStationMarkers(this.busStationsOnMap);
+          this.setRentStationMarkers(this.rentStationsOnMap);
           break;
         case 'bus-station-rent-station-vehicle':
-          this.mapboxService.setBusStationMarkers(this.busStationsOnMap);
-          this.mapboxService.setRentStationMarkers(this.rentStationsOnMap);
+          this.setBusStationMarkers(this.busStationsOnMap);
+          this.setRentStationMarkers(this.rentStationsOnMap);
           console.log('4');
           break;
         default:
-          this.mapboxService.removeBusStationMarker();
-          this.mapboxService.removeRentStationMarker();
+          this.removeBusStationMarker();
+          this.removeRentStationMarker();
           break;
       }
     }
@@ -402,5 +406,100 @@ export class MapPageComponent
       .subscribe((routeRes: RoutesResponse) => {
         this.routes = routeRes.body.items;
       });
+  }
+  // call API vehilce
+  getAllVehicle() {
+    this.vehicleService.getListVehicle().subscribe((res) =>
+      res.body.map((vehicle: any) => {
+        this.vehicleService
+          .getVehicleTrackingById('62a33c2b032de0bd21ee5a99')
+          .subscribe((res) => {
+            this.vehicles = {
+              id: vehicle.id,
+              location: {
+                longitude: res.body.longtitude,
+                latitude: res.body.latitude,
+              },
+            };
+            console.log(this.vehicles);
+          });
+      })
+    );
+  }
+
+  setRentStationMarkers(rentStations: RentStation[]) {
+    rentStations.map((marker) => {
+      const el = document.createElement('div');
+      el.id = marker.id;
+      const width = 40;
+      const height = 40;
+      el.className = 'marker';
+      el.style.backgroundImage = `url('../../../assets/image/rent-station.png')`;
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
+      el.style.backgroundSize = '100%';
+      el.style.cursor = 'pointer';
+
+      const markerDiv = new mapboxgl.Marker(el)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapboxService.map);
+      markerDiv.getElement().addEventListener('click', () => {
+        this.getDetailRentStation({ id: marker.id });
+        if (marker.longitude && marker.latitude) {
+          this.mapboxService.flyToMarker(marker.longitude, marker.latitude);
+        }
+      });
+      this.currentRentStationMarkers.push(markerDiv);
+    });
+  }
+  removeRentStationMarker() {
+    if (this.currentRentStationMarkers !== null) {
+      for (let i = this.currentRentStationMarkers.length - 1; i >= 0; i--) {
+        this.currentRentStationMarkers[i].remove();
+      }
+    }
+  }
+
+  setBusStationMarkers(busStations: Station[]) {
+    busStations.map((marker) => {
+      const elStationMarker = document.createElement('div');
+      elStationMarker.id = marker.id;
+      const width = 40;
+      const height = 40;
+      elStationMarker.className = 'marker';
+      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      elStationMarker.style.width = `${width}px`;
+      elStationMarker.style.height = `${height}px`;
+      elStationMarker.style.backgroundSize = '100%';
+      elStationMarker.style.cursor = 'pointer';
+
+      const markerDiv = new mapboxgl.Marker(elStationMarker)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapboxService.map);
+      // .setPopup(
+      //   new mapboxgl.Popup({ offset: 25 }).setHTML(`
+      // <h3>${marker.title}</h3>
+      // <p>${marker.description}</p>
+      // `)
+      // );
+      // markerDiv.getElement().addEventListener('mouseenter', () => {
+      //   markerDiv.togglePopup();
+      // });
+      markerDiv.getElement().addEventListener('click', () => {
+        this.getDetailStation({ id: marker.id });
+        if (marker.longitude && marker.latitude) {
+          this.mapboxService.flyToMarker(marker.longitude, marker.latitude);
+          markerDiv.getPopup();
+        }
+      });
+      this.currentBusStationMarkers.push(markerDiv);
+    });
+  }
+  removeBusStationMarker() {
+    if (this.currentBusStationMarkers !== null) {
+      for (let i = this.currentBusStationMarkers.length - 1; i >= 0; i--) {
+        this.currentBusStationMarkers[i].remove();
+      }
+    }
   }
 }
