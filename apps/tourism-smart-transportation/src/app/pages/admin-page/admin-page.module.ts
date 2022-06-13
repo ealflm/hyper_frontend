@@ -25,6 +25,7 @@ import { ServiceDetailComponent } from './manager-services/service-detail/servic
 import { FormStationComponent } from './map/form-station/form-station.component';
 import { SettingModule } from './setting/setting.module';
 import { CardComponent } from './card/card.component';
+import { FailureComponent } from '../../shared/failure/failure.component';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -92,6 +93,7 @@ const ADMIN_ROUTES: Routes = [
     MapPageComponent,
     CheckedComponent,
     CardComponent,
+    FailureComponent,
   ],
   imports: [
     CommonModule,
