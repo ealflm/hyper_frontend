@@ -1,3 +1,5 @@
+import { PartnerGuard } from './auth/partner.guard';
+import { AuthGuardService } from './auth/auth.guard';
 import { MapComponent } from './components/map/map.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +40,8 @@ import { CheckedComponent } from './shared/checked/checked.component';
     NoopAnimationsModule,
   ],
   providers: [
+    AuthGuardService,
+    PartnerGuard,
     MessageService,
     ConfirmationService,
     {

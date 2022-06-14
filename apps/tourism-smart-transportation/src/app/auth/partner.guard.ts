@@ -1,6 +1,4 @@
-// import { SocialUser, SocialAuthService } from 'angularx-social-login';
-// import { LocalstorageService, LocalStorageService } from './localstorage.service';
-import { Observable } from 'rxjs';
+import { LocalStorageService } from './localstorage.service';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -8,29 +6,33 @@ import {
   Route,
   Router,
   RouterStateSnapshot,
+  UrlTree,
 } from '@angular/router';
-import { LocalStorageService } from './localstorage.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuardService implements CanActivate {
+export class PartnerGuard implements CanActivate {
   constructor(
     private router: Router,
     private localStorage: LocalStorageService
   ) {}
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> | boolean {
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
     const token = this.localStorage.getToken();
-    console.log(route);
     if (token) {
       const tokenDecode = JSON.parse(atob(token.split('.')[1]));
+      // console.log(tokenDecode.Role)
       if (
         !this._tokenExpired(tokenDecode.exp) &&
-        tokenDecode.Role === 'Admin'
+        tokenDecode.Role === 'Partner'
       ) {
         return true;
       } else {
@@ -43,15 +45,7 @@ export class AuthGuardService implements CanActivate {
       return false;
     }
   }
-  canLoad(route: Route): boolean {
-    const urlPath = route.path;
-    console.log(urlPath);
-    if (urlPath === 'partner') {
-      alert('unauthorised the page');
-      return false;
-    }
-    return true;
-  }
+
   private _tokenExpired(exp: number): boolean {
     return Math.floor(new Date().getTime() / 1000) >= exp;
   }

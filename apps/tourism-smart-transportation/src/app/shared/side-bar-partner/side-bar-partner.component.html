@@ -37,7 +37,7 @@
             routerLinkActive="active-link"
             #rla="routerLinkActive"
           >
-            <div class="nav-link" routerLink="/admin/dashboard">
+            <div class="nav-link" routerLink="/partner/dashboard">
               <mat-icon
                 [ngClass]="
                   rla.isActive ? 'material-icons' : 'material-icons-outlined'
@@ -57,65 +57,43 @@
         <li
           [class]="status ? 'nav-item' : 'nav-item-off '"
           routerLinkActive="active-link"
-          #partner="routerLinkActive"
+          #driver="routerLinkActive"
         >
-          <div class="nav-link" href="" routerLink="/admin/account-partners">
+          <div class="nav-link" href="" routerLink="partner/driver">
             <mat-icon
               [ngClass]="
-                partner.isActive ? 'material-icons' : 'material-icons-outlined'
+                driver.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{ driver.isActive ? 'person' : 'person_outlined' }}</mat-icon
+            >
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Tài xế
+            </div>
+          </div>
+        </li>
+        <li
+          [class]="status ? 'nav-item' : 'nav-item-off'"
+          routerLinkActive="active-link"
+          #vehicle="routerLinkActive"
+        >
+          <div class="nav-link" routerLink="partner/vehicle">
+            <mat-icon
+              [ngClass]="
+                vehicle.isActive ? 'material-icons' : 'material-icons-outlined'
               "
               >{{
-                partner.isActive ? 'handshake' : 'handshake_outlined'
+                vehicle.isActive ? 'directions_car' : 'directions_car_outlined'
               }}</mat-icon
             >
-            <div
-              class="icon-title"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
-            >
-              Đối tác
-            </div>
-          </div>
-        </li>
-        <li
-          [class]="status ? 'nav-item' : 'nav-item-off'"
-          routerLinkActive="active-link"
-          #user="routerLinkActive"
-        >
-          <div class="nav-link" routerLink="/admin/account-customers">
-            <mat-icon
-              [ngClass]="
-                user.isActive ? 'material-icons' : 'material-icons-outlined'
-              "
-              >{{ user.isActive ? 'group' : 'group_outlined' }}</mat-icon
-            >
 
             <div
               class="icon-title"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
-              Khách hàng
-            </div>
-          </div>
-        </li>
-        <!-- Gối dịch vụ -->
-        <li
-          [class]="status ? 'nav-item' : 'nav-item-off'"
-          routerLinkActive="active-link"
-          #service="routerLinkActive"
-        >
-          <div class="nav-link" routerLink="/admin/manage-service">
-            <i
-              style="width: 24px; height: 24px; font-size: 24px"
-              nz-icon
-              nzType="gift"
-              [nzTheme]="service.isActive ? 'fill' : 'outline'"
-            ></i>
-
-            <div
-              class="icon-title"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
-            >
-              Gói dịch vụ
+              Phương tiện
             </div>
           </div>
         </li>
@@ -123,54 +101,32 @@
         <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           routerLinkActive="active-link"
-          #discount="routerLinkActive"
+          #schedule="routerLinkActive"
         >
-          <div class="nav-link" routerLink="/admin/discount">
+          <div class="nav-link" routerLink="partner/schedule">
             <mat-icon
               [ngClass]="
-                discount.isActive ? 'material-icons' : 'material-icons-outlined'
+                schedule.isActive ? 'material-icons' : 'material-icons-outlined'
               "
               >{{
-                discount.isActive ? 'discount_outlined' : 'discount'
+                schedule.isActive ? 'calendar_month' : 'calendar_month'
               }}</mat-icon
             >
             <div
               class="icon-title"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
-              Khuyến mãi
+              Lịch trình
             </div>
           </div>
         </li>
-        <!-- Card  -->
-        <li
-          [class]="status ? 'nav-item' : 'nav-item-off'"
-          routerLinkActive="active-link"
-          #card="routerLinkActive"
-        >
-          <div class="nav-link" routerLink="/admin/card">
-            <mat-icon
-              [ngClass]="
-                card.isActive ? 'material-icons' : 'material-icons-outlined'
-              "
-              >{{ card.isActive ? 'payment_outlined' : 'payment' }}</mat-icon
-            >
-            <div
-              class="icon-title"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
-            >
-              Card
-            </div>
-          </div>
-        </li>
-        <!-- End Card -->
         <!-- Bản đồ -->
         <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           routerLinkActive="active-link"
           #map="routerLinkActive"
         >
-          <div class="nav-link" routerLink="/admin/map">
+          <div class="nav-link" routerLink="partner/map">
             <mat-icon
               [ngClass]="
                 map.isActive ? 'material-icons' : 'material-icons-outlined'
@@ -214,7 +170,7 @@
             </div>
           </div>
         </li> -->
-        <li
+        <!-- <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           [ngClass]="
             (price.isActive ||
@@ -267,10 +223,7 @@
             routerLinkActive="active-link-content"
             #price3="routerLinkActive"
           >
-            <div
-              class="nav-link-content"
-              routerLink="/admin/setting/vehicle-type"
-            >
+            <div class="nav-link-content" routerLink="/setting/vehicle-type">
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Loại xe
               </div>
@@ -282,10 +235,7 @@
             routerLinkActive="active-link-content"
             #price4="routerLinkActive"
           >
-            <div
-              class="nav-link-content"
-              routerLink="/admin/setting/vehicle-class"
-            >
+            <div class="nav-link-content" routerLink="/setting/vehicle-class">
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Phân khúc xe
               </div>
@@ -299,7 +249,7 @@
           >
             <div
               class="nav-link-content"
-              routerLink="/admin/setting/vehicle-manufacture-year"
+              routerLink="/setting/vehicle-manufacture-year"
             >
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Năm sản xuất xe
@@ -312,7 +262,7 @@
             routerLinkActive="active-link-content"
             #price="routerLinkActive"
           >
-            <div class="nav-link-content" routerLink="/admin/setting/bus-price">
+            <div class="nav-link-content" routerLink="/setting/bus-price">
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Giá xe buýt
               </div>
@@ -326,7 +276,7 @@
           >
             <div
               class="nav-link-content"
-              routerLink="/admin/setting/vehicle-booking-price"
+              routerLink="/setting/vehicle-booking-price"
             >
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Giá đặt xe
@@ -341,14 +291,14 @@
           >
             <div
               class="nav-link-content"
-              routerLink="/admin/setting/vehicle-renting-price"
+              routerLink="/setting/vehicle-renting-price"
             >
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Giá thuê xe
               </div>
             </div>
           </li>
-        </ul>
+        </ul> -->
       </ul>
     </div>
   </div>
@@ -369,7 +319,7 @@
         class="footer-name"
         [ngClass]="statusName ? 'showName' : 'navLinkDar'"
       >
-        <span>Thanh Sang (Admin) </span>
+        <span>Thanh Sang (Đối tác) </span>
         <i
           class="{{
             displayAvatar ? 'pi pi-chevron-down' : 'pi pi-chevron-up'

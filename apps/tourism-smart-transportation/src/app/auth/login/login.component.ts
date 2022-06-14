@@ -28,9 +28,17 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.localStorageService.getToken()) {
-      this.router.navigate(['/dashboard']);
+    const token = this.localStorageService.getToken();
+    if (token) {
+      console.log('token');
+      const tokenDecode = JSON.parse(atob(token.split('.')[1]));
+      if (tokenDecode.Role === 'Admin') {
+        this.router.navigate(['admin/dashboard']);
+      } else if (tokenDecode.Role === 'Partner') {
+        this.router.navigate(['partner/dashboard']);
+      }
     }
+
     this._initForm();
   }
   private _initForm() {
@@ -50,7 +58,7 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService
-      .signIn(
+      .signWithPartner(
         this.usersForm['username'].value,
         this.usersForm['password'].value
       )
@@ -59,7 +67,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           if (res.token !== null) {
             this.localStorageService.setToken(res.token);
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['partner/dashboard']);
             this.loading = false;
           }
         },
@@ -86,27 +94,54 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         },
       });
-
-    // this.userService
-    //   .signIn(this.usersForm['email'].value, this.usersForm['password'].value)
-    //   .subscribe({
-    //     next: (res) => {
-    //       if (res.token !== undefined) {
-    //         this.localStorageService.setToken(res.token);
-    //         this.router.navigate(['dashboard']);
-    //       }
-    //     },
-    //     error: (error: HttpErrorResponse) => {
-    //       // console.log(error.status);
-    //       if (error.status === 401) {
-    //         this.messageService.add({
-    //           severity: 'error',
-    //           summary: 'Unauthorized',
-    //           detail: 'Email or password incorect',
-    //         });
-    //       }
-    //     },
-    //   });
+  }
+  loginAdmin() {
+    this.loading = true;
+    // setTimeout(() => {
+    //   this.loading = false;
+    // }, 1500);
+    this.isSubmit = true;
+    if (this.userForm.invalid) {
+      this.loading = false;
+      return;
+    }
+    this.authService
+      .signIn(
+        this.usersForm['username'].value,
+        this.usersForm['password'].value
+      )
+      .pipe(takeUntil(this.$sub))
+      .subscribe({
+        next: (res) => {
+          if (res.token !== null) {
+            this.localStorageService.setToken(res.token);
+            this.router.navigate(['admin/dashboard']);
+            this.loading = false;
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          // console.log(error);
+          if (error.status === 401) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Chưa xác thực',
+              detail: 'Tài khoản hoặc mật khẩu không đúng',
+            });
+          }
+          if (error.status === 500) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Chưa xác thực',
+              detail: 'Tài khoản mật khẩu không đúng',
+            });
+          }
+          this.loading = false;
+        },
+        complete: () => {
+          this.$sub.unsubscribe();
+          this.loading = false;
+        },
+      });
   }
   get usersForm() {
     return this.userForm.controls;
