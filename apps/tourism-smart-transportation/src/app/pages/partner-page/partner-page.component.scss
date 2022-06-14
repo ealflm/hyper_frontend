@@ -1,0 +1,12 @@
+@import '../../../styles.scss';
+html,
+body {
+  scroll-behavior: smooth;
+}
+.main-screen {
+  display: flex;
+  .main-content {
+    width: 100vw;
+    background-color: $background-grey;
+  }
+}

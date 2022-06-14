@@ -8,10 +8,17 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
   apiURL = environment.apiURL + 'admin';
+  apiURLPartner = environment.apiURL + 'partner';
   constructor(private http: HttpClient) {}
   signIn(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiURL}/authorization/login`, {
       userName: email,
+      password: password,
+    });
+  }
+  signWithPartner(username: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiURLPartner}/authorization/login`, {
+      userName: username,
       password: password,
     });
   }

@@ -1,3 +1,4 @@
+import { PartnerGuard } from './../../auth/partner.guard';
 import { CheckedComponent } from './../../shared/checked/checked.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ComponentsModule } from './../../components/components.module';
@@ -33,42 +34,44 @@ const ADMIN_ROUTES: Routes = [
     path: '',
     component: AdminPageComponent,
     canActivate: [AuthGuardService],
-    data: {
-      role: 'Admin',
-    },
     children: [
       {
-        path: '',
-        redirectTo: 'dashboard',
+        path: 'admin',
+        redirectTo: 'admin/dashboard',
         pathMatch: 'full',
       },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'account-partners', component: PartnersComponent },
-      { path: 'account-partners/:id', component: PartnerDetailComponent },
-
-      { path: 'account-customers', component: CustomersComponent },
       {
-        path: 'account-customers/:id',
+        path: '',
+        redirectTo: 'admin/dashboard',
+        pathMatch: 'full',
+      },
+      { path: 'admin/dashboard', component: DashboardComponent },
+      { path: 'admin/account-partners', component: PartnersComponent },
+      { path: 'admin/account-partners/:id', component: PartnerDetailComponent },
+
+      { path: 'admin/account-customers', component: CustomersComponent },
+      {
+        path: 'admin/account-customers/:id',
         component: CustomerDetailsComponent,
       },
-      { path: 'manage-service', component: ManagerServicesComponent },
+      { path: 'admin/manage-service', component: ManagerServicesComponent },
       {
-        path: 'manage-service/create-package',
+        path: 'admin/manage-service/create-package',
         component: ServiceDetailComponent,
       },
       {
-        path: 'manage-service/edit-package/:id',
+        path: 'admin/manage-service/edit-package/:id',
         component: ServiceDetailComponent,
       },
 
-      { path: 'discount', component: DiscountComponent },
-      { path: 'card', component: CardComponent },
+      { path: 'admin/discount', component: DiscountComponent },
+      { path: 'admin/card', component: CardComponent },
 
       // Loading modules UILITY-SERVICES
 
-      { path: 'map', component: MapPageComponent },
+      { path: 'admin/map', component: MapPageComponent },
       {
-        path: 'setting',
+        path: 'admin/setting',
         loadChildren: () =>
           import('./setting/setting.module').then((m) => m.SettingModule),
       },
