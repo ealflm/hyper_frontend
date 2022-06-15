@@ -14,4 +14,26 @@ export class LocalStorageService {
   removeToken() {
     localStorage.removeItem(TOKEN);
   }
+  setUserTokenDecode() {
+    const token = this.getToken();
+    if (token) {
+      const tokenDecode = JSON.parse(atob(token.split('.')[1]));
+      const user = {
+        id: tokenDecode.Id,
+        email: tokenDecode.Email,
+        photoUrl: tokenDecode.PhotoUrl,
+        username: tokenDecode.Username,
+        name: tokenDecode.FirstName + ' ' + tokenDecode.LastName,
+      };
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }
+  removeUserStorage() {
+    localStorage.removeItem('user');
+  }
+  get getUser() {
+    const userStr = localStorage.getItem('user');
+    const user = JSON.parse(userStr ? userStr : '');
+    return user;
+  }
 }

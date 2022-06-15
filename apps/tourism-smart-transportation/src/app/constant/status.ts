@@ -18,6 +18,16 @@ export const STATUS_CUSTOMER: any = {
     class: 'status-active',
   },
 };
+export const STATUS_DRIVER: any = {
+  0: {
+    lable: 'Vô hiệu hóa',
+    class: 'status-disabled',
+  },
+  1: {
+    lable: 'Kích hoạt',
+    class: 'status-active',
+  },
+};
 export const STATUS_TIER: any = {
   0: {
     lable: 'Vô hiệu hóa',

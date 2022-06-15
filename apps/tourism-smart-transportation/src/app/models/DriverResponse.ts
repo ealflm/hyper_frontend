@@ -5,10 +5,10 @@ export class Driver {
   licensePlates?: string;
   firstName?: string;
   lastName?: string;
-  photoUrl?: null;
+  photoUrl?: string;
   gender?: boolean;
   phone?: string;
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
   createdDate?: Date;
   modifiedDate?: Date;
   status?: number;

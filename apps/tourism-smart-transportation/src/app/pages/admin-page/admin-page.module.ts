@@ -1,3 +1,4 @@
+import { PipeModule } from './../../pipe/pipe.module';
 import { PartnerGuard } from './../../auth/partner.guard';
 import { CheckedComponent } from './../../shared/checked/checked.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -92,7 +93,6 @@ const ADMIN_ROUTES: Routes = [
     CustomersComponent,
     ManagerServicesComponent,
     DiscountComponent,
-    LimitLengthPipe,
     CustomerDetailsComponent,
     ServiceDetailComponent,
     FormStationComponent,
@@ -114,6 +114,7 @@ const ADMIN_ROUTES: Routes = [
     MatDialogModule,
     SettingModule,
     ComponentsModule,
+    PipeModule,
   ],
 })
 export class AdminPageModule {}

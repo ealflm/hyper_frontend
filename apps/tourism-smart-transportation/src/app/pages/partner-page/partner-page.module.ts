@@ -1,3 +1,5 @@
+import { PipeModule } from './../../pipe/pipe.module';
+import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
 import { PartnerGuard } from './../../auth/partner.guard';
 import { CheckedComponent } from './../../shared/checked/checked.component';
 import { ComponentsModule } from './../../components/components.module';
@@ -66,6 +68,7 @@ const PARTNER_ROUTES: Routes = [
     MatDialogModule,
     SettingModule,
     ComponentsModule,
+    PipeModule,
   ],
 })
 export class PartnerPageModule {}

@@ -32,7 +32,9 @@ export class SideBarComponent implements OnInit {
     private mapboxService: MapBoxService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.localStorage.setUserTokenDecode();
+  }
 
   onToggle() {
     this.locked = !this.locked;
@@ -79,6 +81,7 @@ export class SideBarComponent implements OnInit {
   }
   onLogout() {
     this.localStorage.removeToken();
+    this.localStorage.removeUserStorage();
     this.router.navigate(['login']);
   }
 }

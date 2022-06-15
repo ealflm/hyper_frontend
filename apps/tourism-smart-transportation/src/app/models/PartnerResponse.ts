@@ -1,3 +1,5 @@
+import { ServiceType } from './ServiceTypeResponse';
+import { Service } from './ServicesResponse';
 import { UtilPaging } from './UtilPaging';
 
 export abstract class Partner {
@@ -17,6 +19,7 @@ export abstract class Partner {
   modifiedDate?: Date;
   status?: number;
   companyName?: string;
+  serviceTypeList?: ServiceType[];
 }
 export abstract class PartnersResponse {
   statusCode?: number;
