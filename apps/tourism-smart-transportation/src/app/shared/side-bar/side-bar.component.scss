@@ -76,7 +76,7 @@
   text-align: center;
   margin-top: 2rem;
   right: 25%;
-  background-color: $background-color-grey;
+  background-color: $bg-grey-10;
   border: none;
   outline: none;
   width: 2rem;
@@ -84,7 +84,7 @@
   border-radius: 26%;
   transition: 0.4s;
   &:hover {
-    background-color: $background-color-grey;
+    background-color: $bg-grey-10;
   }
   i {
     font-size: 1.2rem;
@@ -116,7 +116,7 @@ ul {
   @include font-Roboto-Regular-Body2;
   .nav-item {
     &:hover {
-      background: $background-color-grey-thirdly;
+      background: $bg-grey-10;
     }
     list-style-type: none;
     width: 250px;
@@ -142,7 +142,7 @@ ul {
       }
     }
     &:hover {
-      background: $background-color-grey-thirdly;
+      background: $bg-grey-10;
     }
   }
   .nav-item-content {
@@ -160,11 +160,11 @@ ul {
       margin-left: 67px;
     }
     &:hover {
-      background: $background-color-grey-thirdly;
+      background: $bg-grey-10;
     }
   }
   .active-link {
-    background: $background-color-grey-thirdly;
+    background: $bg-grey-10;
     border-left: 6px solid;
     height: 44px;
     color: $primary-color;
@@ -182,7 +182,7 @@ ul {
     }
   }
   .active-link-content {
-    background: $background-color-grey-thirdly;
+    background: $bg-grey-10;
     border-left: 6px solid;
     height: 44px;
     color: $primary-color;
@@ -192,7 +192,7 @@ ul {
   }
   .nav-item-off {
     &:hover {
-      background: $background-color-grey-thirdly;
+      background: $bg-grey-10;
     }
     width: 250px;
     height: 44px;
@@ -207,7 +207,7 @@ ul {
       padding-top: 11px;
     }
     &:hover {
-      background: $background-color-grey-thirdly;
+      background: $bg-grey-10;
     }
   }
 }
@@ -239,7 +239,7 @@ ul {
     color: var(--text-color);
     .content-item {
       &:hover {
-        background-color: $background-hover-grey;
+        background-color: $bg-grey-10;
       }
       padding: 8px 20px;
       text-align: center;
@@ -263,12 +263,13 @@ ul {
     color: var(--text-color);
   }
   .footer-avatar-content {
+    padding: 7px 0px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
 
     &:hover {
-      background-color: $background-hover-grey;
+      background-color: $bg-grey-10;
     }
     .avatarImage {
       @include size-logo-image-small;
@@ -276,7 +277,7 @@ ul {
       &:hover {
         outline-width: 2px;
         outline-style: solid;
-        outline-color: $background-color-grey-thirdly;
+        outline-color: $bg-grey-10;
       }
     }
 

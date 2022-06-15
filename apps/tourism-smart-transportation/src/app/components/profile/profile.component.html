@@ -1,0 +1,438 @@
+<div class="profile-details">
+  <div class="header-profile-content">
+    <div class="header-content-item">
+      <div class="header-item-H5">Tài khoản</div>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <div class="profile-form">
+    <form [formGroup]="inforForm">
+      <div class="mt-4 grid p-fluid" style="padding: 20px">
+        <div class="col-2" style="margin: auto">
+          <div class="upload-container">
+            <label for="upload" class="thumnail">
+              <img [src]="imagePreview" />
+              <span class="thumnail-text">Tải hình ảnh lên</span>
+              <div class="icon-overplay">
+                <div class="circle-icon">
+                  <span class="material-icons-outlined"> photo_camera </span>
+                </div>
+              </div>
+              <div class="image-overlay"></div>
+            </label>
+            <input
+              type="file"
+              id="upload"
+              accept="image/*"
+              (change)="onUpload($event)"
+            />
+          </div>
+          <div class="username" style="text-align: center">
+            {{ usernameBiding }}
+          </div>
+        </div>
+        <!-- end thông tin đăng nhập -->
+        <div class="col-5">
+          <!-- thông tin người đại diện -->
+          <div class="grid" style="padding-right: 15px">
+            <div class="col-12">
+              <div class="profile-subtitle">Thông tin người đại diện</div>
+            </div>
+            <div class="col-6 profile-input-short">
+              <div class="profile-text">
+                Họ
+                <small
+                  *ngIf="_inforsForm['firstName'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+              </div>
+              <input
+                class="profile-input-text-short"
+                type="text"
+                pInputText
+                formControlName="firstName"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+            <div class="col-6 profile-input-short">
+              <div class="profile-text">
+                Tên
+                <small
+                  *ngIf="_inforsForm['lastName'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+              </div>
+              <input
+                class="profile-input-text-short"
+                type="text"
+                pInputText
+                formControlName="lastName"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+            <div class="col-6 profile-input-short">
+              <div class="profile-text">
+                Ngày sinh
+                <small
+                  *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                >
+                  không được bỏ trống</small
+                >
+                <small
+                  *ngIf="
+          _inforsForm['dateOfBirth'].errors?.['under18']
+        "
+                  class="p-error"
+                >
+                  Tuổi phải lớn hơn 18
+                </small>
+              </div>
+              <div class="input-calendar-custom">
+                <p-calendar
+                  inputId="basic"
+                  formControlName="dateOfBirth"
+                  dateFormat="dd/mm/yy"
+                  [style]="{
+                    height: '28px'
+                  }"
+                >
+                </p-calendar>
+                <span class="material-icons-outlined input-calendar-icon">
+                  calendar_month
+                </span>
+              </div>
+              <div></div>
+            </div>
+            <div class="col-6 profile-input-short">
+              <div class="profile-text">Giới tính</div>
+              <p-dropdown
+                class="dropdown"
+                [style]="{ height: '28px' }"
+                [options]="gender"
+                formControlName="selectedGender"
+                optionLabel="lable"
+                optionValue="id"
+              ></p-dropdown>
+            </div>
+
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">Số điện thoại</div>
+              <input
+                class="profile-input-text-long"
+                type="text"
+                pInputText
+                formControlName="phone"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div>
+                <!-- <small
+          *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
+          class="p-error"
+          >Số điện thoại không được bỏ trống</small
+        > -->
+              </div>
+            </div>
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">
+                Email
+                <small
+                  *ngIf="_inforsForm['email'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+              </div>
+              <input
+                class="profile-input-text-long"
+                type="email"
+                pInputText
+                formControlName="email"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">
+                Địa chỉ
+                <small
+                  *ngIf="_inforsForm['addressUser'].errors?.['required'] && isSubmit "
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+              </div>
+              <input
+                class="profile-input-text-long"
+                type="text"
+                pInputText
+                formControlName="addressUser"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+          </div>
+          <!-- end thông tin người đại diện -->
+        </div>
+        <div class="col-5">
+          <!-- start thông tin công ty -->
+
+          <div class="grid" style="padding-left: 15px">
+            <div class="col-12">
+              <div class="profile-subtitle">Thông tin công ty</div>
+            </div>
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">
+                Công ty
+                <small
+                  *ngIf="_inforsForm['companyName'].invalid && isSubmit"
+                  class="p-error"
+                  >không được trống</small
+                >
+              </div>
+              <input
+                class="profile-input-text-long"
+                type="text"
+                pInputText
+                formControlName="companyName"
+                (keyup.enter)="onSaveInfor()"
+              />
+              <div></div>
+            </div>
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">Địa chỉ</div>
+              <input
+                class="profile-input-text-long"
+                type="text"
+                pInputText
+                formControlName="addressCompany"
+                (keyup.enter)="onSaveInfor()"
+              />
+
+              <!-- <div> -->
+              <!-- <small
+                      *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
+                      class="p-error"
+                      >Địa chỉ không được trống</small
+                      > -->
+              <!-- </div> -->
+            </div>
+            <!-- end thông tin công ty -->
+            <div class="col-12" style="margin-top: 10px">
+              <div class="profile-subtitle">Thông tin loại dịch vụ</div>
+            </div>
+            <div class="col-12 profile-input-long">
+              <div class="profile-text">
+                Loại dịch vụ
+                <small
+                  *ngIf="_inforsForm['serviceType'].invalid && isSubmit"
+                  class="p-error"
+                  >không được trống</small
+                >
+              </div>
+              <input
+                class="profile-input-text-long"
+                type="text"
+                pInputText
+                formControlName="serviceType"
+              />
+            </div>
+            <!-- start thông tin công ty -->
+            <div class="col-12" style="margin-top: 15px">
+              <div class="profile-subtitle">Thông tin khác</div>
+            </div>
+            <div class="col-12 profile-input-long">
+              <div class="profile-text">Ngày tạo</div>
+              <div class="col-12 profile-input-long">
+                <input
+                  class="profile-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="createdDate"
+                />
+                <div></div>
+              </div>
+            </div>
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">Ngày Sửa</div>
+              <div class="col-12 profile-input-long">
+                <input
+                  class="profile-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="modifiedDate"
+                />
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="bottom-profile-form">
+      <button
+        [style]="{ width: '67', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Đổi mật khẩu"
+        (click)="onChangePassword()"
+        *ngIf="!editModeStatus"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Chỉnh sửa"
+        (click)="onChangeEdit()"
+        *ngIf="!editModeStatus"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Hủy"
+        *ngIf="editModeStatus"
+        (click)="onCancleEdit()"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-rounded button-rounded button-background"
+        pButton
+        pRipple
+        type="button"
+        label="Lưu"
+        *ngIf="editModeStatus"
+        (click)="onSaveInfor()"
+      ></button>
+    </div>
+  </div>
+</div>
+<p-dialog
+  header="Đổi mật khẩu"
+  [(visible)]="changePasswordDialog"
+  [style]="{ width: '450px', height: '335px' }"
+  [contentStyle]="{
+    'overflow-y': 'hidden',
+    'overflow-x': 'hidden',
+    'max-height': '90vh',
+    'min-height': '25vh',
+    overflow: 'overlay'
+  }"
+  [blockScroll]="true"
+  [resizable]="true"
+  [modal]="true"
+  [closable]="false"
+  ><div class="grid p-fluid">
+    <div class="password-form">
+      <form [formGroup]="changePassForm">
+        <div class="col-12">
+          <div class="grid">
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">
+                Mật khẩu hiện tại
+                <small
+                  *ngIf="
+                  _changePassForm['currentPassword'].errors?.['required']
+            "
+                  class="p-error"
+                >
+                  không được bỏ trống
+                </small>
+              </div>
+              <div class="col-12 profile-input-long">
+                <input
+                  class="profile-input-text-long"
+                  type="password"
+                  pInputText
+                  formControlName="currentPassword"
+                />
+                <div></div>
+              </div>
+            </div>
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">
+                Mật khẩu mới
+                <small
+                  *ngIf="
+                  _changePassForm['password'].errors?.['required']
+            "
+                  class="p-error"
+                >
+                  không được bỏ trống
+                </small>
+              </div>
+              <div class="col-12 profile-input-long">
+                <input
+                  class="profile-input-text-long"
+                  type="password"
+                  pInputText
+                  formControlName="password"
+                />
+                <div></div>
+              </div>
+            </div>
+            <div class="col-12 profile-input-long" style="margin-top: 10px">
+              <div class="profile-text">
+                Nhập lại mật khẩu
+                <small
+                  *ngIf="
+                _changePassForm['confirmPassword'].errors?.['required']
+          "
+                  class="p-error"
+                >
+                  không được bỏ trống
+                </small>
+                <small
+                  *ngIf="
+                  _changePassForm['confirmPassword'].errors?.['mustMatch']
+                      "
+                  class="p-error"
+                >
+                  Nhập lại mật khẩu không khớp
+                </small>
+              </div>
+              <div class="col-12 profile-input-long">
+                <input
+                  class="profile-input-text-long"
+                  type="password"
+                  pInputText
+                  formControlName="confirmPassword"
+                />
+                <div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      (click)="cancelDialog()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Xác nhận"
+      (click)="onSavePassword()"
+    ></button>
+  </ng-template>
+</p-dialog>
+<p-toast position="top-right"></p-toast>
