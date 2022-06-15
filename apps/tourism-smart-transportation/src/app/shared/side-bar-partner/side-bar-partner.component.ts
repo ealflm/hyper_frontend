@@ -19,10 +19,13 @@ export class SideBarPartnerComponent implements OnInit {
   statusName = true;
   constructor(
     private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.localStorageService.setUserTokenDecode();
+  }
 
   onToggle() {
     this.locked = !this.locked;
@@ -69,6 +72,7 @@ export class SideBarPartnerComponent implements OnInit {
   }
   onLogout() {
     this.localStorage.removeToken();
+    this.localStorage.removeUserStorage();
     this.router.navigate(['login']);
   }
 }

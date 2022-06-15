@@ -270,6 +270,7 @@ export class PartnersComponent implements OnInit {
       const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
       const pipe = new DatePipe('en-US');
       const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
+
       formData.append('DateOfBirth', dobPipe ? dobPipe : '');
       formData.append('Gender', this._inforsForm['selectedGender'].value);
       formData.append('UploadFile', this._inforsForm['photoUrl'].value);
@@ -304,7 +305,13 @@ export class PartnersComponent implements OnInit {
       formData.append('Email', this._inforsForm['email'].value);
       const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
       const pipe = new DatePipe('en-US');
-      const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
+      const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
+      for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
+        formData.append(
+          'ServiceTypeIdList',
+          this._inforsForm['serviceType'].value[i]
+        );
+      }
       formData.append('DateOfBirth', dobPipe ? dobPipe : '');
       formData.append('Gender', this._inforsForm['selectedGender'].value);
       formData.append('UploadFile', this._inforsForm['photoUrl'].value);
@@ -362,6 +369,6 @@ export class PartnersComponent implements OnInit {
     });
   }
   navigatePartnerDetail(id: string) {
-    this.router.navigate([`account-partners/${id}`]);
+    this.router.navigate([`admin/account-partners/${id}`]);
   }
 }

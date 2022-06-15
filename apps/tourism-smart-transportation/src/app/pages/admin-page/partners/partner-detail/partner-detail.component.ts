@@ -2,7 +2,6 @@ import { Vehicle } from './../../../../models/VehicleResponse';
 import { Driver } from './../../../../models/DriverResponse';
 import { DriverService } from './../../../../services/driver.service';
 import { VehicleService } from './../../../../services/vehicle.service';
-import { DatePipe } from '@angular/common';
 import { ServiceType } from './../../../../models/ServiceTypeResponse';
 import { ServiceTypeService } from './../../../../services/service-type.service';
 import { STATUS_PARTNER } from './../../../../constant/status';
@@ -13,6 +12,7 @@ import { PartnersService } from './../../../../services/partners.service';
 import { Component, OnInit } from '@angular/core';
 import { AgeCheck } from '../../../../providers/CustomValidators';
 import { PartnerResponse } from '../../../../models/PartnerResponse';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'tourism-smart-transportation-partner-detail',
@@ -89,9 +89,7 @@ export class PartnerDetailComponent implements OnInit {
             this._inforsForm['modifiedDate'].setValue(
               partnerResponse.body?.modifiedDate
             );
-            const dobRes = new Date(
-              partnerResponse.body.dateOfBirth.toString()
-            );
+            const dobRes = new Date(partnerResponse.body.dateOfBirth);
             const pipe = new DatePipe('en-US');
             const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
             this._inforsForm['dateOfBirth'].setValue(dobPipe);
@@ -103,6 +101,12 @@ export class PartnerDetailComponent implements OnInit {
             this._inforsForm['addressUser'].setValue(
               partnerResponse.body?.address1
             );
+            let serivceTypeIdList: any = [];
+            partnerResponse.body?.serviceTypeList?.map((serviceType) => {
+              serivceTypeIdList = [...serivceTypeIdList, serviceType.id];
+            });
+            this._inforsForm['serviceType'].setValue(serivceTypeIdList);
+
             this._inforsForm['companyName'].setValue(
               partnerResponse.body?.companyName
             );
@@ -230,9 +234,18 @@ export class PartnerDetailComponent implements OnInit {
     formData.append('Address2', this._inforsForm['addressCompany'].value);
     formData.append('Phone', this._inforsForm['phone'].value);
     formData.append('Email', this._inforsForm['email'].value);
+
     const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
     const pipe = new DatePipe('en-US');
-    const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
+    const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
+
+    for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
+      formData.append(
+        'AddServiceTypeIdList',
+        this._inforsForm['serviceType'].value[i]
+      );
+    }
+
     formData.append('DateOfBirth', dobPipe ? dobPipe : '');
     formData.append('Gender', this._inforsForm['selectedGender'].value);
     formData.append('UploadFile', this._inforsForm['photoUrl'].value);

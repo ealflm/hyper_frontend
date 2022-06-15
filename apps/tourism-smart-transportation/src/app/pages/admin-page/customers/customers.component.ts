@@ -131,7 +131,7 @@ export class CustomersComponent implements OnInit {
   }
   navCustomerDetail(id?: string) {
     if (id) {
-      this.router.navigate([`account-customers/${id}`]);
+      this.router.navigate([`admin/account-customers/${id}`]);
     }
   }
 }

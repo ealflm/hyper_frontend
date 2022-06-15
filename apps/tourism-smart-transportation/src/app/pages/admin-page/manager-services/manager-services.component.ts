@@ -56,7 +56,7 @@ export class ManagerServicesComponent implements OnInit {
     this._mapTierStatus();
   }
   createPackage() {
-    this.router.navigate(['manage-service/create-package']);
+    this.router.navigate(['admin/manage-service/create-package']);
   }
   _mapTierStatus() {
     this.tierStatus = Object.keys(STATUS_TIER).map((key) => {
@@ -109,7 +109,7 @@ export class ManagerServicesComponent implements OnInit {
     this._getAllTiers();
   }
   navPackageDetail(id?: string) {
-    this.router.navigate([`manage-service/edit-package/${id}`]);
+    this.router.navigate([`admin/manage-service/edit-package/${id}`]);
   }
   onPaginate(e: any) {
     this.pageIndex = e.page + 1;
