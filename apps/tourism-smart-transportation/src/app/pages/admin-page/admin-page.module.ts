@@ -1,11 +1,9 @@
+import { ProfileComponent } from './../../components/profile/profile.component';
 import { PipeModule } from './../../pipe/pipe.module';
-import { PartnerGuard } from './../../auth/partner.guard';
 import { CheckedComponent } from './../../shared/checked/checked.component';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { ComponentsModule } from './../../components/components.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MapPageComponent } from './map/map-page.component';
-import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
 import { AuthGuardService } from './../../auth/auth.guard';
 import { NzZorroAntdModule } from '../../nz-zorro-antd/nz-zorro-antd.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -76,6 +74,7 @@ const ADMIN_ROUTES: Routes = [
         loadChildren: () =>
           import('./setting/setting.module').then((m) => m.SettingModule),
       },
+      { path: 'admin/profile', component: ProfileComponent },
       // {
       //   path: 'finance',
       //   loadChildren: () =>

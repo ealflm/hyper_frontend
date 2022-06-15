@@ -1,3 +1,5 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './../components/profile/profile.component';
 import { MaterialuiModule } from './../materialui/materialui.module';
 import { PrimengModule } from './../primeng/primeng.module';
 import { DataMapComponent } from './data-map/data-map.component';
@@ -35,6 +37,7 @@ import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.componen
     DataMapComponent,
     ListVehicleComponent,
     VehicleDetailComponent,
+    ProfileComponent,
   ],
   exports: [
     StationDetailComponent,
@@ -52,7 +55,14 @@ import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.componen
     DataMapComponent,
     ListVehicleComponent,
     VehicleDetailComponent,
+    ProfileComponent,
   ],
-  imports: [CommonModule, PrimengModule, MaterialuiModule],
+  imports: [
+    CommonModule,
+    PrimengModule,
+    MaterialuiModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class ComponentsModule {}

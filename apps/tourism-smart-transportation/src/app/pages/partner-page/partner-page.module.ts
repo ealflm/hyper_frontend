@@ -1,7 +1,5 @@
 import { PipeModule } from './../../pipe/pipe.module';
-import { LimitLengthPipe } from './../../pipe/limit-length.pipe';
 import { PartnerGuard } from './../../auth/partner.guard';
-import { CheckedComponent } from './../../shared/checked/checked.component';
 import { ComponentsModule } from './../../components/components.module';
 import { SettingModule } from './../admin-page/setting/setting.module';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -15,12 +13,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PartnerPageComponent } from './partner-page.component';
 import { SideBarPartnerComponent } from '../../shared/side-bar-partner/side-bar-partner.component';
-import { AuthGuardService } from '../../auth/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DriverComponent } from './driver/driver.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { MapComponent } from './map/map.component';
+import { ProfileComponent } from '../../components/profile/profile.component';
 
 const PARTNER_ROUTES: Routes = [
   {
@@ -43,6 +41,7 @@ const PARTNER_ROUTES: Routes = [
       { path: 'partner/vehicle', component: VehicleComponent },
       { path: 'partner/schedule', component: ScheduleComponent },
       { path: 'partner/map', component: MapComponent },
+      { path: 'partner/profile', component: ProfileComponent },
     ],
   },
 ];
