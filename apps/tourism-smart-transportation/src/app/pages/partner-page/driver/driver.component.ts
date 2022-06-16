@@ -6,7 +6,13 @@ import { Vehicle } from './../../../models/VehicleResponse';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DriverService } from './../../../services/driver.service';
 import { LocalStorageService } from './../../../auth/localstorage.service';
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  AfterViewInit,
+} from '@angular/core';
 import { Driver } from '../../../models/DriverResponse';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { AgeCheck } from '../../../providers/CustomValidators';
@@ -16,6 +22,7 @@ import {
   Subject,
   distinctUntilChanged,
   switchMap,
+  takeLast,
 } from 'rxjs';
 import { VehicleService } from '../../../services/vehicle.service';
 
@@ -24,7 +31,7 @@ import { VehicleService } from '../../../services/vehicle.service';
   templateUrl: './driver.component.html',
   styleUrls: ['./driver.component.scss'],
 })
-export class DriverComponent implements OnInit, OnDestroy {
+export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   menuValue: any = [
     {
       value: 1,
@@ -84,7 +91,14 @@ export class DriverComponent implements OnInit, OnDestroy {
     this._initDriverForm();
     this._mapStatus();
   }
-
+  ngAfterViewInit(): void {
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(1000), distinctUntilChanged())
+      .subscribe((value) => {
+        // console.log(value);
+        this.getListDriverOfPartner();
+      });
+  }
   public ngOnDestroy(): void {
     this.searchSubscription?.unsubscribe();
   }
@@ -123,13 +137,8 @@ export class DriverComponent implements OnInit, OnDestroy {
   }
   onChangeFilterByName(e: any) {
     // search lazy
-    this.searchSubject.next(e.target.value);
-    this.searchSubscription = this.searchSubject
-      .pipe(debounceTime(1000), distinctUntilChanged())
-      .subscribe((value) => {
-        this.filterName = value;
-        this.getListDriverOfPartner();
-      });
+    this.filterName = e.target.value;
+    this.searchSubject.next(this.filterName);
   }
   private _getlistVehicle() {
     this.vehicleService
