@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { VehicleClass } from './../../../models/VehicleClassResponse';
 import { PublishYear } from './../../../models/PublishYearResponse';
 import { RentStation } from './../../../models/RentStationResponse';
@@ -17,20 +18,7 @@ export class VehicleComponent implements OnInit {
   editMode = false;
   displayDialog = false;
   status: any = [];
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   vehicles: Vehicle[] = [];
   vehicleForm!: FormGroup;
   isSubmit = false;

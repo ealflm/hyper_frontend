@@ -1,3 +1,5 @@
+import { MenuFilterStatus } from './../../../constant/menu-filter-status';
+import { Gender } from './../../../constant/gender';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CustomersService } from './../../../services/customers.service';
@@ -36,30 +38,8 @@ export class CustomersComponent implements OnInit {
   //
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
-  gender = [
-    {
-      id: 'false',
-      lable: 'Nữ',
-    },
-    {
-      id: 'true',
-      lable: 'Nam',
-    },
-  ];
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  gender = Gender;
+  menuValue = MenuFilterStatus;
   constructor(
     private customerService: CustomersService,
     private confirmationService: ConfirmationService,

@@ -1,3 +1,4 @@
+import { Gender } from './../../../../constant/gender';
 import {
   STATUS_TRANSACTION,
   STATUS_TIER,
@@ -39,16 +40,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   //
   transactionStatus: any[] = [];
   tierStatus: any[] = [];
-  gender = [
-    {
-      id: false,
-      lable: 'Nữ',
-    },
-    {
-      id: true,
-      lable: 'Nam',
-    },
-  ];
+  gender = Gender;
   deleteFile?: string | null;
   customerEditForm!: FormGroup;
   currentPhone?: string;

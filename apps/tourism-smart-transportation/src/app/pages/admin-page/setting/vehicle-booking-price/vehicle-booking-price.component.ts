@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { BookingPrice } from './../../../../models/BookingPriceResponse';
 import { VehicleType } from './../../../../models/VehicleTypeResponse';
 import { BookingConfigService } from './../../../../services/booking-config.service';
@@ -16,20 +17,7 @@ import { isFakeMousedownFromScreenReader } from '@angular/cdk/a11y';
   styleUrls: ['./vehicle-booking-price.component.scss'],
 })
 export class VehicleBookingPriceComponent implements OnInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   editMode = false;
   status: any = [];
   filterByStatus = 1;
@@ -104,10 +92,11 @@ export class VehicleBookingPriceComponent implements OnInit {
   createBookingPrice() {
     this.editMode = false;
     this.displayDialog = true;
-    this._bookingForms['vehicleTypeId'].setValue('');
-    this._bookingForms['fixedPrice'].setValue('');
-    this._bookingForms['fixedDistance'].setValue('');
-    this._bookingForms['pricePerKilometer'].setValue('');
+    this.bookingPriceForm.reset();
+    // this._bookingForms['vehicleTypeId'].setValue('');
+    // this._bookingForms['fixedPrice'].setValue('');
+    // this._bookingForms['fixedDistance'].setValue('');
+    // this._bookingForms['pricePerKilometer'].setValue('');
   }
   onChangeFillterByName(e: any) {}
   onGetValueMenu(value: any) {

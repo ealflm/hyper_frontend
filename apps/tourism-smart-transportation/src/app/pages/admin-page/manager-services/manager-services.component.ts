@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { STATUS_TIER } from './../../../constant/status';
 import { TierService } from './../../../services/tier.service';
@@ -30,20 +31,7 @@ export class ManagerServicesComponent implements OnInit {
   pageIndex?: number = 0;
   itemsPerPage?: number = 5;
   selectedServices?: Service[];
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   constructor(
     private router: Router,
     private tierService: TierService,

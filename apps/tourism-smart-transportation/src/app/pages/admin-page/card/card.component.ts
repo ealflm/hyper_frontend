@@ -1,3 +1,4 @@
+import { MenuFilterCard } from './../../../constant/menu-filter-status';
 import { STATUS_CARD } from './../../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -12,24 +13,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class CardComponent implements OnInit {
   status: any = [];
   cards: any = [];
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Đã liên kết',
-    },
-    {
-      value: 2,
-      lable: 'Chưa liên kết',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterCard;
   displayDialog = false;
   @ViewChild('cardElement') cardElement: any;
   @ViewChild('cardInput') cardInputEle: any;

@@ -1,3 +1,5 @@
+import { Gender } from './../../../constant/gender';
+import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { ServiceTypeService } from './../../../services/service-type.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -54,30 +56,8 @@ export class PartnersComponent implements OnInit {
     '../assets/image/imagePreview.png';
   deleteFile?: string | null;
   $sub: Subject<any> = new Subject();
-  gender = [
-    {
-      id: 'false',
-      lable: 'Nữ',
-    },
-    {
-      id: 'true',
-      lable: 'Nam',
-    },
-  ];
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  gender = Gender;
+  menuValue = MenuFilterStatus;
   serviceTypes: ServiceType[] = [];
   constructor(
     private partnerService: PartnersService,
@@ -122,8 +102,11 @@ export class PartnersComponent implements OnInit {
         addressUser: [''],
         addressCompany: [''],
         serviceType: ['', Validators.required],
-        phone: [''],
-        email: [''],
+        phone: [
+          '',
+          [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
+        ],
+        email: ['', [Validators.required, Validators.email]],
         dateOfBirth: ['', Validators.required],
         selectedGender: ['', Validators.required],
         DeleteFile: [''],
@@ -221,20 +204,24 @@ export class PartnersComponent implements OnInit {
       this.isSubmit = false;
     } else if (!editMode && !comebackStatus) {
       this.isSubmit = false;
-      this._inforsForm['id'].setValue('');
       // this._inforsForm['userName'].setValue('');
       // this._inforsForm['password'].setValue('');
       // this._inforsForm['confirmPassword'].setValue('');
-      this._inforsForm['firstName'].setValue('');
-      this._inforsForm['lastName'].setValue('');
-      this._inforsForm['dateOfBirth'].setValue('');
+      //
+      // this._inforsForm['id'].setValue('');
+      // this._inforsForm['serviceType'].setValue('');
+      // this._inforsForm['firstName'].setValue('');
+      // this._inforsForm['lastName'].setValue('');
+      // this._inforsForm['dateOfBirth'].setValue('');
+      // this._inforsForm['phone'].setValue('');
+      // this._inforsForm['email'].setValue('');
+      // this._inforsForm['addressUser'].setValue('');
+      // this._inforsForm['companyName'].setValue('');
+      // this._inforsForm['addressCompany'].setValue('');
+      // this._inforsForm['photoUrl'].setValue('');
+      this.inforForm.reset();
       this._inforsForm['selectedGender'].setValue(true);
-      this._inforsForm['phone'].setValue('');
-      this._inforsForm['email'].setValue('');
-      this._inforsForm['addressUser'].setValue('');
-      this._inforsForm['companyName'].setValue('');
-      this._inforsForm['addressCompany'].setValue('');
-      this._inforsForm['photoUrl'].setValue('');
+
       this.imagePreview = '../assets/image/imagePreview.png';
       this.deleteFile = null;
     }

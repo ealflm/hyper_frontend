@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BusConfigService } from './../../../../services/bus-config.service';
@@ -17,20 +18,7 @@ import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
   styleUrls: ['./bus-price.component.scss'],
 })
 export class BusPriceComponent implements OnInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   mode: any = [
     {
       name: 'distance',
@@ -103,6 +91,7 @@ export class BusPriceComponent implements OnInit {
   createBusPrice() {
     this.editMode = false;
     this.displayDialog = true;
+    this.busPriceForm.reset();
   }
   onChangeFillterByName(e: any) {}
   onGetValueMenu(e: number) {

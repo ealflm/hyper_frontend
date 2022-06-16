@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   Category,
@@ -17,20 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./vehicle-class.component.scss'],
 })
 export class VehicleClassComponent implements OnInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   status: any = [];
   vehicleClasses: any = [];
   editMode = false;
@@ -72,9 +60,10 @@ export class VehicleClassComponent implements OnInit {
   createVehicleClass() {
     this.displayDialog = true;
     this.editMode = false;
-    this._categoryForm['id'].setValue('');
-    this._categoryForm['name'].setValue('');
-    this._categoryForm['description'].setValue('');
+    this.categoryForm.reset();
+    // this._categoryForm['id'].setValue('');
+    // this._categoryForm['name'].setValue('');
+    // this._categoryForm['description'].setValue('');
   }
   onChangeFillterByName(e: any) {
     this.filterCategoryName = e.target.value;

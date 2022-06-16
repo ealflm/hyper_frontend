@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PublishYear } from './../../../../models/PublishYearResponse';
 import { DatePipe } from '@angular/common';
@@ -12,20 +13,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./year-of-manufacture.component.scss'],
 })
 export class YearOfManufactureComponent implements OnInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   editMode = false;
   displayDialog = false;
   VehicleYearOfPublishes: any = [];
@@ -81,6 +69,7 @@ export class YearOfManufactureComponent implements OnInit {
   createVehicleYearOfPublish() {
     this.editMode = false;
     this.displayDialog = true;
+    this.publishYearForm.reset();
   }
   updateVehicleYearOfPublish(id: string) {
     this.displayDialog = true;
