@@ -1,3 +1,4 @@
+import { MenuFilterStatusDiscount } from './../../../constant/menu-filter-status';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -63,28 +64,7 @@ export class DiscountComponent implements OnInit {
   //
   pageIndex?: number = 0;
   itemsPerPage?: number = 5;
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: 2,
-      lable: 'Đã sử dụng',
-    },
-    {
-      value: 3,
-      lable: 'Hết hạn',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatusDiscount;
   constructor(
     private discountService: DiscountService,
     private fb: FormBuilder,

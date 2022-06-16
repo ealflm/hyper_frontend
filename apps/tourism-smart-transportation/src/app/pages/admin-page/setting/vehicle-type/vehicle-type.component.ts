@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { STATUS_BUS_PRICE } from './../../../../constant/status';
 import {
   VehicleTypesResponse,
@@ -16,20 +17,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicle-type.component.scss'],
 })
 export class VehicleTypeComponent implements OnInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   displayDialog = false;
   vehicleTypes: VehicleType[] = [];
   status: any = [];
@@ -83,10 +71,11 @@ export class VehicleTypeComponent implements OnInit {
   createVehicleType() {
     this.editMode = false;
     this.displayDialog = true;
-    this._vehicleTypeForm['id'].setValue('');
-    this._vehicleTypeForm['label'].setValue('');
-    this._vehicleTypeForm['seats'].setValue('');
-    this._vehicleTypeForm['fuel'].setValue('');
+    this.vehicleTypeForm.reset();
+    // this._vehicleTypeForm['id'].setValue('');
+    // this._vehicleTypeForm['label'].setValue('');
+    // this._vehicleTypeForm['seats'].setValue('');
+    // this._vehicleTypeForm['fuel'].setValue('');
   }
   onChangeFillterByName(e: any) {
     this.filterByLabel = e.target.value;

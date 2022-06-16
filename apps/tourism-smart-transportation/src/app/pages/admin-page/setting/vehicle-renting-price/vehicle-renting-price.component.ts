@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { Category } from './../../../../models/CategoryResponse';
 import { PublishYear } from './../../../../models/PublishYearResponse';
 import { RentingConfigService } from './../../../../services/renting-config.service';
@@ -18,20 +19,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./vehicle-renting-price.component.scss'],
 })
 export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   editMode = false;
   status: any = [];
   filterByStatus = 1;
@@ -106,15 +94,16 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
     this.editMode = false;
     this.displayDialog = true;
     this.isSubmit = false;
-    this._rentingForms['id'].setValue('');
-    this._rentingForms['publishYearId'].setValue('');
-    this._rentingForms['categoryId'].setValue('');
-    this._rentingForms['minTime'].setValue('');
-    this._rentingForms['maxTime'].setValue('');
-    this._rentingForms['pricePerHour'].setValue('');
-    this._rentingForms['fixedPrice'].setValue('');
-    this._rentingForms['weekendPrice'].setValue('');
-    this._rentingForms['holidayPrice'].setValue('');
+    this.rentingPriceForm.reset();
+    // this._rentingForms['id'].setValue('');
+    // this._rentingForms['publishYearId'].setValue('');
+    // this._rentingForms['categoryId'].setValue('');
+    // this._rentingForms['minTime'].setValue('');
+    // this._rentingForms['maxTime'].setValue('');
+    // this._rentingForms['pricePerHour'].setValue('');
+    // this._rentingForms['fixedPrice'].setValue('');
+    // this._rentingForms['weekendPrice'].setValue('');
+    // this._rentingForms['holidayPrice'].setValue('');
   }
   onChangeFillterByName(e: any) {
     this.filterByName = e.target.value;

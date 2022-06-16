@@ -1,1 +1,403 @@
-<p>schedule works!</p>
+<div class="header-schedules">
+  <div class="header-schedules-content">
+    <div class="header-content-item">
+      <div class="header-item-H5"><div>Lịch trình</div></div>
+      <div class="header-item">
+        <!-- <button
+          pButton
+          pRipple
+          type="button"
+          label="Xuất excel"
+          class="p-button-outlined p-button-rounded"
+        ></button> -->
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Tạo mới"
+          (click)="createSchedule()"
+          class="p-button-rounded button-background"
+        ></button>
+      </div>
+    </div>
+    <div class="header-search">
+      <span class="p-input-icon-left">
+        <i class="material-icons-outlined"> search </i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Tìm kiếm theo tên, mã,…"
+          (keydown)="onChangeFilterByName($event)"
+        />
+      </span>
+    </div>
+  </div>
+  <tourism-smart-transportation-header-status
+    [menuValue]="menuValue"
+    (GetValueMenu)="OnGetMenuClick($event)"
+  ></tourism-smart-transportation-header-status>
+  <div class="mt-5"></div>
+  <div class="body-table">
+    <p-table
+      #dt
+      [value]="schedules"
+      responsiveLayout="scroll"
+      scrollDirection="both"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Tên</th>
+          <th>Phương tiện</th>
+          <th>Tuyến</th>
+          <th>Ngày trong tuần</th>
+          <th>Thời gian bắt đầu</th>
+          <th>Thời gian kết thúc</th>
+          <th>Trạng thái</th>
+          <th>Hành động</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-schedule let-i="rowIndex">
+        <tr>
+          <td
+            class="tb-name"
+            [pTooltip]="schedule.firstName + ' ' + schedule.lastName"
+            tooltipPosition="bottom"
+          >
+            <img
+              [src]="
+                schedule.photoUrl === '' || schedule.photoUrl === null
+                  ? '../assets/image/imagePreview.png'
+                  : 'https://se32.blob.core.windows.net/schedule/' +
+                    schedule.photoUrl
+              "
+              alt=""
+            />&nbsp;{{
+              schedule.firstName + ' ' + schedule.lastName | limitLength: 10
+            }}
+          </td>
+          <td [pTooltip]="schedule?.companyName" tooltipPosition="bottom">
+            <!-- {{
+              schedule?.companyName.length > 10
+                ? (schedule?.companyName | slice: 0:10) + '..'
+                : schedule?.companyName
+            }} -->
+            {{ schedule?.companyName | limitLength: 10 }}
+          </td>
+          <td>{{ schedule.gender ? 'Nam' : 'Nữ' }}</td>
+          <td>{{ schedule.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ schedule.phone }}</td>
+          <td [pTooltip]="schedule?.email" tooltipPosition="bottom">
+            {{ schedule.email | limitLength: 10 }}
+          </td>
+          <td>{{ schedule.createdDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ schedule.modifiedDate | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <div [class]="status[schedule.status].class">
+              {{ status[schedule.status].lable }}
+            </div>
+          </td>
+          <td style="text-align: center">
+            <span
+              class="material-icons-outlined enable"
+              style="margin-left: 5px"
+              (click)="deleteSchedule(schedule.id)"
+              *ngIf="schedule.status !== 0"
+            >
+              delete
+            </span>
+            <span
+              class="material-icons-outlined enable"
+              style="margin-left: 5px; cursor: pointer"
+              (click)="viewsScheduleDetail(schedule.id)"
+            >
+              visibility
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="10">Không có nội dung nào để hiển thị.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- diaglog -->
+<p-dialog
+  [header]="editMode ? 'Chỉnh sửa phương tiện' : 'Tạo mới phương tiện'"
+  [(visible)]="displayDialog"
+  [style]="{ width: '450px' }"
+  [contentStyle]="{
+    overflow: 'visible'
+  }"
+  [blockScroll]="true"
+  [resizable]="true"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="header-close-icon" (click)="onCancel()">
+    <span class="material-icons"> close </span>
+  </div>
+  <ng-template pTemplate="content">
+    <div class="schedule-form">
+      <form [formGroup]="scheduleForm">
+        <div class="mt-4 grid p-fluid">
+          <div class="col-12">
+            <div class="col-12">
+              <div class="schedule-subtitle">Thông tin Phương tiện</div>
+            </div>
+            <div class="col-12">
+              <div class="grid">
+                <div class="col-12 schedule-input-long">
+                  <div class="schedule-text">
+                    Tên
+                    <small
+                      *ngIf="_schedulesForm['vehicleName'].errors?.['required'] && isSubmit"
+                      class="p-error"
+                    >
+                      không được bỏ trống</small
+                    >
+                  </div>
+
+                  <input
+                    [style]="{
+                      height: '28px'
+                    }"
+                    class="schedule-input-text-long"
+                    type="text"
+                    pInputText
+                    formControlName="vehicleName"
+                    (keyup.enter)="onSaveSchedule()"
+                  />
+                </div>
+                <div class="col-12 schedule-input-long">
+                  <div class="schedule-text">Phương tiện</div>
+                  <p-dropdown
+                    [style]="{ height: '28px' }"
+                    class="dropdown"
+                    placeholder="Chọn loại xe"
+                    optionValue="id"
+                    formControlName="vehicleLicensePlatesId"
+                    [options]="vehicles"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      {{ item.name }}-{{ item.licensePlates + 'chỗ' }}
+                    </ng-template>
+
+                    <ng-template let-item pTemplate="selectedItem">
+                      {{ item.name }}-{{ item.licensePlates + 'chỗ' }}
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+                <div class="col-12 schedule-input-long">
+                  <div class="schedule-text">Tuyến</div>
+                  <p-dropdown
+                    [style]="{ height: '28px' }"
+                    class="dropdown"
+                    placeholder="Chọn loại xe"
+                    optionValue="id"
+                    formControlName="routeNameId"
+                    [options]="routes"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      {{ item.name }}
+                    </ng-template>
+
+                    <ng-template let-item pTemplate="selectedItem">
+                      {{ item.name }}
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+                <div class="col-12 schedule-input-long">
+                  <div class="schedule-text">Ngày trong tuần</div>
+                  <p-dropdown
+                    [style]="{ height: '28px' }"
+                    class="dropdown"
+                    placeholder="Chọn loại xe"
+                    optionValue="id"
+                    formControlName="dateOfWeek"
+                    [options]="dates"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      {{ item.name }}
+                    </ng-template>
+
+                    <ng-template let-item pTemplate="selectedItem">
+                      {{ item.name }}
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+                <div class="col-12 schedule-input-long">
+                  <div class="schedule-text">
+                    Thời gian bắt đầu
+                    <small
+                      *ngIf="_schedulesForm['timeStart'].errors?.['required'] && isSubmit "
+                      class="p-error"
+                    >
+                      không được bỏ trống</small
+                    >
+                  </div>
+                  <p-calendar
+                    class="schedule-input-text-long"
+                    [style]="{
+                      height: '28px'
+                    }"
+                    formControlName="timeEnd"
+                    [timeOnly]="true"
+                    hourFormat="12"
+                    inputId="timeonly"
+                    formControlName="timeStart"
+                  ></p-calendar>
+                </div>
+                <div class="col-12 schedule-input-long">
+                  <div class="schedule-text">
+                    Thời gian kết thúc
+                    <small
+                      *ngIf="_schedulesForm['timeEnd'].errors?.['required'] && isSubmit "
+                      class="p-error"
+                    >
+                      không được bỏ trống</small
+                    >
+                  </div>
+                  <p-calendar
+                    class="schedule-input-text-long"
+                    [style]="{
+                      height: '28px'
+                    }"
+                    formControlName="timeEnd"
+                    [timeOnly]="true"
+                    hourFormat="12"
+                    inputId="timeonly"
+                  ></p-calendar>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <!-- createMode -->
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      *ngIf="createStatus"
+      (click)="onCancel()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Lưu"
+      *ngIf="createStatus"
+      (click)="onSaveSchedule()"
+    ></button>
+    <!-- View Mode -->
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Chỉnh sửa"
+      *ngIf="!editMode && !createStatus"
+      (click)="onChangeEdit()"
+    ></button>
+    <!-- EditMode -->
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      *ngIf="editMode && !createStatus"
+      (click)="onCancel()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Lưu"
+      *ngIf="editMode && !createStatus"
+      (click)="onSaveChange()"
+    ></button>
+  </ng-template>
+</p-dialog>
+<!-- Confirm dialog -->
+<p-confirmDialog
+  key="confirmCloseDialog"
+  #cd
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      Bạn có chắc chắn muốn đống cửa sổ?
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Đóng"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Quay lại"
+      (click)="cd.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
+
+<p-confirmDialog
+  key="deleteConfirm"
+  #rs
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      Bạn có chắc chắn muốn xóa đối tác này?
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      (click)="rs.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Xóa"
+      (click)="rs.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
+<!-- end confirm dialog -->
+<p-toast position="top-right"></p-toast>

@@ -1,3 +1,5 @@
+import { Gender } from './../../../../constant/gender';
+import { MenuFilterPartnerDetail } from './../../../../constant/menu-filter-status';
 import { Vehicle } from './../../../../models/VehicleResponse';
 import { Driver } from './../../../../models/DriverResponse';
 import { DriverService } from './../../../../services/driver.service';
@@ -20,16 +22,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./partner-detail.component.scss'],
 })
 export class PartnerDetailComponent implements OnInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Tài xế',
-    },
-    {
-      value: 0,
-      lable: 'Phương Tiện',
-    },
-  ];
+  menuValue = MenuFilterPartnerDetail;
   editModeStatus = false;
   status: any = [];
   inforForm!: FormGroup;
@@ -38,16 +31,7 @@ export class PartnerDetailComponent implements OnInit {
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
   deleteFile?: string | null;
-  gender = [
-    {
-      id: 'false',
-      lable: 'Nữ',
-    },
-    {
-      id: 'true',
-      lable: 'Nam',
-    },
-  ];
+  gender = Gender;
   drivers: Driver[] = [];
   vehicles: Vehicle[] = [];
   fillterStatus = 1;

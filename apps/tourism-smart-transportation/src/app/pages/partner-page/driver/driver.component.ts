@@ -1,3 +1,4 @@
+import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { DriverResponse } from './../../../models/DriverResponse';
 import { DatePipe } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -32,20 +33,7 @@ import { VehicleService } from '../../../services/vehicle.service';
   styleUrls: ['./driver.component.scss'],
 })
 export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
-  menuValue: any = [
-    {
-      value: 1,
-      lable: 'Kích hoạt',
-    },
-    {
-      value: 0,
-      lable: 'Vô hiệu hóa',
-    },
-    {
-      value: null,
-      lable: 'Tất cả',
-    },
-  ];
+  menuValue = MenuFilterStatus;
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
 
