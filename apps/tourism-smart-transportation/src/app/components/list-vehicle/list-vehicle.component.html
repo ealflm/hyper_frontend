@@ -12,13 +12,17 @@
 </div>
 
 <div class="body-bottom-content">
-  <div class="body-card" (click)="showDetail()">
+  <div
+    class="body-card"
+    *ngFor="let vehicle of vehicles"
+    (click)="showDetail(vehicle.id)"
+  >
     <div class="card-header">
-      <div>Dương Thanh Sang</div>
+      <div>{{ vehicle?.licensePlates }}</div>
     </div>
     <div class="card-body">
-      <div class="card-body-left">51B-273.39</div>
-      <div class="card-body-right">CTY TNHH vận tải Thanh Sang</div>
+      <div class="card-body-left">{{ vehicle?.serviceTypeName }}</div>
+      <div class="card-body-right">{{ vehicle?.companyName }}</div>
     </div>
   </div>
 </div>

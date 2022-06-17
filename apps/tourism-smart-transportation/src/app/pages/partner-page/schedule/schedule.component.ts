@@ -1,3 +1,4 @@
+import { ConfirmationService } from 'primeng/api';
 import { DateOfWeek } from './../../../constant/dates';
 import { Vehicle } from './../../../models/VehicleResponse';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -24,7 +25,10 @@ export class ScheduleComponent implements OnInit {
   dates = DateOfWeek;
   status: any = [];
   createStatus = false;
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private confirmationService: ConfirmationService
+  ) {}
   ngOnInit(): void {
     this._initScheduleForm();
   }
@@ -70,8 +74,12 @@ export class ScheduleComponent implements OnInit {
   }
   onCancel() {
     this.displayDialog = false;
-    this.editMode = false;
-    this.createStatus = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+      },
+    });
   }
   onSaveSchedule() {}
   onSaveChange() {}

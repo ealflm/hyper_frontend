@@ -23,16 +23,7 @@ export class VehicleBookingPriceComponent implements OnInit {
   filterByStatus = 1;
   filterByName = '';
   vehicleType: VehicleType[] = [];
-  bookingPrices: any = [
-    {
-      id: '1',
-      vehicleType: 'xe máy',
-      distanceDefault: 2,
-      priceFixed: 12000,
-      pricePerKm: 10000,
-      status: 1,
-    },
-  ];
+  bookingPrices: any = [];
   displayDialog = false;
 
   totalItems = 0;

@@ -13,6 +13,7 @@ import { Injectable } from '@angular/core';
 })
 export class VehicleTypesService {
   apiURL = environment.apiURL + 'admin/vehicles/types';
+  partnerApiURL = environment.apiURL + 'partner/get-config/vehicle-types';
   constructor(private http: HttpClient) {}
   getAllVehicleType(
     label?: string,
@@ -40,5 +41,17 @@ export class VehicleTypesService {
   }
   deleteVehicleType(id: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/${id}`);
+  }
+
+  getListVehicleTypeForPartner(
+    status?: number | null
+  ): Observable<VehicleTypesResponse> {
+    let queryParams = new HttpParams();
+    if (status != null) {
+      queryParams = queryParams.append('Status', status);
+    }
+    return this.http.get<VehicleTypesResponse>(`${this.apiURL}`, {
+      params: queryParams,
+    });
   }
 }

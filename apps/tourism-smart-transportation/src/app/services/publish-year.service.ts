@@ -13,6 +13,7 @@ import { Injectable } from '@angular/core';
 })
 export class PublishYearService {
   apiUrl = environment.apiURL + 'admin/publish-year';
+  partnerApiUrl = environment.apiURL + 'partner/get-config/publish-years';
   constructor(private http: HttpClient) {}
   getListPublishYear(status?: number | null): Observable<PublishYearsResponse> {
     let queryParams = new HttpParams();
@@ -34,5 +35,12 @@ export class PublishYearService {
   }
   deletePublishYearByid(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+  getListPublishYearForPartner(): Observable<PublishYearsResponse> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('Status', 1);
+    return this.http.get<PublishYearsResponse>(`${this.partnerApiUrl}`, {
+      params: queryParams,
+    });
   }
 }

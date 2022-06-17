@@ -1,30 +1,30 @@
 export const DateOfWeek = [
   {
-    id: 'Monday',
+    id: 2,
     name: 'Thứ 2',
   },
   {
-    id: 'Tuesday',
+    id: 3,
     name: 'Thứ 3',
   },
   {
-    id: 'Wednesday',
+    id: 4,
     name: 'Thứ 4',
   },
   {
-    id: 'Thursday',
+    id: 5,
     name: 'Thứ 5',
   },
   {
-    id: 'Friday',
+    id: 6,
     name: 'Thứ 6',
   },
   {
-    id: 'Saturday',
+    id: 7,
     name: 'Thứ 7',
   },
   {
-    id: 'Sunday',
+    id: 8,
     name: 'Chủ nhật',
   },
 ];

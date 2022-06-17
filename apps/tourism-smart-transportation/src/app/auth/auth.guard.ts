@@ -25,7 +25,6 @@ export class AuthGuardService implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
     const token = this.localStorage.getToken();
-    console.log(route);
     if (token) {
       const tokenDecode = JSON.parse(atob(token.split('.')[1]));
       if (
@@ -45,7 +44,6 @@ export class AuthGuardService implements CanActivate {
   }
   canLoad(route: Route): boolean {
     const urlPath = route.path;
-    console.log(urlPath);
     if (urlPath === 'partner') {
       alert('unauthorised the page');
       return false;

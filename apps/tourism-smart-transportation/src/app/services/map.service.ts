@@ -1,3 +1,10 @@
+import {
+  VehicleTracking,
+  VehicleTrackingResponse,
+  VehicleTrackingsResponse,
+} from './../models/VehicleTrackingResponse';
+import { VehicleResponse } from './../models/VehicleResponse';
+import { VehiclesResponse } from './../models/VehicleResponse';
 import { RouteResponse, RoutesResponse } from './../models/RouteResponse';
 import {
   RentStation,
@@ -20,8 +27,12 @@ import { Injectable } from '@angular/core';
 export class MapService {
   stationApiURL = environment.apiURL + 'admin/stations';
   rentStationApiUrl = environment.apiURL + 'admin/rent-station';
-  driverApiUrl = environment.apiURL + 'admin/drivers';
   routeApiUrl = environment.apiURL + 'admin/route';
+  //
+  vehicleApiUrl = environment.apiURL + 'admin/vehicle';
+  vehicleAdminTrackingApiUrl = environment.apiURL + 'admin/tracking-vehicle';
+  vehicleIdAminTrackingApiUrl =
+    environment.apiURL + 'admin/tracking-vehicle/vehicle';
   constructor(private http: HttpClient) {}
   // station
   getAllStation(title?: string): Observable<StationsResponse> {
@@ -84,6 +95,35 @@ export class MapService {
   getRouteDirection(coordinates: string): Observable<any> {
     return this.http.get<any>(
       `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${environment.mapbox.accessToken}`
+    );
+  }
+  // getAllVehicle
+  getListVehicle(vehicleName?: string): Observable<VehiclesResponse> {
+    let queryParams = new HttpParams();
+    if (vehicleName) {
+      queryParams = queryParams.append('Name', vehicleName);
+    }
+    queryParams = queryParams.append('Status', 1);
+    return this.http.get<VehiclesResponse>(`${this.vehicleApiUrl}`, {
+      params: queryParams,
+    });
+  }
+  getVehicleById(id: string): Observable<VehicleResponse> {
+    return this.http.get<VehicleResponse>(`${this.vehicleApiUrl}/${id}`);
+  }
+  getVehicleTrackingOnMap(): Observable<VehicleTracking[]> {
+    return this.http.get<VehicleTracking[]>(
+      `${this.vehicleAdminTrackingApiUrl}`
+    );
+  }
+  getVehicleTrackingById(id: string): Observable<VehicleTrackingResponse> {
+    let queryParams = new HttpParams();
+    if (id) {
+      queryParams = queryParams.append('vehicleId', id);
+    }
+    return this.http.get<VehicleTrackingResponse>(
+      `${this.vehicleIdAminTrackingApiUrl}`,
+      { params: queryParams }
     );
   }
 }

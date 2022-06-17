@@ -13,6 +13,7 @@ import { Injectable } from '@angular/core';
 })
 export class CategorySerivce {
   apiURL = environment.apiURL + 'admin/category';
+  partnerApiUrl = environment.apiURL + 'partner/get-config/categories';
   constructor(private http: HttpClient) {}
   getListCategory(
     name?: string | null,
@@ -40,5 +41,12 @@ export class CategorySerivce {
   }
   deleteCategory(id: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/${id}`);
+  }
+  getListCategoryForPartner(): Observable<CategorysResponse> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('Status', 1);
+    return this.http.get<CategorysResponse>(`${this.partnerApiUrl}`, {
+      params: queryParams,
+    });
   }
 }

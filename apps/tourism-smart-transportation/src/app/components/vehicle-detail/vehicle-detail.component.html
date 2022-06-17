@@ -5,42 +5,42 @@
   <div style="margin-top: 10px"></div>
   <div class="driver-container">
     <div class="driver-title">
-      <div>Họ và Tên</div>
+      <div>Tên Phương tiện</div>
     </div>
     <div class="driver-content">
-      <div>Dương Thanh Sang</div>
+      <div>{{ VehicleDetail?.name }}</div>
     </div>
   </div>
   <div class="driver-container">
     <div class="driver-title">
-      <div>Ngày sinh</div>
+      <div>Biển số</div>
     </div>
     <div class="driver-content">
-      <div>09/09/2000</div>
+      <div>{{ VehicleDetail?.licensePlates }}</div>
     </div>
   </div>
   <div class="driver-container">
     <div class="driver-title">
-      <div>Giới tính</div>
+      <div>Màu</div>
     </div>
     <div class="driver-content">
-      <div>Name</div>
+      <div>{{ VehicleDetail?.color }}</div>
     </div>
   </div>
   <div class="driver-container">
     <div class="driver-title">
-      <div>Điện thoại</div>
+      <div>Loại xe</div>
     </div>
     <div class="driver-content">
-      <div>0982354461</div>
+      <div>{{ VehicleDetail?.vehicleTypeName }}</div>
     </div>
   </div>
   <div class="driver-container">
     <div class="driver-title">
-      <div>Phương Tiện</div>
+      <div>Loại dịch vụ</div>
     </div>
     <div class="driver-content">
-      <div>51B-273.39</div>
+      <div>{{ VehicleDetail?.serviceTypeName }}</div>
     </div>
   </div>
   <div class="driver-container">
@@ -48,7 +48,15 @@
       <div>Công ty</div>
     </div>
     <div class="driver-content">
-      <div>Vận tải Gia Nguyên</div>
+      <div>{{ VehicleDetail?.companyName }}</div>
+    </div>
+  </div>
+  <div class="driver-container">
+    <div class="driver-title">
+      <div>Tài xế</div>
+    </div>
+    <div class="driver-content">
+      <div>{{ VehicleDetail?.companyName }}</div>
     </div>
   </div>
 </div>

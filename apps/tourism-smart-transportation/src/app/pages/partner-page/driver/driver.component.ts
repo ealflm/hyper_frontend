@@ -81,7 +81,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.searchSubscription = this.searchSubject
-      .pipe(debounceTime(1000), distinctUntilChanged())
+      .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((value) => {
         // console.log(value);
         this.getListDriverOfPartner();

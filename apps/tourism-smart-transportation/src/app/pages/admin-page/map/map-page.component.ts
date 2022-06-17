@@ -1,3 +1,10 @@
+import {
+  VehicleTracking,
+  VehicleTrackingsResponse,
+} from './../../../models/VehicleTrackingResponse';
+import { HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { VehiclesResponse } from './../../../models/VehicleResponse';
 import { VehicleService } from './../../../services/vehicle.service';
 import {
   Route,
@@ -8,7 +15,7 @@ import {
   RentStation,
   RentStationResponse,
 } from './../../../models/RentStationResponse';
-import { map, Subscription } from 'rxjs';
+import { forkJoin, map, mergeMap, Subscription, of } from 'rxjs';
 import { MapBoxService } from '../../../services/map-box.service';
 import { Validators, FormArray, FormGroup, FormBuilder } from '@angular/forms';
 import {
@@ -23,6 +30,7 @@ import { MapService } from '../../../services/map.service';
 import { StationsResponse, Station } from '../../../models/StationResponse';
 import { RentStationsResponse } from '../../../models/RentStationResponse';
 import { ReturnStatement } from '@angular/compiler';
+import { Vehicle } from '../../../models/VehicleResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-map-page',
@@ -80,7 +88,7 @@ export class MapPageComponent
 
   //
   // drivers: any = [];
-  vehicles: any = [];
+  vehicles: Vehicle[] = [];
   stations: Station[] = [];
   rent_stations: RentStation[] = [];
   routes: Route[] = [];
@@ -88,12 +96,16 @@ export class MapPageComponent
   stationDetail!: Station;
   rentStationDetail!: RentStation;
   routeDetail!: Route;
+  vehicleDetail!: Vehicle;
   //
   idStation = '';
   checkBoxValue: string[] = [];
 
   currentRentStationMarkers: any = [];
   currentBusStationMarkers: any = [];
+  geojson: any;
+  trackingIntervel: any;
+
   private subscription?: Subscription;
   constructor(
     private mapboxService: MapBoxService,
@@ -107,6 +119,12 @@ export class MapPageComponent
     // this.addMarker();
     this.getBusStationMarkers();
     this.getRentStationMarkers();
+    this.getAllVehicles();
+    // this.getVehicleTrackingOnMap();
+    // this.getVehicleTrackingOnMap();
+    // setInterval(() => {
+
+    // }, 2000);
   }
   ngAfterViewInit() {
     this.mapboxService.initializeMap(103.9967, 10.22698, 12);
@@ -191,60 +209,81 @@ export class MapPageComponent
     } else if (this.fillterMenu === 'rent-station') {
       this.getAllRentStations();
     } else if (this.fillterMenu === 'vehicle') {
-      this.getAllVehicle();
+      this.getAllVehicles();
     } else if (this.fillterMenu === 'route') {
       this.getAllRoutes();
     }
   }
+
   onGetValueCheckBox(valueCheckbox: []) {
     this.checkBoxValue = valueCheckbox;
-
     if (valueCheckbox.length <= 0) {
+      clearInterval(this.trackingIntervel);
       this.removeBusStationMarker();
       this.removeRentStationMarker();
+      this.mapboxService.removeLayerTracking();
     } else if (valueCheckbox.length > 0) {
       this.getBusStationMarkers();
       this.getRentStationMarkers();
       switch (valueCheckbox.sort().join('-')) {
         case 'vehicle':
-          console.log('vehicle');
+          clearInterval(this.trackingIntervel);
           this.removeBusStationMarker();
           this.removeRentStationMarker();
+          this.trackingIntervel = setInterval(() => {
+            this.getVehicleTrackingOnMap();
+          }, 2000);
           break;
         case 'bus-station':
+          clearInterval(this.trackingIntervel);
+          this.mapboxService.removeLayerTracking();
           this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.removeRentStationMarker();
+
           break;
         case 'rent-station':
+          clearInterval(this.trackingIntervel);
+          this.mapboxService.removeLayerTracking();
           this.removeRentStationMarker();
           this.setRentStationMarkers(this.rentStationsOnMap);
           this.removeBusStationMarker();
           break;
         case 'rent-station-vehicle':
+          clearInterval(this.trackingIntervel);
           this.removeBusStationMarker();
           this.setRentStationMarkers(this.rentStationsOnMap);
-          console.log('1');
+          this.trackingIntervel = setInterval(() => {
+            this.getVehicleTrackingOnMap();
+          }, 2000);
           break;
         case 'bus-station-vehicle':
+          clearInterval(this.trackingIntervel);
           this.removeRentStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
-
-          console.log('2');
+          this.trackingIntervel = setInterval(() => {
+            this.getVehicleTrackingOnMap();
+          }, 2000);
           break;
         case 'bus-station-rent-station':
+          clearInterval(this.trackingIntervel);
+          this.mapboxService.removeLayerTracking();
           this.removeRentStationMarker();
           this.removeBusStationMarker();
-
           this.setBusStationMarkers(this.busStationsOnMap);
           this.setRentStationMarkers(this.rentStationsOnMap);
           break;
         case 'bus-station-rent-station-vehicle':
+          clearInterval(this.trackingIntervel);
           this.setBusStationMarkers(this.busStationsOnMap);
           this.setRentStationMarkers(this.rentStationsOnMap);
-          console.log('4');
+          this.trackingIntervel = setInterval(() => {
+            this.getVehicleTrackingOnMap();
+          }, 2000);
           break;
         default:
+          clearInterval(this.trackingIntervel);
+          this.mapboxService.removeLayerTracking();
           this.removeBusStationMarker();
           this.removeRentStationMarker();
           break;
@@ -271,7 +310,9 @@ export class MapPageComponent
 
   // fillter function
   // onFillterDriverByName(name: any) {}
-  onFillterVehicleByName(name: any) {}
+  onFillterVehicleByName(name: any) {
+    this.getAllVehicles(name);
+  }
   onFillterStationByName(title: any) {
     this.getAllStations(title);
   }
@@ -311,6 +352,44 @@ export class MapPageComponent
     this.showSideBarList = false;
     this.showSideBarDetail = true;
     console.log(event);
+
+    const callApiVehicleDetail = this.mapService
+      .getVehicleById(event.id)
+      .pipe(catchError((error: any) => of(error)));
+    const callApiTrackingVehicle = this.mapService
+      .getVehicleTrackingById(event.id)
+      .pipe(catchError((error: any) => of(error)));
+    forkJoin([callApiVehicleDetail, callApiTrackingVehicle]).subscribe(
+      (res) => {
+        this.vehicleDetail = {
+          id: res[0].body.id,
+          name: res[0].body.name,
+          licensePlates: res[0].body.licensePlates,
+          color: res[0].body.color,
+          vehicleTypeName: res[0].body.vehicleTypeName,
+          serviceTypeName: res[0].body.serviceTypeName,
+          companyName: res[0].body.companyName,
+          location: {
+            longitude: res[1]?.body?.longitude,
+            latitude: res[1]?.body?.latitude,
+          },
+        };
+      },
+      (error) => of(error)
+    );
+    // res.body.map((vehicle: any) => {
+    //   this.vehicleService
+    //     .getVehicleTrackingById(vehicle.id)
+    //     .subscribe((res) => {
+    //       this.vehicles = {
+    //         id: vehicle.id,
+    //         location: {
+    //           longitude: res.body.longtitude,
+    //           latitude: res.body.latitude,
+    //         },
+    //       };
+    //     });
+    // })
   }
   getDetailStation(event: any) {
     this.showSideBarList = false;
@@ -412,23 +491,12 @@ export class MapPageComponent
       });
   }
   // call API vehilce
-  getAllVehicle() {
-    this.vehicleService.getListVehicle().subscribe((res) =>
-      res.body.map((vehicle: any) => {
-        this.vehicleService
-          .getVehicleTrackingById('62a33c2b032de0bd21ee5a99')
-          .subscribe((res) => {
-            this.vehicles = {
-              id: vehicle.id,
-              location: {
-                longitude: res.body.longtitude,
-                latitude: res.body.latitude,
-              },
-            };
-            console.log(this.vehicles);
-          });
-      })
-    );
+  getAllVehicles(vehicleName?: string) {
+    this.mapService
+      .getListVehicle(vehicleName)
+      .subscribe((res: VehiclesResponse) => {
+        this.vehicles = res.body;
+      });
   }
 
   // Map
@@ -448,6 +516,9 @@ export class MapPageComponent
         .setLngLat([marker.longitude, marker.latitude] as [number, number])
         .addTo(this.mapboxService.map);
       markerDiv.getElement().addEventListener('click', () => {
+        this.fillterMenu = 'rent-station';
+        this.showSideBarList = false;
+        this.showSideBarDetail = true;
         this.getDetailRentStation({ id: marker.id });
         if (marker.longitude && marker.latitude) {
           this.mapboxService.flyToMarker(marker.longitude, marker.latitude);
@@ -481,6 +552,9 @@ export class MapPageComponent
         .setLngLat([marker.longitude, marker.latitude] as [number, number])
         .addTo(this.mapboxService.map);
       markerDiv.getElement().addEventListener('click', () => {
+        this.fillterMenu = 'bus-station';
+        this.showSideBarList = false;
+        this.showSideBarDetail = true;
         this.getDetailStation({ id: marker.id });
         if (marker.longitude && marker.latitude) {
           this.mapboxService.flyToMarker(marker.longitude, marker.latitude);
@@ -496,5 +570,49 @@ export class MapPageComponent
         this.currentBusStationMarkers[i].remove();
       }
     }
+  }
+
+  getVehicleTrackingOnMap() {
+    this.mapService
+      .getVehicleTrackingOnMap()
+      .pipe(
+        map((vehicleTracking) => {
+          const geojson = vehicleTracking.map((vehicle) => {
+            return {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [vehicle.longitude, vehicle.latitude],
+              },
+            };
+          });
+          this.geojson = {
+            type: 'FeatureCollection',
+            features: [geojson],
+          };
+        })
+      )
+      .subscribe(() => {
+        const geojsontest = {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [103.97229998962916, 10.162733227959748],
+              },
+            },
+            {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [103.98259194267769, 10.213039497518153],
+              },
+            },
+          ],
+        };
+        this.mapboxService.trackingVehicle(geojsontest);
+      });
   }
 }

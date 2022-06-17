@@ -9,6 +9,7 @@ import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment.prod';
+
 import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 @Injectable({
   providedIn: 'root',
@@ -83,7 +84,41 @@ export class MapBoxService {
       },
     });
   }
-
+  removeLayerTracking() {
+    if (this.map.getLayer('iss')) {
+      this.map.removeLayer('iss');
+    }
+    if (this.map.getSource('iss')) {
+      this.map.removeSource('iss');
+    }
+  }
+  trackingVehicle(geojson: any) {
+    console.log(geojson);
+    this.removeLayerTracking();
+    this.map.loadImage(
+      'https://img.icons8.com/color/48/undefined/car--v1.png',
+      (error, image) => {
+        if (error) throw error;
+        if (!this.map.hasImage('car')) {
+          if (image) {
+            this.map.addImage('car', image);
+          }
+        }
+        this.map.addLayer({
+          id: 'iss',
+          type: 'symbol',
+          source: {
+            type: 'geojson',
+            data: geojson,
+          },
+          layout: {
+            'icon-image': 'car',
+            'icon-size': 0.5,
+          },
+        });
+      }
+    );
+  }
   initializeMiniMap() {
     this.miniMap = new mapboxgl.Map({
       container: 'mini-map',
