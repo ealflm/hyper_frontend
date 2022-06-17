@@ -23,7 +23,6 @@ export class DataMapComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.selectedCheckBox);
     this.selectedCheckBox = this.CheckBoxValue;
   }
   ngOnChanges(changes: SimpleChanges): void {}

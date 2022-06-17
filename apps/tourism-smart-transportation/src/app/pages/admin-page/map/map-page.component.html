@@ -122,7 +122,7 @@
               >
                 navigate_before
               </span>
-              <div>Chi tiết tài xế</div>
+              <div>Chi tiết Phương tiện</div>
             </div>
             <div class="header-text" *ngIf="fillterMenu === 'bus-station'">
               <span
@@ -186,6 +186,7 @@
           <!--  -->
           <tourism-smart-transportation-vehicle-detail
             *ngIf="fillterMenu === 'vehicle' && showSideBarDetail"
+            [VehicleDetail]="vehicleDetail"
           ></tourism-smart-transportation-vehicle-detail>
           <!-- <tourism-smart-transportation-driver-detail
             *ngIf="fillterMenu === 'driver' && showSideBarDetail"

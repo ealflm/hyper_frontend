@@ -43,6 +43,11 @@
       [value]="vehicles"
       responsiveLayout="scroll"
       scrollDirection="both"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 25, 50]"
+      [paginator]="vehicles.length > 0 ? true : false"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {totalRecords} mục"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -51,52 +56,35 @@
           <th>Màu</th>
           <th>Loại xe</th>
           <th>Loại dịch vụ</th>
-          <th>Tọa độ</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-vehicle let-i="rowIndex">
         <tr>
-          <td
-            class="tb-name"
-            [pTooltip]="vehicle.firstName + ' ' + vehicle.lastName"
-            tooltipPosition="bottom"
-          >
-            <img
-              [src]="
-                vehicle.photoUrl === '' || vehicle.photoUrl === null
-                  ? '../assets/image/imagePreview.png'
-                  : 'https://se32.blob.core.windows.net/vehicle/' +
-                    vehicle.photoUrl
-              "
-              alt=""
-            />&nbsp;{{
-              vehicle.firstName + ' ' + vehicle.lastName | limitLength: 10
-            }}
-          </td>
-          <td [pTooltip]="vehicle?.companyName" tooltipPosition="bottom">
-            <!-- {{
-              vehicle?.companyName.length > 10
-                ? (vehicle?.companyName | slice: 0:10) + '..'
-                : vehicle?.companyName
-            }} -->
-            {{ vehicle?.companyName | limitLength: 10 }}
-          </td>
-          <td>{{ vehicle.gender ? 'Nam' : 'Nữ' }}</td>
-          <td>{{ vehicle.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ vehicle.phone }}</td>
-          <td [pTooltip]="vehicle?.email" tooltipPosition="bottom">
-            {{ vehicle.email | limitLength: 10 }}
-          </td>
-          <td>{{ vehicle.createdDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ vehicle.modifiedDate | date: 'dd/MM/yyyy' }}</td>
           <td>
-            <div [class]="status[vehicle.status].class">
-              {{ status[vehicle.status].lable }}
+            {{ vehicle.name }}
+          </td>
+          <td>
+            {{ vehicle?.licensePlates | limitLength: 10 }}
+          </td>
+          <td>{{ vehicle?.color }}</td>
+          <td>{{ vehicle?.vehicleTypeId }}</td>
+          <td>{{ vehicle.serviceTypeName }}</td>
+          <td>
+            <div [class]="status[vehicle?.status]?.class">
+              {{ status[vehicle?.status]?.lable }}
             </div>
           </td>
           <td style="text-align: center">
+            <span
+              *ngIf="vehicle.status === 0"
+              class="material-icons-outlined enable"
+              style="cursor: pointer"
+              (click)="restoreVehicle(vehicle.id)"
+            >
+              restore
+            </span>
             <span
               class="material-icons-outlined enable"
               style="margin-left: 5px"
@@ -216,7 +204,15 @@
                   />
                 </div>
                 <div class="col-12 vehicle-input-long">
-                  <div class="vehicle-text">Loại xe</div>
+                  <div class="vehicle-text">
+                    Loại xe
+                    <small
+                      *ngIf="_vehiclesForm['vehicleTypeId'].errors?.['required'] && isSubmit"
+                      class="p-error"
+                    >
+                      không được bỏ trống</small
+                    >
+                  </div>
                   <p-dropdown
                     [style]="{ height: '28px' }"
                     class="dropdown"
@@ -226,11 +222,11 @@
                     [options]="vehicleTypes"
                   >
                     <ng-template let-item pTemplate="item">
-                      {{ item.label }}-{{ item.seats + 'chỗ' }}
+                      {{ item.label }} - {{ item.seats + ' chỗ' }}
                     </ng-template>
 
                     <ng-template let-item pTemplate="selectedItem">
-                      {{ item.label }}-{{ item.seats + 'chỗ' }}
+                      {{ item.label }} - {{ item.seats + ' chỗ' }}
                     </ng-template>
                   </p-dropdown>
                 </div>
@@ -253,6 +249,7 @@
                     optionValue="id"
                     formControlName="serviceTypeId"
                     [options]="serviceTypes"
+                    (onChange)="onChangeServiceType()"
                   >
                     <ng-template let-item pTemplate="item">
                       {{ item.name }}
@@ -263,85 +260,92 @@
                     </ng-template>
                   </p-dropdown>
                 </div>
-
-                <div class="col-12 vehicle-input-long">
-                  <div class="vehicle-text">
-                    Trạm thuê xe
-                    <small
-                      *ngIf="_vehiclesForm['rentStationId'].errors?.['required'] && isSubmit "
-                      class="p-error"
-                      >Không được bỏ trống</small
+                <div
+                  *ngIf="
+                    _vehiclesForm['serviceTypeId'].value ===
+                    '5168511d-57f1-460a-8c7c-14664e3dbccc'
+                  "
+                  style="width: 100%"
+                >
+                  <div class="col-12 vehicle-input-long">
+                    <div class="vehicle-text">
+                      Trạm thuê xe
+                      <small
+                        *ngIf="_vehiclesForm['rentStationId'].errors?.['required'] && isSubmit "
+                        class="p-error"
+                        >Không được bỏ trống</small
+                      >
+                    </div>
+                    <p-dropdown
+                      [style]="{ height: '28px' }"
+                      class="dropdown"
+                      placeholder="Chọn trạm để xe"
+                      optionValue="id"
+                      formControlName="rentStationId"
+                      [options]="rentStations"
                     >
+                      <ng-template let-item pTemplate="item">
+                        {{ item.title }}
+                      </ng-template>
+
+                      <ng-template let-item pTemplate="selectedItem">
+                        {{ item.title }}
+                      </ng-template>
+                    </p-dropdown>
                   </div>
-                  <p-dropdown
-                    [style]="{ height: '28px' }"
-                    class="dropdown"
-                    placeholder="Chọn trạm để xe"
-                    optionValue="id"
-                    formControlName="rentStationId"
-                    [options]="rentStations"
-                  >
-                    <ng-template let-item pTemplate="item">
-                      {{ item.title }}
-                    </ng-template>
 
-                    <ng-template let-item pTemplate="selectedItem">
-                      {{ item.title }}
-                    </ng-template>
-                  </p-dropdown>
-                </div>
-
-                <div class="col-12 vehicle-input-long">
-                  <div class="vehicle-text">
-                    Năm sản xuất xe
-                    <small
-                      *ngIf="_vehiclesForm['publishYearId'].errors?.['required'] && isSubmit "
-                      class="p-error"
-                      >Không được bỏ trống</small
+                  <div class="col-12 vehicle-input-long">
+                    <div class="vehicle-text">
+                      Năm sản xuất xe
+                      <small
+                        *ngIf="_vehiclesForm['publishYearId'].errors?.['required'] && isSubmit "
+                        class="p-error"
+                        >Không được bỏ trống</small
+                      >
+                    </div>
+                    <p-dropdown
+                      [style]="{ height: '28px' }"
+                      class="dropdown"
+                      placeholder="Chọn năm sản xuất"
+                      optionValue="id"
+                      formControlName="publishYearId"
+                      [options]="publishYears"
                     >
-                  </div>
-                  <p-dropdown
-                    [style]="{ height: '28px' }"
-                    class="dropdown"
-                    placeholder="Chọn năm sản xuất"
-                    optionValue="id"
-                    formControlName="publishYearId"
-                    [options]="publishYears"
-                  >
-                    <ng-template let-item pTemplate="item">
-                      {{ item.name }}
-                    </ng-template>
+                      <ng-template let-item pTemplate="item">
+                        {{ item.name }}
+                      </ng-template>
 
-                    <ng-template let-item pTemplate="selectedItem">
-                      {{ item.name }}
-                    </ng-template>
-                  </p-dropdown>
-                </div>
-                <div class="col-12 vehicle-input-long">
-                  <div class="vehicle-text">
-                    Phân khúc xe
-                    <small
-                      *ngIf="_vehiclesForm['vehicleClassId'].errors?.['required'] && isSubmit "
-                      class="p-error"
-                      >Không được bỏ trống</small
+                      <ng-template let-item pTemplate="selectedItem">
+                        {{ item.name }}
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
+                  <div class="col-12 vehicle-input-long">
+                    <div class="vehicle-text">
+                      Phân khúc xe
+                      <small
+                        *ngIf="_vehiclesForm['vehicleClassId'].errors?.['required'] && isSubmit "
+                        class="p-error"
+                        >Không được bỏ trống</small
+                      >
+                    </div>
+                    <p-dropdown
+                      [style]="{ height: '28px' }"
+                      class="dropdown"
+                      placeholder="Chọn năm sản xuất"
+                      optionValue="id"
+                      formControlName="vehicleClassId"
+                      [options]="vehicleClass"
                     >
-                  </div>
-                  <p-dropdown
-                    [style]="{ height: '28px' }"
-                    class="dropdown"
-                    placeholder="Chọn năm sản xuất"
-                    optionValue="id"
-                    formControlName="vehicleClassId"
-                    [options]="vehicleClass"
-                  >
-                    <ng-template let-item pTemplate="item">
-                      {{ item.name }}
-                    </ng-template>
+                      <ng-template let-item pTemplate="item">
+                        {{ item.name }}
+                      </ng-template>
 
-                    <ng-template let-item pTemplate="selectedItem">
-                      {{ item.name }}
-                    </ng-template>
-                  </p-dropdown>
+                      <ng-template let-item pTemplate="selectedItem">
+                        {{ item.name }}
+                      </ng-template>
+                    </p-dropdown>
+                  </div>
                 </div>
               </div>
             </div>
@@ -359,6 +363,7 @@
       pRipple
       type="button"
       label="Hủy"
+      *ngIf="createStatus"
       (click)="cancelDialog()"
     ></button>
     <button
@@ -368,7 +373,39 @@
       pRipple
       type="button"
       label="Lưu"
+      *ngIf="createStatus"
       (click)="onSaveVehicle()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Chỉnh sửa"
+      *ngIf="!editMode && !createStatus"
+      (click)="onChangeEdit()"
+    ></button>
+    <!-- EditMode -->
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      *ngIf="editMode && !createStatus"
+      (click)="cancelDialog()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Lưu"
+      *ngIf="editMode && !createStatus"
+      (click)="onSaveChange()"
     ></button>
   </ng-template>
 </p-dialog>
@@ -437,4 +474,36 @@
   </ng-template>
 </p-confirmDialog>
 <!-- end confirm dialog -->
+<!--  -->
+<p-confirmDialog
+  key="restoreConfirm"
+  #rsCf
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      Bạn có muốn kích hoạt lại phương tiện này?
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      (click)="rsCf.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Kích hoạt"
+      (click)="rsCf.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
 <p-toast position="top-right"></p-toast>

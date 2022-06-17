@@ -43,6 +43,11 @@
       [value]="schedules"
       responsiveLayout="scroll"
       scrollDirection="both"
+      [rows]="5"
+      [rowsPerPageOptions]="[5, 25, 50]"
+      [paginator]="schedules.length > 0 ? true : false"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {totalRecords} mục"
     >
       <ng-template pTemplate="header">
         <tr>

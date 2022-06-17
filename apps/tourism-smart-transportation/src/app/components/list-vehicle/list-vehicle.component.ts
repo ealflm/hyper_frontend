@@ -1,3 +1,4 @@
+import { Vehicle } from './../../models/VehicleResponse';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./list-vehicle.component.scss'],
 })
 export class ListVehicleComponent implements OnInit {
-  @Input() vehicles: any = [];
+  @Input() vehicles: Vehicle[] = [];
 
   @Output() GetFillterVehicleName: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetIdVehicle: EventEmitter<any> = new EventEmitter<any>();

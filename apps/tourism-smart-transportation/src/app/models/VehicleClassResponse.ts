@@ -6,13 +6,13 @@ export class VehicleClass {
   status?: number;
 }
 
-export class VehiclesResponse {
+export class VehiclesClassResponse {
   statusCode?: number;
   message?: string;
   body!: UtilPaging<VehicleClass[]>;
 }
 
-export class VehicleResponse {
+export class VehicleClassResponse {
   statusCode?: number;
   message?: string;
   body!: VehicleClass;

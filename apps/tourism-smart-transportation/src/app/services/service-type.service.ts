@@ -12,4 +12,7 @@ export class ServiceTypeService {
   getAllServiceType(): Observable<any> {
     return this.http.get<any>(`${this.apiURL}`);
   }
+  getListServiceTypeForPartner(): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}`);
+  }
 }
