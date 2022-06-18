@@ -32,18 +32,31 @@
       border-radius: 9px;
       .card-header {
         display: flex;
-        img {
-          width: 30px;
-          height: 30px;
-          object-fit: cover;
+        justify-content: space-between;
+        .isOnline {
+          width: 7px;
+          height: 7px;
           border-radius: 50%;
-          display: block;
+          background-color: $primary-color;
         }
-        div {
-          margin: auto 0px;
-          @include font-Roboto-Regular-Body2;
-          color: $black-default;
+        .isOffline {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background-color: $red-primary;
         }
+        // img {
+        //   width: 30px;
+        //   height: 30px;
+        //   object-fit: cover;
+        //   border-radius: 50%;
+        //   display: block;
+        // }
+        // div {
+        //   margin: auto 0px;
+        //   @include font-Roboto-Regular-Body2;
+        //   color: $black-default;
+        // }
       }
       .card-body {
         margin-top: 5px;

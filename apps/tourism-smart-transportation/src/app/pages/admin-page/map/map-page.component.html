@@ -37,7 +37,7 @@
         <div class="container">
           <div class="header">
             <div class="header-text" *ngIf="fillterMenu === 'vehicle'">
-              Danh sách tài xế
+              Danh sách phương tiện
             </div>
             <div class="header-text" *ngIf="fillterMenu === 'route'">
               Danh sách tuyến
@@ -122,7 +122,19 @@
               >
                 navigate_before
               </span>
-              <div>Chi tiết Phương tiện</div>
+              <div>Chi tiết phương tiện</div>
+              &nbsp;&nbsp;
+              <span
+                class="isOnline"
+                *ngIf="vehicleDetail.isRunning === 1"
+              ></span>
+              <span
+                class="isOffline"
+                *ngIf="
+                  vehicleDetail.isRunning === 0 ||
+                  vehicleDetail.isRunning === null
+                "
+              ></span>
             </div>
             <div class="header-text" *ngIf="fillterMenu === 'bus-station'">
               <span

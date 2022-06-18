@@ -8,11 +8,12 @@ import { Injectable } from '@angular/core';
 })
 export class ServiceTypeService {
   apiURL = environment.apiURL + 'admin/service-type';
+  partnerApiUrl = environment.apiURL + 'partner/service-type';
   constructor(private http: HttpClient) {}
   getAllServiceType(): Observable<any> {
     return this.http.get<any>(`${this.apiURL}`);
   }
-  getListServiceTypeForPartner(): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}`);
+  getListServiceTypeForPartner(partnerId: string): Observable<any> {
+    return this.http.get<any>(`${this.partnerApiUrl}/${partnerId}`);
   }
 }

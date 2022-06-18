@@ -72,7 +72,7 @@ export class VehicleService {
     vehicle: Vehicle
   ): Observable<any> {
     return this.http.put<Vehicle>(
-      `${this.partnerApiURLVehicle}${vehicleId}`,
+      `${this.partnerApiURLVehicle}/${vehicleId}`,
       vehicle
     );
   }

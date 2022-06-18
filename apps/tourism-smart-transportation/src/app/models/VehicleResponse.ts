@@ -14,8 +14,9 @@ export class Vehicle {
   status?: number;
   vehicleTypeName?: string;
   publishYearId?: string;
-  vehicleClassId?: string;
+  categoryId?: string;
   location?: VehicleTracking;
+  isRunning?: number;
 }
 
 export class VehiclesResponse {

@@ -69,8 +69,8 @@
             {{ vehicle?.licensePlates | limitLength: 10 }}
           </td>
           <td>{{ vehicle?.color }}</td>
-          <td>{{ vehicle?.vehicleTypeId }}</td>
-          <td>{{ vehicle.serviceTypeName }}</td>
+          <td>{{ vehicle?.vehicleTypeName }}</td>
+          <td>{{ vehicle?.serviceTypeName }}</td>
           <td>
             <div [class]="status[vehicle?.status]?.class">
               {{ status[vehicle?.status]?.lable }}

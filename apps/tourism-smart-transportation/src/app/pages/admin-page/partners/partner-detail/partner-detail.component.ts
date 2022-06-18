@@ -136,7 +136,10 @@ export class PartnerDetailComponent implements OnInit {
         addressUser: [{ value: '', disabled: true }],
         addressCompany: [{ value: '', disabled: true }],
         serviceType: [{ value: '', disabled: true }, Validators.required],
-        phone: [{ value: '', disabled: true }],
+        phone: [
+          { value: '', disabled: true },
+          [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
+        ],
         email: [{ value: '', disabled: true }],
         dateOfBirth: [{ value: '', disabled: true }, Validators.required],
         selectedGender: [{ value: '', disabled: true }, Validators.required],

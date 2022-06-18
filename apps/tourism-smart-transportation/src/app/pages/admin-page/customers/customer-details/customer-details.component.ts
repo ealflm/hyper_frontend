@@ -156,7 +156,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         selectedGender: [{ value: '', disabled: true }, Validators.required],
         phone: [
           { value: '', disabled: true },
-          Validators.required,
+
+          [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
           // Validators.minLength(9),
           // Validators.maxLength(15),
         ],
@@ -188,7 +189,6 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     this._customersEditForm['lastName'].enable();
     this._customersEditForm['dateOfBirth'].enable();
     this._customersEditForm['selectedGender'].enable();
-
     this._customersEditForm['phone'].enable();
     this._customersEditForm['email'].enable();
     this._customersEditForm['addressUser'].enable();
