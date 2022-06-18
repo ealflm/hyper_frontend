@@ -1,0 +1,124 @@
+@import '../../../../styles.scss';
+.partner-map-wrap {
+  @include fixed-scroll-view;
+  @include custom-scrollbar;
+  .map-container {
+    position: relative;
+    width: auto;
+    height: 100vh;
+    // background-color: $primary-color;
+    .layer-map {
+      position: absolute;
+      right: 2%;
+      top: 1%;
+      width: 42px;
+      height: 42px;
+      background-color: rgba(255, 255, 255, 0.88);
+      color: $black-default;
+      border-radius: 10px;
+      cursor: pointer;
+      span {
+        display: block;
+        text-align: center;
+        margin: 9px auto;
+      }
+    }
+    .map-side-bar-top {
+      position: absolute;
+      right: 2%;
+      top: 3%;
+      width: 300px;
+      height: 25vh;
+      background-color: rgba(255, 255, 255, 0.88);
+      border-radius: 10px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      @include custom-scrollbar;
+    }
+    .map-side-bar-body {
+      overflow: hidden;
+      border-radius: 10px;
+      position: absolute;
+      right: 2%;
+      bottom: 3%;
+      width: 300px;
+      height: 67vh;
+      background-color: rgba(255, 255, 255, 0.88);
+      overflow-x: hidden;
+      overflow-y: hidden;
+      .body-bottom-warp {
+        padding: 0 12px;
+      }
+    }
+    .map-sidebar-detail {
+      border-radius: 10px;
+      position: absolute;
+      right: 2%;
+      top: 30%;
+      width: 300px;
+      height: auto;
+      background-color: rgba(255, 255, 255, 0.88);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+}
+::ng-deep {
+  .bottom-side-bar {
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+    margin-right: 15px;
+    .p-button-rounded {
+      @include button-rounded-primary(57, null, null, $primary-color);
+      height: 32px;
+      margin-left: 10px;
+      color: $primary-color;
+      .p-button-label {
+        @include font-Roboto-Medium-Button;
+        color: $white-primary-color;
+      }
+    }
+  }
+}
+.partner-container {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px 0 18px;
+    .header-text {
+      display: flex;
+      @include font-Roboto-Medium-Subtitle2;
+      color: $black-default;
+      span {
+        display: block;
+        margin: auto 0;
+        cursor: pointer;
+        &:hover {
+          background-color: $hover-bg-color;
+        }
+      }
+      .isOnline {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: $primary-color;
+      }
+      .isOffline {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: $red-primary;
+      }
+      div {
+        margin: auto 0;
+      }
+    }
+    .header-iconClose {
+      cursor: pointer;
+    }
+  }
+  .body-warp {
+    padding: 0px 20px 10px 15px;
+  }
+}

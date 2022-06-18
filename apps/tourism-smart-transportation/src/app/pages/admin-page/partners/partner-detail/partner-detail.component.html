@@ -126,7 +126,19 @@
             </div>
 
             <div class="col-12 partner-input-long" style="margin-top: 10px">
-              <div class="partner-text">Số điện thoại</div>
+              <div class="partner-text">
+                Số điện thoại
+                <small
+                  *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+                <small
+                  *ngIf="_inforsForm['phone'].errors?.['pattern'] "
+                  class="p-error"
+                  >sai định dạng (từ 0-9 và 10 số)</small
+                >
+              </div>
               <input
                 class="partner-input-text-long"
                 type="text"
@@ -134,13 +146,7 @@
                 formControlName="phone"
                 (keyup.enter)="onSaveInfor()"
               />
-              <div>
-                <!-- <small
-          *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
-          class="p-error"
-          >Số điện thoại không được bỏ trống</small
-        > -->
-              </div>
+              <div></div>
             </div>
             <div class="col-12 partner-input-long" style="margin-top: 10px">
               <div class="partner-text">Email</div>

@@ -59,6 +59,7 @@ export class VehicleComponent
   filterByName = '';
   filterByStatus = 1;
   createStatus = false;
+  currentLicensePlates? = '';
   constructor(
     private confirmationService: ConfirmationService,
     private fb: FormBuilder,
@@ -73,15 +74,13 @@ export class VehicleComponent
   ) {}
 
   ngOnInit(): void {
+    const user = this.localStorageService.getUser;
+    this.partnerId = user.id;
     this._getVehicleTypes();
     this._getServiceTypes();
     this._getPublishYears();
     this._getCategorys();
     this.getListVehicleOfPartner();
-    const user = this.localStorageService.getUser;
-    this.partnerId = user.id;
-    console.log(this.partnerId);
-
     this._mapStatus();
   }
   ngAfterViewInit(): void {
@@ -109,6 +108,7 @@ export class VehicleComponent
   }
   private _initVehicleForm() {
     this.vehicleForm = this.fb.group({
+      id: [''],
       vehicleId: [''],
       partnerId: [''],
       serviceTypeId: ['', Validators.required],
@@ -128,9 +128,9 @@ export class VehicleComponent
   }
   private _getServiceTypes() {
     this.serviceTypeService
-      .getListServiceTypeForPartner()
+      .getListServiceTypeForPartner(this.partnerId)
       .subscribe((res: any) => {
-        this.serviceTypes = res.body.items;
+        this.serviceTypes = res.body;
       });
   }
   private _getPublishYears() {
@@ -194,7 +194,7 @@ export class VehicleComponent
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
-              detail: 'Đã khóa tài xế',
+              detail: 'Đã khóa phương tiện',
             });
           }
           this.getListVehicleOfPartner();
@@ -214,9 +214,9 @@ export class VehicleComponent
       this._vehiclesForm['rentStationId'].clearValidators();
       this._vehiclesForm['publishYearId'].clearValidators();
       this._vehiclesForm['vehicleClassId'].clearValidators();
-      this._vehiclesForm['rentStationId'].setValue('');
-      this._vehiclesForm['publishYearId'].setValue('');
-      this._vehiclesForm['vehicleClassId'].setValue('');
+      this._vehiclesForm['rentStationId'].setValue(null);
+      this._vehiclesForm['publishYearId'].setValue(null);
+      this._vehiclesForm['vehicleClassId'].setValue(null);
     }
     this.vehicleForm.updateValueAndValidity();
   }
@@ -234,8 +234,8 @@ export class VehicleComponent
     this.vehicleService.getVehicleByIdForPartner(id).subscribe((res) => {
       if (res.body.serviceTypeId == '5168511d-57f1-460a-8c7c-14664e3dbccc') {
         this._vehiclesForm['rentStationId'].setValue(res.body.rentStationId);
-        this._vehiclesForm['publishYearId'].setValue('');
-        this._vehiclesForm['vehicleClassId'].setValue('');
+        this._vehiclesForm['publishYearId'].setValue(res.body.publishYearId);
+        this._vehiclesForm['vehicleClassId'].setValue(res.body.categoryId);
         this._vehiclesForm['rentStationId'].setValidators(Validators.required);
         this._vehiclesForm['publishYearId'].setValidators(Validators.required);
         this._vehiclesForm['vehicleClassId'].setValidators(Validators.required);
@@ -245,17 +245,19 @@ export class VehicleComponent
         this._vehiclesForm['rentStationId'].clearValidators();
         this._vehiclesForm['publishYearId'].clearValidators();
         this._vehiclesForm['vehicleClassId'].clearValidators();
-        this._vehiclesForm['rentStationId'].setValue('');
-        this._vehiclesForm['publishYearId'].setValue('');
-        this._vehiclesForm['vehicleClassId'].setValue('');
+        this._vehiclesForm['rentStationId'].setValue(null);
+        this._vehiclesForm['publishYearId'].setValue(null);
+        this._vehiclesForm['vehicleClassId'].setValue(null);
       }
-
+      this.currentLicensePlates = res?.body?.licensePlates;
       this._vehiclesForm['vehicleId'].setValue(res.body.id);
+      this._vehiclesForm['vehicleTypeId'].setValue(res.body.vehicleTypeId);
       this._vehiclesForm['partnerId'].setValue(res.body.partnerId);
       this._vehiclesForm['serviceTypeId'].setValue(res.body.serviceTypeId);
       this._vehiclesForm['name'].setValue(res.body.name);
       this._vehiclesForm['licensePlates'].setValue(res.body.licensePlates);
       this._vehiclesForm['color'].setValue(res.body.color);
+      this._vehiclesForm['id'].setValue(res.body.id);
     });
     this.vehicleForm.updateValueAndValidity();
   }
@@ -283,7 +285,7 @@ export class VehicleComponent
         vehicleTypeId: this._vehiclesForm['vehicleTypeId'].value,
         rentStationId: this._vehiclesForm['rentStationId'].value,
         publishYearId: this._vehiclesForm['publishYearId'].value,
-        vehicleClassId: this._vehiclesForm['vehicleClassId'].value,
+        categoryId: this._vehiclesForm['vehicleClassId'].value,
         name: this._vehiclesForm['name'].value,
         licensePlates: this._vehiclesForm['licensePlates'].value,
         color: this._vehiclesForm['color'].value,
@@ -303,20 +305,34 @@ export class VehicleComponent
     }
   }
   onSaveChange() {
+    const valueChange = this._vehiclesForm['licensePlates'].value;
+    let vehicle: Vehicle;
     if (this.editMode) {
       const vehicleId = this._vehiclesForm['id'].value;
-      const vehicle: Vehicle = {
-        partnerId: this.partnerId,
-        vehicleTypeId: this._vehiclesForm['vehicleTypeId'].value,
-        rentStationId: this._vehiclesForm['rentStationId'].value,
-        publishYearId: this._vehiclesForm['publishYearId'].value,
-        vehicleClassId: this._vehiclesForm['vehicleClassId'].value,
-        name: this._vehiclesForm['name'].value,
-        licensePlates: this._vehiclesForm['licensePlates'].value,
-        color: this._vehiclesForm['color'].value,
-        serviceTypeId: this._vehiclesForm['serviceTypeId'].value,
-      };
-      console.log(vehicle);
+      if (valueChange == this.currentLicensePlates) {
+        vehicle = {
+          partnerId: this.partnerId,
+          vehicleTypeId: this._vehiclesForm['vehicleTypeId'].value,
+          rentStationId: this._vehiclesForm['rentStationId'].value,
+          publishYearId: this._vehiclesForm['publishYearId'].value,
+          categoryId: this._vehiclesForm['vehicleClassId'].value,
+          name: this._vehiclesForm['name'].value,
+          color: this._vehiclesForm['color'].value,
+          serviceTypeId: this._vehiclesForm['serviceTypeId'].value,
+        };
+      } else {
+        vehicle = {
+          partnerId: this.partnerId,
+          vehicleTypeId: this._vehiclesForm['vehicleTypeId'].value,
+          rentStationId: this._vehiclesForm['rentStationId'].value,
+          publishYearId: this._vehiclesForm['publishYearId'].value,
+          categoryId: this._vehiclesForm['vehicleClassId'].value,
+          licensePlates: this._vehiclesForm['licensePlates'].value,
+          name: this._vehiclesForm['name'].value,
+          color: this._vehiclesForm['color'].value,
+          serviceTypeId: this._vehiclesForm['serviceTypeId'].value,
+        };
+      }
 
       this.vehicleService
         .updateVehicleForPartner(vehicleId, vehicle)
@@ -329,6 +345,7 @@ export class VehicleComponent
             });
           }
           this.getListVehicleOfPartner();
+          this.displayDialog = false;
         });
     }
   }
@@ -350,6 +367,7 @@ export class VehicleComponent
               });
             }
             this.getListVehicleOfPartner();
+            this.displayDialog = false;
           });
       },
     });

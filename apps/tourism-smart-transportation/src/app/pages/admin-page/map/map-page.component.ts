@@ -1,3 +1,4 @@
+import { MenuDataMap } from './../../../constant/menu-filter-status';
 import {
   VehicleTracking,
   VehicleTrackingsResponse,
@@ -42,36 +43,7 @@ export class MapPageComponent
 {
   coordinates: any;
 
-  headerMenu: any = [
-    {
-      name: 'vehicle',
-      class: '',
-      hiddenCheckbox: false,
-      icon: 'directions_car',
-      lable: 'Phương tiện',
-    },
-    {
-      name: 'rent-station',
-      class: '',
-      hiddenCheckbox: false,
-      icon: 'car_rental',
-      lable: 'Trạm thuê xe',
-    },
-    {
-      name: 'bus-station',
-      class: '',
-      hiddenCheckbox: false,
-      icon: 'directions_bus',
-      lable: 'Trạm xe buýt',
-    },
-    {
-      name: 'route',
-      class: '',
-      hiddenCheckbox: true,
-      icon: 'route',
-      lable: 'Tuyến xe buýt',
-    },
-  ];
+  headerMenu = MenuDataMap;
   fillterMenu?: string = 'vehicle';
   //
   // fillterDriverName = '';
@@ -141,6 +113,7 @@ export class MapPageComponent
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+    clearInterval(this.trackingIntervel);
   }
   onSaveLocation() {
     // console.log(this.locationForm.get('locations')?.value);
@@ -216,6 +189,8 @@ export class MapPageComponent
   }
 
   onGetValueCheckBox(valueCheckbox: []) {
+    // console.log(valueCheckbox);
+
     this.checkBoxValue = valueCheckbox;
     if (valueCheckbox.length <= 0) {
       clearInterval(this.trackingIntervel);
@@ -351,8 +326,6 @@ export class MapPageComponent
   getDetailVehicle(event: any) {
     this.showSideBarList = false;
     this.showSideBarDetail = true;
-    console.log(event);
-
     const callApiVehicleDetail = this.mapService
       .getVehicleById(event.id)
       .pipe(catchError((error: any) => of(error)));
@@ -369,27 +342,21 @@ export class MapPageComponent
           vehicleTypeName: res[0].body.vehicleTypeName,
           serviceTypeName: res[0].body.serviceTypeName,
           companyName: res[0].body.companyName,
+          isRunning: res[0].body.isRunning,
           location: {
             longitude: res[1]?.body?.longitude,
             latitude: res[1]?.body?.latitude,
           },
         };
+        if (res[1]?.body?.longitude && res[1]?.body?.latitude) {
+          this.mapboxService.flyToMarker(
+            res[1]?.body?.longitude,
+            res[1]?.body?.latitude
+          );
+        }
       },
       (error) => of(error)
     );
-    // res.body.map((vehicle: any) => {
-    //   this.vehicleService
-    //     .getVehicleTrackingById(vehicle.id)
-    //     .subscribe((res) => {
-    //       this.vehicles = {
-    //         id: vehicle.id,
-    //         location: {
-    //           longitude: res.body.longtitude,
-    //           latitude: res.body.latitude,
-    //         },
-    //       };
-    //     });
-    // })
   }
   getDetailStation(event: any) {
     this.showSideBarList = false;
@@ -586,33 +553,34 @@ export class MapPageComponent
               },
             };
           });
+
           this.geojson = {
             type: 'FeatureCollection',
-            features: [geojson],
+            features: geojson,
           };
         })
       )
       .subscribe(() => {
-        const geojsontest = {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [103.97229998962916, 10.162733227959748],
-              },
-            },
-            {
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [103.98259194267769, 10.213039497518153],
-              },
-            },
-          ],
-        };
-        this.mapboxService.trackingVehicle(geojsontest);
+        // const geojsontest = {
+        //   type: 'FeatureCollection',
+        //   features: [
+        //     {
+        //       type: 'Feature',
+        //       geometry: {
+        //         type: 'Point',
+        //         coordinates: [103.97229998962916, 10.162733227959748],
+        //       },
+        //     },
+        //     {
+        //       type: 'Feature',
+        //       geometry: {
+        //         type: 'Point',
+        //         coordinates: [103.98259194267769, 10.213039497518153],
+        //       },
+        //     },
+        //   ],
+        // };
+        this.mapboxService.trackingVehicle(this.geojson);
       });
   }
 }

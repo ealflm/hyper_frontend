@@ -1,1 +1,218 @@
-<p>map works!</p>
+<div class="partner-map-wrap">
+  <div class="map-container">
+    <div id="map" class="map-container"></div>
+    <div
+      class="layer-map animate__animated"
+      [ngClass]="!showRightSideBarStatus ? 'animate__flipInY' : ' '"
+      *ngIf="!showRightSideBarStatus"
+      (click)="showRightSideBar()"
+    >
+      <span class="material-icons-outlined"> layers </span>
+    </div>
+    <ng-container *ngIf="showRightSideBarStatus">
+      <div class="map-side-bar-top">
+        <div class="partner-container">
+          <div class="header">
+            <div class="header-text">Dữ liệu bản đồ</div>
+            <div class="header-iconClose" (click)="showRightSideBar()">
+              <span
+                class="material-icons animate__animated"
+                [ngClass]="showRightSideBarStatus ? 'animate__rotateIn' : ' '"
+              >
+                close
+              </span>
+            </div>
+          </div>
+          <div class="body-warp">
+            <tourism-smart-transportation-data-map
+              [DataMapValue]="headerMenu"
+              (GetFillterValue)="onGetFillterMenu($event)"
+              (GetValueCheckBox)="onGetValueCheckBox($event)"
+              [CheckBoxValue]="checkBoxValue"
+            ></tourism-smart-transportation-data-map>
+          </div>
+        </div>
+      </div>
+      <div class="map-side-bar-body animate__animated" *ngIf="showSideBarList">
+        <div class="partner-container">
+          <div class="header">
+            <div class="header-text" *ngIf="fillterMenu === 'vehicle'">
+              Danh sách phương tiện
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'route'">
+              Danh sách tuyến
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'bus-station'">
+              Danh sách trạm
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'rent-station'">
+              Danh sách trạm thuê xe
+            </div>
+            <div class="header-iconClose" (click)="onCloseSibarList()">
+              <span
+                class="material-icons animate__animated"
+                [ngClass]="
+                  showRightSideBarStatus
+                    ? 'animate__rotateIn'
+                    : '' || showSideBarList
+                    ? 'animate__rotateIn'
+                    : ''
+                "
+              >
+                close
+              </span>
+            </div>
+          </div>
+          <div class="body-bottom-warp">
+            <!-- <tourism-smart-transportation-list-drivers
+              *ngIf="fillterMenu === 'vehicle'"
+              [drivers]="drivers"
+              (GetFillterDriverName)="onFillterDriverByName($event)"
+              (GetIdDriver)="getDetailDriver($event)"
+            ></tourism-smart-transportation-list-drivers> -->
+            <tourism-smart-transportation-list-vehicle
+              *ngIf="fillterMenu === 'vehicle'"
+              [vehicles]="vehicles"
+              (GetFillterVehicleName)="onFillterVehicleByName($event)"
+              (GetIdVehicle)="getDetailVehicle($event)"
+            ></tourism-smart-transportation-list-vehicle>
+            <!--  -->
+
+            <tourism-smart-transportation-list-stations
+              *ngIf="fillterMenu === 'bus-station'"
+              [stations]="stations"
+              (FillterStation)="onFillterStationByName($event)"
+              (GetIdStation)="getDetailStation($event)"
+            >
+            </tourism-smart-transportation-list-stations>
+            <!--  -->
+            <tourism-smart-transportation-list-rent-stations
+              *ngIf="fillterMenu === 'rent-station'"
+              [rent_stations]="rent_stations"
+              (GetFillterRentStation)="onFillterRentStationByName($event)"
+              (GetIdRentStation)="getDetailRentStation($event)"
+            ></tourism-smart-transportation-list-rent-stations>
+            <!--  -->
+            <tourism-smart-transportation-list-routes
+              *ngIf="fillterMenu === 'route'"
+              [routes]="routes"
+              (GetFillterRoute)="onFillterRouteByName($event)"
+              (GetIdRoute)="getDetailRoute($event)"
+            ></tourism-smart-transportation-list-routes>
+          </div>
+        </div>
+        <div class="bottom-side-bar" *ngIf="fillterMenu === 'rent-station'">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Tạo mới"
+            (click)="createRentStation()"
+            class="p-button-rounded button-background"
+          ></button>
+        </div>
+      </div>
+      <div class="map-sidebar-detail" *ngIf="showSideBarDetail">
+        <div class="partner-container">
+          <div class="header">
+            <div class="header-text" *ngIf="fillterMenu === 'vehicle'">
+              <span
+                class="material-icons-outlined"
+                (click)="onShowSideBarList()"
+              >
+                navigate_before
+              </span>
+              <div>Chi tiết phương tiện</div>
+              &nbsp;&nbsp;
+              <span
+                class="isOnline"
+                *ngIf="vehicleDetail.isRunning === 1"
+              ></span>
+              <span
+                class="isOffline"
+                *ngIf="
+                  vehicleDetail.isRunning === 0 ||
+                  vehicleDetail.isRunning === null
+                "
+              ></span>
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'bus-station'">
+              <span
+                class="material-icons-outlined"
+                (click)="onShowSideBarList()"
+              >
+                navigate_before
+              </span>
+              <div>Chi tiết trạm xe buýt</div>
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'rent-station'">
+              <span
+                class="material-icons-outlined"
+                (click)="onShowSideBarList()"
+              >
+                navigate_before
+              </span>
+              <div>Chi tiết trạm thuê xe</div>
+            </div>
+            <div class="header-text" *ngIf="fillterMenu === 'route'">
+              <span
+                class="material-icons-outlined"
+                (click)="onShowSideBarList()"
+              >
+                navigate_before
+              </span>
+              <div>Chi tiết tuyến</div>
+            </div>
+            <div class="header-iconClose" (click)="onHiddenSideBarDetail()">
+              <span
+                class="material-icons animate__animated"
+                [ngClass]="
+                  showRightSideBarStatus
+                    ? 'animate__rotateIn'
+                    : '' || showSideBarList
+                    ? 'animate__rotateIn'
+                    : ''
+                "
+              >
+                close
+              </span>
+            </div>
+          </div>
+
+          <!-- tạo 4 component for detail 4 cái -->
+          <tourism-smart-transportation-station-detail
+            *ngIf="fillterMenu === 'bus-station' && showSideBarDetail"
+            [StationDetail]="stationDetail"
+          ></tourism-smart-transportation-station-detail>
+          <!--  -->
+          <tourism-smart-transportation-rent-station-detail
+            *ngIf="fillterMenu === 'rent-station' && showSideBarDetail"
+            [RentStation]="rentStationDetail"
+            (GetStationId)="onEditRentStation($event)"
+          ></tourism-smart-transportation-rent-station-detail>
+          <!--  -->
+          <tourism-smart-transportation-route-detail
+            *ngIf="fillterMenu === 'route' && showSideBarDetail"
+            [RouteDetail]="routeDetail"
+          ></tourism-smart-transportation-route-detail>
+          <!--  -->
+          <tourism-smart-transportation-vehicle-detail
+            *ngIf="fillterMenu === 'vehicle' && showSideBarDetail"
+            [VehicleDetail]="vehicleDetail"
+          ></tourism-smart-transportation-vehicle-detail>
+          <!-- <tourism-smart-transportation-driver-detail
+            *ngIf="fillterMenu === 'driver' && showSideBarDetail"
+          >
+          </tourism-smart-transportation-driver-detail> -->
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<tourism-smart-transportation-rent-station-form
+  [showDialog]="showDialog"
+  (hiddenDialog)="onHiddenDialog()"
+  [idStation]="idStation"
+></tourism-smart-transportation-rent-station-form>
+<p-toast position="top-right"></p-toast>
