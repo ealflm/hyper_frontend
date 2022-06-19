@@ -5,6 +5,7 @@ export class RentStation {
   address?: string;
   partnerId?: string;
   companyName?: string;
+  description?: string;
   longitude?: number;
   latitude?: number;
   status?: number;

@@ -1,3 +1,4 @@
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MenuDataMap } from './../../../constant/menu-filter-status';
 import {
   VehicleTracking,
@@ -77,13 +78,16 @@ export class MapPageComponent
   currentBusStationMarkers: any = [];
   geojson: any;
   trackingIntervel: any;
+  listVehicleTracking: any;
 
   private subscription?: Subscription;
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
     private mapService: MapService,
-    private vehicleService: VehicleService
+    private vehicleService: VehicleService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +95,6 @@ export class MapPageComponent
     // this.addMarker();
     this.getBusStationMarkers();
     this.getRentStationMarkers();
-    this.getAllVehicles();
     // this.getVehicleTrackingOnMap();
     // this.getVehicleTrackingOnMap();
     // setInterval(() => {
@@ -100,6 +103,9 @@ export class MapPageComponent
   }
   ngAfterViewInit() {
     this.mapboxService.initializeMap(103.9967, 10.22698, 12);
+    this.listVehicleTracking = setInterval(() => {
+      this.getAllVehicles();
+    }, 2000);
     // this.mapboxService.setMarker();
     // console.log('map page after view init');
     // this.mapboxService.getCoordinates().subscribe((res: any) => {
@@ -176,14 +182,20 @@ export class MapPageComponent
     this.showSideBarList = true;
     this.showSideBarDetail = false;
     // console.log(this.fillterMenu);
-
     if (this.fillterMenu === 'bus-station') {
+      clearInterval(this.listVehicleTracking);
       this.getAllStations();
     } else if (this.fillterMenu === 'rent-station') {
+      clearInterval(this.listVehicleTracking);
       this.getAllRentStations();
     } else if (this.fillterMenu === 'vehicle') {
-      this.getAllVehicles();
+      clearInterval(this.listVehicleTracking);
+      this.listVehicleTracking = setInterval(() => {
+        this.getAllVehicles();
+        console.log('chạy');
+      }, 2000);
     } else if (this.fillterMenu === 'route') {
+      clearInterval(this.listVehicleTracking);
       this.getAllRoutes();
     }
   }
@@ -276,11 +288,30 @@ export class MapPageComponent
     this.mapboxService.initView$.next(false);
     this.idStation = stationId;
   }
-  onHiddenDialog() {
+  onDeleteStation(stationId: string) {
+    this.confirmationService.confirm({
+      key: 'confirmDelete',
+      accept: () => {
+        this.mapService.deleteStation(stationId).subscribe((res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Đã xóa trạm!',
+            });
+            this.getAllStations();
+          }
+        });
+      },
+    });
+  }
+  onHiddenDialog(event: any) {
     this.idStation = '';
     this.showDialog = false;
+    if (event) {
+      this.getAllStations();
+    }
     this.onShowSideBarList();
-    this.getAllStations();
   }
 
   // fillter function

@@ -19,8 +19,10 @@
     .station-footer {
       padding: 12px;
       text-align: end;
-      @include button-outlined-primary(67, 32, null, $primary-color);
       box-shadow: none;
+      .p-button-outlined {
+        @include button-outlined-primary(67, 32, null, $primary-color);
+      }
     }
   }
 }

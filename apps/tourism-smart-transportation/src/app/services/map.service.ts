@@ -25,27 +25,37 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MapService {
+  //API for admin
   stationApiURL = environment.apiURL + 'admin/stations';
   rentStationApiUrl = environment.apiURL + 'admin/rent-station';
   routeApiUrl = environment.apiURL + 'admin/route';
-  //
+  // Tracking vehicle
   vehicleApiUrl = environment.apiURL + 'admin/vehicle';
   vehicleAdminTrackingApiUrl = environment.apiURL + 'admin/tracking-vehicle';
   vehicleIdAminTrackingApiUrl =
     environment.apiURL + 'admin/tracking-vehicle/vehicle';
+
+  // API for partner
+  partnerApiRentStationUrl = environment.apiURL + 'partner/rent-station';
   constructor(private http: HttpClient) {}
+  //API FOR ADMIN
   // station
   getAllStation(title?: string): Observable<StationsResponse> {
     let queryParams = new HttpParams();
     if (title) {
       queryParams = queryParams.append('Title', title);
     }
+    queryParams = queryParams.append('Status', 1);
     return this.http.get<StationsResponse>(`${this.stationApiURL}`, {
       params: queryParams,
     });
   }
   getStationOnMap(): Observable<StationsResponse> {
-    return this.http.get<StationsResponse>(`${this.stationApiURL}`);
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('Status', 1);
+    return this.http.get<StationsResponse>(`${this.stationApiURL}`, {
+      params: queryParams,
+    });
   }
   getStationById(id?: string): Observable<StationResponse> {
     return this.http.get<StationResponse>(`${this.stationApiURL}/${id}`);
@@ -60,18 +70,26 @@ export class MapService {
       station
     );
   }
+  deleteStation(idStation: string): Observable<any> {
+    return this.http.delete(`${this.stationApiURL}/${idStation}`);
+  }
   // rent-station
   getAllRentStation(title?: string): Observable<RentStationsResponse> {
     let queryParams = new HttpParams();
     if (title) {
       queryParams = queryParams.append('Title', title);
     }
+    queryParams = queryParams.append('Status', 1);
     return this.http.get<RentStationsResponse>(`${this.rentStationApiUrl}`, {
       params: queryParams,
     });
   }
   getRentStationOnMap(): Observable<RentStationsResponse> {
-    return this.http.get<RentStationsResponse>(`${this.rentStationApiUrl}`);
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('Status', 1);
+    return this.http.get<RentStationsResponse>(`${this.rentStationApiUrl}`, {
+      params: queryParams,
+    });
   }
   getRentStationById(id: string): Observable<RentStationResponse> {
     return this.http.get<RentStationResponse>(
@@ -85,6 +103,7 @@ export class MapService {
     if (name) {
       queryParams = queryParams.append('Name', name);
     }
+    queryParams = queryParams.append('Status', 1);
     return this.http.get<RentStationsResponse>(`${this.routeApiUrl}`, {
       params: queryParams,
     });
@@ -124,6 +143,53 @@ export class MapService {
     return this.http.get<VehicleTrackingResponse>(
       `${this.vehicleIdAminTrackingApiUrl}`,
       { params: queryParams }
+    );
+  }
+
+  //  API FOR PARTNER
+  getListRentStationForPartner(
+    partnerId: string,
+    title?: string | null,
+    status?: number | null
+  ): Observable<RentStationsResponse> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('PartnerId', partnerId);
+    if (title != null) {
+      queryParams = queryParams.append('Title', title);
+    }
+    if (status != null) {
+      queryParams = queryParams.append('Status', status);
+    }
+    return this.http.get<RentStationsResponse>(
+      `${this.partnerApiRentStationUrl}`,
+      { params: queryParams }
+    );
+  }
+  getRentStationDetailForPartner(
+    rentStationId: string
+  ): Observable<RentStationResponse> {
+    return this.http.get<RentStationResponse>(
+      `${this.partnerApiRentStationUrl}/${rentStationId}`
+    );
+  }
+  createRentStationForPartner(rentStation: RentStation): Observable<any> {
+    return this.http.post<RentStation>(
+      `${this.partnerApiRentStationUrl}`,
+      rentStation
+    );
+  }
+  deleteRentStationForPartner(rentStationId: string): Observable<any> {
+    return this.http.delete(
+      `${this.partnerApiRentStationUrl}/${rentStationId}`
+    );
+  }
+  updateRentStationForPartner(
+    rentStationId: string,
+    rentStation: RentStation
+  ): Observable<any> {
+    return this.http.put<RentStation>(
+      `${this.partnerApiRentStationUrl}/${rentStationId}`,
+      rentStation
     );
   }
 }

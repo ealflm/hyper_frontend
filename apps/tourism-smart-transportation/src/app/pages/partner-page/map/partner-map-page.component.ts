@@ -1,9 +1,10 @@
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { Route } from './../../../models/RouteResponse';
-import { Vehicle } from './../../../models/VehicleResponse';
-import { RentStation } from './../../../models/RentStationResponse';
-import { Station } from './../../../models/StationResponse';
-import { MenuDataMap } from './../../../constant/menu-filter-status';
+import { Route } from '../../../models/RouteResponse';
+import { Vehicle } from '../../../models/VehicleResponse';
+import { RentStation } from '../../../models/RentStationResponse';
+import { Station } from '../../../models/StationResponse';
+import { MenuDataMap } from '../../../constant/menu-filter-status';
 import {
   Component,
   OnInit,
@@ -12,13 +13,16 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MapBoxService } from '../../../services/map-box.service';
+import { MapService } from '../../../services/map.service';
+import { LocalStorageService } from '../../../auth/localstorage.service';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
-  selector: 'tourism-smart-transportation-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  selector: 'tourism-smart-transportation-partner-map-page',
+  templateUrl: './partner-map-page.component.html',
+  styleUrls: ['./partner-map-page.component.scss'],
 })
-export class MapComponent
+export class PartnerMapPageComponent
   implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy
 {
   coordinates: any;
@@ -50,18 +54,35 @@ export class MapComponent
   routeDetail!: Route;
   vehicleDetail!: Vehicle;
   //
-  idStation = '';
+  rentStationId = '';
   checkBoxValue: string[] = [];
 
   currentRentStationMarkers: any = [];
   currentBusStationMarkers: any = [];
   geojson: any;
   trackingIntervel: any;
+  partnerId = '';
+
+  //
 
   private subscription?: Subscription;
-  constructor(private mapboxService: MapBoxService) {}
+  constructor(
+    private mapboxService: MapBoxService,
+    private mapService: MapService,
+    private localStorageService: LocalStorageService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const user = this.localStorageService.getUser;
+    if (user) {
+      this.partnerId = user.id;
+    }
+    this.getListRentStationByPartnerId();
+    this.getListRentStationByPartnerIdOnMap();
+  }
+
   ngAfterViewInit(): void {
     this.mapboxService.initializeMap(103.9967, 10.22698, 12);
   }
@@ -97,7 +118,7 @@ export class MapComponent
     if (this.fillterMenu === 'bus-station') {
       // this.getAllStations();
     } else if (this.fillterMenu === 'rent-station') {
-      // this.getAllRentStations();
+      this.getListRentStationByPartnerId();
     } else if (this.fillterMenu === 'vehicle') {
       // this.getAllVehicles();
     } else if (this.fillterMenu === 'route') {
@@ -112,16 +133,16 @@ export class MapComponent
     if (valueCheckbox.length <= 0) {
       // clearInterval(this.trackingIntervel);
       // this.removeBusStationMarker();
-      // this.removeRentStationMarker();
+      this.removeRentStationMarker();
       // this.mapboxService.removeLayerTracking();
     } else if (valueCheckbox.length > 0) {
       // this.getBusStationMarkers();
-      // this.getRentStationMarkers();
+      this.getListRentStationByPartnerIdOnMap();
       switch (valueCheckbox.sort().join('-')) {
         case 'vehicle':
           // clearInterval(this.trackingIntervel);
           // this.removeBusStationMarker();
-          // this.removeRentStationMarker();
+          this.removeRentStationMarker();
           // this.trackingIntervel = setInterval(() => {
           //   this.getVehicleTrackingOnMap();
           // }, 2000);
@@ -131,27 +152,27 @@ export class MapComponent
           // this.mapboxService.removeLayerTracking();
           // this.removeBusStationMarker();
           // this.setBusStationMarkers(this.busStationsOnMap);
-          // this.removeRentStationMarker();
+          this.removeRentStationMarker();
 
           break;
         case 'rent-station':
           // clearInterval(this.trackingIntervel);
           // this.mapboxService.removeLayerTracking();
-          // this.removeRentStationMarker();
-          // this.setRentStationMarkers(this.rentStationsOnMap);
+          this.removeRentStationMarker();
+          this.setRentStationMarkers(this.rentStationsOnMap);
           // this.removeBusStationMarker();
           break;
         case 'rent-station-vehicle':
           // clearInterval(this.trackingIntervel);
           // this.removeBusStationMarker();
-          // this.setRentStationMarkers(this.rentStationsOnMap);
+          this.setRentStationMarkers(this.rentStationsOnMap);
           // this.trackingIntervel = setInterval(() => {
           //   this.getVehicleTrackingOnMap();
           // }, 2000);
           break;
         case 'bus-station-vehicle':
           // clearInterval(this.trackingIntervel);
-          // this.removeRentStationMarker();
+          this.removeRentStationMarker();
           // this.setBusStationMarkers(this.busStationsOnMap);
           // this.trackingIntervel = setInterval(() => {
           //   this.getVehicleTrackingOnMap();
@@ -160,15 +181,15 @@ export class MapComponent
         case 'bus-station-rent-station':
           // clearInterval(this.trackingIntervel);
           // this.mapboxService.removeLayerTracking();
-          // this.removeRentStationMarker();
+          this.removeRentStationMarker();
           // this.removeBusStationMarker();
           // this.setBusStationMarkers(this.busStationsOnMap);
-          // this.setRentStationMarkers(this.rentStationsOnMap);
+          this.setRentStationMarkers(this.rentStationsOnMap);
           break;
         case 'bus-station-rent-station-vehicle':
           // clearInterval(this.trackingIntervel);
           // this.setBusStationMarkers(this.busStationsOnMap);
-          // this.setRentStationMarkers(this.rentStationsOnMap);
+          this.setRentStationMarkers(this.rentStationsOnMap);
           // this.trackingIntervel = setInterval(() => {
           //   this.getVehicleTrackingOnMap();
           // }, 2000);
@@ -177,7 +198,7 @@ export class MapComponent
           // clearInterval(this.trackingIntervel);
           // this.mapboxService.removeLayerTracking();
           // this.removeBusStationMarker();
-          // this.removeRentStationMarker();
+          this.removeRentStationMarker();
           break;
       }
     }
@@ -190,7 +211,7 @@ export class MapComponent
     // this.getAllStations(title);
   }
   onFillterRentStationByName(title: any) {
-    // this.getAllRentStations(title);
+    this.getListRentStationByPartnerId(title);
   }
   onFillterRouteByName(name: any) {
     // this.getAllRoutes(name);
@@ -198,14 +219,106 @@ export class MapComponent
   getDetailVehicle(event: any) {}
 
   getDetailStation(event: any) {}
-  getDetailRentStation(event: any) {}
+  getDetailRentStation(event: any) {
+    this.showSideBarList = false;
+    this.showSideBarDetail = true;
+    this.mapService
+      .getRentStationDetailForPartner(event.id)
+      .subscribe((rentStationRes) => {
+        this.rentStationDetail = rentStationRes.body;
+        if (rentStationRes.body.longitude && rentStationRes.body.latitude)
+          this.mapboxService.flyToMarker(
+            rentStationRes.body.longitude,
+            rentStationRes.body.latitude
+          );
+      });
+  }
   getDetailRoute(event: any) {}
-  createRentStation() {}
-  onEditRentStation(event: any) {}
+  createRentStation() {
+    this.rentStationId = '';
+    this.showDialog = true;
+    this.mapboxService.initView$.next(false);
+  }
+  onEditRentStation(rentStationId: string) {
+    this.showDialog = true;
+    this.mapboxService.initView$.next(false);
+    this.rentStationId = rentStationId;
+  }
+  onDeleteRentStation(rentStationId: string) {
+    this.confirmationService.confirm({
+      key: 'confirmDelete',
+      accept: () => {
+        this.mapService
+          .deleteRentStationForPartner(rentStationId)
+          .subscribe((res) => {
+            if (res.statusCode === 201) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Thành công',
+                detail: 'Đã xóa trạm!',
+              });
+              this.onShowSideBarList();
+              this.getListRentStationByPartnerId();
+            }
+          });
+      },
+    });
+  }
   onHiddenDialog() {
-    this.idStation = '';
+    this.rentStationId = '';
     this.showDialog = false;
     this.onShowSideBarList();
     // this.getAllStations();
+  }
+  // Call Api Rent Station
+  getListRentStationByPartnerId(filterByTitle?: string) {
+    this.mapService
+      .getListRentStationForPartner(this.partnerId, filterByTitle, 1)
+      .subscribe((rentStationRes) => {
+        this.rent_stations = rentStationRes.body.items;
+      });
+  }
+  getListRentStationByPartnerIdOnMap() {
+    this.mapService
+      .getListRentStationForPartner(this.partnerId, null, 1)
+      .subscribe((rentStationRes) => {
+        this.rentStationsOnMap = rentStationRes.body.items;
+      });
+  }
+
+  //Set Marker on Map
+  setRentStationMarkers(rentStations: RentStation[]) {
+    rentStations.map((marker) => {
+      const el = document.createElement('div');
+      el.id = marker.id;
+      const width = 30;
+      const height = 30;
+      el.className = 'marker';
+      el.style.backgroundImage = `url('../../../assets/image/rent-station.png')`;
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
+      el.style.backgroundSize = '100%';
+      el.style.cursor = 'pointer';
+      const markerDiv = new mapboxgl.Marker(el)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapboxService.map);
+      markerDiv.getElement().addEventListener('click', () => {
+        this.fillterMenu = 'rent-station';
+        this.showSideBarList = false;
+        this.showSideBarDetail = true;
+        this.getDetailRentStation({ id: marker.id });
+        if (marker.longitude && marker.latitude) {
+          this.mapboxService.flyToMarker(marker.longitude, marker.latitude);
+        }
+      });
+      this.currentRentStationMarkers.push(markerDiv);
+    });
+  }
+  removeRentStationMarker() {
+    if (this.currentRentStationMarkers !== null) {
+      for (let i = this.currentRentStationMarkers.length - 1; i >= 0; i--) {
+        this.currentRentStationMarkers[i].remove();
+      }
+    }
   }
 }
