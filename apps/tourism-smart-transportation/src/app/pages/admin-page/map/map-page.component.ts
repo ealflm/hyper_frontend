@@ -26,6 +26,7 @@ import {
   OnInit,
   OnDestroy,
   AfterViewChecked,
+  ChangeDetectorRef,
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { MapService } from '../../../services/map.service';
@@ -72,7 +73,7 @@ export class MapPageComponent
   vehicleDetail!: Vehicle;
   //
   idStation = '';
-  checkBoxValue: string[] = [];
+  checkBoxValue = '';
 
   currentRentStationMarkers: any = [];
   currentBusStationMarkers: any = [];
@@ -87,7 +88,8 @@ export class MapPageComponent
     private mapService: MapService,
     private vehicleService: VehicleService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -163,6 +165,10 @@ export class MapPageComponent
   // show right side bar
   showRightSideBar() {
     this.showRightSideBarStatus = !this.showRightSideBarStatus;
+    clearInterval(this.trackingIntervel);
+    this.mapboxService.removeLayerTracking();
+    this.removeBusStationMarker();
+    this.removeRentStationMarker();
   }
   // show or hidden each sidebar
   onCloseSibarList() {
@@ -201,10 +207,8 @@ export class MapPageComponent
   }
 
   onGetValueCheckBox(valueCheckbox: []) {
-    // console.log(valueCheckbox);
-
-    this.checkBoxValue = valueCheckbox;
     if (valueCheckbox.length <= 0) {
+      this.checkBoxValue = '';
       clearInterval(this.trackingIntervel);
       this.removeBusStationMarker();
       this.removeRentStationMarker();
@@ -331,6 +335,7 @@ export class MapPageComponent
 
   // Get detail function
   getDetailRoute(event: any) {
+    this.checkBoxValue = 'bus-station';
     this.showSideBarList = false;
     this.showSideBarDetail = true;
     this.mapService
@@ -355,6 +360,7 @@ export class MapPageComponent
   //   console.log(event);
   // }
   getDetailVehicle(event: any) {
+    this.checkBoxValue = 'vehicle';
     this.showSideBarList = false;
     this.showSideBarDetail = true;
     const callApiVehicleDetail = this.mapService
@@ -390,6 +396,7 @@ export class MapPageComponent
     );
   }
   getDetailStation(event: any) {
+    this.checkBoxValue = 'bus-station';
     this.showSideBarList = false;
     this.showSideBarDetail = true;
     this.mapService.getStationById(event.id).subscribe((stationRes) => {
@@ -402,6 +409,7 @@ export class MapPageComponent
     });
   }
   getDetailRentStation(event: any) {
+    this.checkBoxValue = 'rent-station';
     this.showSideBarList = false;
     this.showSideBarDetail = true;
     this.mapService

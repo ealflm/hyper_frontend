@@ -6,6 +6,10 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
+  AfterViewInit,
+  AfterViewChecked,
+  DoCheck,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 @Component({
@@ -13,19 +17,30 @@ import {
   templateUrl: './data-map.component.html',
   styleUrls: ['./data-map.component.scss'],
 })
-export class DataMapComponent implements OnInit, OnChanges {
+export class DataMapComponent
+  implements OnInit, OnChanges, AfterViewInit, AfterViewChecked
+{
+  selectedCheckBox: string[] = [];
   @Input() DataMapValue: any = [];
-  @Input() CheckBoxValue: string[] = [];
+  @Input() set CheckBoxValue(value: string) {
+    if (value) {
+      if (!this.selectedCheckBox.includes(value)) {
+        this.selectedCheckBox = [...this.selectedCheckBox, value];
+        this.GetValueCheckBox.emit(this.selectedCheckBox);
+      }
+    }
+  }
+
   @Output() GetFillterValue: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetValueCheckBox: EventEmitter<any> = new EventEmitter<any>();
-  selectedCheckBox: string[] = [];
   fillterValue?: string = 'vehicle';
-  constructor() {}
-
-  ngOnInit(): void {
-    this.selectedCheckBox = this.CheckBoxValue;
+  constructor(private cd: ChangeDetectorRef) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnInit(): void {}
+  ngAfterViewInit(): void {}
+  ngAfterViewChecked(): void {}
   onChangeFillterValue(value: string) {
     this.fillterValue = value;
     this.GetFillterValue.emit(this.fillterValue);
