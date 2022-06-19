@@ -23,6 +23,7 @@ export class LocalStorageService {
         email: tokenDecode.Email,
         photoUrl: tokenDecode.PhotoUrl,
         username: tokenDecode.Username,
+        role: tokenDecode.Role,
         name: tokenDecode.FirstName + ' ' + tokenDecode.LastName,
       };
       localStorage.setItem('user', JSON.stringify(user));

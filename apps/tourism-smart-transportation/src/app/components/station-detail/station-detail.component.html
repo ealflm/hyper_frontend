@@ -41,9 +41,19 @@
       <div>{{ StationDetail?.latitude }}</div>
     </div>
   </div>
-  <div class="station-footer">
+  <div class="station-footer" *ngIf="roleUser === 'Admin'">
     <button
-      [style]="{ width: '57', height: '32px' }"
+      [style]="{ height: '32px' }"
+      style="margin-right: 10px"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Xóa"
+      (click)="deleteStation(StationDetail!.id)"
+    ></button>
+    <button
+      [style]="{ height: '32px' }"
       class="p-button-outlined p-button-rounded"
       pButton
       pRipple

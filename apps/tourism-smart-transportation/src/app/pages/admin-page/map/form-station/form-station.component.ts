@@ -123,8 +123,7 @@ export class FormStationComponent
   }
   onCloseDialog() {
     this.setEmtyInitForm();
-
-    this.hiddenDialog.emit();
+    this.hiddenDialog.emit(true);
     this._dialog = false;
   }
   _initLocationForm() {

@@ -17,7 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DriverComponent } from './driver/driver.component';
 import { VehicleComponent } from './vehicle/vehicle.component';
 import { ScheduleComponent } from './schedule/schedule.component';
-import { MapComponent } from './map/map.component';
+import { PartnerMapPageComponent } from './map/partner-map-page.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { RentStationFormComponent } from './map/rent-station-form/rent-station-form.component';
 import { RouteFormComponent } from './map/route-form/route-form.component';
@@ -42,7 +42,7 @@ const PARTNER_ROUTES: Routes = [
       { path: 'partner/driver', component: DriverComponent },
       { path: 'partner/vehicle', component: VehicleComponent },
       { path: 'partner/schedule', component: ScheduleComponent },
-      { path: 'partner/map', component: MapComponent },
+      { path: 'partner/map', component: PartnerMapPageComponent },
       { path: 'partner/map/route', component: RouteFormComponent },
       { path: 'partner/map/route/:id', component: RouteFormComponent },
       { path: 'partner/profile', component: ProfileComponent },
@@ -57,7 +57,7 @@ const PARTNER_ROUTES: Routes = [
     DriverComponent,
     VehicleComponent,
     ScheduleComponent,
-    MapComponent,
+    PartnerMapPageComponent,
     RentStationFormComponent,
     RouteFormComponent,
   ],

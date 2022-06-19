@@ -1,6 +1,6 @@
-<div class="station-dialog">
+<div class="rent-station-dialog">
   <p-dialog
-    [header]="editMode ? 'Chỉnh sửa trạm xe buýt' : 'Tạo mới trạm xe buýt'"
+    [header]="editMode ? 'Chỉnh sửa trạm thuê xe' : 'Tạo mới trạm thuê xe'"
     [(visible)]="showDialog"
     [blockScroll]="false"
     [modal]="true"
@@ -17,7 +17,7 @@
     <div class="header-icon" (click)="onCloseDialog()">
       <span class="material-icons"> close </span>
     </div>
-    <div class="station-form">
+    <div class="rent-station-form">
       <div class="mt-4 grid p-fluid">
         <!-- Vị trí trạm -->
         <form [formGroup]="locationForm">
@@ -27,13 +27,13 @@
               <div class="col-8">
                 <div class="grid">
                   <div
-                    class="col-6 station-input-short"
+                    class="col-6 rent-station-input-short"
                     style="margin-top: 0px"
                   >
-                    <div class="station-text">
+                    <div class="rent-station-text">
                       Kinh độ
                       <!-- <small
-                  *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
+                  *ngIf="_rent-stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
                   không được bỏ trống</small
@@ -41,21 +41,21 @@
                     </div>
 
                     <input
-                      class="station-input-text-short"
+                      class="rent-station-input-text-short"
                       type="text"
                       pInputText
                       formControlName="longitude"
-                      (keyup.enter)="onSaveStation()"
+                      (keyup.enter)="onSaveRentStation()"
                     />
                   </div>
                   <div
-                    class="col-6 station-input-short"
+                    class="col-6 rent-station-input-short"
                     style="margin-top: 0px; margin-left: 12px"
                   >
-                    <div class="station-text">
+                    <div class="rent-station-text">
                       Vĩ độ
                       <!-- <small
-                  *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
+                  *ngIf="_rent-stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
                   không được bỏ trống</small
@@ -63,11 +63,11 @@
                     </div>
 
                     <input
-                      class="station-input-text-short"
+                      class="rent-station-input-text-short"
                       type="text"
                       pInputText
                       formControlName="latitude"
-                      (keyup.enter)="onSaveStation()"
+                      (keyup.enter)="onSaveRentStation()"
                     />
                   </div>
                   <!-- map -->
@@ -83,8 +83,8 @@
             <div class="grid">
               <div class="col-4 header-text">Thông tin chi tiết</div>
               <div class="col-8">
-                <div class="col-12 station-input-long">
-                  <div class="station-text">
+                <div class="col-12 rent-station-input-long">
+                  <div class="rent-station-text">
                     Tên Trạm
                     <small
                       *ngIf="
@@ -96,15 +96,15 @@
                     </small>
                   </div>
                   <input
-                    class="station-input-text-long"
+                    class="rent-station-input-text-long"
                     type="text"
                     pInputText
                     formControlName="title"
-                    (keyup.enter)="onSaveStation()"
+                    (keyup.enter)="onSaveRentStation()"
                   />
                 </div>
-                <div class="col-12 station-input-long">
-                  <div class="station-text">
+                <div class="col-12 rent-station-input-long">
+                  <div class="rent-station-text">
                     Mô tả
                     <small
                       *ngIf="
@@ -116,15 +116,15 @@
                     </small>
                   </div>
                   <input
-                    class="station-input-text-long"
+                    class="rent-station-input-text-long"
                     type="text"
                     pInputText
                     formControlName="description"
-                    (keyup.enter)="onSaveStation()"
+                    (keyup.enter)="onSaveRentStation()"
                   />
                 </div>
-                <div class="col-12 station-input-long">
-                  <div class="station-text">
+                <div class="col-12 rent-station-input-long">
+                  <div class="rent-station-text">
                     Địa chỉ
                     <small
                       *ngIf="
@@ -136,11 +136,11 @@
                     </small>
                   </div>
                   <input
-                    class="station-input-text-long"
+                    class="rent-station-input-text-long"
                     type="text"
                     pInputText
                     formControlName="address"
-                    (keyup.enter)="onSaveStation()"
+                    (keyup.enter)="onSaveRentStation()"
                   />
                 </div>
               </div>
@@ -165,7 +165,7 @@
           pRipple
           type="button"
           label="Lưu"
-          (click)="onSaveStation()"
+          (click)="onSaveRentStation()"
         ></button>
       </div>
     </div>

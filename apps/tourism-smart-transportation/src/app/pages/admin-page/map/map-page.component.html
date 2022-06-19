@@ -184,6 +184,7 @@
             *ngIf="fillterMenu === 'bus-station' && showSideBarDetail"
             [StationDetail]="stationDetail"
             (GetStationId)="onEditStation($event)"
+            (DeleteStationId)="onDeleteStation($event)"
           ></tourism-smart-transportation-station-detail>
           <!--  -->
           <tourism-smart-transportation-rent-station-detail
@@ -212,9 +213,38 @@
 
 <tourism-smart-transportation-form-station
   [showDialog]="showDialog"
-  (hiddenDialog)="onHiddenDialog()"
+  (hiddenDialog)="onHiddenDialog($event)"
   [idStation]="idStation"
 ></tourism-smart-transportation-form-station>
+<p-confirmDialog
+  key="confirmDelete"
+  #cd
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">Bạn có chắc chắn muốn trạm này?</div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      (click)="cd.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Xóa"
+      (click)="cd.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
 <p-toast position="top-right"></p-toast>
 
 <!-- <div class="location-form">

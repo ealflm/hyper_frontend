@@ -10,6 +10,14 @@
   </div>
   <div class="rent-station-container">
     <div class="rent-station-title">
+      <div>Mô tả</div>
+    </div>
+    <div class="rent-station-content">
+      <div>{{ RentStation?.description }}</div>
+    </div>
+  </div>
+  <div class="rent-station-container">
+    <div class="rent-station-title">
       <div>Địa chỉ</div>
     </div>
     <div class="rent-station-content">
@@ -41,5 +49,26 @@
     <div class="rent-station-content">
       <div>{{ RentStation?.latitude }}</div>
     </div>
+  </div>
+  <div class="rent-station-footer" *ngIf="roleUser === 'Partner'">
+    <button
+      [style]="{ height: '32px' }"
+      style="margin-right: 10px"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Xóa"
+      (click)="deleteRentStation(RentStation!.id)"
+    ></button>
+    <button
+      [style]="{ height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Chỉnh sửa"
+      (click)="editRentStation(RentStation!.id)"
+    ></button>
   </div>
 </div>
