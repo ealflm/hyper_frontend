@@ -126,13 +126,13 @@
               &nbsp;&nbsp;
               <span
                 class="isOnline"
-                *ngIf="vehicleDetail.isRunning === 1"
+                *ngIf="vehicleDetail?.isRunning === 1"
               ></span>
               <span
                 class="isOffline"
                 *ngIf="
-                  vehicleDetail.isRunning === 0 ||
-                  vehicleDetail.isRunning === null
+                  vehicleDetail?.isRunning === 0 ||
+                  vehicleDetail?.isRunning === null
                 "
               ></span>
             </div>
