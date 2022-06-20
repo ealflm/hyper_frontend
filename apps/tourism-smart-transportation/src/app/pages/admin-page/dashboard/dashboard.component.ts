@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   // Set event handler to null if event needs to be removed
   // More events can be provided from here
   // https://docs.microsoft.com/en-us/javascript/api/overview/powerbi/handle-events#report-events
-
+  loading = true;
   constructor(
     private mapboxService: MapBoxService,
     private httpService: DashboardService,
@@ -78,6 +78,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.embedReportPowerBI();
+    setTimeout(() => {
+      this.loading = false;
+    }, 5000);
   }
   ngAfterViewInit(): void {
     // this.mapboxService.initializeMap2();

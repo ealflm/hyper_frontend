@@ -7,8 +7,11 @@ Licensed under the MIT License. -->
   <button (click)="setDataSelectedEvent()">Set Event</button>
   <div class="display-message" #status>{{ displayMessage }}</div>
 </div> -->
+<tourism-smart-transportation-loading
+  *ngIf="loading"
+></tourism-smart-transportation-loading>
 <ng-template #embedReportFlow>
-  <div class="embed-report">
+  <div class="embed-report" *ngIf="!loading">
     <button (click)="embedReportPowerBI()" id="embed-action" #embedReportBtn>
       Embed Report
     </button>
