@@ -3,13 +3,13 @@ Licensed under the MIT License. */
 
 .header {
   background: #3476ae 0 0 no-repeat padding-box;
-  border: 1px solid #707070;
+  border: 1px solid #ffffff;
   height: 55px;
 }
 
 .title {
   color: #fff;
-  font: 700 22px/27px "Segoe UI";
+  font: 700 22px/27px 'Segoe UI';
   margin: 13px 13px 13px 36px;
   text-align: left;
 }
@@ -46,7 +46,7 @@ Licensed under the MIT License. */
 .display-message {
   align-items: center;
   display: flex;
-  font: 400 18px/27px "Segoe UI";
+  font: 400 18px/27px 'Segoe UI';
   height: 30px;
   justify-content: center;
   margin-top: 8px;
@@ -87,7 +87,7 @@ button:hover {
 }
 
 .footer-text {
-  font: 400 16px/21px "Segoe UI";
+  font: 400 16px/21px 'Segoe UI';
   height: 21px;
   letter-spacing: 0;
   margin-top: 9px;
@@ -99,7 +99,7 @@ button:hover {
 
 .footer-text > a {
   color: #606a74;
-  font: Regular 16px/21px "Segoe UI";
+  font: Regular 16px/21px 'Segoe UI';
   letter-spacing: 0;
   text-decoration: underline;
 }

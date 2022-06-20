@@ -19,6 +19,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListVehicleComponent } from './list-vehicle/list-vehicle.component';
 import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.component';
+import { LoadingComponent } from './loading/loading.component';
+import { IonicModule } from '@ionic/angular';
+import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.componen
     ListVehicleComponent,
     VehicleDetailComponent,
     ProfileComponent,
+    LoadingComponent,
+    LoadingProgressComponent,
   ],
   exports: [
     StationDetailComponent,
@@ -56,6 +61,8 @@ import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.componen
     ListVehicleComponent,
     VehicleDetailComponent,
     ProfileComponent,
+    LoadingComponent,
+    LoadingProgressComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +70,7 @@ import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.componen
     MaterialuiModule,
     FormsModule,
     ReactiveFormsModule,
+    IonicModule,
   ],
 })
 export class ComponentsModule {}

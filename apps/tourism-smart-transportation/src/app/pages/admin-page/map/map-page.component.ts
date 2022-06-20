@@ -80,7 +80,7 @@ export class MapPageComponent
   geojson: any;
   trackingIntervel: any;
   listVehicleTracking: any;
-
+  loading = true;
   private subscription?: Subscription;
   constructor(
     private mapboxService: MapBoxService,
@@ -95,6 +95,9 @@ export class MapPageComponent
   ngOnInit(): void {
     // this._initLocationFormArray();
     // this.addMarker();
+    setTimeout(() => {
+      this.loading = false;
+    }, 3000);
     this.getBusStationMarkers();
     this.getRentStationMarkers();
     // this.getVehicleTrackingOnMap();
@@ -104,10 +107,13 @@ export class MapPageComponent
     // }, 2000);
   }
   ngAfterViewInit() {
-    this.mapboxService.initializeMap(103.9967, 10.22698, 12);
-    this.listVehicleTracking = setInterval(() => {
-      this.getAllVehicles();
-    }, 2000);
+    if (this.loading) {
+      this.mapboxService.initializeMap(103.9967, 10.22698, 12);
+      this.listVehicleTracking = setInterval(() => {
+        this.getAllVehicles();
+      }, 2000);
+    }
+
     // this.mapboxService.setMarker();
     // console.log('map page after view init');
     // this.mapboxService.getCoordinates().subscribe((res: any) => {
@@ -122,6 +128,7 @@ export class MapPageComponent
       this.subscription.unsubscribe();
     }
     clearInterval(this.trackingIntervel);
+    clearInterval(this.listVehicleTracking);
   }
   onSaveLocation() {
     // console.log(this.locationForm.get('locations')?.value);
@@ -198,7 +205,6 @@ export class MapPageComponent
       clearInterval(this.listVehicleTracking);
       this.listVehicleTracking = setInterval(() => {
         this.getAllVehicles();
-        console.log('chạy');
       }, 2000);
     } else if (this.fillterMenu === 'route') {
       clearInterval(this.listVehicleTracking);

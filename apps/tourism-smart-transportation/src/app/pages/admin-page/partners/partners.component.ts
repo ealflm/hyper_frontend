@@ -242,6 +242,7 @@ export class PartnersComponent implements OnInit {
   onSaveInfor() {
     this.isSubmit = true;
     if (this.inforForm.invalid) return;
+    this.loading = true;
     const formData = new FormData();
     const idPartner = this._inforsForm['id'].value;
     if (this.editMode) {
@@ -274,6 +275,7 @@ export class PartnersComponent implements OnInit {
                 detail: updatePartnerRes.message,
               });
             }
+            this.loading = false;
             this._getAllPartners();
             this.editMode = false;
           });
@@ -312,6 +314,7 @@ export class PartnersComponent implements OnInit {
             detail: partnerRes.message,
           });
         }
+        this.loading = false;
         this._getAllPartners();
       });
     }
