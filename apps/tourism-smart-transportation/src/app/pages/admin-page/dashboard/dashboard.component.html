@@ -1,19 +1,24 @@
-<!-- <p-dialog
-  header="Tạo mới trạm xe buýt"
-  [(visible)]="dialog"
-  [blockScroll]="false"
-  [resizable]="false"
-  [modal]="true"
-  [style]="{ width: '674px', height: '670px' }"
-  [contentStyle]="{
-    'overflow-y': 'auto',
-    'overflow-x': 'hidden',
-    'max-height': '70vh',
-    'min-height': '25vh'
-  }"
-  [baseZIndex]="10000"
+<!-- Copyright (c) Microsoft Corporation.
+Licensed under the MIT License. -->
+
+<!-- <div class="controls" *ngIf="isEmbedded; else embedReportFlow">
+  <button (click)="deleteVisual()">Delete Visual</button>
+  <button (click)="hideFilterPane()">Hide Filter Pane</button>
+  <button (click)="setDataSelectedEvent()">Set Event</button>
+  <div class="display-message" #status>{{ displayMessage }}</div>
+</div> -->
+<ng-template #embedReportFlow>
+  <div class="embed-report">
+    <button (click)="embedReportPowerBI()" id="embed-action" #embedReportBtn>
+      Embed Report
+    </button>
+  </div>
+  <div class="separator"></div>
+</ng-template>
+
+<powerbi-report
+  [embedConfig]="reportConfig"
+  [cssClassName]="reportClass"
+  [phasedEmbedding]="phasedEmbeddingFlag"
 >
-  <div class="map-wrap"> -->
-<!-- <div id="map2" class="map-container"></div> -->
-<!-- </div>
-</p-dialog> -->
+</powerbi-report>

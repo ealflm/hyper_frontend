@@ -27,6 +27,7 @@ export class DataMapComponent
       if (!this.selectedCheckBox.includes(value)) {
         this.selectedCheckBox = [...this.selectedCheckBox, value];
         this.GetValueCheckBox.emit(this.selectedCheckBox);
+        console.log(this.selectedCheckBox);
       }
     }
   }
