@@ -55,7 +55,7 @@ export class PartnerMapPageComponent
   vehicleDetail!: Vehicle;
   //
   rentStationId = '';
-  checkBoxValue: string[] = [];
+  checkBoxValue = '';
 
   currentRentStationMarkers: any = [];
   currentBusStationMarkers: any = [];
@@ -128,9 +128,8 @@ export class PartnerMapPageComponent
 
   onGetValueCheckBox(valueCheckbox: []) {
     // console.log(valueCheckbox);
-
-    this.checkBoxValue = valueCheckbox;
     if (valueCheckbox.length <= 0) {
+      this.checkBoxValue = '';
       // clearInterval(this.trackingIntervel);
       // this.removeBusStationMarker();
       this.removeRentStationMarker();

@@ -27,6 +27,7 @@ import { SettingModule } from './setting/setting.module';
 import { CardComponent } from './card/card.component';
 import { FailureComponent } from '../../shared/failure/failure.component';
 import { PartnerDetailComponent } from './partners/partner-detail/partner-detail.component';
+import { PowerBIEmbedModule } from 'powerbi-client-angular';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -114,6 +115,7 @@ const ADMIN_ROUTES: Routes = [
     SettingModule,
     ComponentsModule,
     PipeModule,
+    PowerBIEmbedModule,
   ],
 })
 export class AdminPageModule {}
