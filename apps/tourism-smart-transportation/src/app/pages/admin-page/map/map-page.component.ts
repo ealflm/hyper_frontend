@@ -291,11 +291,11 @@ export class MapPageComponent
   createStation() {
     this.idStation = '';
     this.showDialog = true;
-    this.mapboxService.initView$.next(false);
+    this.mapboxService.iniViewMiniMapAdmin$.next(false);
   }
   onEditStation(stationId: string) {
     this.showDialog = true;
-    this.mapboxService.initView$.next(false);
+    this.mapboxService.iniViewMiniMapAdmin$.next(false);
     this.idStation = stationId;
   }
   onDeleteStation(stationId: string) {

@@ -236,11 +236,11 @@ export class PartnerMapPageComponent
   createRentStation() {
     this.rentStationId = '';
     this.showDialog = true;
-    this.mapboxService.initView$.next(false);
+    this.mapboxService.initViewMiniMapPartner$.next(false);
   }
   onEditRentStation(rentStationId: string) {
     this.showDialog = true;
-    this.mapboxService.initView$.next(false);
+    this.mapboxService.initViewMiniMapPartner$.next(false);
     this.rentStationId = rentStationId;
   }
   onDeleteRentStation(rentStationId: string) {

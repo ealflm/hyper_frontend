@@ -24,7 +24,11 @@ export class MapBoxService {
   zoom = 12;
   coordinates$ = new Subject<any>();
   coordinates = this.coordinates$.asObservable();
-  initView$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  initViewMiniMapPartner$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  iniViewMiniMapAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
   // currentBusStationMarkers: any = [];
   // currentRentStationMarkers: any = [];
   constructor(private mapService: MapService) {
