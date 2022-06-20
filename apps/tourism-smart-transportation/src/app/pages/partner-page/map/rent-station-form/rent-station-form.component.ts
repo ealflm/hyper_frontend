@@ -71,7 +71,7 @@ export class RentStationFormComponent
   ngAfterViewInit() {}
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
-    if (this._dialog && !this.mapboxService.initView$.value) {
+    if (this._dialog && !this.mapboxService.initViewMiniMapPartner$.value) {
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
       if (this.rentStationId) {
@@ -104,11 +104,11 @@ export class RentStationFormComponent
         this.addMarker();
         this.editMode = false;
       }
-      this.mapboxService.initView$.next(true);
+      this.mapboxService.initViewMiniMapPartner$.next(true);
     }
   }
   ngOnDestroy(): void {
-    this.mapboxService.initView$.unsubscribe();
+    this.mapboxService.initViewMiniMapPartner$.unsubscribe();
   }
   setEmtyInitForm() {
     this._locationForm['id'].setValue(null);

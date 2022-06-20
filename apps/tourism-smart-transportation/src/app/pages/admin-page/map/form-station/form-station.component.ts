@@ -70,7 +70,7 @@ export class FormStationComponent
   ngAfterViewInit() {}
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
-    if (this._dialog && !this.mapboxService.initView$.value) {
+    if (this._dialog && !this.mapboxService.iniViewMiniMapAdmin$.value) {
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
       if (this.idStation) {
@@ -102,7 +102,7 @@ export class FormStationComponent
         this.addMarker();
         this.editMode = false;
       }
-      this.mapboxService.initView$.next(true);
+      this.mapboxService.iniViewMiniMapAdmin$.next(true);
     }
   }
   ngOnDestroy(): void {
