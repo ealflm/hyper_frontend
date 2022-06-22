@@ -124,9 +124,9 @@ export class MapPageComponent
     this.mapboxService.map.resize();
   }
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    // if (this.subscription) {
+    //   this.subscription.unsubscribe();
+    // }
     clearInterval(this.trackingIntervel);
     clearInterval(this.listVehicleTracking);
   }

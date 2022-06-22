@@ -112,6 +112,16 @@
             class="p-button-rounded button-background"
           ></button>
         </div>
+        <div class="bottom-side-bar" *ngIf="fillterMenu === 'route'">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Tạo mới"
+            (click)="createRoute()"
+            class="p-button-rounded button-background"
+          ></button>
+        </div>
       </div>
       <div class="map-sidebar-detail" *ngIf="showSideBarDetail">
         <div class="partner-container">
