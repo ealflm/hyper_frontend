@@ -123,6 +123,7 @@ export class FormStationComponent
   }
   onCloseDialog() {
     this.setEmtyInitForm();
+    this.mapboxService.iniViewMiniMapAdmin$.next(true);
     this.hiddenDialog.emit(true);
     this._dialog = false;
   }
