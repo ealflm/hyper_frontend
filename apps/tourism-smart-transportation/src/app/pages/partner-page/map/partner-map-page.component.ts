@@ -90,9 +90,9 @@ export class PartnerMapPageComponent
     this.mapboxService.map.resize();
   }
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    // if (this.subscription) {
+    //   this.subscription.unsubscribe();
+    // }
     clearInterval(this.trackingIntervel);
   }
   showRightSideBar() {
@@ -233,6 +233,7 @@ export class PartnerMapPageComponent
       });
   }
   getDetailRoute(event: any) {}
+  createRoute() {}
   createRentStation() {
     this.rentStationId = '';
     this.showDialog = true;
