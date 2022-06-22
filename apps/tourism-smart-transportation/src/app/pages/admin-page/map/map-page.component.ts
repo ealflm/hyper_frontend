@@ -318,6 +318,7 @@ export class MapPageComponent
   onHiddenDialog(event: any) {
     this.idStation = '';
     this.showDialog = false;
+    this.mapboxService.iniViewMiniMapAdmin$.next(true);
     if (event) {
       this.getAllStations();
     }

@@ -108,7 +108,7 @@ export class RentStationFormComponent
     }
   }
   ngOnDestroy(): void {
-    this.mapboxService.initViewMiniMapPartner$.unsubscribe();
+    // this.mapboxService.initViewMiniMapPartner$.unsubscribe();
   }
   setEmtyInitForm() {
     this._locationForm['id'].setValue(null);
@@ -126,7 +126,7 @@ export class RentStationFormComponent
   }
   onCloseDialog() {
     this.setEmtyInitForm();
-
+    this.mapboxService.initViewMiniMapPartner$.next(true);
     this.hiddenDialog.emit();
     this._dialog = false;
   }
