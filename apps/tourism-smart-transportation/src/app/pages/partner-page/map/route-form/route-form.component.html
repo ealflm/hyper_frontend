@@ -1,1 +1,108 @@
-<p>route-form works!</p>
+<div class="route-details">
+  <div class="header-route-content">
+    <div class="header-content-item">
+      <div class="header-item-H5">Bản đồ</div>
+      <div class="header-item">|</div>
+      <div class="header-item-H6">
+        {{ editMode ? 'Tạo mới tuyến' : 'Chỉnh sửa tuyến' }}
+      </div>
+    </div>
+    <div class="right-btn-form">
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-outlined p-button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Hủy"
+        (click)="onCancle()"
+      ></button>
+      <button
+        [style]="{ width: '57', height: '32px' }"
+        class="p-button-rounded button-rounded button-background"
+        pButton
+        pRipple
+        type="button"
+        label="Lưu"
+        (click)="onSave()"
+      ></button>
+    </div>
+  </div>
+  <p-divider></p-divider>
+  <div class="form-edit">
+    <div class="form-edit-container">
+      <div class="grid p-fluid form-content">
+        <div class="col-7">
+          <div class="map-box-container">
+            <div #mapChild id="mini-map" class="map-container"></div>
+          </div>
+        </div>
+        <div class="col-5">
+          <form [formGroup]="routeForm">
+            <div class="grid p-fluid">
+              <div class="col-12 route-input-long">
+                <div class="route-text">
+                  Tên tuyến
+                  <!-- <small
+                    *ngIf="
+                  _routesForm['routeName'].errors?.['required'] && isSubmit
+              "
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small> -->
+                </div>
+                <input class="route-input-text-long" type="text" pInputText />
+              </div>
+              <div class="col-12 route-input-long">
+                <div class="route-text">
+                  Mô tả
+                  <!-- <small
+                    *ngIf="
+                  _routesForm['routeName'].errors?.['required'] && isSubmit
+              "
+                    class="p-error"
+                  >
+                    không được bỏ trống
+                  </small> -->
+                </div>
+                <input class="route-input-text-long" type="text" pInputText />
+              </div>
+              <div class="col-12">
+                <div class="list-station">
+                  <div class="route-title">Danh sách trạm xe buýt đã chọn</div>
+                  <div class="mt-2"></div>
+                  <div class="list-station-selected">
+                    <p-orderList
+                      class="order-list-custom"
+                      [value]="stations"
+                      [listStyle]="{
+                        border: 'none'
+                      }"
+                      [dragdrop]="true"
+                      (onReorder)="onReoderStations()"
+                    >
+                      <ng-template let-stations pTemplate="item">
+                        <div class="route-item">
+                          <div class="route-item-left">
+                            <div>{{ stations.description }}</div>
+                            <div>
+                              {{ stations.address }}
+                            </div>
+                          </div>
+                          <div class="route-item-right">
+                            <span class="material-icons"> close </span>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-orderList>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { Route } from '../../../models/RouteResponse';
@@ -71,7 +72,8 @@ export class PartnerMapPageComponent
     private mapService: MapService,
     private localStorageService: LocalStorageService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -233,7 +235,9 @@ export class PartnerMapPageComponent
       });
   }
   getDetailRoute(event: any) {}
-  createRoute() {}
+  createRoute() {
+    this.router.navigateByUrl('/partner/map/route');
+  }
   createRentStation() {
     this.rentStationId = '';
     this.showDialog = true;

@@ -21,6 +21,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { OrderListModule } from 'primeng/orderlist';
 
 @NgModule({
   declarations: [],
@@ -46,6 +47,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     InputNumberModule,
     CheckboxModule,
     MultiSelectModule,
+    OrderListModule,
   ],
   exports: [
     CardModule,
@@ -69,6 +71,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     InputNumberModule,
     CheckboxModule,
     MultiSelectModule,
+    OrderListModule,
   ],
 })
 export class PrimengModule {}
