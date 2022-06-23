@@ -1,0 +1,139 @@
+@import '../../../../../styles.scss';
+::ng-deep {
+  .route-details {
+    background-color: $background-grey;
+    @include fixed-scroll-view;
+    @include custom-scrollbar;
+    .header-route-content {
+      display: flex;
+      padding-left: 30px;
+      align-items: center;
+      margin-top: 26px;
+      justify-content: space-between;
+    }
+    .header-content-item {
+      display: flex;
+      align-items: center;
+    }
+    .header-item-H5 {
+      @include font-Roboto-Regular-H5;
+      color: rgb(102, 102, 102);
+    }
+    .header-item {
+      margin: 5px 5px 0 5px;
+      width: 5px;
+      height: 23px;
+      color: black;
+    }
+    .header-item-H6 {
+      margin-top: 5px;
+      @include font-Roboto-Medium-H6;
+      color: $black-default;
+    }
+    .form-edit {
+      width: 80%;
+      height: 654px;
+      margin: 26px auto;
+      border-radius: 9px;
+      background-color: $white-primary-color;
+      @include box-shadown-grey;
+      &-container {
+        padding: 20px 25px 0px 25px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        .map-box-container {
+          position: relative;
+          width: 100%;
+          .map-container {
+            border-radius: 9px;
+            margin-top: 5px;
+            width: auto;
+            height: 600px;
+          }
+        }
+        .form-content {
+          flex: 70%;
+          height: 305px;
+          .route-input-long {
+            height: 49px;
+            .route-input-text-long {
+              height: 28px;
+            }
+          }
+          .list-station {
+            margin-top: 10px;
+            padding: 12px;
+            border: 1px solid $input-border;
+            border-radius: 9px;
+            height: 498px;
+            .list-station-selected {
+              height: 435px;
+              overflow-x: hidden;
+              overflow-y: auto;
+              @include custom-scrollbar;
+            }
+            .p-orderlist-controls {
+              display: none;
+            }
+            .p-orderlist .p-orderlist-list .p-orderlist-item {
+              padding: 0 !important;
+              border-radius: 9px;
+              border: 1px solid $color-line-grey;
+              margin-top: 9px;
+            }
+            .route-item {
+              width: 100%;
+              height: 55px;
+              padding: 9px 9px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              .route-item-right {
+                cursor: pointer;
+                .span {
+                  font-size: 20px;
+                }
+              }
+            }
+          }
+          .route-title {
+            padding-bottom: 15px;
+            border-bottom: 1px solid $color-line-grey;
+            @include font-Roboto-Medium-Subtitle2;
+            color: $black-default;
+          }
+        }
+      }
+    }
+  }
+}
+::ng-deep {
+  .header-route-content {
+    .right-btn-form {
+      margin-right: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .p-button-rounded {
+        height: 32px;
+        margin-left: 10px;
+        .p-button-label {
+          @include font-Roboto-Medium-Button;
+          color: $white-primary-color !important;
+        }
+      }
+      .p-button-outlined {
+        @include button-outlined-primary(66, 32, null, $primary-color);
+      }
+      .button-background {
+        background-color: $primary-color !important;
+        border: none;
+        &:hover {
+          background-color: $primary-color !important;
+          @include box-shadown-green;
+        }
+      }
+    }
+  }
+}
