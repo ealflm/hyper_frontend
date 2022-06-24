@@ -22,6 +22,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { OrderListModule } from 'primeng/orderlist';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [],
@@ -48,6 +49,7 @@ import { OrderListModule } from 'primeng/orderlist';
     CheckboxModule,
     MultiSelectModule,
     OrderListModule,
+    ChartModule,
   ],
   exports: [
     CardModule,
@@ -72,6 +74,7 @@ import { OrderListModule } from 'primeng/orderlist';
     CheckboxModule,
     MultiSelectModule,
     OrderListModule,
+    ChartModule,
   ],
 })
 export class PrimengModule {}
