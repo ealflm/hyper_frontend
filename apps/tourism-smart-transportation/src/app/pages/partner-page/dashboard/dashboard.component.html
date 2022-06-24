@@ -1,1 +1,17 @@
-<p>dashboard works!</p>
+<div class="report-page">
+  <p-chart
+    type="doughnut"
+    [data]="data"
+    [options]="chartOptions"
+    [style]="{ width: '30%' }"
+  ></p-chart>
+  <p-chart
+    type="line"
+    [data]="basicData"
+    [options]="basicOptions"
+    [style]="{ width: '30%' }"
+  ></p-chart>
+  <div style="width: 500px; height: 500px">
+    <canvas id="lineChart" width="400" height="400"></canvas>
+  </div>
+</div>
