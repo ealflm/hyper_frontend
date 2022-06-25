@@ -20,7 +20,6 @@ import { CommonModule } from '@angular/common';
 import { ListVehicleComponent } from './list-vehicle/list-vehicle.component';
 import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.component';
 import { LoadingComponent } from './loading/loading.component';
-import { IonicModule } from '@ionic/angular';
 import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
 
 @NgModule({
@@ -70,7 +69,6 @@ import { LoadingProgressComponent } from './loading-progress/loading-progress.co
     MaterialuiModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule,
   ],
 })
 export class ComponentsModule {}

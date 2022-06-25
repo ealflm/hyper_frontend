@@ -9,9 +9,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/tourism-smart-transportation",
             "index": "apps/tourism-smart-transportation/src/index.html",
@@ -43,7 +41,7 @@
             ],
             "scripts": [
               "node_modules/quill/dist/quill.js",
-              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/chart.js/dist/chart.js",
               "node_modules/mapbox-gl/dist/mapbox-gl.js",
               "./node_modules/hammerjs/hammer.min.js"
             ]
@@ -110,9 +108,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/tourism-smart-transportation"
-          ],
+          "outputs": ["coverage/apps/tourism-smart-transportation"],
           "options": {
             "jestConfig": "apps/tourism-smart-transportation/jest.config.js",
             "passWithNoTests": true
@@ -140,9 +136,7 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": [
-            "{options.outputFile}"
-          ],
+          "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": [
               "apps/tourism-smart-transportation-e2e/**/*.{js,ts}"
@@ -151,9 +145,7 @@
         }
       },
       "tags": [],
-      "implicitDependencies": [
-        "tourism-smart-transportation"
-      ]
+      "implicitDependencies": ["tourism-smart-transportation"]
     }
   }
 }
