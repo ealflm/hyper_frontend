@@ -26,6 +26,7 @@ import {
   takeLast,
 } from 'rxjs';
 import { VehicleService } from '../../../services/vehicle.service';
+import { Gender } from '../../../constant/gender';
 
 @Component({
   selector: 'tourism-smart-transportation-driver',
@@ -42,16 +43,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   filterName = '';
   filterStatus = 1;
   status: any = [];
-  gender = [
-    {
-      id: false,
-      lable: 'Nữ',
-    },
-    {
-      id: true,
-      lable: 'Nam',
-    },
-  ];
+  gender = Gender;
   vehicles: any = [];
   partnerId = '';
   editMode = false;
@@ -73,7 +65,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     const user = this.localStorageService.getUser;
-    this.partnerId = user.id;
+    this.partnerId = user?.id;
     this.getListDriverOfPartner();
     this._getlistVehicle();
     this._initDriverForm();
@@ -213,7 +205,13 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onCancel() {
     this.displayDialog = false;
-    this.editMode = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+        // console.log(this.editMode);
+      },
+    });
   }
   onChangeEdit() {
     this.editMode = true;

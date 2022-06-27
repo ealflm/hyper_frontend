@@ -21,6 +21,7 @@ import { ListVehicleComponent } from './list-vehicle/list-vehicle.component';
 import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
+import { ConfirmCloseDialogComponent } from './confirm-close-dialog/confirm-close-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { LoadingProgressComponent } from './loading-progress/loading-progress.co
     ProfileComponent,
     LoadingComponent,
     LoadingProgressComponent,
+    ConfirmCloseDialogComponent,
   ],
   exports: [
     StationDetailComponent,
@@ -62,6 +64,7 @@ import { LoadingProgressComponent } from './loading-progress/loading-progress.co
     ProfileComponent,
     LoadingComponent,
     LoadingProgressComponent,
+    ConfirmCloseDialogComponent,
   ],
   imports: [
     CommonModule,

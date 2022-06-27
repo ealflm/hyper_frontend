@@ -1,6 +1,6 @@
 import { LocalStorageService } from './../../../../auth/localstorage.service';
 import { RentStation } from './../../../../models/RentStationResponse';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { MapService } from './../../../../services/map.service';
 import { MapBoxService } from './../../../../services/map-box.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -53,7 +53,8 @@ export class RentStationFormComponent
     private fb: FormBuilder,
     private mapService: MapService,
     private messageService: MessageService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private confirmationService: ConfirmationService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
@@ -71,6 +72,12 @@ export class RentStationFormComponent
   ngAfterViewInit() {}
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
+    this.getDetailsRentStation();
+  }
+  ngOnDestroy(): void {
+    // this.mapboxService.initViewMiniMapPartner$.unsubscribe();
+  }
+  getDetailsRentStation() {
     if (this._dialog && !this.mapboxService.initViewMiniMapPartner$.value) {
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
@@ -107,9 +114,6 @@ export class RentStationFormComponent
       this.mapboxService.initViewMiniMapPartner$.next(true);
     }
   }
-  ngOnDestroy(): void {
-    // this.mapboxService.initViewMiniMapPartner$.unsubscribe();
-  }
   setEmtyInitForm() {
     this._locationForm['id'].setValue(null);
     this._locationForm['partnerId'].setValue(null);
@@ -120,9 +124,18 @@ export class RentStationFormComponent
     this._locationForm['address'].setValue(null);
   }
   cancelDialog() {
-    this.setEmtyInitForm();
-    this.onCloseDialog();
-    this.editMode = false;
+    this._dialog = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this._dialog = true;
+        this.mapboxService.initViewMiniMapPartner$.next(false);
+        console.log(this.rentStationId);
+      },
+      reject: () => {
+        this.onCloseDialog();
+      },
+    });
   }
   onCloseDialog() {
     this.setEmtyInitForm();

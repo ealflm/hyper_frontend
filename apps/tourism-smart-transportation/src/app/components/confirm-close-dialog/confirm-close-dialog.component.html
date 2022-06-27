@@ -1,0 +1,31 @@
+<p-confirmDialog
+  key="confirmCloseDialog"
+  #cl
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      Bạn có chắc chắn muốn đóng cửa sổ?
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Đóng"
+      (click)="cl.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Quay Lại"
+      (click)="cl.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
