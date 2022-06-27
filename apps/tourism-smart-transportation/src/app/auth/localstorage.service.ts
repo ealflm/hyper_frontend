@@ -34,7 +34,10 @@ export class LocalStorageService {
   }
   get getUser() {
     const userStr = localStorage.getItem('user');
-    const user = JSON.parse(userStr ? userStr : '');
+    let user: any;
+    if (userStr) {
+      user = JSON.parse(userStr ? userStr : '');
+    }
     return user;
   }
 }

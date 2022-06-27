@@ -410,37 +410,7 @@
   </ng-template>
 </p-dialog>
 <!-- Confirm dialog -->
-<p-confirmDialog
-  key="confirmCloseDialog"
-  #cd
-  [style]="{ width: '450px', height: '101px' }"
->
-  <ng-template pTemplate="header">
-    <div class="confirm-dialog-subtitle">
-      Bạn có chắc chắn muốn đống cửa sổ?
-    </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <button
-      [style]="{ width: '57', height: '32px' }"
-      class="p-button-outlined p-button-rounded"
-      pButton
-      pRipple
-      type="button"
-      label="Đóng"
-      (click)="cd.reject()"
-    ></button>
-    <button
-      [style]="{ width: '57', height: '32px' }"
-      class="p-button-rounded button-rounded"
-      pButton
-      pRipple
-      type="button"
-      label="Quay lại"
-      (click)="cd.accept()"
-    ></button>
-  </ng-template>
-</p-confirmDialog>
+<tourism-smart-transportation-confirm-close-dialog></tourism-smart-transportation-confirm-close-dialog>
 
 <p-confirmDialog
   key="deleteConfirm"

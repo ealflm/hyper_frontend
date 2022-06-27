@@ -75,7 +75,7 @@ export class VehicleComponent
 
   ngOnInit(): void {
     const user = this.localStorageService.getUser;
-    this.partnerId = user.id;
+    this.partnerId = user?.id;
     this._getVehicleTypes();
     this._getServiceTypes();
     this._getPublishYears();
