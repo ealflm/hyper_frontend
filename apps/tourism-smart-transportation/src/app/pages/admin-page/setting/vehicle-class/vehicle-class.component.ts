@@ -136,6 +136,7 @@ export class VehicleClassComponent implements OnInit {
         this.getAllCategory();
       });
     }
+    this.isSubmit = false;
     this.editMode = false;
     this.displayDialog = false;
   }
