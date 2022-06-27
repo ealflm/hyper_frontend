@@ -139,7 +139,12 @@ export class BusPriceComponent implements OnInit {
   }
   cancelDialog() {
     this.displayDialog = false;
-    this.editMode = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+      },
+    });
   }
   onSaveBusPrice() {
     this.isSubmit = true;
@@ -158,8 +163,9 @@ export class BusPriceComponent implements OnInit {
         maxStation: this._busPriceForms['maxStation'].value,
         price: this._busPriceForms['price'].value,
       };
-      this.busConfigService.updateBusPrice(id, busPriceUpdate).subscribe(
-        (busPriceRes: any) => {
+      this.busConfigService
+        .updateBusPrice(id, busPriceUpdate)
+        .subscribe((busPriceRes: any) => {
           if (busPriceRes?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -168,18 +174,7 @@ export class BusPriceComponent implements OnInit {
             });
           }
           this.getAllBusPrice();
-        }
-        // (error: HttpErrorResponse) => {
-        //   console.log(error.status);
-        //   if (error.status === 400) {
-        //     this.messageService.add({
-        //       severity: 'error',
-        //       summary: 'Thất bại',
-        //       detail: error.error.message,
-        //     });
-        //   }
-        // }
-      );
+        });
     } else if (this.isSubmit && !this.editMode) {
       const busPrice: BusPrice = {
         id: '',
@@ -192,8 +187,9 @@ export class BusPriceComponent implements OnInit {
         maxStation: this._busPriceForms['maxStation'].value,
         price: this._busPriceForms['price'].value,
       };
-      this.busConfigService.createBusPrice(busPrice).subscribe(
-        (busPriceRes: any) => {
+      this.busConfigService
+        .createBusPrice(busPrice)
+        .subscribe((busPriceRes: any) => {
           if (busPriceRes?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -202,19 +198,9 @@ export class BusPriceComponent implements OnInit {
             });
           }
           this.getAllBusPrice();
-        }
-        // (error: HttpErrorResponse) => {
-        //   console.log(error.status);
-        //   if (error.status === 400) {
-        //     this.messageService.add({
-        //       severity: 'error',
-        //       summary: 'Thất bại',
-        //       detail: error.error.message,
-        //     });
-        //   }
-        // }
-      );
+        });
     }
+    this.isSubmit = false;
     this.editMode = false;
     this.displayDialog = false;
   }

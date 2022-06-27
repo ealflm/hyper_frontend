@@ -103,7 +103,12 @@ export class YearOfManufactureComponent implements OnInit {
   }
   cancelDialog() {
     this.displayDialog = false;
-    this.editMode = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+      },
+    });
   }
   onSaveVehicleYearOfPublish() {
     this.isSubmit = true;
@@ -125,7 +130,6 @@ export class YearOfManufactureComponent implements OnInit {
               summary: 'Thành công',
               detail: res.message,
             });
-            this.displayDialog = false;
             this.getAllVehiclePublishYear();
           }
         });
@@ -146,12 +150,12 @@ export class YearOfManufactureComponent implements OnInit {
               summary: 'Thành công',
               detail: res.message,
             });
-            this.displayDialog = false;
             this.getAllVehiclePublishYear();
           }
         });
     }
 
+    this.displayDialog = false;
     this.editMode = false;
   }
   convertTime(value: string) {

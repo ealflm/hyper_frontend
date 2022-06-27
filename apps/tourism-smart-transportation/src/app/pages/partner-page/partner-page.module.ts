@@ -26,7 +26,7 @@ const PARTNER_ROUTES: Routes = [
   {
     path: '',
     component: PartnerPageComponent,
-    // canActivate: [PartnerGuard],
+    canActivate: [PartnerGuard],
     children: [
       {
         path: 'partner',

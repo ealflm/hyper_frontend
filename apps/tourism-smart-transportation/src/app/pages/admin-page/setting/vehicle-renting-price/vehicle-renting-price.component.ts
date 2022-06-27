@@ -150,8 +150,12 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   }
   cancelDialog() {
     this.displayDialog = false;
-    this.editMode = false;
-    this.isSubmit = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+      },
+    });
   }
   onSaveRentingPrice() {
     this.isSubmit = true;
@@ -180,7 +184,6 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
           }
           this.getListRentingPrice();
         });
-      this.isSubmit = false;
     } else if (this.isSubmit && !this.editMode) {
       this.rentingService.createRentingConfig(rentingPrice).subscribe((res) => {
         if (res?.statusCode === 201) {
@@ -192,8 +195,9 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
         }
         this.getListRentingPrice();
       });
-      this.isSubmit = false;
     }
+    this.isSubmit = false;
+    this.editMode = false;
     this.displayDialog = false;
   }
 }
