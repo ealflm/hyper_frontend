@@ -136,12 +136,18 @@ export class VehicleClassComponent implements OnInit {
         this.getAllCategory();
       });
     }
+    this.isSubmit = false;
     this.editMode = false;
     this.displayDialog = false;
   }
   cancelDialog() {
-    this.editMode = false;
     this.displayDialog = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+      },
+    });
   }
   getAllCategory() {
     this.categoryService

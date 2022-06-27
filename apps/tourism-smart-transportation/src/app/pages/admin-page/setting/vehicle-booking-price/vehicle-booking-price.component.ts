@@ -109,10 +109,10 @@ export class VehicleBookingPriceComponent implements OnInit {
     });
   }
   updateBookingPrice(id: string) {
-    this.editMode = false;
+    this.editMode = true;
     this.displayDialog = true;
     this.bookingService.getBookingPriceById(id).subscribe((res) => {
-      console.log(res);
+      // console.log(res);
       this._bookingForms['id'].setValue(res.body.id);
       this._bookingForms['vehicleTypeId'].setValue(res.body.vehicleTypeId);
       this._bookingForms['fixedPrice'].setValue(res.body.fixedPrice);
@@ -124,8 +124,12 @@ export class VehicleBookingPriceComponent implements OnInit {
   }
   cancelDialog() {
     this.displayDialog = false;
-    this.isSubmit = false;
-    this.editMode = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+      },
+    });
   }
   onSaveBookingPrice() {
     this.isSubmit = true;
@@ -151,7 +155,6 @@ export class VehicleBookingPriceComponent implements OnInit {
           }
           this.getAllBookingPrice();
         });
-      this.isSubmit = false;
     } else if (!this.editMode && this.isSubmit) {
       this.bookingService.createBookingPrice(bookingPrice).subscribe((res) => {
         if (res?.statusCode === 201) {
@@ -163,8 +166,9 @@ export class VehicleBookingPriceComponent implements OnInit {
         }
         this.getAllBookingPrice();
       });
-      this.isSubmit = false;
     }
+    this.isSubmit = false;
+    this.editMode = false;
     this.displayDialog = false;
   }
 }

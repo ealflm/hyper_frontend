@@ -201,6 +201,8 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         this.getListDriverOfPartner();
       });
     }
+    this.editMode = false;
+    this.isSubmit = false;
     this.displayDialog = false;
   }
   onCancel() {

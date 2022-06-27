@@ -157,8 +157,12 @@ export class VehicleTypeComponent implements OnInit {
   }
   cancelDialog() {
     this.displayDialog = false;
-    this.editMode = false;
-    // this.confirmationService.confirm({});
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.displayDialog = true;
+      },
+    });
   }
   getAllVehicleType() {
     this.vehicleTypeService
