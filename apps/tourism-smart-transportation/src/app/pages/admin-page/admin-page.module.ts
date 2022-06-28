@@ -33,7 +33,7 @@ const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminPageComponent,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [
       {
         path: 'admin',

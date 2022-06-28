@@ -91,7 +91,6 @@ export class BusPriceComponent implements OnInit {
   createBusPrice() {
     this.editMode = false;
     this.displayDialog = true;
-    this.busPriceForm.reset();
   }
   onChangeFillterByName(e: any) {}
   onGetValueMenu(e: number) {
@@ -177,7 +176,6 @@ export class BusPriceComponent implements OnInit {
         });
     } else if (this.isSubmit && !this.editMode) {
       const busPrice: BusPrice = {
-        id: '',
         mode: this._busPriceForms['mode'].value,
         minDistance: this._busPriceForms['minDistance'].value,
         maxDistance: this._busPriceForms['maxDistance'].value,
