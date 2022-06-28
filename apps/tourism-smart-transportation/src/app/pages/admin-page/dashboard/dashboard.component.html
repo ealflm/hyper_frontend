@@ -10,8 +10,9 @@ Licensed under the MIT License. -->
 <tourism-smart-transportation-loading
   *ngIf="loading"
 ></tourism-smart-transportation-loading>
+
 <ng-template #embedReportFlow>
-  <div class="embed-report" *ngIf="!loading">
+  <div class="embed-report">
     <button (click)="embedReportPowerBI()" id="embed-action" #embedReportBtn>
       Embed Report
     </button>

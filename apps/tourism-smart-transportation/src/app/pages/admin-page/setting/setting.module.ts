@@ -13,8 +13,8 @@ import { YearOfManufactureComponent } from './year-of-manufacture/year-of-manufa
 
 const SETTING_ROUTE: Routes = [
   {
-    path: 'setting',
-    redirectTo: 'setting/bus-price',
+    path: 'admin/setting',
+    redirectTo: 'admin/setting/vehicle-type',
     pathMatch: 'full',
   },
   {

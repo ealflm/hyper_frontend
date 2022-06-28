@@ -38,6 +38,7 @@ export class PartnerDetailComponent implements OnInit {
   serviceTypes: ServiceType[] = [];
   usernameBiding? = '';
   statusBiding?: number = 1;
+  loading = false;
   constructor(
     private partnerService: PartnersService,
     private formBuilder: FormBuilder,
@@ -211,6 +212,7 @@ export class PartnerDetailComponent implements OnInit {
   }
   onSaveChange() {
     this.isSubmit = true;
+    this.loading = true;
     if (this.inforForm.invalid) return;
     const formData = new FormData();
     const idPartner = this._inforsForm['id'].value;
@@ -249,6 +251,7 @@ export class PartnerDetailComponent implements OnInit {
               detail: updatePartnerRes.message,
             });
           }
+          this.loading = false;
           this.onCancleEdit();
           this.isSubmit = false;
         });

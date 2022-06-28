@@ -50,6 +50,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   payments: any[] = [];
   status: any = [];
   statusBiding? = 1;
+  loading = false;
   private subscription?: Subscription;
   constructor(
     private fb: FormBuilder,
@@ -221,6 +222,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     if (this.customerEditForm.invalid) {
       return;
     }
+    this.loading = true;
     const editFormData = new FormData();
     editFormData.append(
       'FirstName',
@@ -260,13 +262,14 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       .updateCustomerById(this._customersEditForm['id'].value, editFormData)
       .subscribe(
         (res) => {
-          if (res.statusCode === 200) {
+          if (res.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: res.message,
             });
           }
+          this.loading = false;
           this.onCancleEdit();
         }
         // (error: HttpErrorResponse) => {
