@@ -206,14 +206,30 @@
           </small>
         </div>
         <p-dropdown
+          [style]="{ height: '28px' }"
+          class="dropdown"
+          placeholder="Chọn loại xe"
+          optionValue="id"
+          formControlName="categoryId"
+          [options]="category"
+        >
+          <ng-template let-item pTemplate="item">
+            {{ item.name }}
+          </ng-template>
+
+          <ng-template let-item pTemplate="selectedItem">
+            {{ item.name }}
+          </ng-template>
+        </p-dropdown>
+        <!-- <p-dropdown
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
           [options]="category"
           optionLabel="name"
           optionValue="id"
-          placeholder="Chọn loại xe"
+
           formControlName="categoryId"
-        ></p-dropdown>
+        ></p-dropdown> -->
       </div>
       <div class="col-12">
         <div class="bus-price-text">

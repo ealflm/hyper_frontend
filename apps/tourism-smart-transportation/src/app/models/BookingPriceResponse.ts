@@ -1,7 +1,9 @@
 export class BookingPrice {
   id?: string;
   vehicleTypeId?: string;
-  vehicleName?: string;
+  vehicleLabel?: string;
+  vehicleSeats?: string;
+  vehicleFuel?: string;
   fixedPrice?: number;
   fixedDistance?: number;
   pricePerKilometer?: number;

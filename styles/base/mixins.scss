@@ -194,6 +194,15 @@
   padding: 2px 15px 2px 15px;
   width: 131px;
 }
+@mixin status-completed {
+  background-color: $status-tag-color-completed;
+  color: $status-tag-text-color-completed;
+  box-shadow: 0rem 0rem 2rem rgb(225, 224, 254);
+  border-radius: 50px;
+  text-align: center;
+  padding: 2px 15px 2px 15px;
+  width: 131px;
+}
 @mixin status-inactive {
   background-color: $status-tag-color-disable;
   color: $red-primary;
