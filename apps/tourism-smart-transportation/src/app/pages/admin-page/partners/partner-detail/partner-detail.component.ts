@@ -39,6 +39,7 @@ export class PartnerDetailComponent implements OnInit {
   usernameBiding? = '';
   statusBiding?: number = 1;
   loading = false;
+  deleteServiceTypeList = [];
   constructor(
     private partnerService: PartnersService,
     private formBuilder: FormBuilder,
@@ -108,6 +109,8 @@ export class PartnerDetailComponent implements OnInit {
             this.deleteFile = partnerResponse.body?.photoUrl?.trim();
             this.usernameBiding = partnerResponse.body?.username;
             this.statusBiding = partnerResponse.body?.status;
+            this.deleteServiceTypeList = serivceTypeIdList;
+
             this.getListDriverFormPartnerId();
           });
       }
@@ -148,6 +151,7 @@ export class PartnerDetailComponent implements OnInit {
         photoUrl: [''],
         createdDate: [{ value: '', disabled: true }],
         modifiedDate: [{ value: '', disabled: true }],
+        DeleteServiceTypeIdList: [],
       },
       {
         validator: [
@@ -157,7 +161,15 @@ export class PartnerDetailComponent implements OnInit {
       }
     );
   }
+  OnChangeServiceTypeList() {
+    const result = this.deleteServiceTypeList.filter(
+      (value) => !this._inforsForm['serviceType'].value.includes(value)
+    );
+    this._inforsForm['DeleteServiceTypeIdList'].setValue(result);
+    console.log('mang da xoa', result);
 
+    console.log('mang hien tai', this._inforsForm['serviceType'].value);
+  }
   get _inforsForm() {
     return this.inforForm.controls;
   }
@@ -228,11 +240,28 @@ export class PartnerDetailComponent implements OnInit {
     const pipe = new DatePipe('en-US');
     const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
 
-    for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
-      formData.append(
-        'AddServiceTypeIdList',
-        this._inforsForm['serviceType'].value[i]
-      );
+    if (this._inforsForm['DeleteServiceTypeIdList'].value.length == 0) {
+      for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
+        formData.append(
+          'AddServiceTypeIdList',
+          this._inforsForm['serviceType'].value[i]
+        );
+      }
+    }
+    if (
+      this._inforsForm['DeleteServiceTypeIdList'].value &&
+      this._inforsForm['DeleteServiceTypeIdList'].value.length > 0
+    ) {
+      for (
+        let i = 0;
+        i < this._inforsForm['DeleteServiceTypeIdList'].value.length;
+        i++
+      ) {
+        formData.append(
+          'DeleteServiceTypeIdList',
+          this._inforsForm['DeleteServiceTypeIdList'].value[i]
+        );
+      }
     }
 
     formData.append('DateOfBirth', dobPipe ? dobPipe : '');
