@@ -256,21 +256,26 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       this._customersEditForm['deleteFile'].value
     );
     editFormData.forEach((e) => {
-      console.log(e);
+      // console.log(e);
     });
     this.customerService
       .updateCustomerById(this._customersEditForm['id'].value, editFormData)
-      .subscribe((res) => {
-        if (res.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: res.message,
-          });
+      .subscribe(
+        (res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+          }
+        },
+        (error) => {},
+        () => {
+          this.onCancleEdit();
+          this.loading = false;
         }
-        this.loading = false;
-        this.onCancleEdit();
-      });
+      );
     this.editModeStatus = false;
   }
   _getTierByUser() {
