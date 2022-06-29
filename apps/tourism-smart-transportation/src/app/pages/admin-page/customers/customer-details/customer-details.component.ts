@@ -260,30 +260,17 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     });
     this.customerService
       .updateCustomerById(this._customersEditForm['id'].value, editFormData)
-      .subscribe(
-        (res) => {
-          if (res.statusCode === 201) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Thành công',
-              detail: res.message,
-            });
-          }
-          this.loading = false;
-          this.onCancleEdit();
+      .subscribe((res) => {
+        if (res.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: res.message,
+          });
         }
-        // (error: HttpErrorResponse) => {
-        //   console.log(error);
-        //   if (error.status === 400) {
-        //     this.messageService.add({
-        //       severity: 'error',
-        //       summary: 'Lỗi',
-        //       detail: error.error.message,
-        //     });
-        //   }
-        //   this.onCancleEdit();
-        // }
-      );
+        this.loading = false;
+        this.onCancleEdit();
+      });
     this.editModeStatus = false;
   }
   _getTierByUser() {

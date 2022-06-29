@@ -1,3 +1,4 @@
+import { ServiceTypeEnum } from './../../../constant/service-type';
 import { STATUS_VEHICLE } from './../../../constant/status';
 import { LocalStorageService } from './../../../auth/localstorage.service';
 import { VehicleService } from './../../../services/vehicle.service';
@@ -60,6 +61,7 @@ export class VehicleComponent
   filterByStatus = 1;
   createStatus = false;
   currentLicensePlates? = '';
+  ServiceTypeEnum = ServiceTypeEnum;
   constructor(
     private confirmationService: ConfirmationService,
     private fb: FormBuilder,
@@ -205,7 +207,7 @@ export class VehicleComponent
   onChangeServiceType() {
     if (
       this._vehiclesForm['serviceTypeId'].value ==
-      '5168511d-57f1-460a-8c7c-14664e3dbccc'
+      ServiceTypeEnum.RentCarService
     ) {
       this._vehiclesForm['rentStationId'].setValidators(Validators.required);
       this._vehiclesForm['publishYearId'].setValidators(Validators.required);
@@ -232,16 +234,14 @@ export class VehicleComponent
     this.createStatus = false;
     this.setDisableForm();
     this.vehicleService.getVehicleByIdForPartner(id).subscribe((res) => {
-      if (res.body.serviceTypeId == '5168511d-57f1-460a-8c7c-14664e3dbccc') {
+      if (res.body.serviceTypeId == ServiceTypeEnum.RentCarService) {
         this._vehiclesForm['rentStationId'].setValue(res.body.rentStationId);
         this._vehiclesForm['publishYearId'].setValue(res.body.publishYearId);
         this._vehiclesForm['vehicleClassId'].setValue(res.body.categoryId);
         this._vehiclesForm['rentStationId'].setValidators(Validators.required);
         this._vehiclesForm['publishYearId'].setValidators(Validators.required);
         this._vehiclesForm['vehicleClassId'].setValidators(Validators.required);
-      } else if (
-        res.body.serviceTypeId !== '5168511d-57f1-460a-8c7c-14664e3dbccc'
-      ) {
+      } else if (res.body.serviceTypeId !== ServiceTypeEnum.RentCarService) {
         this._vehiclesForm['rentStationId'].clearValidators();
         this._vehiclesForm['publishYearId'].clearValidators();
         this._vehiclesForm['vehicleClassId'].clearValidators();

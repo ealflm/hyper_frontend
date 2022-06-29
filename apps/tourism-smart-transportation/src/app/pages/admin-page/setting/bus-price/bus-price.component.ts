@@ -1,3 +1,4 @@
+import { MODE } from './../../../../constant/mode';
 import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -19,16 +20,7 @@ import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 })
 export class BusPriceComponent implements OnInit {
   menuValue = MenuFilterStatus;
-  mode: any = [
-    {
-      name: 'distance',
-      lable: 'Khoảng cách',
-    },
-    {
-      name: 'station',
-      lable: 'Trạm',
-    },
-  ];
+  mode = MODE;
   editMode = false;
   busPriceStatus: any = [];
   busPrices: BusPrice[] = [];
