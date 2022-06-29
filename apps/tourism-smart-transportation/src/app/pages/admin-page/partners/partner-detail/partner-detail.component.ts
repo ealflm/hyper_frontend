@@ -237,8 +237,8 @@ export class PartnerDetailComponent implements OnInit {
   }
   onSaveChange() {
     this.isSubmit = true;
-    this.loading = true;
     if (this.inforForm.invalid) return;
+    this.loading = true;
     const formData = new FormData();
     const idPartner = this._inforsForm['id'].value;
     formData.append('FirstName', this._inforsForm['firstName'].value);
@@ -252,14 +252,15 @@ export class PartnerDetailComponent implements OnInit {
     const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
     const pipe = new DatePipe('en-US');
     const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
-    if (this._inforsForm['DeleteServiceTypeIdList'].value !== null) {
-      if (this._inforsForm['DeleteServiceTypeIdList'].value.length == 0) {
-        for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
-          formData.append(
-            'AddServiceTypeIdList',
-            this._inforsForm['serviceType'].value[i]
-          );
-        }
+    if (
+      this._inforsForm['DeleteServiceTypeIdList'].value ||
+      this._inforsForm['DeleteServiceTypeIdList'].value.length == 0
+    ) {
+      for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
+        formData.append(
+          'AddServiceTypeIdList',
+          this._inforsForm['serviceType'].value[i]
+        );
       }
     }
 

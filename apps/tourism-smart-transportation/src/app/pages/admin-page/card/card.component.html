@@ -47,7 +47,13 @@
         <tr>
           <th>Khách hàng</th>
           <th>Mã thẻ</th>
-          <th>Trạng thái</th>
+          <th pSortableColumn="status">
+            <div>
+              Trạng thái
+              <p-sortIcon field="status"></p-sortIcon>
+            </div>
+          </th>
+
           <th>Hành động</th>
         </tr>
       </ng-template>
