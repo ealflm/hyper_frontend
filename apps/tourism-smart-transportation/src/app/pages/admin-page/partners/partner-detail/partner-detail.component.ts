@@ -56,6 +56,9 @@ export class PartnerDetailComponent implements OnInit {
     this._mapStatus();
     this._initForm();
     this._getServiceType();
+    this._getDetailPartner();
+  }
+  private _getDetailPartner() {
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.partnerService
@@ -110,7 +113,6 @@ export class PartnerDetailComponent implements OnInit {
             this.usernameBiding = partnerResponse.body?.username;
             this.statusBiding = partnerResponse.body?.status;
             this.deleteServiceTypeList = serivceTypeIdList;
-
             this.getListDriverFormPartnerId();
           });
       }
@@ -166,9 +168,9 @@ export class PartnerDetailComponent implements OnInit {
       (value) => !this._inforsForm['serviceType'].value.includes(value)
     );
     this._inforsForm['DeleteServiceTypeIdList'].setValue(result);
-    console.log('mang da xoa', result);
+    // console.log('mang da xoa', result);
 
-    console.log('mang hien tai', this._inforsForm['serviceType'].value);
+    // console.log('mang hien tai', this._inforsForm['serviceType'].value);
   }
   get _inforsForm() {
     return this.inforForm.controls;
@@ -239,15 +241,17 @@ export class PartnerDetailComponent implements OnInit {
     const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
     const pipe = new DatePipe('en-US');
     const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
-
-    if (this._inforsForm['DeleteServiceTypeIdList'].value.length == 0) {
-      for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
-        formData.append(
-          'AddServiceTypeIdList',
-          this._inforsForm['serviceType'].value[i]
-        );
+    if (this._inforsForm['DeleteServiceTypeIdList'].value !== null) {
+      if (this._inforsForm['DeleteServiceTypeIdList'].value.length == 0) {
+        for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
+          formData.append(
+            'AddServiceTypeIdList',
+            this._inforsForm['serviceType'].value[i]
+          );
+        }
       }
     }
+
     if (
       this._inforsForm['DeleteServiceTypeIdList'].value &&
       this._inforsForm['DeleteServiceTypeIdList'].value.length > 0
@@ -283,6 +287,7 @@ export class PartnerDetailComponent implements OnInit {
           this.loading = false;
           this.onCancleEdit();
           this.isSubmit = false;
+          this._getDetailPartner();
         });
     }
   }
