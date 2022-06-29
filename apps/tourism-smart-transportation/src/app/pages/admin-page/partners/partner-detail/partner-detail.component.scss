@@ -214,7 +214,21 @@
 .status-paid {
   @include status-paid;
 }
-
+.status-disabled {
+  @include status-disabled;
+}
+.status-active {
+  @include status-active;
+}
+.status-used {
+  @include status-used;
+}
+.status-expired {
+  @include status-expried;
+}
+.status-completed {
+  @include status-completed;
+}
 ::ng-deep {
   p-dialog {
     .table-dialog {
@@ -358,16 +372,7 @@
     }
   }
 }
-.status-disabled {
-  @include status-disabled;
-  margin-left: 12px;
-  margin-top: 10px;
-}
-.status-active {
-  @include status-active;
-  margin-left: 12px;
-  margin-top: 10px;
-}
+
 ::ng-deep {
   .partner-input-long {
     .p-multiselect .p-multiselect-label {

@@ -6,7 +6,7 @@ import { DriverService } from './../../../../services/driver.service';
 import { VehicleService } from './../../../../services/vehicle.service';
 import { ServiceType } from './../../../../models/ServiceTypeResponse';
 import { ServiceTypeService } from './../../../../services/service-type.service';
-import { STATUS_PARTNER } from './../../../../constant/status';
+import { STATUS_PARTNER, STATUS_VEHICLE } from './../../../../constant/status';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -25,6 +25,7 @@ export class PartnerDetailComponent implements OnInit {
   menuValue = MenuFilterPartnerDetail;
   editModeStatus = false;
   status: any = [];
+  vehicleStatus: any = [];
   inforForm!: FormGroup;
   isSubmit = false;
   uploadedFiles: any[] = [];
@@ -57,6 +58,7 @@ export class PartnerDetailComponent implements OnInit {
     this._initForm();
     this._getServiceType();
     this._getDetailPartner();
+    this._mapVehicleStatus();
   }
   private _getDetailPartner() {
     this.route.params.subscribe((params) => {
@@ -124,6 +126,15 @@ export class PartnerDetailComponent implements OnInit {
         id: key,
         lable: STATUS_PARTNER[key].lable,
         class: STATUS_PARTNER[key].class,
+      };
+    });
+  }
+  private _mapVehicleStatus() {
+    this.vehicleStatus = Object.keys(STATUS_VEHICLE).map((key) => {
+      return {
+        id: key,
+        lable: STATUS_VEHICLE[key].lable,
+        class: STATUS_VEHICLE[key].class,
       };
     });
   }
@@ -296,6 +307,7 @@ export class PartnerDetailComponent implements OnInit {
     if (id) {
       this.verhicleService.getListVehicleByPartnerId(id).subscribe((res) => {
         this.vehicles = res.body;
+        console.log(res);
       });
     }
   }
@@ -303,6 +315,7 @@ export class PartnerDetailComponent implements OnInit {
     const id = this._inforsForm['id'].value;
     if (id) {
       this.driverService.getListDriverByPartnerId(id).subscribe((res) => {
+        console.log(res);
         this.drivers = res.body;
       });
     }

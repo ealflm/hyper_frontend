@@ -354,7 +354,7 @@
               {{ driver.firstName + ' ' + driver.lastName }}
             </td>
             <td>
-              {{ driver.vehicleId }}
+              {{ driver.name }}
             </td>
             <td>
               {{ driver.gender ? 'Nam' : 'Nữ' }}
@@ -394,7 +394,7 @@
             <th>Màu</th>
             <th>Loại xe</th>
             <th>Loại dịch vụ</th>
-            <th>Tọa độ</th>
+            <th>Trạng thái</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-vehicle let-i="rowIndex">
@@ -402,8 +402,13 @@
             <td>{{ vehicle?.name }}</td>
             <td>{{ vehicle?.licensePlates }}</td>
             <td>{{ vehicle?.color }}</td>
-            <td>{{ vehicle?.vehicleTypeId }}</td>
+            <td>{{ vehicle?.vehicleTypeName }}</td>
             <td>{{ vehicle?.serviceTypeName }}</td>
+            <td>
+              <div [class]="vehicleStatus[vehicle.status].class">
+                {{ vehicleStatus[vehicle.status].lable }}
+              </div>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

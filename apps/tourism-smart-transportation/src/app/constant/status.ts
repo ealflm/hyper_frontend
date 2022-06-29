@@ -43,11 +43,11 @@ export const STATUS_VEHICLE: any = {
   },
   3: {
     lable: 'Đang đón khách',
-    class: 'status-used',
+    class: 'status-completed',
   },
   4: {
     lable: 'Đang chạy',
-    class: 'status-used',
+    class: 'status-completed',
   },
   5: {
     lable: 'Quá hạn',
