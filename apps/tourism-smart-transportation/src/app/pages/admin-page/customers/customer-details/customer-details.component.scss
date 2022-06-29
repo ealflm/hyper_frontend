@@ -228,16 +228,11 @@
 }
 .status-disabled {
   @include status-disabled;
-
-  margin-left: 33px;
-  margin-top: 10px;
 }
 .status-active {
   @include status-active;
-
-  margin-left: 33px;
-  margin-top: 10px;
 }
+
 ::ng-deep {
   p-dialog {
     .table-dialog {

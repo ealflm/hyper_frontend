@@ -35,7 +35,10 @@
           <div class="username" style="text-align: center">
             {{ usernameBiding }}
           </div>
-          <div [class]="status[statusBiding!].class">
+          <div
+            [class]="status[statusBiding!].class"
+            style="margin-top: 10px; margin-left: 12px"
+          >
             {{ status[statusBiding!].lable }}
           </div>
         </div>

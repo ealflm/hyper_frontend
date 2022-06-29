@@ -27,7 +27,10 @@
             accept="image/*"
             (change)="onUpload($event)"
           />
-          <div [class]="status[statusBiding!].class" style="margin-top: 150px">
+          <div
+            [class]="status[statusBiding!].class"
+            style="margin-top: 150px; margin-left: 33px"
+          >
             {{ status[statusBiding!].lable }}
           </div>
         </div>
