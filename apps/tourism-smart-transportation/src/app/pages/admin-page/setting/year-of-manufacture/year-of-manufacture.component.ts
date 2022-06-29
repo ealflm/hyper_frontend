@@ -120,6 +120,7 @@ export class YearOfManufactureComponent implements OnInit {
           ' - ' +
           this.convertTime(this._publishYearForm['name'].value[1]),
         description: this._publishYearForm['description'].value,
+        status: 1,
       };
       this.publishYearService
         .updatePublishYearById(id, publishYear)

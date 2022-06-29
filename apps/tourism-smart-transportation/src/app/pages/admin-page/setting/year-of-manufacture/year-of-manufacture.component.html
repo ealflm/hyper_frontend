@@ -51,7 +51,12 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Đời xe</th>
+          <th pSortableColumn="name">
+            <div>
+              Đời xe
+              <p-sortIcon field="name"></p-sortIcon>
+            </div>
+          </th>
           <th>Mô tả</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
