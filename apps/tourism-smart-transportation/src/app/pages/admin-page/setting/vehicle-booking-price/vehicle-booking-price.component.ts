@@ -23,7 +23,7 @@ export class VehicleBookingPriceComponent implements OnInit {
   filterByStatus = 1;
   filterByName = '';
   vehicleType: VehicleType[] = [];
-  bookingPrices: any = [];
+  bookingPrices: BookingPrice[] = [];
   displayDialog = false;
 
   totalItems = 0;

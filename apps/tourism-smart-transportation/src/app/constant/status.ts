@@ -34,8 +34,54 @@ export const STATUS_VEHICLE: any = {
     class: 'status-disabled',
   },
   1: {
-    lable: 'Kích hoạt',
+    lable: 'Chuẩn bị',
     class: 'status-active',
+  },
+  2: {
+    lable: 'Sẵn sàng',
+    class: 'status-active',
+  },
+  3: {
+    lable: 'Đang đón khách',
+    class: 'status-used',
+  },
+  4: {
+    lable: 'Đang chạy',
+    class: 'status-used',
+  },
+  5: {
+    lable: 'Quá hạn',
+    class: 'status-expired',
+  },
+};
+export const STATUS_CUSTOMER_TRIP = {
+  0: {
+    lable: 'Bị Hủy',
+    class: 'status-disabled',
+  },
+  1: {
+    lable: 'Mới tạo',
+    class: 'status-active',
+  },
+  2: {
+    lable: 'Đã chấp thuận',
+    class: 'status-active',
+  },
+  3: {
+    lable: 'Đã đón khách',
+    class: 'status-used',
+  },
+  4: {
+    lable: 'Đang thuê',
+    class: 'status-used',
+  },
+  5: {
+    lable: 'Quá hạn',
+    class: 'status-expired',
+  },
+  6: {
+    lable: 'Hoàn Thành',
+    class: 'status-completed',
   },
 };
 export const STATUS_TIER: any = {
@@ -72,15 +118,15 @@ export const STATUS_CARD: any = {
     class: 'status-inactive',
   },
   1: {
-    lable: 'Đã liên kết',
-    class: 'status-linked',
-  },
-  2: {
     lable: 'Chưa liên kết',
     class: 'status-unlinked',
   },
+  2: {
+    lable: 'Đã liên kết',
+    class: 'status-linked',
+  },
   3: {
-    lable: 'Hết hạn',
+    lable: 'Hủy',
     class: 'status-expired',
   },
 };

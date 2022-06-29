@@ -61,7 +61,15 @@
       </ng-template>
       <ng-template pTemplate="body" let-bookingPrice let-i="rowIndex">
         <tr>
-          <td>{{ bookingPrice.vehicleName }}</td>
+          <td>
+            {{
+              bookingPrice?.vehicleLabel +
+                ' - ' +
+                bookingPrice?.vehicleSeats +
+                ' - ' +
+                bookingPrice?.vehicleFuel
+            }}
+          </td>
           <td>{{ bookingPrice?.fixedDistance }}</td>
           <td>{{ bookingPrice?.fixedPrice }}</td>
           <td>{{ bookingPrice?.pricePerKilometer }}</td>
@@ -159,19 +167,8 @@
             >Không được trống</small
           >
         </div>
+
         <!-- <p-dropdown
-          [options]="category"
-          placeholder="Chọn loại xe"
-          [group]="true"
-          [style]="{ width: '420px', height: '28px' }"
-        >
-          <ng-template let-group pTemplate="group">
-            <div class="flex align-items-center">
-              <span>{{ group.name + '-' + group.description }}</span>
-            </div>
-          </ng-template>
-        </p-dropdown> -->
-        <p-dropdown
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
           [options]="vehicleType"
@@ -179,7 +176,23 @@
           optionValue="id"
           placeholder="Chọn loại xe"
           formControlName="vehicleTypeId"
-        ></p-dropdown>
+        ></p-dropdown> -->
+        <p-dropdown
+          [style]="{ height: '28px' }"
+          class="dropdown"
+          placeholder="Chọn loại xe"
+          optionValue="id"
+          formControlName="vehicleTypeId"
+          [options]="vehicleType"
+        >
+          <ng-template let-item pTemplate="item">
+            {{ item.label + ' - ' + item.seats + ' Chỗ' + ' - ' + item.fuel }}
+          </ng-template>
+
+          <ng-template let-item pTemplate="selectedItem">
+            {{ item.label + ' - ' + item.seats + ' Chỗ' + ' - ' + item.fuel }}
+          </ng-template>
+        </p-dropdown>
       </div>
       <div class="col-12">
         <div class="vehicle-book-text">
