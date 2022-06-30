@@ -12,6 +12,8 @@ export class Driver {
   createdDate?: Date;
   modifiedDate?: Date;
   status?: number;
+  vehicleName?: string;
+  vehicleTypeLabel?: string;
 }
 
 export class DriversResponse {

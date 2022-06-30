@@ -117,11 +117,11 @@ export const STATUS_CARD: any = {
     lable: 'Vô hiệu hóa',
     class: 'status-inactive',
   },
-  1: {
+  2: {
     lable: 'Chưa liên kết',
     class: 'status-unlinked',
   },
-  2: {
+  1: {
     lable: 'Đã liên kết',
     class: 'status-linked',
   },
