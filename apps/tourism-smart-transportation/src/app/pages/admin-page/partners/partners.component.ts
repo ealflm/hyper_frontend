@@ -8,12 +8,17 @@ import {
   PartnerResponse,
   PartnersResponse,
 } from '../../../models/PartnerResponse';
-import { Subject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  Subject,
+  Subscription,
+} from 'rxjs';
 import { STATUS_PARTNER } from '../../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PartnersService } from '../../../services/partners.service';
 import { Partner } from '../../../models/PartnerResponse';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import {
   animate,
   state,
@@ -21,7 +26,6 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ServiceType } from '../../../models/ServiceTypeResponse';
 
@@ -30,7 +34,7 @@ import { ServiceType } from '../../../models/ServiceTypeResponse';
   templateUrl: './partners.component.html',
   styleUrls: ['./partners.component.scss'],
 })
-export class PartnersComponent implements OnInit {
+export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
   displayDialog = false;
   loading = false;
   isSubmit = false;
@@ -59,6 +63,8 @@ export class PartnersComponent implements OnInit {
   gender = Gender;
   menuValue = MenuFilterStatus;
   serviceTypes: ServiceType[] = [];
+  private searchSubscription?: Subscription;
+  private readonly searchSubject = new Subject<string>();
   constructor(
     private partnerService: PartnersService,
     private formBuilder: FormBuilder,
@@ -74,6 +80,16 @@ export class PartnersComponent implements OnInit {
     this._mapStatus();
     this._getServiceType();
     // console.log(this.status);
+  }
+  ngAfterViewInit(): void {
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => {
+        this._getAllPartners();
+      });
+  }
+  ngOnDestroy(): void {
+    this.searchSubscription?.unsubscribe();
   }
   private _mapStatus() {
     this.status = Object.keys(STATUS_PARTNER).map((key) => {
@@ -146,7 +162,7 @@ export class PartnersComponent implements OnInit {
   }
   onChangeFillterByName(e: any) {
     this.fillterByName = e.target.value;
-    this._getAllPartners();
+    this.searchSubject.next(this.fillterByName);
   }
   OnGetMenuClick(value: any) {
     this.fillterStatus = value;
