@@ -27,6 +27,7 @@ export class VehicleClassComponent implements OnInit {
   displayDialog = false;
   categoryForm!: FormGroup;
   isSubmit = false;
+  currentVehicleClass?: Category;
   constructor(
     private categoryService: CategorySerivce,
     private fb: FormBuilder,
@@ -92,6 +93,7 @@ export class VehicleClassComponent implements OnInit {
         this._categoryForm['id'].setValue(res.body.id);
         this._categoryForm['name'].setValue(res.body.name);
         this._categoryForm['description'].setValue(res.body.description);
+        this.currentVehicleClass = res.body;
       });
   }
 
@@ -104,11 +106,20 @@ export class VehicleClassComponent implements OnInit {
     if (this.categoryForm.invalid) return;
     if (this.isSubmit && this.editMode) {
       const id = this._categoryForm['id'].value;
-      const vehicleType: Category = {
-        name: this._categoryForm['name'].value,
-        description: this._categoryForm['description'].value,
-        status: 1,
-      };
+      let vehicleType: Category;
+      if (this.currentVehicleClass?.name === this._categoryForm['name'].value) {
+        vehicleType = {
+          description: this._categoryForm['description'].value,
+          status: 1,
+        };
+      } else {
+        vehicleType = {
+          name: this._categoryForm['name'].value,
+          description: this._categoryForm['description'].value,
+          status: 1,
+        };
+      }
+
       this.categoryService.updateCategory(id, vehicleType).subscribe((res) => {
         if (res?.statusCode === 201) {
           this.messageService.add({

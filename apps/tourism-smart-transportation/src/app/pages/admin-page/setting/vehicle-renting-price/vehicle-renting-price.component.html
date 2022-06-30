@@ -51,13 +51,39 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Năm sản xuất</th>
+          <th pSortableColumn="publishYearName">
+            <div>
+              Năm sản xuất
+              <p-sortIcon field="publishYearName"></p-sortIcon>
+            </div>
+          </th>
+
           <th>Phân loại</th>
-          <th>Giá cơ bản (VND)</th>
+          <th pSortableColumn="fixedPrice">
+            <div>
+              Giá cơ bản (VND)
+              <p-sortIcon field="fixedPrice"></p-sortIcon>
+            </div>
+          </th>
           <th>Thời gian (giờ)</th>
-          <th>Giá theo giờ</th>
-          <th>Giá cuối tuần (VND)</th>
-          <th>Giá ngày lễ (VND)</th>
+          <th pSortableColumn="pricePerHour">
+            <div>
+              Giá theo giờ
+              <p-sortIcon field="pricePerHour"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="weekendPrice">
+            <div>
+              Giá cuối tuần (VND)
+              <p-sortIcon field="weekendPrice"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="holidayPrice">
+            <div>
+              Giá ngày lễ (VND)
+              <p-sortIcon field="holidayPrice"></p-sortIcon>
+            </div>
+          </th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
@@ -68,15 +94,15 @@
           <td>{{ rentingPrice?.categoryName }}</td>
           <td>
             {{
-              rentingPrice?.pricePerHour
-                | currency: rentingPrice?.pricePerHour:'':'.0-0'
+              rentingPrice?.fixedPrice
+                | currency: rentingPrice?.fixedPrice:'':'.0-0'
             }}
           </td>
           <td>{{ rentingPrice?.minTime + ' - ' + rentingPrice?.maxTime }}</td>
           <td>
             {{
-              rentingPrice?.fixedPrice
-                | currency: rentingPrice?.fixedPrice:'':'.0-0'
+              rentingPrice?.pricePerHour
+                | currency: rentingPrice?.pricePerHour:'':'.0-0'
             }}
           </td>
           <td>

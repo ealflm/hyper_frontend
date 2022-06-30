@@ -43,11 +43,11 @@ export const STATUS_VEHICLE: any = {
   },
   3: {
     lable: 'Đang đón khách',
-    class: 'status-used',
+    class: 'status-completed',
   },
   4: {
     lable: 'Đang chạy',
-    class: 'status-used',
+    class: 'status-completed',
   },
   5: {
     lable: 'Quá hạn',
@@ -117,11 +117,11 @@ export const STATUS_CARD: any = {
     lable: 'Vô hiệu hóa',
     class: 'status-inactive',
   },
-  1: {
+  2: {
     lable: 'Chưa liên kết',
     class: 'status-unlinked',
   },
-  2: {
+  1: {
     lable: 'Đã liên kết',
     class: 'status-linked',
   },

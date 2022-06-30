@@ -35,7 +35,10 @@
           <div class="username" style="text-align: center">
             {{ usernameBiding }}
           </div>
-          <div [class]="status[statusBiding!].class">
+          <div
+            [class]="status[statusBiding!].class"
+            style="margin-top: 10px; margin-left: 12px"
+          >
             {{ status[statusBiding!].lable }}
           </div>
         </div>
@@ -354,7 +357,7 @@
               {{ driver.firstName + ' ' + driver.lastName }}
             </td>
             <td>
-              {{ driver.vehicleId }}
+              {{ driver.vehicleTypeLabel + ' ' + driver.vehicleName }}
             </td>
             <td>
               {{ driver.gender ? 'Nam' : 'Nữ' }}
@@ -389,21 +392,26 @@
       >
         <ng-template pTemplate="header">
           <tr>
+            <th>Loại xe</th>
             <th>Tên</th>
             <th>Số hiệu</th>
             <th>Màu</th>
-            <th>Loại xe</th>
             <th>Loại dịch vụ</th>
-            <th>Tọa độ</th>
+            <th>Trạng thái</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-vehicle let-i="rowIndex">
           <tr>
+            <td>{{ vehicle?.vehicleTypeName }}</td>
             <td>{{ vehicle?.name }}</td>
             <td>{{ vehicle?.licensePlates }}</td>
             <td>{{ vehicle?.color }}</td>
-            <td>{{ vehicle?.vehicleTypeId }}</td>
             <td>{{ vehicle?.serviceTypeName }}</td>
+            <td>
+              <div [class]="vehicleStatus[vehicle.status].class">
+                {{ vehicleStatus[vehicle.status].lable }}
+              </div>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

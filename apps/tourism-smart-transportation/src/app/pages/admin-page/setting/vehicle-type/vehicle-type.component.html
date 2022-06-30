@@ -51,8 +51,18 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Nhãn hiệu</th>
-          <th>Số ghế</th>
+          <th pSortableColumn="label">
+            <div>
+              Nhãn hiệu
+              <p-sortIcon field="label"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="seats">
+            <div>
+              Số ghế
+              <p-sortIcon field="seats"></p-sortIcon>
+            </div>
+          </th>
           <th>Nhiên liệu</th>
           <th>Trạng thái</th>
           <th>Hành động</th>

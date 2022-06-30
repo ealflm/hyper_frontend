@@ -53,8 +53,19 @@
         <tr>
           <th>Loại xe</th>
           <th>Khoảng cách cố định (Km)</th>
-          <th>Giá cố định</th>
-          <th>Giá mõi Km</th>
+          <th pSortableColumn="fixedPrice">
+            <div>
+              Giá cố định
+              <p-sortIcon field="fixedPrice"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="pricePerKilometer">
+            <div>
+              Giá mõi Km
+              <p-sortIcon field="pricePerKilometer"></p-sortIcon>
+            </div>
+          </th>
+
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>

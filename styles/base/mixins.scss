@@ -186,6 +186,7 @@
   padding: 2px 15px 2px 15px;
 }
 @mixin status-disabled {
+  @include font-Roboto-Regular-Body2;
   background-color: $status-tag-color-disable;
   color: $red-primary;
   box-shadow: 0rem 0rem 2rem rgb(254, 230, 224);
@@ -195,15 +196,17 @@
   width: 131px;
 }
 @mixin status-completed {
+  @include font-Roboto-Regular-Body2;
   background-color: $status-tag-color-completed;
   color: $status-tag-text-color-completed;
   box-shadow: 0rem 0rem 2rem rgb(225, 224, 254);
   border-radius: 50px;
   text-align: center;
   padding: 2px 15px 2px 15px;
-  width: 131px;
+  width: 135px;
 }
 @mixin status-inactive {
+  @include font-Roboto-Regular-Body2;
   background-color: $status-tag-color-disable;
   color: $red-primary;
   box-shadow: 0rem 0rem 2rem rgb(254, 230, 224);
@@ -213,6 +216,7 @@
   width: 131px;
 }
 @mixin status-used {
+  @include font-Roboto-Regular-Body2;
   background-color: $expired-grey;
   color: $color-grey-text-placeholder;
   box-shadow: 0rem 0rem 2rem rgb(201, 201, 201);
@@ -222,6 +226,7 @@
   width: 131px;
 }
 @mixin status-active {
+  @include font-Roboto-Regular-Body2;
   background-color: $status-tag-color-active;
   color: $status-tag-text-color-active;
   box-shadow: 0rem 0rem 2rem rgb(176, 238, 211);
@@ -231,13 +236,14 @@
   width: 131px;
 }
 @mixin status-expried {
+  @include font-Roboto-Regular-Body2;
   background-color: $status-tag-color-expired;
   color: $hard-yellow;
   box-shadow: 0rem 0rem 2rem rgb(255, 241, 202);
   border-radius: 50px;
   text-align: center;
   padding: 2px 15px 2px 15px;
-  width: 90px;
+  width: 131px;
 }
 @mixin status-unlinked {
   @include status-expried();

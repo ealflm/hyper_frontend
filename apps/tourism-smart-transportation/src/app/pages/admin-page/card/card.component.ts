@@ -21,7 +21,7 @@ export class CardComponent implements OnInit {
   checked = false;
   uiCard = '';
   isNumber = false;
-  filterByStatus = 1;
+  filterByStatus = 2;
   constructor(
     private cardService: CardService,
     private confirmationService: ConfirmationService,
