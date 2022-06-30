@@ -37,7 +37,7 @@ export class DataMapComponent
   fillterValue?: string = 'vehicle';
   constructor(private cd: ChangeDetectorRef) {}
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+    // console.log(changes);
   }
   ngOnInit(): void {}
   ngAfterViewInit(): void {}
