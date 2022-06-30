@@ -19,10 +19,20 @@
   >
     <div class="card-header">
       <div>{{ vehicle?.licensePlates }}</div>
-      <div class="isOnline" *ngIf="vehicle?.isRunning === 1"></div>
+      <div>{{ vehicle?.name }}</div>
+      <div
+        class="isOnline"
+        *ngIf="vehicle?.status === 1 || vehicle?.status === 2"
+      ></div>
       <div
         class="isOffline"
-        *ngIf="vehicle?.isRunning === 0 || vehicle?.isRunning === null"
+        *ngIf="
+          vehicle?.status === 0 ||
+          vehicle?.status === null ||
+          vehicle?.status === 3 ||
+          vehicle?.status === 4 ||
+          vehicle?.status === 5
+        "
       ></div>
     </div>
     <div class="card-body">

@@ -48,7 +48,7 @@ export class MapPageComponent
   headerMenu = MenuDataMap;
   fillterMenu?: string = 'vehicle';
   //
-  // fillterDriverName = '';
+  fillterVehicleName? = '';
   // fillterStationTitle = '';
   //
   showRightSideBarStatus = true;
@@ -93,25 +93,18 @@ export class MapPageComponent
   ) {}
 
   ngOnInit(): void {
-    // this._initLocationFormArray();
-    // this.addMarker();
     setTimeout(() => {
       this.loading = false;
     }, 3000);
     this.getBusStationMarkers();
     this.getRentStationMarkers();
-    // this.getVehicleTrackingOnMap();
-    // this.getVehicleTrackingOnMap();
-    // setInterval(() => {
-
-    // }, 2000);
   }
   ngAfterViewInit() {
     if (this.loading) {
       this.mapboxService.initializeMap(103.9967, 10.22698, 12);
-      this.listVehicleTracking = setInterval(() => {
-        this.getAllVehicles();
-      }, 2000);
+      // this.listVehicleTracking = setInterval(() => {
+      this.getAllVehicles();
+      // }, 5000);
     }
 
     // this.mapboxService.setMarker();
@@ -128,19 +121,19 @@ export class MapPageComponent
     //   this.subscription.unsubscribe();
     // }
     clearInterval(this.trackingIntervel);
-    clearInterval(this.listVehicleTracking);
+    // clearInterval(this.listVehicleTracking);
   }
-  onSaveLocation() {
-    // console.log(this.locationForm.get('locations')?.value);
-    // this.locationForm
-    //   .get('locations')
-    //   ?.value.map((value: any, index: number) => {
-    //     console.log(value);
-    //   });
-    // this.getObject(this.locationForm.get('locations')?.value);
-    // console.log(this.getObject(this.locationForm.get('locations')?.value));
-    // this.getObject2(this.locationForm.get('locations')?.value);
-  }
+  // onSaveLocation() {
+  // console.log(this.locationForm.get('locations')?.value);
+  // this.locationForm
+  //   .get('locations')
+  //   ?.value.map((value: any, index: number) => {
+  //     console.log(value);
+  //   });
+  // this.getObject(this.locationForm.get('locations')?.value);
+  // console.log(this.getObject(this.locationForm.get('locations')?.value));
+  // this.getObject2(this.locationForm.get('locations')?.value);
+  // }
   //thuật toán O(n^2)
   getObject(arr: []) {
     const result: any = {};
@@ -196,18 +189,18 @@ export class MapPageComponent
     this.showSideBarDetail = false;
     // console.log(this.fillterMenu);
     if (this.fillterMenu === 'bus-station') {
-      clearInterval(this.listVehicleTracking);
+      // clearInterval(this.listVehicleTracking);
       this.getAllStations();
     } else if (this.fillterMenu === 'rent-station') {
-      clearInterval(this.listVehicleTracking);
+      // clearInterval(this.listVehicleTracking);
       this.getAllRentStations();
     } else if (this.fillterMenu === 'vehicle') {
-      clearInterval(this.listVehicleTracking);
-      this.listVehicleTracking = setInterval(() => {
-        this.getAllVehicles();
-      }, 2000);
+      // clearInterval(this.listVehicleTracking);
+      // this.listVehicleTracking = setInterval(() => {
+      this.getAllVehicles();
+      // }, 5000);
     } else if (this.fillterMenu === 'route') {
-      clearInterval(this.listVehicleTracking);
+      // clearInterval(this.listVehicleTracking);
       this.getAllRoutes();
     }
   }
@@ -391,6 +384,7 @@ export class MapPageComponent
             longitude: res[1]?.body?.longitude,
             latitude: res[1]?.body?.latitude,
           },
+          status: res[0].body.status,
         };
         if (res[1]?.body?.longitude && res[1]?.body?.latitude) {
           this.mapboxService.flyToMarker(
@@ -505,8 +499,9 @@ export class MapPageComponent
   }
   // call API vehilce
   getAllVehicles(vehicleName?: string) {
+    this.fillterVehicleName = vehicleName;
     this.mapService
-      .getListVehicle(vehicleName)
+      .getListVehicle(this.fillterVehicleName)
       .subscribe((res: VehiclesResponse) => {
         this.vehicles = res.body;
       });

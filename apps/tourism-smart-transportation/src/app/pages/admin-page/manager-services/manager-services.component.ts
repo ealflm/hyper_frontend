@@ -1,7 +1,7 @@
+import { PackageService } from './../../../services/package.service';
 import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { STATUS_TIER } from './../../../constant/status';
-import { TierService } from './../../../services/tier.service';
 import { Router } from '@angular/router';
 import { Service } from '../../../models/ServicesResponse';
 import { Component, OnInit } from '@angular/core';
@@ -12,7 +12,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Tier, TiersResponse } from '../../../models/TierResponse';
+import { Package } from '../../../models/PackageResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-manager-services',
@@ -21,8 +21,8 @@ import { Tier, TiersResponse } from '../../../models/TierResponse';
 })
 export class ManagerServicesComponent implements OnInit {
   //
-  packageServices: Tier[] = [];
-  tierStatus: any[] = [];
+  packageServices: Package[] = [];
+  PackageStatus: any[] = [];
   //
   fillterStatus: number | null = 1;
   fillterByName: any | null;
@@ -34,20 +34,20 @@ export class ManagerServicesComponent implements OnInit {
   menuValue = MenuFilterStatus;
   constructor(
     private router: Router,
-    private tierService: TierService,
+    private packageService: PackageService,
     private confirmService: ConfirmationService,
     private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    this._getAllTiers();
-    this._mapTierStatus();
+    this._getListPackage();
+    this._mapPackageStatus();
   }
   createPackage() {
     this.router.navigate(['admin/manage-service/create-package']);
   }
-  _mapTierStatus() {
-    this.tierStatus = Object.keys(STATUS_TIER).map((key) => {
+  private _mapPackageStatus() {
+    this.PackageStatus = Object.keys(STATUS_TIER).map((key) => {
       return {
         id: STATUS_TIER[key].id,
         lable: STATUS_TIER[key].lable,
@@ -60,41 +60,41 @@ export class ManagerServicesComponent implements OnInit {
     if (id) {
       this.confirmService.confirm({
         accept: () => {
-          this.tierService.deleteTier(id).subscribe((res: any) => {
+          this.packageService.deletePackage(id).subscribe((res: any) => {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: res.message,
             });
-            this._getAllTiers();
+            this._getListPackage();
           });
         },
       });
     }
-    this._getAllTiers();
+    this._getListPackage();
   }
-  _getAllTiers() {
-    this.tierService
-      .getAllTier(
+  private _getListPackage() {
+    this.packageService
+      .getAllPackage(
         this.fillterByName,
         this.fillterStatus,
         this.pageIndex,
         this.itemsPerPage,
         null
       )
-      .subscribe((partnersResponse: TiersResponse) => {
-        this.totalItems = partnersResponse.body?.totalItems as number;
-        this.packageServices = partnersResponse.body?.items;
+      .subscribe((packageResponse) => {
+        this.totalItems = packageResponse.body?.totalItems as number;
+        this.packageServices = packageResponse.body?.items;
       });
   }
   onGetValueMenu(value: any) {
     this.fillterStatus = value;
-    this._getAllTiers();
+    this._getListPackage();
   }
 
   onChangeFillterByLastName(e: any) {
     this.fillterByName = e.target.value;
-    this._getAllTiers();
+    this._getListPackage();
   }
   navPackageDetail(id?: string) {
     this.router.navigate([`admin/manage-service/edit-package/${id}`]);
@@ -102,6 +102,6 @@ export class ManagerServicesComponent implements OnInit {
   onPaginate(e: any) {
     this.pageIndex = e.page + 1;
     this.itemsPerPage = e.rows;
-    this._getAllTiers();
+    this._getListPackage();
   }
 }

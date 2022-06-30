@@ -129,13 +129,18 @@
               &nbsp;&nbsp;
               <span
                 class="isOnline"
-                *ngIf="vehicleDetail?.isRunning === 1"
+                *ngIf="
+                  vehicleDetail?.status === 1 || vehicleDetail?.status === 2
+                "
               ></span>
               <span
                 class="isOffline"
                 *ngIf="
-                  vehicleDetail?.isRunning === 0 ||
-                  vehicleDetail?.isRunning === null
+                  vehicleDetail?.status === 0 ||
+                  vehicleDetail?.status === null ||
+                  vehicleDetail?.status === 3 ||
+                  vehicleDetail?.status === 4 ||
+                  vehicleDetail?.status === 5
                 "
               ></span>
             </div>

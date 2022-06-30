@@ -1,11 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { PackageService } from './../../../../services/package.service';
 import { ServiceTypeService } from './../../../../services/service-type.service';
 import { ServiceType } from '../../../../models/ServiceTypeResponse';
-import { TierService } from './../../../../services/tier.service';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ThisReceiver } from '@angular/compiler';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Location } from '@angular/common';
 
@@ -30,7 +28,7 @@ export class ServiceDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private tierService: TierService,
+    private packageService: PackageService,
     private serviceTypeService: ServiceTypeService,
     private messageService: MessageService,
     private location: Location,
@@ -78,18 +76,18 @@ export class ServiceDetailComponent implements OnInit {
     });
   }
   _getTierId(id: string) {
-    this.tierService.getTierById(id).subscribe((tierRes) => {
-      this._tiersForm['id'].setValue(tierRes.body.id);
-      this._tiersForm['tierName'].setValue(tierRes.body.name);
-      this._tiersForm['description'].setValue(tierRes.body.description);
-      this._tiersForm['price'].setValue(tierRes.body.price);
-      this._tiersForm['promotedTitle'].setValue(tierRes.body.promotedTitle);
-      this._tiersForm['uploadFile'].setValue(tierRes.body.photoUrl);
-      tierRes.body?.photoUrl == '' || tierRes.body?.photoUrl == null
+    this.packageService.getPackageById(id).subscribe((packageRes) => {
+      this._tiersForm['id'].setValue(packageRes.body.id);
+      this._tiersForm['tierName'].setValue(packageRes.body.name);
+      this._tiersForm['description'].setValue(packageRes.body.description);
+      this._tiersForm['price'].setValue(packageRes.body.price);
+      this._tiersForm['promotedTitle'].setValue(packageRes.body.promotedTitle);
+      this._tiersForm['uploadFile'].setValue(packageRes.body.photoUrl);
+      packageRes.body?.photoUrl == '' || packageRes.body?.photoUrl == null
         ? (this.imagePreview = '../assets/image/imagePreview.png')
-        : (this.imagePreview = `https://se32.blob.core.windows.net/admin/${tierRes.body?.photoUrl}`);
-      this.deleteFile = tierRes.body?.photoUrl?.trim();
-      tierRes.body.packageList.map((packageValue: any, index: any) => {
+        : (this.imagePreview = `https://se32.blob.core.windows.net/admin/${packageRes.body?.photoUrl}`);
+      this.deleteFile = packageRes.body?.photoUrl?.trim();
+      packageRes.body.packageList.map((packageValue: any, index: any) => {
         if (index - 1) {
           this.addNewPackgeForm();
         }
@@ -295,8 +293,8 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
     this.nomalizeDataPackageList(formData);
-    this.tierService
-      .updateTierbyId(this._tiersForm['id'].value, formData)
+    this.packageService
+      .updatePackagebyId(this._tiersForm['id'].value, formData)
       .subscribe(
         (res) => {
           if (res.statusCode === 201) {
@@ -388,7 +386,7 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
     this.nomalizeDataPackageList(formData);
-    this.tierService.createTier(formData).subscribe(
+    this.packageService.createPackage(formData).subscribe(
       (res) => {
         if (res.statusCode === 201) {
           this.messageService.add({

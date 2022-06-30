@@ -2,21 +2,22 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { TierResponse, TiersResponse } from '../models/TierResponse';
+import { PackageHistorysResponse } from '../models/PackageHistoryResponse';
+import { PackagesResponse } from '../models/PackageResponse';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TierService {
-  apiURL = environment.apiURL + 'admin/tier';
+export class PackageService {
+  apiURL = environment.apiURL + 'admin/package';
   constructor(private http: HttpClient) {}
-  getAllTier(
+  getAllPackage(
     name?: string | null,
     status?: number | null,
     pageIndex?: number | null,
     itemsPerPage?: number | null,
     sortBy?: string | null
-  ): Observable<TiersResponse> {
+  ): Observable<PackagesResponse> {
     let queryParams = new HttpParams();
     if (name != null) {
       queryParams = queryParams.append('Name', name);
@@ -34,20 +35,20 @@ export class TierService {
     if (sortBy != null) {
       queryParams = queryParams.append('SortBy', sortBy);
     }
-    return this.http.get<TiersResponse>(`${this.apiURL}`, {
+    return this.http.get<PackagesResponse>(`${this.apiURL}`, {
       params: queryParams,
     });
   }
-  deleteTier(id: string): Observable<any> {
+  deletePackage(id: string): Observable<any> {
     return this.http.delete(`${this.apiURL}/${id}`);
   }
-  createTier(formData: FormData): Observable<any> {
+  createPackage(formData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiURL}`, formData);
   }
-  getTierById(id: string): Observable<any> {
+  getPackageById(id: string): Observable<any> {
     return this.http.get(`${this.apiURL}/${id}`);
   }
-  updateTierbyId(tierId: string, formData: FormData): Observable<any> {
-    return this.http.put(`${this.apiURL}/${tierId}`, formData);
+  updatePackagebyId(PackageID: string, formData: FormData): Observable<any> {
+    return this.http.put(`${this.apiURL}/${PackageID}`, formData);
   }
 }
