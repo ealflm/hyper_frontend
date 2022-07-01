@@ -1,3 +1,4 @@
+import { Service } from './../../../models/ServicesResponse';
 import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { Gender } from './../../../constant/gender';
 import { Router } from '@angular/router';

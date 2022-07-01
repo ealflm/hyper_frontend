@@ -37,6 +37,12 @@ export class MapService {
 
   // API for partner
   partnerApiRentStationUrl = environment.apiURL + 'partner/rent-station';
+  partnerApiStation = environment.apiURL + 'partner/station';
+  // tracking vehicle by parter id
+  partnerApiVehicle = environment.apiURL + 'partner/vehicle';
+  partnerApiTrackingVehicle = environment.apiURL + 'partner/tracking-vehicle';
+  partnerVehicleIdTrackingApiUrl =
+    environment.apiURL + 'partner/tracking-vehicle/vehicle';
   constructor(private http: HttpClient) {}
   //API FOR ADMIN
   // station
@@ -122,7 +128,7 @@ export class MapService {
     if (vehicleName) {
       queryParams = queryParams.append('Name', vehicleName);
     }
-    queryParams = queryParams.append('Status', 1);
+    // queryParams = queryParams.append('Status', 1);
     return this.http.get<VehiclesResponse>(`${this.vehicleApiUrl}`, {
       params: queryParams,
     });
@@ -147,6 +153,7 @@ export class MapService {
   }
 
   //  API FOR PARTNER
+  // Rentstation
   getListRentStationForPartner(
     partnerId: string,
     title?: string | null,
@@ -190,6 +197,61 @@ export class MapService {
     return this.http.put<RentStation>(
       `${this.partnerApiRentStationUrl}/${rentStationId}`,
       rentStation
+    );
+  }
+  // STATION PARTNER
+  getListStationForPartner(title?: string): Observable<StationsResponse> {
+    let queryParams = new HttpParams();
+    if (title) {
+      queryParams = queryParams.append('Title', title);
+    }
+    queryParams = queryParams.append('Status', 1);
+    return this.http.get<StationsResponse>(`${this.partnerApiStation}`, {
+      params: queryParams,
+    });
+  }
+  getStationByIdForPartner(id?: string): Observable<StationResponse> {
+    return this.http.get<StationResponse>(`${this.partnerApiStation}/${id}`);
+  }
+  // VEHICLE FOR PARTNER
+  getListVehicleForPartner(
+    partnerId: string,
+    vehicleName?: string | null
+  ): Observable<VehiclesResponse> {
+    let queryParams = new HttpParams();
+    if (vehicleName) {
+      queryParams = queryParams.append('Name', vehicleName);
+    }
+    queryParams = queryParams.append('PartnerId', partnerId);
+    return this.http.get<VehiclesResponse>(`${this.partnerApiVehicle}`, {
+      params: queryParams,
+    });
+  }
+  getVehicleByIdForPartner(id: string): Observable<VehicleResponse> {
+    return this.http.get<VehicleResponse>(`${this.partnerApiVehicle}/${id}`);
+  }
+  getVehicleTrackingOnMapForPartner(
+    partnerId: string
+  ): Observable<VehicleTracking[]> {
+    let queryParam = new HttpParams();
+    if (partnerId) {
+      queryParam = queryParam.append('partnerId', partnerId);
+    }
+    return this.http.get<VehicleTracking[]>(
+      `${this.partnerApiTrackingVehicle}`,
+      { params: queryParam }
+    );
+  }
+  getVehicleTrackingByIdForPartner(
+    vehicleId: string
+  ): Observable<VehicleTrackingResponse> {
+    let queryParams = new HttpParams();
+    if (vehicleId) {
+      queryParams = queryParams.append('vehicleId', vehicleId);
+    }
+    return this.http.get<VehicleTrackingResponse>(
+      `${this.vehicleIdAminTrackingApiUrl}`,
+      { params: queryParams }
     );
   }
 }

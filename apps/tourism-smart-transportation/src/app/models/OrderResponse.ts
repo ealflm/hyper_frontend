@@ -3,6 +3,8 @@ import { UtilPaging } from './UtilPaging';
 export abstract class Order {
   id?: string;
   customerId?: string;
+  serviceTypeId?: string;
+  discountId?: string;
   createdDate?: Date;
   totalPrice?: number;
   status?: number;
@@ -10,12 +12,10 @@ export abstract class Order {
 export class OrderDetail {
   id?: string;
   orderId?: string;
-  tierId?: string;
   price!: number;
   quantity!: number;
   content?: string;
   status?: number;
-  totalPrice?: number;
 }
 export class OrdersResponse {
   statusCode?: number;

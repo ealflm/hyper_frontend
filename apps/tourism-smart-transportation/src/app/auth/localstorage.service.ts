@@ -19,7 +19,7 @@ export class LocalStorageService {
     if (token) {
       const tokenDecode = JSON.parse(atob(token.split('.')[1]));
       const user = {
-        id: tokenDecode.Id,
+        id: tokenDecode.PartnerId,
         email: tokenDecode.Email,
         photoUrl: tokenDecode.PhotoUrl,
         username: tokenDecode.Username,

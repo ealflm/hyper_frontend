@@ -14,7 +14,7 @@ import { PartnersResponse } from '../models/PartnerResponse';
 })
 export class CustomersService {
   apiURL = environment.apiURL + 'admin/customers';
-  apiCusTierHis = environment.apiURL + 'admin/cus-tier-his';
+  apiCusTierHis = environment.apiURL + 'admin/package-history';
   constructor(private http: HttpClient) {}
   getAllCustomers(
     lastName?: string | null,
@@ -57,7 +57,7 @@ export class CustomersService {
   updateCustomerById(id: string, formCusData: FormData): Observable<any> {
     return this.http.put<Customer>(`${this.apiURL}/${id}`, formCusData);
   }
-  getTierByCustomerId(id: string): Observable<any> {
+  getPackgeUsedByCustomerId(id: string): Observable<any> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('CustomerId', id ? id : '');
     return this.http.get(`${this.apiCusTierHis}`, { params: queryParams });

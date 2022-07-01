@@ -269,11 +269,11 @@
     <div class="body-table" *ngIf="fillterStatus">
       <p-table
         #dt
-        [value]="cusTiersHis"
+        [value]="packageHistory"
         [showCurrentPageReport]="true"
         [rows]="2"
         [rowsPerPageOptions]="[2, 5, 10]"
-        [paginator]="cusTiersHis.length > 0 ? true : false"
+        [paginator]="packageHistory.length > 0 ? true : false"
         currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
       >
         <ng-template pTemplate="header">
@@ -287,7 +287,7 @@
         <ng-template pTemplate="body" let-tier>
           <tr>
             <td>
-              {{ tier.tierName }}
+              {{ tier.packageName }}
             </td>
             <td>{{ tier.timeStart | date: 'dd/MM/yyyy, h:mm a' }}</td>
             <td>{{ tier.timeEnd | date: 'dd/MM/yyyy, h:mm a' }}</td>
@@ -366,17 +366,18 @@
   [resizable]="false"
   [modal]="true"
 >
-  <div class="table-dialog">
+  <div class="table-dialog table-order-details">
     <p-table
       #td
       *ngIf="!paymentDialogStatus"
       [value]="orderDetails"
-      [rows]="2"
-      [rowsPerPageOptions]="[2, 5]"
-      [showCurrentPageReport]="true"
-      [paginator]="orderDetails.length > 0 ? true : false"
-      currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
+      style="border-bottom: 9px"
     >
+      <!-- [rows]="2"
+    [rowsPerPageOptions]="[2, 5]"
+    [showCurrentPageReport]="true"
+    [paginator]="orderDetails.length > 0 ? true : false"
+    currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục" -->
       <ng-template pTemplate="header">
         <tr>
           <th>Nội dung</th>
@@ -403,7 +404,6 @@
           <td colspan="8">Không có nội dung nào để hiển thị.</td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="paginatorleft"> </ng-template>
     </p-table>
 
     <!-- table payment -->

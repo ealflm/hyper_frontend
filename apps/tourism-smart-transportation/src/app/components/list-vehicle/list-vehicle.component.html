@@ -5,7 +5,7 @@
       [style]="{ width: '276px', height: '32px' }"
       type="text"
       pInputText
-      placeholder="Tìm kiếm danh sách tài xế"
+      placeholder="Tìm kiếm phương tiện"
       (keydown)="onChangeFillterMapVehicle($event)"
     />
   </span>
@@ -19,11 +19,9 @@
   >
     <div class="card-header">
       <div>{{ vehicle?.licensePlates }}</div>
-      <div class="isOnline" *ngIf="vehicle?.isRunning === 1"></div>
-      <div
-        class="isOffline"
-        *ngIf="vehicle?.isRunning === 0 || vehicle?.isRunning === null"
-      ></div>
+      <div>{{ vehicle?.name }}</div>
+      <div class="isOnline" *ngIf="vehicle?.status === 4"></div>
+      <div class="isOffline" *ngIf="vehicle?.status !== 4"></div>
     </div>
     <div class="card-body">
       <div class="card-body-left">{{ vehicle?.serviceTypeName }}</div>

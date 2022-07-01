@@ -22,7 +22,10 @@ import { map, of, Subscription, throwIfEmpty } from 'rxjs';
 import { CustomerResponse } from '../../../../models/CustomerResponse';
 import { AgeCheck } from '../../../../providers/CustomValidators';
 import { Payment, PaymentsResponse } from '../../../../models/PaymentResponse';
-import { TiersResponse } from '../../../../models/TierResponse';
+import {
+  PackageHistory,
+  PackageHistorysResponse,
+} from '../../../../models/PackageHistoryResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-customer-details',
@@ -44,7 +47,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   deleteFile?: string | null;
   customerEditForm!: FormGroup;
   currentPhone?: string;
-  cusTiersHis: any[] = [];
+  packageHistory: PackageHistory[] = [];
   transactionHis: Order[] = [];
   orderDetails: OrderDetail[] = [];
   payments: any[] = [];
@@ -65,12 +68,12 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     this._initCustomerForm();
     this._getDetailCustomer();
     if (this.fillterStatus) {
-      this._getTierByUser();
+      this._getPackgeHistoryByUser();
     } else {
       this._getOrderByCusId();
     }
     this._mapPaymentStatus();
-    this._mapTierStatus();
+    this._mapPackageHistoryStatus();
     this._mapStatus();
   }
   private _mapStatus() {
@@ -91,7 +94,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       };
     });
   }
-  private _mapTierStatus() {
+  private _mapPackageHistoryStatus() {
     this.tierStatus = Object.keys(STATUS_TIER).map((key) => {
       return {
         id: STATUS_TRANSACTION[key].id,
@@ -176,7 +179,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   navmenuclick(e: boolean) {
     this.fillterStatus = e;
     if (this.fillterStatus) {
-      this._getTierByUser();
+      this._getPackgeHistoryByUser();
     } else {
       this._getOrderByCusId();
     }
@@ -278,13 +281,13 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       );
     this.editModeStatus = false;
   }
-  _getTierByUser() {
+  _getPackgeHistoryByUser() {
     this.route.paramMap.subscribe((params) => {
       const idCus = params.get('id');
       this.customerService
-        .getTierByCustomerId(idCus ? idCus : '')
-        .subscribe((tiersRes: TiersResponse) => {
-          this.cusTiersHis = tiersRes.body.items;
+        .getPackgeUsedByCustomerId(idCus ? idCus : '')
+        .subscribe((packageHistory: PackageHistorysResponse) => {
+          this.packageHistory = packageHistory.body.items;
         });
     });
   }

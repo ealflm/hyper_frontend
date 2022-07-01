@@ -26,6 +26,8 @@ export class SideBarComponent implements OnInit {
   showMoreMap = false;
   displayAvatar = false;
   statusName = true;
+  user: any;
+  photoUrl = '';
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
@@ -34,6 +36,11 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.localStorage.setUserTokenDecode();
+    this.user = this.localStorage.getUser;
+    if (this.user) {
+      this.photoUrl =
+        'https://se32.blob.core.windows.net/admin/' + this.user.photoUrl;
+    }
   }
 
   onToggle() {

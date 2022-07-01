@@ -15,22 +15,12 @@ export class PurchaseHistoryService {
   apiURLOderDetail = environment.apiURL + 'admin/order-detail';
   constructor(private http: HttpClient) {}
   getOrderByCusId(idCus: string): Observable<OrdersResponse> {
-    let queryParams = new HttpParams();
-    if (idCus) {
-      queryParams = queryParams.append('customerId', idCus);
-    }
-    return this.http.get<OrdersResponse>(`${this.apiURL}`, {
-      params: queryParams,
-    });
+    return this.http.get<OrdersResponse>(`${this.apiURL}/${idCus}`);
   }
   getOrderDetailsByOrderId(orderId: string): Observable<OrderDetailsResponse> {
-    let queryParams = new HttpParams();
-    if (orderId) {
-      queryParams = queryParams.append('orderId', orderId);
-    }
-    return this.http.get<OrderDetailsResponse>(`${this.apiURLOderDetail}`, {
-      params: queryParams,
-    });
+    return this.http.get<OrderDetailsResponse>(
+      `${this.apiURLOderDetail}/${orderId}`
+    );
   }
   getPaymentsByOrderId(orderId: string): Observable<PaymentsResponse> {
     let queryParams = new HttpParams();

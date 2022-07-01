@@ -1,6 +1,6 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class Tier {
+export abstract class PackageHistory {
   id?: string;
   customerId?: string;
   tierId?: string;
@@ -11,13 +11,13 @@ export abstract class Tier {
   status?: number;
 }
 
-export abstract class TiersResponse {
+export abstract class PackageHistorysResponse {
   statusCode?: number;
   message?: string;
-  body!: UtilPaging<Tier[]>;
+  body!: UtilPaging<PackageHistory[]>;
 }
-export abstract class TierResponse extends Tier {
+export abstract class PackageHistoryResponse extends PackageHistory {
   statusCode?: number;
   message?: string;
-  body!: Tier;
+  body!: PackageHistory;
 }
