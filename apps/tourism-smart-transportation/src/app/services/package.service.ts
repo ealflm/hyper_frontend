@@ -2,7 +2,6 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { PackageHistorysResponse } from '../models/PackageHistoryResponse';
 import { PackagesResponse } from '../models/PackageResponse';
 
 @Injectable({

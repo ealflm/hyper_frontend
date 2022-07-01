@@ -80,14 +80,14 @@
         <li
           [class]="status ? 'nav-item' : 'nav-item-off'"
           routerLinkActive="active-link"
-          #user="routerLinkActive"
+          #customer="routerLinkActive"
         >
           <div class="nav-link" routerLink="/admin/account-customers">
             <mat-icon
               [ngClass]="
-                user.isActive ? 'material-icons' : 'material-icons-outlined'
+                customer.isActive ? 'material-icons' : 'material-icons-outlined'
               "
-              >{{ user.isActive ? 'group' : 'group_outlined' }}</mat-icon
+              >{{ customer.isActive ? 'group' : 'group_outlined' }}</mat-icon
             >
 
             <div
@@ -362,7 +362,7 @@
       <img
         class="avatarImage"
         [ngClass]="displayAvatar ? 'outline-img' : ''"
-        src="../../../assets/image/avatar.jpg"
+        [src]="photoUrl"
         alt=""
       />
 
@@ -370,7 +370,7 @@
         class="footer-name"
         [ngClass]="statusName ? 'showName' : 'navLinkDar'"
       >
-        <span>Thanh Sang (Admin) </span>
+        <span>{{ user?.name | limitLength: 10 }} (Admin) </span>
         <i
           class="{{
             displayAvatar ? 'pi pi-chevron-down' : 'pi pi-chevron-up'

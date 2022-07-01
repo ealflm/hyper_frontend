@@ -48,6 +48,7 @@ export class RentStationFormComponent
   //
   locationForm!: FormGroup;
   editMode = false;
+  successChange = false;
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -128,6 +129,7 @@ export class RentStationFormComponent
     this.confirmationService.confirm({
       key: 'confirmCloseDialog',
       accept: () => {
+        this.successChange = false;
         this._dialog = true;
         this.mapboxService.initViewMiniMapPartner$.next(false);
         console.log(this.rentStationId);
@@ -140,7 +142,7 @@ export class RentStationFormComponent
   onCloseDialog() {
     this.setEmtyInitForm();
     this.mapboxService.initViewMiniMapPartner$.next(true);
-    this.hiddenDialog.emit();
+    this.hiddenDialog.emit({ successChange: this.successChange });
     this._dialog = false;
   }
   _initLocationForm() {
@@ -225,6 +227,7 @@ export class RentStationFormComponent
           }
           this.editMode = false;
         });
+      this.successChange = true;
     } else {
       const user = this.localStorageService.getUser;
       const partnerId = user.id;
@@ -251,6 +254,7 @@ export class RentStationFormComponent
           }
         });
       this.editMode = false;
+      this.successChange = true;
     }
     this._locationForm['longitude'].disable();
     this._locationForm['latitude'].disable();

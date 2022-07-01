@@ -127,21 +127,10 @@
               </span>
               <div>Chi tiết phương tiện</div>
               &nbsp;&nbsp;
-              <span
-                class="isOnline"
-                *ngIf="
-                  vehicleDetail?.status === 1 || vehicleDetail?.status === 2
-                "
-              ></span>
+              <span class="isOnline" *ngIf="vehicleDetail?.status === 4"></span>
               <span
                 class="isOffline"
-                *ngIf="
-                  vehicleDetail?.status === 0 ||
-                  vehicleDetail?.status === null ||
-                  vehicleDetail?.status === 3 ||
-                  vehicleDetail?.status === 4 ||
-                  vehicleDetail?.status === 5
-                "
+                *ngIf="vehicleDetail?.status !== 4"
               ></span>
             </div>
             <div class="header-text" *ngIf="fillterMenu === 'bus-station'">

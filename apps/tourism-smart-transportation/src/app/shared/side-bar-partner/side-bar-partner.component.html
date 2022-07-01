@@ -309,7 +309,7 @@
       <img
         class="avatarImage"
         [ngClass]="displayAvatar ? 'outline-img' : ''"
-        src="../../../assets/image/avatar.jpg"
+        [src]="photoUrl"
         alt=""
       />
 
@@ -317,7 +317,7 @@
         class="footer-name"
         [ngClass]="statusName ? 'showName' : 'navLinkDar'"
       >
-        <span>Thanh Sang (Đối tác) </span>
+        <span>{{ user?.name | limitLength: 10 }} (Đối tác) </span>
         <i
           class="{{
             displayAvatar ? 'pi pi-chevron-down' : 'pi pi-chevron-up'

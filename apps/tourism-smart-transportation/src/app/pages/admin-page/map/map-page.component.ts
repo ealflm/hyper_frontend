@@ -134,7 +134,6 @@ export class MapPageComponent
   // console.log(this.getObject(this.locationForm.get('locations')?.value));
   // this.getObject2(this.locationForm.get('locations')?.value);
   // }
-  //thuật toán O(n^2)
   getObject(arr: []) {
     const result: any = {};
     arr.map((item: any) => {
@@ -187,7 +186,6 @@ export class MapPageComponent
     this.fillterMenu = event;
     this.showSideBarList = true;
     this.showSideBarDetail = false;
-    // console.log(this.fillterMenu);
     if (this.fillterMenu === 'bus-station') {
       // clearInterval(this.listVehicleTracking);
       this.getAllStations();
@@ -265,6 +263,8 @@ export class MapPageComponent
           break;
         case 'bus-station-rent-station-vehicle':
           clearInterval(this.trackingIntervel);
+          this.removeRentStationMarker();
+          this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.setRentStationMarkers(this.rentStationsOnMap);
           this.trackingIntervel = setInterval(() => {
@@ -349,7 +349,7 @@ export class MapPageComponent
         });
         const coordinates = stationList.join(';');
         this.mapService.getRouteDirection(coordinates).subscribe((res) => {
-          console.log(res.routes[0]);
+          // console.log(res.routes[0]);
           this.mapboxService.getRoute(res.routes[0]);
         });
       });
@@ -515,7 +515,7 @@ export class MapPageComponent
       const width = 40;
       const height = 40;
       el.className = 'marker';
-      el.style.backgroundImage = `url('../../../assets/image/rent-station.png')`;
+      el.style.backgroundImage = `url('../../../assets/image/rent-station.svg')`;
       el.style.width = `${width}px`;
       el.style.height = `${height}px`;
       el.style.backgroundSize = '100%';
@@ -547,8 +547,8 @@ export class MapPageComponent
     busStations.map((marker) => {
       const elStationMarker = document.createElement('div');
       elStationMarker.id = marker.id;
-      const width = 40;
-      const height = 40;
+      const width = 35;
+      const height = 35;
       elStationMarker.className = 'marker';
       elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
       elStationMarker.style.width = `${width}px`;
