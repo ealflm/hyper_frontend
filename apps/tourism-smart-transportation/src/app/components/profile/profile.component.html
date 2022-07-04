@@ -232,12 +232,16 @@
                   >không được trống</small
                 >
               </div>
-              <input
-                class="profile-input-text-long"
-                type="text"
-                pInputText
+              <p-multiSelect
+                [showToggleAll]="false"
+                class="dropdown"
+                [filter]="false"
+                [style]="{ height: '28px' }"
+                [options]="serviceTypes"
                 formControlName="serviceType"
-              />
+                optionLabel="name"
+                optionValue="id"
+              ></p-multiSelect>
             </div>
             <!-- start thông tin công ty -->
             <div class="col-12" style="margin-top: 15px">

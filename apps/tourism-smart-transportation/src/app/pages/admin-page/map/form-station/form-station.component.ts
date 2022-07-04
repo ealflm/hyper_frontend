@@ -48,6 +48,7 @@ export class FormStationComponent
   //
   locationForm!: FormGroup;
   editMode = false;
+  successChange = false;
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -118,13 +119,14 @@ export class FormStationComponent
   }
   cancelDialog() {
     this.setEmtyInitForm();
-    this.onCloseDialog();
+    this.successChange = false;
     this.editMode = false;
+    this.onCloseDialog();
   }
   onCloseDialog() {
     this.setEmtyInitForm();
     this.mapboxService.iniViewMiniMapAdmin$.next(true);
-    this.hiddenDialog.emit(true);
+    this.hiddenDialog.emit({ successChange: this.successChange });
     this._dialog = false;
   }
   _initLocationForm() {
@@ -209,6 +211,7 @@ export class FormStationComponent
           }
           this.editMode = false;
         });
+      this.successChange = true;
     } else {
       const station: Station = {
         id: '',
@@ -229,6 +232,7 @@ export class FormStationComponent
           });
         }
       });
+      this.successChange = true;
       this.editMode = false;
     }
     this._locationForm['longitude'].disable();

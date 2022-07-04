@@ -1,3 +1,6 @@
+<tourism-smart-transportation-loading-progress
+  *ngIf="loadingProgress"
+></tourism-smart-transportation-loading-progress>
 <div class="route-details">
   <div class="header-route-content">
     <div class="header-content-item">
@@ -43,36 +46,49 @@
               <div class="col-12 route-input-long">
                 <div class="route-text">
                   Tên tuyến
-                  <!-- <small
+                  <small
                     *ngIf="
                   _routesForm['routeName'].errors?.['required'] && isSubmit
               "
                     class="p-error"
                   >
                     không được bỏ trống
-                  </small> -->
+                  </small>
                 </div>
-                <input class="route-input-text-long" type="text" pInputText />
+                <input
+                  class="route-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="routeName"
+                />
               </div>
               <div class="col-12 route-input-long">
                 <div class="route-text">
                   Mô tả
-                  <!-- <small
+                  <small
                     *ngIf="
                   _routesForm['routeName'].errors?.['required'] && isSubmit
               "
                     class="p-error"
                   >
                     không được bỏ trống
-                  </small> -->
+                  </small>
                 </div>
-                <input class="route-input-text-long" type="text" pInputText />
+                <input
+                  class="route-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="routeDescription"
+                />
               </div>
               <div class="col-12">
                 <div class="list-station">
                   <div class="route-title">Danh sách trạm xe buýt đã chọn</div>
                   <div class="mt-2"></div>
-                  <div class="list-station-selected">
+                  <div
+                    class="list-station-selected"
+                    [ngClass]="blockLayout ? 'block-layout' : ''"
+                  >
                     <p-orderList
                       class="order-list-custom"
                       [value]="stations"
@@ -85,12 +101,17 @@
                       <ng-template let-stations pTemplate="item">
                         <div class="route-item">
                           <div class="route-item-left">
-                            <div>{{ stations.description }}</div>
+                            <div>
+                              <b>{{ stations.title }}</b>
+                            </div>
                             <div>
                               {{ stations.address }}
                             </div>
                           </div>
-                          <div class="route-item-right">
+                          <div
+                            class="route-item-right"
+                            (click)="removeSationFormList(stations.id)"
+                          >
                             <span class="material-icons"> close </span>
                           </div>
                         </div>
@@ -101,8 +122,23 @@
               </div>
             </div>
           </form>
+          <div class="footer-btn" [ngClass]="blockLayout ? 'block-layout' : ''">
+            <button
+              [style]="{ width: '57', height: '32px' }"
+              class="p-button-rounded button-rounded"
+              pButton
+              pRipple
+              [disabled]="blockLayout"
+              type="button"
+              label="Xác nhận trạm"
+              (click)="onConfirmListStation($event)"
+            ></button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<p-toast></p-toast>
+<tourism-smart-transportation-confirm-close-dialog></tourism-smart-transportation-confirm-close-dialog>
+<p-confirmPopup> </p-confirmPopup>

@@ -1,7 +1,13 @@
+import { ServiceType } from './../../models/ServiceTypeResponse';
+import { ServiceTypeService } from './../../services/service-type.service';
+import { PartnersService } from './../../services/partners.service';
+import { LocalStorageService } from './../../auth/localstorage.service';
 import { STATUS_PARTNER } from './../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AgeCheck, MustMatch } from '../../providers/CustomValidators';
+import { DatePipe } from '@angular/common';
+import { Gender } from '../../constant/gender';
 
 @Component({
   selector: 'tourism-smart-transportation-profile',
@@ -14,25 +20,73 @@ export class ProfileComponent implements OnInit {
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
   deleteFile?: string | null;
-  gender = [
-    {
-      id: 'false',
-      lable: 'Nữ',
-    },
-    {
-      id: 'true',
-      lable: 'Nam',
-    },
-  ];
+  gender = Gender;
   usernameBiding? = '';
   isSubmit = false;
   editModeStatus = false;
   changePasswordDialog = false;
-  constructor(private fb: FormBuilder) {}
+  profile: any;
+  serviceTypes: ServiceType[] = [];
+  constructor(
+    private fb: FormBuilder,
+    private localStorageService: LocalStorageService,
+    private partnerService: PartnersService,
+    private serviceTypeService: ServiceTypeService
+  ) {}
 
   ngOnInit(): void {
     this._initForm();
     this._changePasswordForm();
+    const user = this.localStorageService.getUser;
+    if (user) {
+      this.profile = user;
+      this._getServiceType();
+      this._getProfileUser();
+    }
+  }
+  private _getProfileUser() {
+    if (this.profile.role === 'Partner') {
+      this.partnerService
+        .getProfileForPartner(this.profile.id)
+        .subscribe((res) => {
+          this._inforsForm['id'].setValue(res?.body.id);
+          this._inforsForm['firstName'].setValue(res.body.firstName);
+          this._inforsForm['lastName'].setValue(res.body.lastName);
+          this._inforsForm['companyName'].setValue(res.body.companyName);
+          this._inforsForm['addressUser'].setValue(res.body.address1);
+          this._inforsForm['addressCompany'].setValue(res.body.address2);
+          let serivceTypeIdList: any = [];
+          res.body.serviceTypeList?.map((serviceType) => {
+            serivceTypeIdList = [...serivceTypeIdList, serviceType.id];
+          });
+          this._inforsForm['serviceType'].setValue(serivceTypeIdList);
+          this._inforsForm['phone'].setValue(res.body.phone);
+          this._inforsForm['email'].setValue(res.body.email);
+
+          const dobRes = new Date(res.body.dateOfBirth);
+          const pipe = new DatePipe('en-US');
+          const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
+          this._inforsForm['dateOfBirth'].setValue(dobPipe);
+          this._inforsForm['selectedGender'].setValue(
+            res?.body.gender?.toString()
+          );
+          this._inforsForm['createdDate'].setValue(res?.body.createdDate);
+          this._inforsForm['modifiedDate'].setValue(res?.body.modifiedDate);
+          this._inforsForm['photoUrl'].setValue(res?.body.photoUrl);
+          res?.body.photoUrl == '' || res?.body.photoUrl == null
+            ? (this.imagePreview = '../assets/image/imagePreview.png')
+            : (this.imagePreview = `https://se32.blob.core.windows.net/partner/${res?.body.photoUrl}`);
+          this.deleteFile = res?.body.photoUrl?.trim();
+          this.usernameBiding = res?.body.username;
+        });
+    }
+  }
+  private _getServiceType() {
+    this.serviceTypeService
+      .getListServiceTypeForPartner(this.profile.id)
+      .subscribe((serviceTypeRes) => {
+        this.serviceTypes = serviceTypeRes.body;
+      });
   }
   private _initForm() {
     this.inforForm = this.fb.group(
