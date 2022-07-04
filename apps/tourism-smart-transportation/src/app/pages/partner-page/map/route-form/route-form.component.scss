@@ -32,7 +32,7 @@
     }
     .form-edit {
       width: 80%;
-      height: 654px;
+      height: 690px;
       margin: 26px auto;
       border-radius: 9px;
       background-color: $white-primary-color;
@@ -96,6 +96,12 @@
                 }
               }
             }
+            .block-layout {
+              pointer-events: none;
+              &:hover {
+                cursor: not-allowed;
+              }
+            }
           }
           .route-title {
             padding-bottom: 15px;
@@ -103,9 +109,38 @@
             @include font-Roboto-Medium-Subtitle2;
             color: $black-default;
           }
+          .footer-btn {
+            text-align: end;
+            .p-button-rounded {
+              height: 32px;
+              width: 144px;
+              margin-left: 10px;
+              background-color: $primary-color !important;
+              border: none;
+              &:hover {
+                background-color: $primary-color !important;
+                @include box-shadown-green;
+              }
+              .p-button-label {
+                @include font-Roboto-Medium-Button;
+                color: $white-primary-color !important;
+              }
+            }
+          }
         }
       }
     }
+  }
+  .p-confirm-popup-footer {
+    .p-confirm-popup-accept {
+      background-color: $primary-color !important;
+    }
+  }
+}
+.block-layout {
+  pointer-events: none;
+  &:hover {
+    cursor: not-allowed;
   }
 }
 ::ng-deep {

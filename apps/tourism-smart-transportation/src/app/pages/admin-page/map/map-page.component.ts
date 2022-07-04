@@ -302,6 +302,30 @@ export class MapPageComponent
               summary: 'Thành công',
               detail: 'Đã xóa trạm!',
             });
+            this.mapService
+              .getStationOnMap()
+              .pipe(
+                map((stationRes: StationsResponse) => {
+                  this.busStationsOnMap = stationRes.body.items.map(
+                    (station: Station) => {
+                      return {
+                        id: station.id,
+                        title: station.title,
+                        description: station.description,
+                        address: station.address,
+                        longitude: station.longitude,
+                        latitude: station.latitude,
+                        status: station.status,
+                      };
+                    }
+                  );
+                })
+              )
+              .subscribe((res) => {
+                this.removeBusStationMarker();
+                this.setBusStationMarkers(this.busStationsOnMap);
+              });
+            this.onShowSideBarList();
             this.getAllStations();
           }
         });
@@ -312,6 +336,13 @@ export class MapPageComponent
     this.idStation = '';
     this.showDialog = false;
     this.mapboxService.iniViewMiniMapAdmin$.next(true);
+    if (event.successChange) {
+      this.mapService.getStationOnMap().subscribe((stationRes) => {
+        this.busStationsOnMap = stationRes.body.items;
+        this.removeBusStationMarker();
+        this.setBusStationMarkers(stationRes.body.items);
+      });
+    }
     if (event) {
       this.getAllStations();
     }
@@ -349,16 +380,10 @@ export class MapPageComponent
         });
         const coordinates = stationList.join(';');
         this.mapService.getRouteDirection(coordinates).subscribe((res) => {
-          // console.log(res.routes[0]);
           this.mapboxService.getRoute(res.routes[0]);
         });
       });
   }
-  // getDetailDriver(event: any) {
-  //   this.showSideBarList = false;
-  //   this.showSideBarDetail = true;
-  //   console.log(event);
-  // }
   getDetailVehicle(event: any) {
     this.checkBoxValue = 'vehicle';
     this.showSideBarList = false;

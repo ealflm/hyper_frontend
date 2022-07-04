@@ -25,6 +25,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class MapService {
+  mapboxAPIDirection = 'https://api.mapbox.com/directions';
   //API for admin
   stationApiURL = environment.apiURL + 'admin/stations';
   rentStationApiUrl = environment.apiURL + 'admin/rent-station';
@@ -38,6 +39,7 @@ export class MapService {
   // API for partner
   partnerApiRentStationUrl = environment.apiURL + 'partner/rent-station';
   partnerApiStation = environment.apiURL + 'partner/station';
+  partnerApiRoute = environment.apiURL + 'partner/routes';
   // tracking vehicle by parter id
   partnerApiVehicle = environment.apiURL + 'partner/vehicle';
   partnerApiTrackingVehicle = environment.apiURL + 'partner/tracking-vehicle';
@@ -119,7 +121,7 @@ export class MapService {
   }
   getRouteDirection(coordinates: string): Observable<any> {
     return this.http.get<any>(
-      `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${environment.mapbox.accessToken}`
+      `${this.mapboxAPIDirection}/v5/mapbox/driving-traffic/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${environment.mapbox.accessToken}`
     );
   }
   // getAllVehicle
@@ -253,5 +255,18 @@ export class MapService {
       `${this.vehicleIdAminTrackingApiUrl}`,
       { params: queryParams }
     );
+  }
+  getListRoutesForPartner(
+    partnerId: string,
+    name?: string
+  ): Observable<RoutesResponse> {
+    let queryParam = new HttpParams();
+    queryParam = queryParam.append('PartnerId', partnerId);
+    if (name) {
+      queryParam = queryParam.append('Name', name);
+    }
+    return this.http.get<RoutesResponse>(`${this.partnerApiRoute}`, {
+      params: queryParam,
+    });
   }
 }

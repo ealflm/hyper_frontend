@@ -1,3 +1,4 @@
+import { RouteResponse } from './../../../models/RouteResponse';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -118,8 +119,6 @@ export class PartnerMapPageComponent
     this.fillterMenu = event;
     this.showSideBarList = true;
     this.showSideBarDetail = false;
-    // console.log(this.fillterMenu);
-
     if (this.fillterMenu === 'bus-station') {
       this.getListStation();
     } else if (this.fillterMenu === 'rent-station') {
@@ -127,7 +126,7 @@ export class PartnerMapPageComponent
     } else if (this.fillterMenu === 'vehicle') {
       this.getListVehiclesByPartnerId();
     } else if (this.fillterMenu === 'route') {
-      // this.getAllRoutes();
+      this.getListRoutes();
     }
   }
 
@@ -209,7 +208,6 @@ export class PartnerMapPageComponent
       }
     }
   }
-  // onFillterDriverByName(name: any) {}
   onFillterVehicleByName(name: string) {
     this.getListVehiclesByPartnerId(name);
   }
@@ -220,7 +218,7 @@ export class PartnerMapPageComponent
     this.getListRentStationByPartnerId(title);
   }
   onFillterRouteByName(name: any) {
-    // this.getAllRoutes(name);
+    this.getListRoutes(name);
   }
   getDetailVehicle(event: any) {
     this.checkBoxValue = 'vehicle';
@@ -295,7 +293,23 @@ export class PartnerMapPageComponent
       });
   }
   getDetailRoute(event: any) {
-    this.checkBoxValue = 'route';
+    this.showSideBarList = false;
+    this.showSideBarDetail = true;
+    this.checkBoxValue = 'bus-station';
+    this.mapService
+      .getRouteById(event.id)
+      .subscribe((routeRes: RouteResponse) => {
+        this.routeDetail = routeRes.body;
+        let stationList: any = [];
+        routeRes.body.stationList?.map((stations: Station) => {
+          const lnglat = stations.longitude + ',' + stations.latitude;
+          stationList = [...stationList, lnglat];
+        });
+        const coordinates = stationList.join(';');
+        this.mapService.getRouteDirection(coordinates).subscribe((res) => {
+          this.mapboxService.getRoute(res.routes[0]);
+        });
+      });
   }
 
   createRoute() {
@@ -481,6 +495,14 @@ export class PartnerMapPageComponent
       )
       .subscribe(() => {
         this.mapboxService.trackingVehicle(this.geojson);
+      });
+  }
+  // CALL API get routes
+  getListRoutes(routeName?: string) {
+    this.mapService
+      .getListRoutesForPartner(this.partnerId, routeName)
+      .subscribe((routesRes) => {
+        this.routes = routesRes.body.items;
       });
   }
 }

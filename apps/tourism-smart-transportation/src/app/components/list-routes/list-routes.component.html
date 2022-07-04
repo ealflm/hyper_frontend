@@ -15,14 +15,14 @@
   <div
     *ngFor="let route of routes"
     class="body-card"
-    (click)="showDetail(route.id)"
+    (click)="showDetail(route?.id)"
   >
     <div class="card-header">
-      <div>{{ route.name }}</div>
+      <div>{{ route?.name }}</div>
     </div>
     <div class="card-body">
-      <div>{{ route.distance }} Km</div>
-      <div>{{ route.totalStation }} Trạm</div>
+      <div>{{ route.distance! / 1000 }} Km</div>
+      <div>{{ route?.totalStation }} Trạm</div>
     </div>
   </div>
   <!--  -->

@@ -88,6 +88,43 @@ export class MapBoxService {
       },
     });
   }
+  getRouteMiniMap(routeRes: any) {
+    const data = routeRes;
+    const route = data.geometry.coordinates;
+    const geojson: any = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates: route,
+      },
+    };
+    // if the route already exists on the map, we'll reset it using setData
+    if (this.miniMap.getLayer('route')) {
+      this.miniMap.removeLayer('route');
+    }
+    if (this.miniMap.getSource('route')) {
+      this.miniMap.removeSource('route');
+    }
+
+    this.miniMap.addLayer({
+      id: 'route',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: geojson,
+      },
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': '#00d795',
+        'line-width': 5,
+        'line-opacity': 0.75,
+      },
+    });
+  }
   removeLayerTracking() {
     if (this.map.getLayer('iss')) {
       this.map.removeLayer('iss');
