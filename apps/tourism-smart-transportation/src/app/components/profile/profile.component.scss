@@ -1,203 +1,207 @@
 @import '../../../styles.scss';
-.profile-details {
-  background-color: $background-grey;
-  @include fixed-scroll-view;
-  @include custom-scrollbar;
-  .header-profile-content {
-    padding-left: 30px;
-    align-items: center;
-    margin-top: 26px;
-  }
-  .header-content-item {
-    display: flex;
-    align-items: center;
-  }
-  .header-item-H5 {
-    @include font-Roboto-Regular-H5;
-    color: $black-default;
-  }
-  .header-item {
-    margin: 5px 5px 0 5px;
-    width: 5px;
-    height: 23px;
-    color: black;
-  }
-
-  .profile-form {
-    width: 1100px;
-    height: 550px;
-    margin: 26px auto;
-    border-radius: 9px;
-    background-color: $white-primary-color;
-    display: flex;
-    flex-direction: column;
-    @include box-shadown-grey;
-
-    .profile-input-long {
-      height: 49px;
-      .p-multiselect .p-multiselect-label {
-        margin-top: -8px;
-      }
-      .profile-input-text-long {
-        height: 28px;
-      }
+::ng-deep {
+  .profile-details {
+    background-color: $background-grey;
+    @include fixed-scroll-view;
+    @include custom-scrollbar;
+    .header-profile-content {
+      padding-left: 30px;
+      align-items: center;
+      margin-top: 26px;
     }
-
-    .profile-input-short {
-      margin-top: 10px;
-      height: 49px;
-      .profile-input-text-short {
-        height: 28px;
-      }
+    .header-content-item {
+      display: flex;
+      align-items: center;
     }
-
-    .upload-container {
-      height: 95px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .thumbnail {
-      background: #eee;
-      display: table-cell;
-      vertical-align: middle;
-      position: relative;
-    }
-    img {
-      position: absolute;
-      background-position: center;
-      background-size: cover;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 125px;
-      width: 125px;
-      border-radius: 50%;
-      border: 2px solid $background-color-grey;
-      object-fit: cover;
-    }
-
-    .icon-overplay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      height: 125px;
-      width: 125px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: opacity ease 0.5s;
-      text-align: center;
-    }
-    .circle-icon {
-      border-radius: 50%;
-      position: absolute;
-      bottom: 2%;
-      right: 9%;
-      background: $primary-color;
-      border: 2px solid $white-primary-color;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-    }
-
-    .circle-icon span {
-      color: $white-primary-color;
-      position: absolute;
-      font-size: 14px;
-      height: 14px;
-      width: 14px;
-      right: 2px;
-      bottom: 2px;
-      z-index: 2;
-    }
-    .image-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      opacity: 0;
-      background: rgba(0, 0, 0, 0.1);
+    .header-item-H5 {
+      @include font-Roboto-Regular-H5;
       color: $black-default;
-      height: 125px;
-      width: 125px;
-      font-size: 12px;
-      cursor: pointer;
-      transition: opacity ease 0.5s;
-      text-align: center;
-      z-index: 1;
     }
-    .thumnail-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 12px;
-      opacity: 0;
+    .header-item {
+      margin: 5px 5px 0 5px;
+      width: 5px;
+      height: 23px;
+      color: black;
     }
-    .upload-container :hover {
+
+    .profile-form {
+      width: 1100px;
+      height: 550px;
+      margin: 26px auto;
+      border-radius: 9px;
+      background-color: $white-primary-color;
+      display: flex;
+      flex-direction: column;
+      @include box-shadown-grey;
+
+      .profile-input-long {
+        height: 49px;
+        .p-multiselect .p-multiselect-label {
+          margin-top: -8px;
+        }
+        .profile-input-text-long {
+          height: 28px;
+        }
+      }
+
+      .profile-input-short {
+        margin-top: 10px;
+        height: 49px;
+        .profile-input-text-short {
+          height: 28px;
+        }
+      }
+
+      .upload-container {
+        height: 95px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        position: relative;
+      }
+      .thumbnail {
+        background: #eee;
+        display: table-cell;
+        vertical-align: middle;
+        position: relative;
+      }
+      img {
+        position: absolute;
+        background-position: center;
+        background-size: cover;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 125px;
+        width: 125px;
+        border-radius: 50%;
+        border: 2px solid $background-color-grey;
+        object-fit: cover;
+      }
+
+      .icon-overplay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        height: 125px;
+        width: 125px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: opacity ease 0.5s;
+        text-align: center;
+      }
+      .circle-icon {
+        border-radius: 50%;
+        position: absolute;
+        bottom: 2%;
+        right: 9%;
+        background: $primary-color;
+        border: 2px solid $white-primary-color;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+      }
+
+      .circle-icon span {
+        color: $white-primary-color;
+        position: absolute;
+        font-size: 14px;
+        height: 14px;
+        width: 14px;
+        right: 2px;
+        bottom: 2px;
+        z-index: 2;
+      }
       .image-overlay {
-        opacity: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        opacity: 0;
+        background: rgba(0, 0, 0, 0.1);
+        color: $black-default;
+        height: 125px;
+        width: 125px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: opacity ease 0.5s;
+        text-align: center;
         z-index: 1;
       }
       .thumnail-text {
-        opacity: 1;
+        width: 60%;
+        margin-left: 7px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 12px;
+        opacity: 0;
       }
-    }
-    input[type='file'] {
-      opacity: 0;
-      width: 125px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+      .upload-container :hover {
+        .image-overlay {
+          opacity: 1;
+          z-index: 1;
+        }
+        .thumnail-text {
+          opacity: 1;
+        }
+      }
+      input[type='file'] {
+        opacity: 0;
+        width: 125px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
 
-    .profile-subtitle {
-      @include font-Roboto-Medium-Subtitle2;
-      color: $black-default;
-    }
-    .profile-text {
-      @include font-Roboto-Regular-Body2;
-      color: $black-default;
-    }
-    .input-calendar-custom {
-      position: relative;
-    }
-    .input-calendar-icon {
-      position: absolute;
-      right: 4%;
-      top: 7%;
-    }
-  }
-
-  .footer-service-profile {
-    .header-status {
-      margin-top: 25px;
-      display: flex;
-      position: relative;
-      padding: 0 30px 0 30px;
-      border-bottom: 1px solid $background-color-grey-secondary;
-      color: $black-default;
-      height: 38px;
-      @include font-Roboto-Light-Status;
-      .active {
-        padding-bottom: 13px;
-        border-bottom: 3px solid $primary-color;
+      .profile-subtitle {
+        @include font-Roboto-Medium-Subtitle2;
+        color: $black-default;
+      }
+      .profile-text {
         @include font-Roboto-Regular-Body2;
+        color: $black-default;
       }
-      .status-item {
-        .status-item-right-title {
+      .input-calendar-custom {
+        position: relative;
+      }
+      .input-calendar-icon {
+        position: absolute;
+        right: 4%;
+        top: 7%;
+      }
+    }
+
+    .footer-service-profile {
+      .header-status {
+        margin-top: 25px;
+        display: flex;
+        position: relative;
+        padding: 0 30px 0 30px;
+        border-bottom: 1px solid $background-color-grey-secondary;
+        color: $black-default;
+        height: 38px;
+        @include font-Roboto-Light-Status;
+        .active {
+          padding-bottom: 13px;
+          border-bottom: 3px solid $primary-color;
           @include font-Roboto-Regular-Body2;
         }
-        padding-top: 5px;
-        padding-right: 10px;
-        padding-left: 10px;
-        cursor: pointer;
-        &:hover {
-          background-color: $background-hover-grey !important;
+        .status-item {
+          .status-item-right-title {
+            @include font-Roboto-Regular-Body2;
+          }
+          padding-top: 5px;
+          padding-right: 10px;
+          padding-left: 10px;
+          cursor: pointer;
+          &:hover {
+            background-color: $background-hover-grey !important;
+          }
         }
       }
     }

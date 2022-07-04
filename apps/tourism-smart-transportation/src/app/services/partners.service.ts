@@ -19,6 +19,7 @@ import { Injectable } from '@angular/core';
 })
 export class PartnersService {
   apiURL = environment.apiURL + 'admin/partners';
+  partnerAPIProfile = environment.apiURL + 'partner/profile';
   constructor(private http: HttpClient) {}
   getAllPartners(
     userName?: string | null,
@@ -72,5 +73,8 @@ export class PartnersService {
     }
     console.log(errorMessage);
     return throwError(errorMessage);
+  }
+  getProfileForPartner(id: string): Observable<PartnerResponse> {
+    return this.http.get<PartnerResponse>(`${this.partnerAPIProfile}/${id}`);
   }
 }
