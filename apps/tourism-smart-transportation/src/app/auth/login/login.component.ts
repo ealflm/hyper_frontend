@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   isSubmit = false;
   userForm!: FormGroup;
   $sub: Subject<any> = new Subject();
+  showPassword = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -45,7 +46,18 @@ export class LoginComponent implements OnInit {
     this.userForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.maxLength(20)]],
+      isAdmin: [false],
     });
+  }
+  onShowPassword() {
+    this.showPassword = !this.showPassword;
+  }
+  login() {
+    if (this.usersForm['isAdmin'].value === true) {
+      this.loginAdmin();
+    } else if (this.usersForm['isAdmin'].value === false) {
+      this.onSignIn();
+    }
   }
   onSignIn() {
     this.loading = true;

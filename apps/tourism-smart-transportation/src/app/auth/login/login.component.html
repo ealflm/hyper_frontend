@@ -7,17 +7,6 @@
         <div
           class="login-form-input align-items-center justify-content-center mt-4"
         >
-          <span class="p-input-icon-left">
-            <i class="fas fa-envelope"></i>
-            <input
-              class="input-login"
-              type="email"
-              pInputText
-              placeholder="Tài khoản"
-              formControlName="username"
-              (keyup.enter)="onSignIn()"
-            />
-          </span>
           <div>
             <small
               *ngIf="usersForm['username'].errors?.['required'] && isSubmit"
@@ -31,18 +20,19 @@
               không được quá 20 ký tự</small
             >
           </div>
-          <div class="mt-3"></div>
-          <span class="p-input-icon-left">
-            <i class="fas fa-lock"></i>
+          <div class="input-container">
+            <i class="fas fa-envelope"></i>
             <input
               class="input-login"
-              type="password"
+              type="text"
               pInputText
-              placeholder="Mật khẩu"
-              formControlName="password"
+              placeholder="Tài khoản"
+              formControlName="username"
               (keyup.enter)="onSignIn()"
             />
-          </span>
+          </div>
+
+          <div class="mt-3"></div>
           <div>
             <small
               *ngIf="usersForm['password'].invalid && isSubmit"
@@ -56,6 +46,43 @@
               không được quá 20 ký tự</small
             >
           </div>
+          <div class="input-container">
+            <i class="fas fa-lock"></i>
+            <input
+              class="input-login"
+              type="{{ showPassword ? 'text' : 'password' }}"
+              pInputText
+              placeholder="Mật khẩu"
+              formControlName="password"
+              (keyup.enter)="onSignIn()"
+            />
+            <span
+              (click)="onShowPassword()"
+              *ngIf="!showPassword"
+              class="material-icons"
+            >
+              visibility
+            </span>
+            <span
+              (click)="onShowPassword()"
+              *ngIf="showPassword"
+              class="material-icons"
+            >
+              visibility_off
+            </span>
+          </div>
+
+          <div class="isAdmin">
+            <input
+              formControlName="isAdmin"
+              type="checkbox"
+              id="cbtest"
+              value="true"
+            />
+            <label for="cbtest" class="check-box"></label>
+            <span>Đăng nhập với quyền tối cao</span>
+          </div>
+
           <button
             pButton
             pRipple
@@ -63,16 +90,7 @@
             label="Đăng nhập"
             class="p-button-rounded w-8 mt-4 btn-login"
             [loading]="loading"
-            (click)="onSignIn()"
-          ></button>
-          <button
-            pButton
-            pRipple
-            type="button"
-            label="Đăng nhập (Admin test)"
-            class="p-button-rounded w-8 mt-4 btn-login"
-            [loading]="loading"
-            (click)="loginAdmin()"
+            (click)="login()"
           ></button>
         </div>
       </form>
