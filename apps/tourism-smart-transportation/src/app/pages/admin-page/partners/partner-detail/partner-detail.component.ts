@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Gender } from './../../../../constant/gender';
 import { MenuFilterPartnerDetail } from './../../../../constant/menu-filter-status';
 import { Vehicle } from './../../../../models/VehicleResponse';
@@ -252,10 +253,7 @@ export class PartnerDetailComponent implements OnInit {
     const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
     const pipe = new DatePipe('en-US');
     const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
-    if (
-      this._inforsForm['DeleteServiceTypeIdList'].value ||
-      this._inforsForm['DeleteServiceTypeIdList'].value.length == 0
-    ) {
+    if (this._inforsForm['DeleteServiceTypeIdList'].value) {
       for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
         formData.append(
           'AddServiceTypeIdList',
@@ -286,9 +284,8 @@ export class PartnerDetailComponent implements OnInit {
     formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
 
     if (idPartner != null) {
-      this.partnerService
-        .updatePartnerById(idPartner, formData)
-        .subscribe((updatePartnerRes) => {
+      this.partnerService.updatePartnerById(idPartner, formData).subscribe(
+        (updatePartnerRes) => {
           if (updatePartnerRes.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -296,11 +293,17 @@ export class PartnerDetailComponent implements OnInit {
               detail: updatePartnerRes.message,
             });
           }
-          this.loading = false;
           this.onCancleEdit();
           this.isSubmit = false;
           this._getDetailPartner();
-        });
+        },
+        (error: HttpErrorResponse) => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
     }
   }
   getListVehicleFormPartnerId() {
@@ -316,7 +319,7 @@ export class PartnerDetailComponent implements OnInit {
     const id = this._inforsForm['id'].value;
     if (id) {
       this.driverService.getListDriverByPartnerId(id).subscribe((res) => {
-        console.log(res);
+        // console.log(res);
         this.drivers = res.body;
       });
     }
