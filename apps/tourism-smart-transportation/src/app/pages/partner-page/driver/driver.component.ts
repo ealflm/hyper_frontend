@@ -1,3 +1,4 @@
+import { ServiceTypeEnum } from './../../../constant/service-type';
 import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { DriverResponse } from './../../../models/DriverResponse';
 import { DatePipe } from '@angular/common';
@@ -67,7 +68,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     const user = this.localStorageService.getUser;
     this.partnerId = user?.id;
     this.getListDriverOfPartner();
-    this._getlistVehicle();
+    this._getlistVehicleForBookCarService();
     this._initDriverForm();
     this._mapStatus();
   }
@@ -120,9 +121,12 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filterName = e.target.value;
     this.searchSubject.next(this.filterName);
   }
-  private _getlistVehicle() {
+  private _getlistVehicleForBookCarService() {
     this.vehicleService
-      .getListVehicleByPartnerId(this.partnerId)
+      .getListVehicleDropdownForPartner(
+        this.partnerId,
+        ServiceTypeEnum.BookCarService
+      )
       .subscribe((vehicleRes) => (this.vehicles = vehicleRes.body));
   }
   OnGetMenuClick(e: any) {

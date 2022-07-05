@@ -1,4 +1,8 @@
-import { ServiceTypeEnum } from './../../../constant/service-type';
+import { MapService } from './../../../services/map.service';
+import {
+  ServiceTypeEnum,
+  ServiceTypeFilter,
+} from './../../../constant/service-type';
 import { STATUS_VEHICLE } from './../../../constant/status';
 import { LocalStorageService } from './../../../auth/localstorage.service';
 import { VehicleService } from './../../../services/vehicle.service';
@@ -51,6 +55,7 @@ export class VehicleComponent
   isSubmit = false;
   vehicleTypes: VehicleType[] = [];
   serviceTypes: ServiceType[] = [];
+  serviceTypeFilter = ServiceTypeFilter;
   rentStations: RentStation[] = [];
   publishYears: PublishYear[] = [];
   vehicleClass: VehicleClass[] = [];
@@ -72,7 +77,8 @@ export class VehicleComponent
     private cd: ChangeDetectorRef,
     private vehicleService: VehicleService,
     private messageService: MessageService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private mapService: MapService
   ) {}
 
   ngOnInit(): void {
@@ -84,6 +90,7 @@ export class VehicleComponent
     this._getCategorys();
     this.getListVehicleOfPartner();
     this._mapStatus();
+    this._getRentStation();
   }
   ngAfterViewInit(): void {
     this._initVehicleForm();
@@ -144,6 +151,13 @@ export class VehicleComponent
     this.categoryService.getListCategoryForPartner().subscribe((res) => {
       this.vehicleClass = res.body.items;
     });
+  }
+  private _getRentStation() {
+    this.mapService
+      .getListRentStationForPartner(this.partnerId, null, 1)
+      .subscribe((res) => {
+        this.rentStations = res.body.items;
+      });
   }
   get _vehiclesForm() {
     return this.vehicleForm.controls;

@@ -30,7 +30,7 @@ export class DriverService {
 
   getListDriverOfPartner(
     partnerId: string,
-    filterName?: string,
+    filterName?: string | null,
     status?: number | null
   ): Observable<DriversResponse> {
     let queryParams = new HttpParams();

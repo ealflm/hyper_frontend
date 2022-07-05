@@ -61,6 +61,18 @@ export class VehicleService {
       params: queryParams,
     });
   }
+  getListVehicleDropdownForPartner(
+    partnerId: string,
+    serviceTypeId: string
+  ): Observable<VehiclesResponse> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('PartnerId', partnerId);
+    queryParams = queryParams.append('ServiceTypeId', serviceTypeId);
+
+    return this.http.get<VehiclesResponse>(`${this.partnerApiURLVehicle}`, {
+      params: queryParams,
+    });
+  }
   createVehicleForPartner(vehicle: Vehicle): Observable<any> {
     return this.http.post<Vehicle>(`${this.partnerApiURLVehicle}`, vehicle);
   }
