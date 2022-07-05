@@ -55,7 +55,38 @@
           <th>Số hiệu</th>
           <th>Màu</th>
           <th>Loại xe</th>
-          <th>Loại dịch vụ</th>
+          <th>
+            Loại dịch vụ
+            <p-columnFilter
+              field="serviceTypeName"
+              matchMode="equals"
+              display="menu"
+              [showMatchModes]="false"
+              [showOperator]="false"
+              [showAddButton]="false"
+              [showApplyButton]="false"
+            >
+              <ng-template
+                pTemplate="filter"
+                let-value
+                let-filter="filterCallback"
+                class="filter-custom"
+              >
+                <p-dropdown
+                  [ngModel]="value"
+                  [options]="serviceTypeFilter"
+                  (onChange)="filter($event.value)"
+                  placeholder="Chọn dịch vụ"
+                >
+                  <ng-template let-option pTemplate="item">
+                    <span [class]="'customer-badge status-' + option.value">{{
+                      option.label
+                    }}</span>
+                  </ng-template>
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>

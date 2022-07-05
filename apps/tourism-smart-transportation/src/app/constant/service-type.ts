@@ -8,3 +8,8 @@ export const SERVICE_TYPE_MAPING = {
   [ServiceTypeEnum.BusService]: { name: 'Đi xe theo chuyến' },
   [ServiceTypeEnum.RentCarService]: { name: 'Thuê xe' },
 };
+export const ServiceTypeFilter = [
+  { label: 'Thuê xe', value: 'Thuê xe' },
+  { label: 'Đi xe theo chuyến', value: 'Đi xe theo chuyến' },
+  { label: 'Đặt xe', value: 'Đặt xe' },
+];

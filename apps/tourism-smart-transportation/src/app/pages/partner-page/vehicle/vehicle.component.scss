@@ -260,4 +260,12 @@
     }
     @include custom-dropdown;
   }
+  .p-column-filter-overlay {
+    .p-column-filter-buttonbar {
+      .p-button-outlined {
+        border-radius: 20px !important;
+        height: 28px !important;
+      }
+    }
+  }
 }
