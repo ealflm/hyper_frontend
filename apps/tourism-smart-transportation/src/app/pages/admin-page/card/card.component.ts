@@ -21,7 +21,7 @@ export class CardComponent implements OnInit {
   checked = false;
   uiCard = '';
   isNumber = false;
-  filterByStatus = 2;
+  filterByStatus = 1;
   constructor(
     private cardService: CardService,
     private confirmationService: ConfirmationService,
@@ -67,11 +67,8 @@ export class CardComponent implements OnInit {
     }
   }
   onChangeFilterByLastName(e: any) {
-    this.cards = this.cards.filter(
-      (el: any) =>
-        el?.customerName
-          ?.toLowerCase()
-          .indexOf(e.target.value.toLowerCase()) !== -1
+    this.cards = this.cards.filter((el: any) =>
+      el?.customerName?.toLowerCase().includes(e.target.value.toLowerCase())
     );
   }
   OnGetMenuClick(value: any) {

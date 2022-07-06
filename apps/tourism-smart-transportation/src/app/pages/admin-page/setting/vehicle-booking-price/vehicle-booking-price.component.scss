@@ -189,6 +189,12 @@
 }
 
 ::ng-deep {
+  .header-close-icon {
+    position: absolute;
+    right: 2%;
+    top: 3%;
+    cursor: pointer;
+  }
   .p-dialog {
     .p-dialog-content {
       border-bottom-left-radius: none !important;

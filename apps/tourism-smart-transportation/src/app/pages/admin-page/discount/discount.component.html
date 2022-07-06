@@ -49,7 +49,6 @@
         <tr>
           <th>Tên</th>
           <th>Mô tả</th>
-          <th>Mã</th>
           <th>Thời gian bắt đầu</th>
           <th>Thời gian kết thúc</th>
           <th>Giá trị</th>
@@ -72,12 +71,11 @@
                     discount.photoUrl
               "
               alt=""
-            />&nbsp;{{ discount.title | limitLength: 10 }}
+            />&nbsp;{{ discount.title | limitLength: 20 }}
           </td>
           <td [pTooltip]="discount?.description" tooltipPosition="bottom">
-            {{ discount?.description | limitLength: 10 }}
+            {{ discount?.description | limitLength: 20 }}
           </td>
-          <td>{{ discount.code }}</td>
           <td>{{ discount.timeStart | date: 'dd/MM/yyyy, h:mm a' }}</td>
           <td>{{ discount.timeEnd | date: 'dd/MM/yyyy, h:mm a' }}</td>
           <td>{{ discount.value }}</td>
@@ -148,8 +146,12 @@
   [blockScroll]="true"
   [resizable]="true"
   [modal]="true"
+  [closable]="false"
 >
   <p-divider></p-divider>
+  <div class="header-close-icon" (click)="cancelDialog(false, true)">
+    <span class="material-icons"> close </span>
+  </div>
   <ng-template pTemplate="content">
     <div class="discount-form">
       <form [formGroup]="discountForm">
