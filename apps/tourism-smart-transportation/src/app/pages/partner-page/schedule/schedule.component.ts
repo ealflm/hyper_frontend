@@ -1,3 +1,4 @@
+import { STATUS_TRIP } from './../../../constant/status';
 import { DriverService } from './../../../services/driver.service';
 import { Driver } from './../../../models/DriverResponse';
 import { TripService } from './../../../services/trip.service';
@@ -21,7 +22,6 @@ import { convertTime } from '../../../providers/ConvertDate';
 })
 export class ScheduleComponent implements OnInit {
   menuValue = MenuFilterStatus;
-  schedules: any = [];
   dialogDetail = false;
   editMode = false;
   displayDialog = false;
@@ -31,6 +31,7 @@ export class ScheduleComponent implements OnInit {
   vehicles: Vehicle[] = [];
   routes: Route[] = [];
   drivers: Driver[] = [];
+  trips: Trip[] = [];
   dates = DateOfWeek;
   status: any = [];
   createStatus = false;
@@ -50,10 +51,21 @@ export class ScheduleComponent implements OnInit {
     if (user) {
       this.partnerId = user?.id;
     }
+    this._mapStatus();
+    this._getListTrip();
     this._getVehicleDropdown();
     this._getRoutesDropdown();
     this._getDriverDropdown();
     this._initScheduleForm();
+  }
+  private _mapStatus() {
+    this.status = Object.keys(STATUS_TRIP).map((key) => {
+      return {
+        id: key,
+        lable: STATUS_TRIP[key].lable,
+        class: STATUS_TRIP[key].class,
+      };
+    });
   }
   private _getVehicleDropdown() {
     this.vehicleService
@@ -79,6 +91,13 @@ export class ScheduleComponent implements OnInit {
         this.drivers = res.body;
       });
   }
+  private _getListTrip(tripName?: string) {
+    this.tripService
+      .getListTrip(this.partnerId, tripName)
+      .subscribe((tripRes) => {
+        this.trips = tripRes.body.items;
+      });
+  }
   private _initScheduleForm() {
     this.scheduleForm = this.fb.group({
       tripName: ['', [Validators.required]],
@@ -93,7 +112,9 @@ export class ScheduleComponent implements OnInit {
   get _schedulesForm() {
     return this.scheduleForm.controls;
   }
-  onChangeFilterByName(e: any) {}
+  onChangeFilterByName(e: any) {
+    this._getListTrip(e.target.value);
+  }
   OnGetMenuClick(value: number) {}
   createSchedule() {
     this.displayDialog = true;

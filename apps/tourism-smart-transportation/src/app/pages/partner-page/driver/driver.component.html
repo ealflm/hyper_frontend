@@ -1,3 +1,6 @@
+<tourism-smart-transportation-loading-progress
+  *ngIf="loading"
+></tourism-smart-transportation-loading-progress>
 <div class="header-drivers">
   <div class="header-drivers-content">
     <div class="header-content-item">
@@ -132,7 +135,7 @@
   [style]="
     editMode
       ? { width: '459px', height: '710px' }
-      : { width: '459px', height: '479px' }
+      : { width: '459px', height: '400px' }
   "
   [contentStyle]="{
     'overflow-y': 'auto',
@@ -248,7 +251,15 @@
                   <div></div>
                 </div>
                 <div class="col-6 driver-input-short">
-                  <div class="driver-text">Giới tính</div>
+                  <div class="driver-text">
+                    Giới tính
+                    <small
+                      *ngIf="_driversForm['dateOfBirth'].errors?.['required'] && isSubmit "
+                      class="p-error"
+                    >
+                      không được bỏ trống</small
+                    >
+                  </div>
                   <p-dropdown
                     class="dropdown"
                     [style]="{ height: '28px' }"
@@ -279,10 +290,10 @@
                     formControlName="phone"
                   />
                 </div>
-                <div class="col-12" style="margin-top: 10px">
+                <div class="col-12" style="margin-top: 10px" *ngIf="editMode">
                   <div class="driver-subtitle">Thông tin phương tiện</div>
                 </div>
-                <div class="col-12 driver-input-long">
+                <div class="col-12 driver-input-long" *ngIf="editMode">
                   <div class="driver-text">
                     Số hiệu phương tiện
                     <small

@@ -7,6 +7,10 @@ export class Trip {
   dayOfWeek?: number;
   timeStart!: string;
   timeEnd!: string;
+  driverFirstName?: string;
+  driverLastName?: string;
+  driverPhotoUrl?: string;
+  vehicleName?: string;
 }
 
 export class TripsResponse {

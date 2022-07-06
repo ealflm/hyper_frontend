@@ -52,6 +52,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   displayDialog = false;
   dialogDetail = false;
   statusBiding = 1;
+  loading = false;
   private searchSubscription?: Subscription;
   private readonly searchSubject = new Subject<string>();
   constructor(
@@ -66,7 +67,9 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     const user = this.localStorageService.getUser;
-    this.partnerId = user?.id;
+    if (user) {
+      this.partnerId = user?.id;
+    }
     this.getListDriverOfPartner();
     this._getlistVehicleForBookCarService();
     this._initDriverForm();
@@ -104,7 +107,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
           [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
         ],
         selectedGender: ['', Validators.required],
-        vehicleId: ['', Validators.required],
+        vehicleId: [''],
         createdDate: [{ value: '', disabled: true }],
         modifiedDate: [{ value: '', disabled: true }],
       },
@@ -154,11 +157,14 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     this.editMode = false;
     this.isSubmit = false;
     this.displayDialog = true;
+    this._driversForm['vehicleId'].clearValidators();
+    this.driverForm.reset();
     this.enableForm();
   }
   onSave() {
     this.isSubmit = true;
     if (this.driverForm.invalid) return;
+    this.loading = true;
     const dobRes = new Date(this._driversForm['dateOfBirth'].value);
     const pipe = new DatePipe('en-US');
     const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
@@ -169,41 +175,54 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         firstName: this._driversForm['firstName'].value,
         lastName: this._driversForm['lastName'].value,
         dateOfBirth: dobPipe ? dobPipe : '',
-        gender: this._driversForm['selectedGender'].value,
+        gender:
+          this._driversForm['selectedGender'].value === 'true' ? true : false,
         phone: this._driversForm['phone'].value,
         vehicleId: this._driversForm['vehicleId'].value,
       };
-      this.driverService.updateDriverById(driverId, driver).subscribe((res) => {
-        if (res.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: 'Cập nhật thành công',
-          });
+      this.driverService.updateDriverById(driverId, driver).subscribe(
+        (res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Cập nhật thành công',
+            });
+          }
+          this.loading = false;
+          this.getListDriverOfPartner();
+        },
+        (error) => {
+          this.loading = false;
         }
-        this.getListDriverOfPartner();
-      });
+      );
     } else {
       const driver: Driver = {
         partnerId: this.partnerId,
         firstName: this._driversForm['firstName'].value,
         lastName: this._driversForm['lastName'].value,
         dateOfBirth: dobPipe ? dobPipe : '',
-        gender: this._driversForm['selectedGender'].value,
+        gender:
+          this._driversForm['selectedGender'].value === 'true' ? true : false,
         phone: this._driversForm['phone'].value,
-        vehicleId: this._driversForm['vehicleId'].value,
+        // vehicleId: this._driversForm['vehicleId'].value,
       };
-      this.driverService.createDriver(driver).subscribe((res) => {
-        if (res.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: 'Tạo tài xế thành công',
-          });
+      this.driverService.createDriver(driver).subscribe(
+        (res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Tạo tài xế thành công',
+            });
+          }
+          this.loading = false;
+          this.getListDriverOfPartner();
+        },
+        (error) => {
+          this.loading = false;
         }
-
-        this.getListDriverOfPartner();
-      });
+      );
     }
     this.editMode = false;
     this.isSubmit = false;
@@ -221,6 +240,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onChangeEdit() {
     this.editMode = true;
+    this._driversForm['vehicleId'].setValidators([Validators.required]);
     this.dialogDetail = false;
     this.displayDialog = true;
     this.cd.detectChanges();
@@ -245,7 +265,9 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         )
       );
       this._driversForm['phone'].setValue(res.body.phone);
-      this._driversForm['selectedGender'].setValue(res.body.gender);
+      this._driversForm['selectedGender'].setValue(
+        res.body.gender ? res.body.gender.toString() : ''
+      );
       this._driversForm['vehicleId'].setValue(res.body.vehicleId);
       res.body.photoUrl == '' || res.body?.photoUrl == null
         ? (this.imagePreview = '../assets/image/imagePreview.png')

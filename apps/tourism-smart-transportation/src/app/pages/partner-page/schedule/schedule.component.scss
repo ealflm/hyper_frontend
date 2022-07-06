@@ -179,6 +179,9 @@
 .status-active {
   @include status-active;
 }
+.status-completed {
+  @include status-completed;
+}
 ::ng-deep {
   .schedule-input-short {
     .p-dropdown .p-dropdown-label {

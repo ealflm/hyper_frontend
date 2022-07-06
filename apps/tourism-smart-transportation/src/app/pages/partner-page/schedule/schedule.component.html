@@ -40,12 +40,12 @@
   <div class="body-table">
     <p-table
       #dt
-      [value]="schedules"
+      [value]="trips"
       responsiveLayout="scroll"
       scrollDirection="both"
       [rows]="7"
       [rowsPerPageOptions]="[7, 25, 50]"
-      [paginator]="schedules.length > 0 ? true : false"
+      [paginator]="trips.length > 0 ? true : false"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {totalRecords} mục"
     >
@@ -61,59 +61,52 @@
           <th>Hành động</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-schedule let-i="rowIndex">
+      <ng-template pTemplate="body" let-trip let-i="rowIndex">
         <tr>
           <td
             class="tb-name"
-            [pTooltip]="schedule.firstName + ' ' + schedule.lastName"
+            [pTooltip]="trip.driverFirstName + ' ' + trip.driverLastName"
             tooltipPosition="bottom"
           >
             <img
               [src]="
-                schedule.photoUrl === '' || schedule.photoUrl === null
+                trip.driverPhotoUrl === '' || trip.driverPhotoUrl === null
                   ? '../assets/image/imagePreview.png'
-                  : 'https://se32.blob.core.windows.net/schedule/' +
-                    schedule.photoUrl
+                  : 'https://se32.blob.core.windows.net/driver/' +
+                    trip.driverPhotoUrl
               "
               alt=""
-            />&nbsp;{{
-              schedule.firstName + ' ' + schedule.lastName | limitLength: 10
+            />&nbsp;
+            {{
+              trip.driverFirstName + ' ' + trip.driverLastName | limitLength: 20
             }}
           </td>
-          <td [pTooltip]="schedule?.companyName" tooltipPosition="bottom">
-            <!-- {{
-              schedule?.companyName.length > 10
-                ? (schedule?.companyName | slice: 0:10) + '..'
-                : schedule?.companyName
-            }} -->
-            {{ schedule?.companyName | limitLength: 10 }}
-          </td>
-          <td>{{ schedule.gender ? 'Nam' : 'Nữ' }}</td>
-          <td>{{ schedule.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ schedule.phone }}</td>
-          <td [pTooltip]="schedule?.email" tooltipPosition="bottom">
-            {{ schedule.email | limitLength: 10 }}
-          </td>
-          <td>{{ schedule.createdDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ schedule.modifiedDate | date: 'dd/MM/yyyy' }}</td>
+
           <td>
-            <div [class]="status[schedule.status].class">
-              {{ status[schedule.status].lable }}
+            {{ trip.vehicleName + ' ' + trip?.licensePlates }}
+          </td>
+          <td>{{ trip?.tripName | limitLength: 20 }}</td>
+          <td>{{ trip?.dayOfWeek }}</td>
+          <td>{{ trip?.timeStart }}</td>
+          <td>{{ trip?.timeEnd }}</td>
+          <td>
+            <div [class]="status[trip?.status]?.class">
+              {{ status[trip?.status]?.lable }}
             </div>
           </td>
           <td style="text-align: center">
             <span
               class="material-icons-outlined enable"
               style="margin-left: 5px"
-              (click)="deleteSchedule(schedule.id)"
-              *ngIf="schedule.status !== 0"
+              (click)="deleteSchedule(trip.id)"
+              *ngIf="trip.status !== 0"
             >
               delete
             </span>
             <span
               class="material-icons-outlined enable"
               style="margin-left: 5px; cursor: pointer"
-              (click)="viewsScheduleDetail(schedule.id)"
+              (click)="viewsScheduleDetail(trip.id)"
             >
               visibility
             </span>
