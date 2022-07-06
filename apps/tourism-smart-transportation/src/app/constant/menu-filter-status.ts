@@ -47,11 +47,11 @@ export const MenuFilterStatusDiscount = [
 export const MenuFilterCard = [
   {
     value: 1,
-    lable: 'Đã liên kết',
+    lable: 'Chưa liên kết',
   },
   {
     value: 2,
-    lable: 'Chưa liên kết',
+    lable: 'Đã liên kết',
   },
   {
     value: 0,

@@ -29,7 +29,7 @@ export class VehicleBookingPriceComponent implements OnInit {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 5;
+  itemsPerPage?: number = 7;
   bookingPriceForm!: FormGroup;
   isSubmit = false;
   constructor(

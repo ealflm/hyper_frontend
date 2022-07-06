@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Gender } from './../../../constant/gender';
 import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { ServiceTypeService } from './../../../services/service-type.service';
@@ -53,7 +54,7 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 5;
+  itemsPerPage?: number = 7;
   //
   uploadedFiles: any[] = [];
   imagePreview?: string | ArrayBuffer | null =
@@ -281,9 +282,8 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
       formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
 
       if (idPartner != null) {
-        this.partnerService
-          .updatePartnerById(idPartner, formData)
-          .subscribe((updatePartnerRes) => {
+        this.partnerService.updatePartnerById(idPartner, formData).subscribe(
+          (updatePartnerRes) => {
             if (updatePartnerRes.statusCode === 201) {
               this.messageService.add({
                 severity: 'success',
@@ -294,7 +294,14 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
             this.loading = false;
             this._getAllPartners();
             this.editMode = false;
-          });
+          },
+          (error: HttpErrorResponse) => {
+            this.loading = false;
+          },
+          () => {
+            this.loading = false;
+          }
+        );
       }
     } else if (!this.editMode) {
       this.isSubmit = false;
@@ -322,17 +329,25 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
       formData.append('UploadFile', this._inforsForm['photoUrl'].value);
       formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
 
-      this.partnerService.createPartner(formData).subscribe((partnerRes) => {
-        if (partnerRes.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: partnerRes.message,
-          });
+      this.partnerService.createPartner(formData).subscribe(
+        (partnerRes) => {
+          if (partnerRes.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: partnerRes.message,
+            });
+          }
+          this.loading = false;
+          this._getAllPartners();
+        },
+        (error: HttpErrorResponse) => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
         }
-        this.loading = false;
-        this._getAllPartners();
-      });
+      );
     }
   }
 

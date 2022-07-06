@@ -1,3 +1,5 @@
+import { ServiceTypeService } from './../../../services/service-type.service';
+import { ServiceType } from './../../../models/ServiceTypeResponse';
 import { MenuFilterStatusDiscount } from './../../../constant/menu-filter-status';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
@@ -46,6 +48,7 @@ export class DiscountComponent implements OnInit {
   isOpenIconFillter?: boolean = true;
   discounts: Discount[] = [];
   discountStatus: any[] = [];
+  serviceTypes: ServiceType[] = [];
   displayDialog = false;
   editMode = false;
   comebackStatus = false;
@@ -63,21 +66,27 @@ export class DiscountComponent implements OnInit {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 5;
+  itemsPerPage?: number = 7;
   menuValue = MenuFilterStatusDiscount;
   constructor(
     private discountService: DiscountService,
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private serviceTypeService: ServiceTypeService
   ) {
     this._mapDiscountStatus();
   }
   ngOnInit(): void {
+    this._getServiceType();
     this._getAllDiscount();
     this._initDiscountForm();
   }
-
+  private _getServiceType() {
+    this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
+      this.serviceTypes = serviceTypeRes.body.items;
+    });
+  }
   private _mapDiscountStatus() {
     this.discountStatus = Object.keys(STATUS_DISCOUNT).map((key) => {
       return {
@@ -93,7 +102,7 @@ export class DiscountComponent implements OnInit {
         id: [''],
         title: ['', [Validators.required]],
         description: ['', [Validators.required, Validators.maxLength(50)]],
-        code: ['', [Validators.required]],
+        serviceType: ['', [Validators.required]],
         time: ['', [Validators.required]],
         photoUrl: [''],
         value: [
@@ -173,7 +182,9 @@ export class DiscountComponent implements OnInit {
           this._discountsForm['description'].setValue(
             discountResponse.body?.description
           );
-          this._discountsForm['code'].setValue(discountResponse.body?.code);
+          this._discountsForm['serviceType'].setValue(
+            discountResponse.body?.serviceTypeId
+          );
           const pipe = new DatePipe('en-US');
           const timeStart = new Date(
             discountResponse.body.timeStart.toString()
@@ -198,8 +209,8 @@ export class DiscountComponent implements OnInit {
       this._discountsForm['id'].setValue('');
       this._discountsForm['title'].setValue('');
       this._discountsForm['description'].setValue('');
+      this._discountsForm['serviceType'].setValue('');
       this._discountsForm['time'].setValue('');
-      this._discountsForm['code'].setValue('');
       this._discountsForm['value'].setValue('');
       this._discountsForm['photoUrl'].setValue('');
       this.imagePreview = '../assets/image/imagePreview.png';
@@ -219,8 +230,12 @@ export class DiscountComponent implements OnInit {
       this.displayDialog = false;
       this.isSubmit = false;
       formData.append('Description', this._discountsForm['description'].value);
-      formData.append('Code', this._discountsForm['code'].value);
       formData.append('Title', this._discountsForm['title'].value);
+      formData.append(
+        'ServiceTypeId',
+        this._discountsForm['serviceType'].value
+      );
+
       const timeStart = this.convertTime(
         this._discountsForm['time'].value[0]
           ? this._discountsForm['time'].value[0]
@@ -278,7 +293,10 @@ export class DiscountComponent implements OnInit {
       );
       formData.append('TimeEnd', timeEnd ? timeEnd : '');
       formData.append('Description', this._discountsForm['description'].value);
-      formData.append('Code', this._discountsForm['code'].value);
+      formData.append(
+        'ServiceTypeId',
+        this._discountsForm['serviceType'].value
+      );
       formData.append('Value', this._discountsForm['value'].value);
       formData.append('UploadFile', this._discountsForm['photoUrl'].value);
       formData.append('DeleteFile', this._discountsForm['deleteFile'].value);

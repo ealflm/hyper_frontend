@@ -1,5 +1,6 @@
 import { UtilPaging } from './UtilPaging';
 export class Trip {
+  tripId?: string;
   routeId?: string;
   vehicleId?: string;
   driverId?: string;
@@ -7,6 +8,10 @@ export class Trip {
   dayOfWeek?: number;
   timeStart!: string;
   timeEnd!: string;
+  driverFirstName?: string;
+  driverLastName?: string;
+  driverPhotoUrl?: string;
+  vehicleName?: string;
 }
 
 export class TripsResponse {

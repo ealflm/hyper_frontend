@@ -36,7 +36,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 5;
+  itemsPerPage?: number = 7;
   isSubmit = false;
   constructor(
     private confirmationService: ConfirmationService,

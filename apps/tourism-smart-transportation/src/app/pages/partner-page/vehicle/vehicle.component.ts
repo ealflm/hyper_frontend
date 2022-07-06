@@ -241,6 +241,10 @@ export class VehicleComponent
     this.editMode = false;
     this.createStatus = true;
     this.vehicleForm.reset();
+    this.setEnableForm();
+    this._vehiclesForm['rentStationId'].clearValidators();
+    this._vehiclesForm['publishYearId'].clearValidators();
+    this._vehiclesForm['vehicleClassId'].clearValidators();
   }
   viewVehicleDetail(id: string) {
     this.displayDialog = true;
