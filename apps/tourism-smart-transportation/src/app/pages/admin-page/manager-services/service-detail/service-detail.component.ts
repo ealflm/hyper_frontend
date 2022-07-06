@@ -70,12 +70,13 @@ export class ServiceDetailComponent implements OnInit {
   get _packagesForm() {
     return this.tierForm.get('packages') as FormArray;
   }
-  _getServiceType() {
+  private _getServiceType() {
     this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
       this.serviceTypes = serviceTypeRes.body.items;
     });
   }
-  _getTierId(id: string) {
+  private _getTierId(id: string) {
+    this.disableAllInputForm();
     this.packageService.getPackageById(id).subscribe((packageRes) => {
       this._tiersForm['id'].setValue(packageRes.body.id);
       this._tiersForm['tierName'].setValue(packageRes.body.name);
@@ -108,7 +109,6 @@ export class ServiceDetailComponent implements OnInit {
           .get('tierId')
           ?.setValue(packageValue.tierId);
       });
-      this.disableAllInputForm();
     });
   }
   onChangeServiceType() {
@@ -348,8 +348,8 @@ export class ServiceDetailComponent implements OnInit {
     let result = '';
     data.map((res: any) => {
       const obj = {
-        id: res.id,
-        tierId: res.tierId,
+        // id: res.id,
+        // tierId: res.tierId,
         serviceTypeId: res.serviceType,
         name: res.packageName,
         limit: res.limit,
@@ -361,7 +361,7 @@ export class ServiceDetailComponent implements OnInit {
     result = result.substring(0, result.length - 1);
     console.log(result);
 
-    formData.append('PackageList', `${result}`);
+    formData.append('PackageItems', `${result}`);
   }
   // create mode
   onCancle() {

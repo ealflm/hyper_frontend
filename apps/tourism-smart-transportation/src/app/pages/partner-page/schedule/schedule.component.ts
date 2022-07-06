@@ -7,14 +7,14 @@ import { ServiceTypeEnum } from './../../../constant/service-type';
 import { LocalStorageService } from './../../../auth/localstorage.service';
 import { VehicleService } from './../../../services/vehicle.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DateOfWeek } from './../../../constant/dates';
+import { DateOfWeek, DateOfWeekMap } from './../../../constant/dates';
 import { Vehicle } from './../../../models/VehicleResponse';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { Component, OnInit } from '@angular/core';
 import { Route } from '../../../models/RouteResponse';
 import { RouteService } from '../../../services/route.service';
-import { convertTime } from '../../../providers/ConvertDate';
+import { convertTime, formatDateToFE } from '../../../providers/ConvertDate';
 @Component({
   selector: 'tourism-smart-transportation-schedule',
   templateUrl: './schedule.component.html',
@@ -34,6 +34,7 @@ export class ScheduleComponent implements OnInit {
   trips: Trip[] = [];
   dates = DateOfWeek;
   status: any = [];
+  mapDate = DateOfWeekMap;
   createStatus = false;
   partnerId = '';
   constructor(
@@ -52,6 +53,7 @@ export class ScheduleComponent implements OnInit {
       this.partnerId = user?.id;
     }
     this._mapStatus();
+    // this._mapDateOfWeek();
     this._getListTrip();
     this._getVehicleDropdown();
     this._getRoutesDropdown();
@@ -67,6 +69,14 @@ export class ScheduleComponent implements OnInit {
       };
     });
   }
+  // private _mapDateOfWeek() {
+  //   this.mapDate = Object.keys(DateOfWeekMap).map((key, index) => {
+  //     return {
+  //       id: key,
+  //       name: DateOfWeekMap[key].name,
+  //     };
+  //   });
+  // }
   private _getVehicleDropdown() {
     this.vehicleService
       .getListVehicleDropdownForPartner(
@@ -100,6 +110,7 @@ export class ScheduleComponent implements OnInit {
   }
   private _initScheduleForm() {
     this.scheduleForm = this.fb.group({
+      tripId: [''],
       tripName: ['', [Validators.required]],
       vehicleId: ['', [Validators.required]],
       driverId: ['', Validators.required],
@@ -122,6 +133,7 @@ export class ScheduleComponent implements OnInit {
     this.editMode = false;
     this.createStatus = true;
     this.scheduleForm.reset();
+    this._setEnableForm();
   }
   resetForm() {
     this._schedulesForm['vehicleName'].setValue('');
@@ -132,15 +144,66 @@ export class ScheduleComponent implements OnInit {
     this._schedulesForm['timeStart'].setValue('');
     this._schedulesForm['timeEnd'].setValue('');
   }
-  deleteSchedule(id: string) {}
+  deleteSchedule(id: string) {
+    this.confirmationService.confirm({
+      key: 'deleteConfirm',
+      accept: () => {
+        this.tripService.deleteTrip(id).subscribe((res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Xóa chuyến thành công',
+            });
+          }
+        });
+      },
+    });
+  }
   viewsScheduleDetail(id: string) {
     this.displayDialog = true;
     this.createStatus = false;
     this.editMode = false;
+    this._setDisableForm();
+    this.tripService.getTripById(id).subscribe((tripRes) => {
+      this._schedulesForm['tripId'].setValue(tripRes.body.tripId);
+
+      this._schedulesForm['routeId'].setValue(tripRes.body.routeId);
+      this._schedulesForm['tripName'].setValue(tripRes.body.tripName);
+      this._schedulesForm['driverId'].setValue(tripRes.body.driverId);
+      this._schedulesForm['dateOfWeek'].setValue(tripRes.body.dayOfWeek);
+      this._schedulesForm['vehicleId'].setValue(tripRes.body.vehicleId);
+      this._schedulesForm['timeStart'].setValue(
+        formatDateToFE(tripRes.body.timeStart)
+      );
+      this._schedulesForm['timeEnd'].setValue(
+        formatDateToFE(tripRes.body.timeEnd)
+      );
+    });
   }
   onChangeEdit() {
     this.editMode = true;
     this.createStatus = false;
+    this.displayDialog = true;
+    this._setEnableForm();
+  }
+  private _setDisableForm() {
+    this._schedulesForm['routeId'].disable();
+    this._schedulesForm['tripName'].disable();
+    this._schedulesForm['driverId'].disable();
+    this._schedulesForm['dateOfWeek'].disable();
+    this._schedulesForm['vehicleId'].disable();
+    this._schedulesForm['timeStart'].disable();
+    this._schedulesForm['timeEnd'].disable();
+  }
+  private _setEnableForm() {
+    this._schedulesForm['routeId'].enable();
+    this._schedulesForm['tripName'].enable();
+    this._schedulesForm['driverId'].enable();
+    this._schedulesForm['dateOfWeek'].enable();
+    this._schedulesForm['vehicleId'].enable();
+    this._schedulesForm['timeStart'].enable();
+    this._schedulesForm['timeEnd'].enable();
   }
   onCancel() {
     this.displayDialog = false;
@@ -173,7 +236,36 @@ export class ScheduleComponent implements OnInit {
         });
       }
       this.displayDialog = false;
+      this.isSubmit = false;
+      this._getListTrip();
     });
   }
-  onSaveChange() {}
+  onSaveChange() {
+    this.isSubmit = true;
+    if (this.scheduleForm.invalid) return;
+
+    const trip: Trip = {
+      routeId: this._schedulesForm['routeId'].value,
+      tripName: this._schedulesForm['tripName'].value,
+      driverId: this._schedulesForm['driverId'].value,
+      dayOfWeek: this._schedulesForm['dateOfWeek'].value,
+      vehicleId: this._schedulesForm['vehicleId'].value,
+      timeStart: convertTime(this._schedulesForm['timeStart'].value),
+      timeEnd: convertTime(this._schedulesForm['timeEnd'].value),
+    };
+    this.tripService
+      .updateTripById(this._schedulesForm['tripId'].value, trip)
+      .subscribe((res) => {
+        if (res.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: 'Cập nhật chuyến đi thành công',
+          });
+        }
+        this.displayDialog = false;
+        this.isSubmit = false;
+        this._getListTrip();
+      });
+  }
 }

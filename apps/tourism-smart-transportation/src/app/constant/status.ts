@@ -118,11 +118,11 @@ export const STATUS_CARD: any = {
     lable: 'Vô hiệu hóa',
     class: 'status-inactive',
   },
-  2: {
+  1: {
     lable: 'Chưa liên kết',
     class: 'status-unlinked',
   },
-  1: {
+  2: {
     lable: 'Đã liên kết',
     class: 'status-linked',
   },
@@ -173,8 +173,8 @@ export const STATUS_VEHICLE_BOOKING_PRICE: any = {
 };
 export const STATUS_TRIP: any = {
   0: {
-    lable: 'Mới tạo',
-    class: 'status-active',
+    lable: 'Đã ngừng chạy',
+    class: 'status-disabled',
   },
   1: {
     lable: 'Đang chạy',

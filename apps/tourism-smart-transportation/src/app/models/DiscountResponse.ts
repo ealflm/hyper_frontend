@@ -9,6 +9,7 @@ export abstract class DiscountsResponse {
 export abstract class Discount {
   id?: string;
   title?: string;
+  serviceTypeId?: string;
   description?: string;
   code?: string;
   timeStart!: Date;

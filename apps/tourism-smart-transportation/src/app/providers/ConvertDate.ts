@@ -5,3 +5,13 @@ export function convertTime(value: string) {
   const timeConverted = pipe.transform(time, 'yyyy-MM-ddTHH:mm:ss');
   return timeConverted as string;
 }
+export function formatDateToFE(value: string) {
+  const dateConvert = new Date(value ? value.toString() : '');
+  return dateConvert;
+  // const pipe = new DatePipe('en-US');
+  // let dateConverted: any;
+  // if (value) {
+  //   dateConverted = pipe.transform(dateConvert, 'YYYY-MM-DDTHH:mm:ss.sssZ');
+  // }
+  // return dateConverted;
+}

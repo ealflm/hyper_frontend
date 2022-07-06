@@ -1,5 +1,6 @@
 import { UtilPaging } from './UtilPaging';
 export class Trip {
+  tripId?: string;
   routeId?: string;
   vehicleId?: string;
   driverId?: string;
