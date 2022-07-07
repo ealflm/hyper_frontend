@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 import { ServiceType } from './../../models/ServiceTypeResponse';
 import { ServiceTypeService } from './../../services/service-type.service';
 import { PartnersService } from './../../services/partners.service';
@@ -8,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgeCheck, MustMatch } from '../../providers/CustomValidators';
 import { DatePipe } from '@angular/common';
 import { Gender } from '../../constant/gender';
+import { convertDateToVN } from '../../providers/ConvertDate';
 
 @Component({
   selector: 'tourism-smart-transportation-profile',
@@ -27,12 +30,13 @@ export class ProfileComponent implements OnInit {
   changePasswordDialog = false;
   profile: any;
   serviceTypes: ServiceType[] = [];
-
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
     private partnerService: PartnersService,
-    private serviceTypeService: ServiceTypeService
+    private serviceTypeService: ServiceTypeService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -65,14 +69,17 @@ export class ProfileComponent implements OnInit {
           this._inforsForm['email'].setValue(res.body.email);
 
           const dobRes = new Date(res.body.dateOfBirth);
-          const pipe = new DatePipe('en-US');
-          const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
-          this._inforsForm['dateOfBirth'].setValue(dobPipe);
+
+          this._inforsForm['dateOfBirth'].setValue(dobRes);
           this._inforsForm['selectedGender'].setValue(
             res?.body.gender?.toString()
           );
-          this._inforsForm['createdDate'].setValue(res?.body.createdDate);
-          this._inforsForm['modifiedDate'].setValue(res?.body.modifiedDate);
+          this._inforsForm['createdDate'].setValue(
+            convertDateToVN(res.body.createdDate.toString())
+          );
+          this._inforsForm['modifiedDate'].setValue(
+            convertDateToVN(res.body.modifiedDate.toString())
+          );
           this._inforsForm['photoUrl'].setValue(res?.body.photoUrl);
           res?.body.photoUrl == '' || res?.body.photoUrl == null
             ? (this.imagePreview = '../assets/image/imagePreview.png')
@@ -103,7 +110,7 @@ export class ProfileComponent implements OnInit {
         email: [{ value: '', disabled: true }],
         dateOfBirth: [{ value: '', disabled: true }, Validators.required],
         selectedGender: [{ value: '', disabled: true }, Validators.required],
-        deleteFile: [''],
+        DeleteFile: [''],
         photoUrl: [''],
         createdDate: [{ value: '', disabled: true }],
         modifiedDate: [{ value: '', disabled: true }],
@@ -166,7 +173,7 @@ export class ProfileComponent implements OnInit {
     if (avatarFile) {
       this.inforForm.patchValue({ image: avatarFile });
       this._inforsForm['photoUrl'].setValue(avatarFile);
-      this._inforsForm['deleteFile'].setValue(this.deleteFile);
+      this._inforsForm['DeleteFile'].setValue(this.deleteFile);
       const fileReader = new FileReader();
       fileReader.onload = () => {
         this.imagePreview = fileReader.result;
@@ -177,7 +184,52 @@ export class ProfileComponent implements OnInit {
   cancelDialog() {
     this.changePasswordDialog = false;
   }
-  onSaveInfor() {}
+  onSaveInfor() {
+    this.isSubmit = true;
+    if (this.inforForm.invalid) return;
+    this.loading = true;
+    const formData = new FormData();
+    const idPartner = this._inforsForm['id'].value;
+    formData.append('FirstName', this._inforsForm['firstName'].value);
+    formData.append('LastName', this._inforsForm['lastName'].value);
+    formData.append('CompanyName', this._inforsForm['companyName'].value);
+    formData.append('Address1', this._inforsForm['addressUser'].value);
+    formData.append('Address2', this._inforsForm['addressCompany'].value);
+    formData.append('Phone', this._inforsForm['phone'].value);
+    formData.append('Email', this._inforsForm['email'].value);
+    const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
+    const pipe = new DatePipe('en-US');
+    const dobPipe = pipe.transform(dobRes, 'yyyy/MM/dd');
+    formData.append('DateOfBirth', dobPipe ? dobPipe : '');
+    formData.append('Gender', this._inforsForm['selectedGender'].value);
+    formData.append('UploadFile', this._inforsForm['photoUrl'].value);
+    if (this._inforsForm['DeleteFile'].value) {
+      formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
+    }
+
+    if (idPartner != null) {
+      this.partnerService.partnerUpdateProfile(idPartner, formData).subscribe(
+        (updatePartnerRes) => {
+          if (updatePartnerRes.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: updatePartnerRes.message,
+            });
+          }
+          this.onCancleEdit();
+          this.isSubmit = false;
+          this._getProfileUser();
+        },
+        (error: HttpErrorResponse) => {
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
+  }
   onChangePassword() {
     this.changePasswordDialog = true;
   }

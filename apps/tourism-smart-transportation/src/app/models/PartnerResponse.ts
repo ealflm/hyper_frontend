@@ -15,8 +15,8 @@ export abstract class Partner {
   address2?: null | string;
   dateOfBirth!: Date;
   email?: null;
-  createdDate?: Date;
-  modifiedDate?: Date;
+  createdDate!: Date;
+  modifiedDate!: Date;
   status?: number;
   companyName?: string;
   serviceTypeList?: ServiceType[];

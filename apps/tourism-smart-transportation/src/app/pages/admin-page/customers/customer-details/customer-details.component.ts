@@ -1,3 +1,7 @@
+import {
+  Transaction,
+  TransactionsResponse,
+} from './../../../../models/TransactionResponse';
 import { Gender } from './../../../../constant/gender';
 import {
   STATUS_TRANSACTION,
@@ -48,9 +52,9 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   customerEditForm!: FormGroup;
   currentPhone?: string;
   packageHistory: PackageHistory[] = [];
-  transactionHis: Order[] = [];
+  orders: Order[] = [];
+  transactions: Transaction[] = [];
   orderDetails: OrderDetail[] = [];
-  payments: any[] = [];
   status: any = [];
   statusBiding? = 1;
   loading = false;
@@ -103,7 +107,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       };
     });
   }
-  _getDetailCustomer() {
+  private _getDetailCustomer() {
     this.subscription = this.route.params.subscribe((params) => {
       const idCus = params['id'];
       if (idCus) {
@@ -293,7 +297,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       this.purchaseHistoryService
         .getOrderByCusId(idCus ? idCus : '')
         .subscribe((transRes: OrdersResponse) => {
-          this.transactionHis = transRes.body?.items;
+          this.orders = transRes.body?.items;
         });
     });
   }
@@ -349,10 +353,10 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     this.displayDialog = true;
     this.paymentDialogStatus = e.paymentDialogStatus;
     this.purchaseHistoryService
-      .getPaymentsByOrderId(e.orderId)
+      .getTransactionsByOrderId(e.orderId)
       .pipe(
         map((data) => {
-          this.payments = data.body.items.map((x: any) => {
+          this.transactions = data.body.items.map((x: any) => {
             return {
               amount: x.amount,
               content: x.content,
@@ -366,7 +370,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
 
   normalizeToTreeNodeData(res: any) {
     if (res) {
-      this.payments = res.map((x: any) => {
+      this.transactions = res.map((x: any) => {
         return {
           data: {
             amount: x.amount,

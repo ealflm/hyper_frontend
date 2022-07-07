@@ -385,6 +385,7 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('Price', this._tiersForm['price'].value);
     formData.append('PromotedTitle', this._tiersForm['promotedTitle'].value);
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
+
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
     this.nomalizeDataPackageList(formData);
     this.packageService.createPackage(formData).subscribe(
