@@ -107,7 +107,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       };
     });
   }
-  _getDetailCustomer() {
+  private _getDetailCustomer() {
     this.subscription = this.route.params.subscribe((params) => {
       const idCus = params['id'];
       if (idCus) {

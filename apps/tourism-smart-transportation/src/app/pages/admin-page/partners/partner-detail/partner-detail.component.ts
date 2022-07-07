@@ -16,6 +16,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgeCheck } from '../../../../providers/CustomValidators';
 import { PartnerResponse } from '../../../../models/PartnerResponse';
 import { DatePipe } from '@angular/common';
+import { convertDateToVN } from '../../../../providers/ConvertDate';
 
 @Component({
   selector: 'tourism-smart-transportation-partner-detail',
@@ -75,11 +76,12 @@ export class PartnerDetailComponent implements OnInit {
             this._inforsForm['lastName'].setValue(
               partnerResponse.body?.lastName
             );
+
             this._inforsForm['createdDate'].setValue(
-              partnerResponse.body?.createdDate
+              convertDateToVN(partnerResponse.body?.createdDate.toString())
             );
             this._inforsForm['modifiedDate'].setValue(
-              partnerResponse.body?.modifiedDate
+              convertDateToVN(partnerResponse.body?.modifiedDate.toString())
             );
             const dobRes = new Date(partnerResponse.body.dateOfBirth);
 

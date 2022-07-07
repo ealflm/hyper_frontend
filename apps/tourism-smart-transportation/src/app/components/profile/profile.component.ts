@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { AgeCheck, MustMatch } from '../../providers/CustomValidators';
 import { DatePipe } from '@angular/common';
 import { Gender } from '../../constant/gender';
+import { convertDateToVN } from '../../providers/ConvertDate';
 
 @Component({
   selector: 'tourism-smart-transportation-profile',
@@ -71,8 +72,12 @@ export class ProfileComponent implements OnInit {
           this._inforsForm['selectedGender'].setValue(
             res?.body.gender?.toString()
           );
-          this._inforsForm['createdDate'].setValue(res?.body.createdDate);
-          this._inforsForm['modifiedDate'].setValue(res?.body.modifiedDate);
+          this._inforsForm['createdDate'].setValue(
+            convertDateToVN(res.body.createdDate.toString())
+          );
+          this._inforsForm['modifiedDate'].setValue(
+            convertDateToVN(res.body.modifiedDate.toString())
+          );
           this._inforsForm['photoUrl'].setValue(res?.body.photoUrl);
           res?.body.photoUrl == '' || res?.body.photoUrl == null
             ? (this.imagePreview = '../assets/image/imagePreview.png')

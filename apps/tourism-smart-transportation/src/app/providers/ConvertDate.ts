@@ -24,3 +24,12 @@ export function convertDateOfBirth(value: string) {
   }
   return dobPipe;
 }
+export function convertDateToVN(value: string) {
+  const dateCreate = new Date(value ? value.toString() : '');
+  const pipe = new DatePipe('en-US');
+  let dateCreated: any;
+  if (value) {
+    dateCreated = pipe.transform(dateCreate, 'dd/MM/yyyy');
+  }
+  return dateCreated;
+}
