@@ -118,12 +118,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
             const dobRes = new Date(
               cusRes.body.dateOfBirth ? cusRes.body.dateOfBirth.toString() : ''
             );
-            const pipe = new DatePipe('en-US');
-            let dobPipe: any;
-            if (cusRes.body.dateOfBirth) {
-              dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
-            }
-            this._customersEditForm['dateOfBirth'].setValue(dobPipe);
+
+            this._customersEditForm['dateOfBirth'].setValue(dobRes);
             this._customersEditForm['selectedGender'].setValue(
               cusRes.body.gender
             );
@@ -238,7 +234,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     );
     const dobRes = new Date(this._customersEditForm['dateOfBirth'].value);
     const pipe = new DatePipe('en-US');
-    const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
+    const dobPipe = pipe.transform(dobRes, 'yyyy/MM/dd');
     editFormData.append('Birthday', dobPipe ? dobPipe : '');
 
     if (this.currentPhone !== this._customersEditForm['phone'].value) {

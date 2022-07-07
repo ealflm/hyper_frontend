@@ -250,7 +250,9 @@ export class DiscountComponent implements OnInit {
       formData.append('Value', this._discountsForm['value'].value);
       formData.append('TimeEnd', timeEnd ? timeEnd : '');
       formData.append('UploadFile', this._discountsForm['photoUrl'].value);
-      formData.append('DeleteFile', this._discountsForm['deleteFile'].value);
+      if (this._discountsForm['deleteFile'].value) {
+        formData.append('DeleteFile', this._discountsForm['deleteFile'].value);
+      }
       formData.forEach((res) => {
         console.log(res);
       });
@@ -299,7 +301,9 @@ export class DiscountComponent implements OnInit {
       );
       formData.append('Value', this._discountsForm['value'].value);
       formData.append('UploadFile', this._discountsForm['photoUrl'].value);
-      formData.append('DeleteFile', this._discountsForm['deleteFile'].value);
+      if (this._discountsForm['deleteFile'].value) {
+        formData.append('DeleteFile', this._discountsForm['deleteFile'].value);
+      }
       formData.forEach((res) => {
         console.log(res);
       });
