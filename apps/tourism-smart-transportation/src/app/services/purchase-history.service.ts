@@ -1,3 +1,4 @@
+import { TransactionsResponse } from './../models/TransactionResponse';
 import { OrderDetailsResponse } from './../models/OrderResponse';
 import { OrdersResponse } from '../models/OrderResponse';
 import { map, Observable } from 'rxjs';
@@ -11,7 +12,7 @@ import { PaymentsResponse } from '../models/PaymentResponse';
 })
 export class PurchaseHistoryService {
   apiURL = environment.apiURL + 'admin/order';
-  apiURLPayment = environment.apiURL + 'admin/payment';
+  apiURLPayment = environment.apiURL + 'admin/transaction';
   apiURLOderDetail = environment.apiURL + 'admin/order-detail';
   constructor(private http: HttpClient) {}
   getOrderByCusId(idCus: string): Observable<OrdersResponse> {
@@ -22,13 +23,9 @@ export class PurchaseHistoryService {
       `${this.apiURLOderDetail}/${orderId}`
     );
   }
-  getPaymentsByOrderId(orderId: string): Observable<PaymentsResponse> {
-    let queryParams = new HttpParams();
-    if (orderId) {
-      queryParams = queryParams.append('orderId', orderId);
-    }
-    return this.http.get<PaymentsResponse>(`${this.apiURLPayment}`, {
-      params: queryParams,
-    });
+  getTransactionsByOrderId(orderId: string): Observable<TransactionsResponse> {
+    return this.http.get<TransactionsResponse>(
+      `${this.apiURLPayment}/${orderId}`
+    );
   }
 }
