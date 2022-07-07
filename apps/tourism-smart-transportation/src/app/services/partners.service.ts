@@ -77,4 +77,13 @@ export class PartnersService {
   getProfileForPartner(id: string): Observable<PartnerResponse> {
     return this.http.get<PartnerResponse>(`${this.partnerAPIProfile}/${id}`);
   }
+  partnerUpdateProfile(
+    partnerId: string,
+    partnerProfile: FormData
+  ): Observable<any> {
+    return this.http.put(
+      `${this.partnerAPIProfile}/${partnerId}`,
+      partnerProfile
+    );
+  }
 }
