@@ -38,7 +38,7 @@
       responsiveLayout="scroll"
       scrollDirection="both"
       [showCurrentPageReport]="true"
-      [rows]="2"
+      [rows]="7"
       [rowsPerPageOptions]="[7, 10, 20]"
       [paginator]="cards.length > 0 ? true : false"
       currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
@@ -74,7 +74,14 @@
               alt=""
             />&nbsp;{{ card.customerName | limitLength: 10 }}
           </td>
-          <td>{{ card.uid }}</td>
+          <td>
+            <tourism-smart-transportation-card-credit
+              [cardNumber]="card.uid"
+              [userName]="card.customerName"
+            ></tourism-smart-transportation-card-credit>
+
+            <!-- {{ card.uid }} -->
+          </td>
           <td>
             <div [class]="status[card.status]?.class">
               {{ status[card.status]?.lable }}

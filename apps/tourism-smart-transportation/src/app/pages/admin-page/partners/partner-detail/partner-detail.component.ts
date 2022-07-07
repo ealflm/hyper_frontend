@@ -82,9 +82,8 @@ export class PartnerDetailComponent implements OnInit {
               partnerResponse.body?.modifiedDate
             );
             const dobRes = new Date(partnerResponse.body.dateOfBirth);
-            const pipe = new DatePipe('en-US');
-            const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
-            this._inforsForm['dateOfBirth'].setValue(dobPipe);
+
+            this._inforsForm['dateOfBirth'].setValue(dobRes);
             this._inforsForm['selectedGender'].setValue(
               partnerResponse.body?.gender?.toString()
             );
@@ -252,7 +251,8 @@ export class PartnerDetailComponent implements OnInit {
 
     const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
     const pipe = new DatePipe('en-US');
-    const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
+    const dobPipe = pipe.transform(dobRes, 'yyyy/MM/dd');
+
     if (this._inforsForm['DeleteServiceTypeIdList'].value) {
       for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
         formData.append(
@@ -281,7 +281,9 @@ export class PartnerDetailComponent implements OnInit {
     formData.append('DateOfBirth', dobPipe ? dobPipe : '');
     formData.append('Gender', this._inforsForm['selectedGender'].value);
     formData.append('UploadFile', this._inforsForm['photoUrl'].value);
-    formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
+    if (this._inforsForm['DeleteFile'].value) {
+      formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
+    }
 
     if (idPartner != null) {
       this.partnerService.updatePartnerById(idPartner, formData).subscribe(

@@ -56,7 +56,18 @@
       </ng-template>
       <ng-template pTemplate="body" let-package let-i="rowIndex">
         <tr>
-          <td>{{ package.name }}</td>
+          <td>
+            <img
+              style="width: 50px; height: 25px; border-radius: 3px"
+              [src]="
+                package.photoUrl === '' || package.photoUrl === null
+                  ? '../assets/image/imagePreview.png'
+                  : 'https://se32.blob.core.windows.net/admin/' +
+                    package.photoUrl
+              "
+              alt=""
+            />&nbsp;{{ package.name }}
+          </td>
           <td>{{ package.description }}</td>
           <td>{{ package.price | currency: package?.price:'':'.0-0' }} VND</td>
           <td>{{ package.promotedTitle }}</td>

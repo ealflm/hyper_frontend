@@ -15,3 +15,12 @@ export function formatDateToFE(value: string) {
   // }
   // return dateConverted;
 }
+export function convertDateOfBirth(value: string) {
+  const dobRes = new Date(value ? value.toString() : '');
+  const pipe = new DatePipe('en-US');
+  let dobPipe: any;
+  if (value) {
+    dobPipe = pipe.transform(dobRes, 'yyyy/MM/dd');
+  }
+  return dobPipe;
+}

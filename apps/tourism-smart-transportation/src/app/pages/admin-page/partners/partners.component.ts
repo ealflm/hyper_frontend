@@ -268,18 +268,25 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
       formData.append('FirstName', this._inforsForm['firstName'].value);
       formData.append('LastName', this._inforsForm['lastName'].value);
       formData.append('CompanyName', this._inforsForm['companyName'].value);
-      formData.append('Address1', this._inforsForm['addressUser'].value);
-      formData.append('Address2', this._inforsForm['addressCompany'].value);
+      if (this._inforsForm['addressUser'].value) {
+        formData.append('Address1', this._inforsForm['addressUser'].value);
+      }
+      if (this._inforsForm['addressCompany'].value) {
+        formData.append('Address2', this._inforsForm['addressCompany'].value);
+      }
+
       formData.append('Phone', this._inforsForm['phone'].value);
       formData.append('Email', this._inforsForm['email'].value);
       const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
       const pipe = new DatePipe('en-US');
-      const dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
+      const dobPipe = pipe.transform(dobRes, 'yyyy/MM/dd');
 
       formData.append('DateOfBirth', dobPipe ? dobPipe : '');
       formData.append('Gender', this._inforsForm['selectedGender'].value);
       formData.append('UploadFile', this._inforsForm['photoUrl'].value);
-      formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
+      if (this._inforsForm['DeleteFile'].value) {
+        formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
+      }
 
       if (idPartner != null) {
         this.partnerService.updatePartnerById(idPartner, formData).subscribe(
@@ -311,13 +318,17 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
       formData.append('FirstName', this._inforsForm['firstName'].value);
       formData.append('LastName', this._inforsForm['lastName'].value);
       formData.append('CompanyName', this._inforsForm['companyName'].value);
-      formData.append('Address1', this._inforsForm['addressUser'].value);
-      formData.append('Address2', this._inforsForm['addressCompany'].value);
+      if (this._inforsForm['addressUser'].value) {
+        formData.append('Address1', this._inforsForm['addressUser'].value);
+      }
+      if (this._inforsForm['addressCompany'].value) {
+        formData.append('Address2', this._inforsForm['addressCompany'].value);
+      }
       formData.append('Phone', this._inforsForm['phone'].value);
       formData.append('Email', this._inforsForm['email'].value);
       const dobRes = new Date(this._inforsForm['dateOfBirth'].value);
       const pipe = new DatePipe('en-US');
-      const dobPipe = pipe.transform(dobRes, 'yyyy-MM-dd');
+      const dobPipe = pipe.transform(dobRes, 'yyyy/MM/dd');
       for (let i = 0; i < this._inforsForm['serviceType'].value.length; i++) {
         formData.append(
           'ServiceTypeIdList',
@@ -327,7 +338,9 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
       formData.append('DateOfBirth', dobPipe ? dobPipe : '');
       formData.append('Gender', this._inforsForm['selectedGender'].value);
       formData.append('UploadFile', this._inforsForm['photoUrl'].value);
-      formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
+      if (this._inforsForm['DeleteFile'].value) {
+        formData.append('DeleteFile', this._inforsForm['DeleteFile'].value);
+      }
 
       this.partnerService.createPartner(formData).subscribe(
         (partnerRes) => {

@@ -258,12 +258,8 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
       this._driversForm['modifiedDate'].setValue(res.body.modifiedDate);
       this._driversForm['firstName'].setValue(res.body.firstName);
       this._driversForm['lastName'].setValue(res.body.lastName);
-
-      this._driversForm['dateOfBirth'].setValue(
-        this.convertDateOfBirth(
-          res.body.dateOfBirth ? res.body.dateOfBirth?.toString() : ''
-        )
-      );
+      const dobRes = new Date(res.body.dateOfBirth ? res.body.dateOfBirth : '');
+      this._driversForm['dateOfBirth'].setValue(dobRes);
       this._driversForm['phone'].setValue(res.body.phone);
       this._driversForm['selectedGender'].setValue(
         res.body.gender ? res.body.gender.toString() : ''
@@ -290,15 +286,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     this._driversForm['selectedGender'].disable();
     this._driversForm['vehicleId'].disable();
   }
-  convertDateOfBirth(value: string) {
-    const dobRes = new Date(value ? value.toString() : '');
-    const pipe = new DatePipe('en-US');
-    let dobPipe: any;
-    if (value) {
-      dobPipe = pipe.transform(dobRes, 'dd/MM/yyy');
-    }
-    return dobPipe;
-  }
+
   getListDriverOfPartner() {
     this.driverService
       .getListDriverOfPartner(
