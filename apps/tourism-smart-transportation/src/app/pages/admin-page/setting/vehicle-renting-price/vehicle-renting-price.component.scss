@@ -189,6 +189,12 @@
 }
 
 ::ng-deep {
+  .header-close-icon {
+    position: absolute;
+    right: 5%;
+    top: 3%;
+    cursor: pointer;
+  }
   .p-dialog {
     .p-dialog-content {
       .divider {

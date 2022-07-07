@@ -146,9 +146,13 @@
   }"
   [blockScroll]="true"
   [resizable]="true"
+  [closable]="false"
   [modal]="true"
 >
   <p-divider></p-divider>
+  <div class="header-close-icon" (click)="onCancel()">
+    <span class="material-icons"> close </span>
+  </div>
   <ng-template pTemplate="content">
     <div class="driver-form">
       <form [formGroup]="driverForm">

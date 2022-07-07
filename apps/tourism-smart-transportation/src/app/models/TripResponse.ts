@@ -12,6 +12,7 @@ export class Trip {
   driverLastName?: string;
   driverPhotoUrl?: string;
   vehicleName?: string;
+  status?: number;
 }
 
 export class TripsResponse {

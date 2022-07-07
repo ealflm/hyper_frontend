@@ -188,6 +188,12 @@
 }
 ::ng-deep {
   p-dialog {
+    .header-close-icon {
+      position: absolute;
+      right: 5%;
+      top: 3%;
+      cursor: pointer;
+    }
     ::-webkit-scrollbar {
       width: 10px;
     }

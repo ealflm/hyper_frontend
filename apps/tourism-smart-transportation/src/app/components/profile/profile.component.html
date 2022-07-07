@@ -344,7 +344,7 @@
                 Mật khẩu hiện tại
                 <small
                   *ngIf="
-                  _changePassForm['currentPassword'].errors?.['required']
+                  _changePassForm['currentPassword'].errors?.['required'] && isSubmit
             "
                   class="p-error"
                 >
@@ -366,7 +366,7 @@
                 Mật khẩu mới
                 <small
                   *ngIf="
-                  _changePassForm['password'].errors?.['required']
+                  _changePassForm['password'].errors?.['required'] && isSubmit
             "
                   class="p-error"
                 >
@@ -388,7 +388,7 @@
                 Nhập lại mật khẩu
                 <small
                   *ngIf="
-                _changePassForm['confirmPassword'].errors?.['required']
+                _changePassForm['confirmPassword'].errors?.['required'] && isSubmit
           "
                   class="p-error"
                 >

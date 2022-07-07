@@ -164,8 +164,12 @@
   [blockScroll]="true"
   [resizable]="true"
   [modal]="true"
+  [closable]="false"
 >
   <div class="divider"></div>
+  <div class="header-close-icon" (click)="cancelDialog()">
+    <span class="material-icons"> close </span>
+  </div>
   <form [formGroup]="bookingPriceForm" class="vehicle-book-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">

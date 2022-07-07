@@ -173,11 +173,26 @@
     }
   }
 }
+.status-unpaid {
+  @include status-unpaid;
+}
+.status-paid {
+  @include status-paid;
+}
 .status-disabled {
   @include status-disabled;
 }
 .status-active {
   @include status-active;
+}
+.status-used {
+  @include status-used;
+}
+.status-expired {
+  @include status-expried;
+}
+.status-completed {
+  @include status-completed;
 }
 ::ng-deep {
   .vehicle-input-short {

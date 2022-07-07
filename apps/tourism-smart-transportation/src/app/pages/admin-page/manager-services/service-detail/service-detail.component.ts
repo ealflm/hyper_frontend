@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { PackageService } from './../../../../services/package.service';
 import { ServiceTypeService } from './../../../../services/service-type.service';
 import { ServiceType } from '../../../../models/ServiceTypeResponse';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Location } from '@angular/common';
@@ -24,6 +25,7 @@ export class ServiceDetailComponent implements OnInit {
   editModeStatus?: boolean = false;
   editBtnStatus?: boolean = false;
   createStatus?: boolean = true;
+  loading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +34,7 @@ export class ServiceDetailComponent implements OnInit {
     private serviceTypeService: ServiceTypeService,
     private messageService: MessageService,
     private location: Location,
+    private router: Router,
     private confirmationService: ConfirmationService
   ) {
     this._getServiceType();
@@ -43,7 +46,7 @@ export class ServiceDetailComponent implements OnInit {
     if (idTier) {
       this.createStatus = false;
       this.editBtnStatus = true;
-      this._getTierId(idTier);
+      this._getPackageId(idTier);
     } else {
       this.createStatus = true;
     }
@@ -75,8 +78,7 @@ export class ServiceDetailComponent implements OnInit {
       this.serviceTypes = serviceTypeRes.body.items;
     });
   }
-  private _getTierId(id: string) {
-    this.disableAllInputForm();
+  private _getPackageId(id: string) {
     this.packageService.getPackageById(id).subscribe((packageRes) => {
       this._tiersForm['id'].setValue(packageRes.body.id);
       this._tiersForm['tierName'].setValue(packageRes.body.name);
@@ -88,7 +90,7 @@ export class ServiceDetailComponent implements OnInit {
         ? (this.imagePreview = '../assets/image/imagePreview.png')
         : (this.imagePreview = `https://se32.blob.core.windows.net/admin/${packageRes.body?.photoUrl}`);
       this.deleteFile = packageRes.body?.photoUrl?.trim();
-      packageRes.body.packageList.map((packageValue: any, index: any) => {
+      packageRes.body.packageItems.map((packageValue: any, index: any) => {
         if (index - 1) {
           this.addNewPackgeForm();
         }
@@ -102,13 +104,13 @@ export class ServiceDetailComponent implements OnInit {
           ?.setValue(packageValue.serviceTypeId);
         this._packagesForm.at(index).get('limit')?.setValue(packageValue.limit);
         this._packagesForm.at(index).get('value')?.setValue(packageValue.value);
-
         this._packagesForm.at(index).get('id')?.setValue(packageValue.id);
         this._packagesForm
           .at(index)
           .get('tierId')
           ?.setValue(packageValue.tierId);
       });
+      this.disableAllInputForm();
     });
   }
   onChangeServiceType() {
@@ -284,7 +286,7 @@ export class ServiceDetailComponent implements OnInit {
     if (this.tierForm.invalid) {
       return;
     }
-
+    this.loading = true;
     const formData = new FormData();
     formData.append('Name', this._tiersForm['tierName'].value);
     formData.append('Description', this._tiersForm['description'].value);
@@ -304,19 +306,18 @@ export class ServiceDetailComponent implements OnInit {
               detail: res.message,
             });
           }
+          this.loading = false;
+          if (!this.loading) {
+            this.router.navigate(['admin/manage-service']);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          this.loading = false;
+          if (!this.loading) {
+            this.router.navigate(['admin/manage-service']);
+          }
         }
-        // (error: HttpErrorResponse) => {
-        //   console.log(error);
-        //   if (error.status === 400) {
-        //     this.messageService.add({
-        //       severity: 'error',
-        //       summary: 'Lỗi',
-        //       detail: error.error.message,
-        //     });
-        //   }
-        // }
       );
-    this.location.back();
   }
   nomalizeDataPackageList(formData: FormData) {
     let data: any = [];
@@ -348,8 +349,8 @@ export class ServiceDetailComponent implements OnInit {
     let result = '';
     data.map((res: any) => {
       const obj = {
-        // id: res.id,
-        // tierId: res.tierId,
+        id: res.id,
+        packageId: res.packageId,
         serviceTypeId: res.serviceType,
         name: res.packageName,
         limit: res.limit,
@@ -377,7 +378,7 @@ export class ServiceDetailComponent implements OnInit {
     if (this.tierForm.invalid) {
       return;
     }
-
+    this.loading = true;
     const formData = new FormData();
     formData.append('Name', this._tiersForm['tierName'].value);
     formData.append('Description', this._tiersForm['description'].value);
@@ -395,19 +396,18 @@ export class ServiceDetailComponent implements OnInit {
             detail: res.message,
           });
         }
+        this.loading = false;
+        if (!this.loading) {
+          this.router.navigate(['admin/manage-service']);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        this.loading = false;
+        if (!this.loading) {
+          this.router.navigate(['admin/manage-service']);
+        }
       }
-      // (error: HttpErrorResponse) => {
-      //   console.log(error);
-      //   if (error.status === 400) {
-      //     this.messageService.add({
-      //       severity: 'error',
-      //       summary: 'Lỗi',
-      //       detail: error.error.message,
-      //     });
-      //   }
-      // }
     );
-    this.location.back();
   }
 
   // hủy thay đổi

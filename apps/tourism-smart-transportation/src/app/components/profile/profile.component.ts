@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
   changePasswordDialog = false;
   profile: any;
   serviceTypes: ServiceType[] = [];
+
   constructor(
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
