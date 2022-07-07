@@ -155,6 +155,7 @@ export class ScheduleComponent implements OnInit {
               summary: 'Thành công',
               detail: 'Xóa chuyến thành công',
             });
+            this._getListTrip();
           }
         });
       },
@@ -252,6 +253,7 @@ export class ScheduleComponent implements OnInit {
       vehicleId: this._schedulesForm['vehicleId'].value,
       timeStart: convertTime(this._schedulesForm['timeStart'].value),
       timeEnd: convertTime(this._schedulesForm['timeEnd'].value),
+      status: 1,
     };
     this.tripService
       .updateTripById(this._schedulesForm['tripId'].value, trip)

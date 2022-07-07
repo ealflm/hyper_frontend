@@ -1,10 +1,4 @@
 @import '../../../styles.scss';
-$checked-color: #34b93d;
-$unchecked-color: #000;
-$checkbox-height: 20px;
-$background-color: #667788;
-$font-color: #efefef;
-$duration: 0.4s;
 html,
 body {
   overflow-x: hidden;
@@ -102,6 +96,9 @@ body {
   }
 }
 .isAdmin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   padding-top: 10px;
   span {
@@ -109,149 +106,41 @@ body {
     font-size: 12px;
   }
 }
-@-moz-keyframes dothabottomcheck {
-  0% {
-    height: 0;
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  label {
+    display: flex;
+    margin: auto;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
   }
-  100% {
-    height: $checkbox-height/2;
-  }
-}
 
-@-webkit-keyframes dothabottomcheck {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: $checkbox-height/2;
-  }
-}
-
-@keyframes dothabottomcheck {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: $checkbox-height/2;
-  }
-}
-
-@keyframes dothatopcheck {
-  0% {
-    height: 0;
-  }
-  50% {
-    height: 0;
-  }
-  100% {
-    height: $checkbox-height * 1.2;
-  }
-}
-@-webkit-keyframes dothatopcheck {
-  0% {
-    height: 0;
-  }
-  50% {
-    height: 0;
-  }
-  100% {
-    height: $checkbox-height * 1.2;
-  }
-}
-@-moz-keyframes dothatopcheck {
-  0% {
-    height: 0;
-  }
-  50% {
-    height: 0;
-  }
-  100% {
-    height: $checkbox-height * 1.2;
-  }
-}
-
-input[type='checkbox'] {
-  display: none;
-}
-
-.check-box {
-  height: $checkbox-height;
-  width: $checkbox-height;
-  background-color: transparent;
-  border: $checkbox-height * 0.1 solid $unchecked-color;
-  border-radius: 5px;
-  position: relative;
-  display: inline-block;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -moz-transition: border-color ease $duration/2;
-  -o-transition: border-color ease $duration/2;
-  -webkit-transition: border-color ease $duration/2;
-  transition: border-color ease $duration/2;
-  cursor: pointer;
-
-  &::before,
-  &::after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  input {
     position: absolute;
-    height: 0;
-    width: $checkbox-height * 0.2;
-    background-color: $checked-color;
-    display: inline-block;
-    -moz-transform-origin: left top;
-    -ms-transform-origin: left top;
-    -o-transform-origin: left top;
-    -webkit-transform-origin: left top;
-    transform-origin: left top;
-    border-radius: 5px;
-    content: ' ';
-    -webkit-transition: opacity ease 0.5;
-    -moz-transition: opacity ease 0.5;
-    transition: opacity ease 0.5;
+    transform: scale(0);
   }
 
-  &::before {
-    top: $checkbox-height * 0.72;
-    left: $checkbox-height * 0.41;
-    box-shadow: 0 0 0 $checkbox-height * 0.05 $background-color;
-    -moz-transform: rotate(-135deg);
-    -ms-transform: rotate(-135deg);
-    -o-transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-    transform: rotate(-135deg);
+  input:checked ~ .checkbox {
+    transform: rotate(30deg);
+    width: 20px;
+    margin: -5px 7px 0px 8px;
+    border-color: #24c78e;
+    border-width: 3px;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-radius: 0;
   }
 
-  &::after {
-    top: $checkbox-height * 0.37;
-    left: $checkbox-height * 0.05;
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-  }
-}
-
-input[type='checkbox']:checked + .check-box,
-.check-box.checked {
-  border-color: $checked-color;
-
-  &::after {
-    height: $checkbox-height * 0.5;
-    -moz-animation: dothabottomcheck $duration/2 ease 0s forwards;
-    -o-animation: dothabottomcheck $duration/2 ease 0s forwards;
-    -webkit-animation: dothabottomcheck $duration/2 ease 0s forwards;
-    animation: dothabottomcheck $duration/2 ease 0s forwards;
-  }
-
-  &::before {
-    height: $checkbox-height * 1.2;
-    -moz-animation: dothatopcheck $duration ease 0s forwards;
-    -o-animation: dothatopcheck $duration ease 0s forwards;
-    -webkit-animation: dothatopcheck $duration ease 0s forwards;
-    animation: dothatopcheck $duration ease 0s forwards;
+  .checkbox {
+    display: block;
+    width: inherit;
+    height: inherit;
+    border: 2px solid #999;
+    border-radius: 4px;
+    transition: all 0.2s cubic-bezier(0, 0.01, 0.23, 0.8);
   }
 }

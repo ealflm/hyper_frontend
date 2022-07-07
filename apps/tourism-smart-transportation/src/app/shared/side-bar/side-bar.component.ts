@@ -38,8 +38,12 @@ export class SideBarComponent implements OnInit {
     this.localStorage.setUserTokenDecode();
     this.user = this.localStorage.getUser;
     if (this.user) {
-      this.photoUrl =
-        'https://se32.blob.core.windows.net/admin/' + this.user.photoUrl;
+      if (this.user.photoUrl === '' || !this.user.photoUrl) {
+        this.photoUrl = '../../../assets/image/default-avatar.png';
+      } else {
+        this.photoUrl =
+          'https://se32.blob.core.windows.net/admin/' + this.user.photoUrl;
+      }
     }
   }
 
