@@ -41,7 +41,7 @@
             <div class="grid">
               <div class="col-6 customer-input-short">
                 <div class="customer-text">
-                  Họ
+                  Tên
                   <small
                     *ngIf="
                   _customersEditForm['firstName'].errors?.['required']
@@ -60,7 +60,7 @@
               </div>
               <div class="col-6 customer-input-short">
                 <div class="customer-text">
-                  Tên
+                  Họ
                   <small
                     *ngIf="
                   _customersEditForm['lastName'].errors?.['required']
@@ -284,16 +284,16 @@
             <th>Trạng thái</th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-tier>
+        <ng-template pTemplate="body" let-package>
           <tr>
             <td>
-              {{ tier.packageName }}
+              {{ package.packageName }}
             </td>
-            <td>{{ tier.timeStart | date: 'dd/MM/yyyy, h:mm a' }}</td>
-            <td>{{ tier.timeEnd | date: 'dd/MM/yyyy, h:mm a' }}</td>
+            <td>{{ package.timeStart | date: 'dd/MM/yyyy, h:mm a' }}</td>
+            <td>{{ package.timeEnd | date: 'dd/MM/yyyy, h:mm a' }}</td>
             <td>
-              <div [class]="tierStatus[tier.status].class">
-                {{ tierStatus[tier.status].lable }}
+              <div [class]="packageStatus[package.status].class">
+                {{ packageStatus[package.status].lable }}
               </div>
             </td>
           </tr>
@@ -332,8 +332,8 @@
               VND
             </td>
             <td>
-              <div [class]="transactionStatus[order?.status].class">
-                {{ transactionStatus[order?.status].lable }}
+              <div [class]="transactionStatus[order?.status]?.class">
+                {{ transactionStatus[order?.status]?.lable }}
               </div>
             </td>
             <td class="more-vert" style="text-align: center">

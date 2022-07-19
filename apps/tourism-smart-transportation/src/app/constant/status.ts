@@ -85,7 +85,7 @@ export const STATUS_CUSTOMER_TRIP = {
     class: 'status-completed',
   },
 };
-export const STATUS_TIER: any = {
+export const STATUS_PACKAGE: any = {
   0: {
     lable: 'Vô hiệu hóa',
     class: 'status-disabled',

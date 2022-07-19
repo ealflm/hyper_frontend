@@ -7,7 +7,7 @@ import {
   service,
   VisualDescriptor,
 } from 'powerbi-client';
-import { Subject } from 'rxjs';
+import { Subject, Subscription, take, takeUntil } from 'rxjs';
 import { MapBoxService } from './../../../services/map-box.service';
 import {
   Component,
@@ -25,7 +25,7 @@ import { ConfigResponse } from '../../../models/ConfigResponse';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   $sub: Subject<any> = new Subject();
   dialog = true;
   @ViewChild(PowerBIReportEmbedComponent)
@@ -52,13 +52,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.embedReportPowerBI();
   }
-  ngAfterViewInit(): void {
-    // this.mapboxService.initializeMap2();
+  ngAfterViewInit(): void {}
+  ngOnDestroy(): void {
+    // this.$sub.complete();
+    this.$sub.unsubscribe();
   }
-
   embedReportPowerBI() {
     this.httpService
       .getEmbeddedTokenPowerBI()
+      .pipe(take(1), takeUntil(this.$sub))
       .subscribe((reportConfigResponse) => {
         this.reportConfig = {
           ...this.reportConfig,

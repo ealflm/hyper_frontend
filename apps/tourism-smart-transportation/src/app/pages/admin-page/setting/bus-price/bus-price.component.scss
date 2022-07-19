@@ -127,9 +127,9 @@
           @include font-Roboto-Regular-Body2;
           background-color: white;
           font-weight: bold;
-          &:last-child {
-            text-align: center;
-          }
+          // &:last-child {
+          //   text-align: center;
+          // }
         }
         .tb-name {
           img {
@@ -155,11 +155,12 @@
             color: rgba(0, 0, 0, 0.3);
             cursor: no-drop;
           }
-          &:last-child {
-            .material-icons-outlined {
-              font-size: 20px;
-            }
-          }
+          // &:last-child {
+          //   text-align: center;
+          //   .material-icons-outlined {
+          //     font-size: 20px;
+          //   }
+          // }
         }
 
         tr:not(:first-child) {

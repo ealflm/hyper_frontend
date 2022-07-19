@@ -9,6 +9,8 @@ export class BusPrice {
   maxStation?: number;
   mode?: string;
   status?: number;
+  baseMinDistance?: number;
+  baseMaxDistance?: number;
 }
 export class BusPricesResponse {
   statusCode?: number;
