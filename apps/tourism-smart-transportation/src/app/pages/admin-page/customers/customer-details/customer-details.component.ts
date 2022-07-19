@@ -5,8 +5,8 @@ import {
 import { Gender } from './../../../../constant/gender';
 import {
   STATUS_TRANSACTION,
-  STATUS_TIER,
   STATUS_CUSTOMER,
+  STATUS_PACKAGE,
 } from './../../../../constant/status';
 import { PurchaseHistoryService } from './../../../../services/purchase-history.service';
 import {
@@ -46,7 +46,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   fillterStatus?: boolean = true;
   //
   transactionStatus: any[] = [];
-  tierStatus: any[] = [];
+  packageStatus: any[] = [];
   gender = Gender;
   deleteFile?: string | null;
   customerEditForm!: FormGroup;
@@ -99,11 +99,11 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     });
   }
   private _mapPackageHistoryStatus() {
-    this.tierStatus = Object.keys(STATUS_TIER).map((key) => {
+    this.packageStatus = Object.keys(STATUS_PACKAGE).map((key) => {
       return {
-        id: STATUS_TRANSACTION[key].id,
-        lable: STATUS_TRANSACTION[key].lable,
-        class: STATUS_TRANSACTION[key].class,
+        id: STATUS_PACKAGE[key].id,
+        lable: STATUS_PACKAGE[key].lable,
+        class: STATUS_PACKAGE[key].class,
       };
     });
   }

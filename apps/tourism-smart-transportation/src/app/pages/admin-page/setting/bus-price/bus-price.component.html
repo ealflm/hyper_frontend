@@ -10,12 +10,20 @@
           label="Xuất excel"
           class="p-button-outlined p-button-rounded"
         ></button> -->
-        <button
+        <!-- <button
           pButton
           pRipple
           type="button"
           label="Tạo mới"
           (click)="createBusPrice()"
+          class="p-button-rounded button-background"
+        ></button> -->
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Tạo giá"
+          (click)="createPriceDefault()"
           class="p-button-rounded button-background"
         ></button>
       </div>
@@ -62,18 +70,22 @@
           </th>
           <th>Chế độ</th>
           <th>Trạng thái</th>
-          <th>Hành động</th>
+          <!-- <th>Hành động</th> -->
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-busPrice let-i="rowIndex">
         <tr>
           <td>
-            {{ busPrice.minRouteDistance }}-{{ busPrice.maxRouteDistance }}
+            {{ busPrice.baseMinDistance / 1000 }}-{{
+              busPrice.baseMaxDistance / 1000
+            }}
           </td>
           <td>
             {{
               busPrice?.mode === 'distance'
-                ? busPrice?.minDistance + '-' + busPrice?.maxDistance
+                ? busPrice?.minDistance / 1000 +
+                  '-' +
+                  busPrice?.maxDistance / 1000
                 : '-'
             }}
           </td>
@@ -94,7 +106,7 @@
               {{ busPriceStatus[busPrice.status].lable }}
             </div>
           </td>
-          <td style="text-align: center">
+          <!-- <td style="text-align: center">
             <span
               class="material-icons-outlined enable"
               style="margin-right: 10px"
@@ -116,7 +128,7 @@
             >
               edit
             </span>
-          </td>
+          </td> -->
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -349,5 +361,115 @@
   </ng-template>
 </p-dialog>
 <!-- endDialog -->
+<p-dialog
+  [(visible)]="displaySetPriceDefault"
+  header="Tạo giá khoảng cách tuyến"
+  [style]="{ width: '464px', height: '170px' }"
+  [contentStyle]="{
+    'overflow-y': 'auto',
+    'overflow-x': 'hidden',
+    'max-height': '50vh',
+    'min-height': '20vh'
+  }"
+  [blockScroll]="true"
+  [resizable]="true"
+  [modal]="true"
+  [closable]="false"
+>
+  <div class="header-close-icon" (click)="cancelDialog()">
+    <span class="material-icons"> close </span>
+  </div>
+  <form [formGroup]="priceDefaultForm" class="bus-price-form">
+    <div class="mt-4 grid p-fluid">
+      <div class="col-12">
+        <div class="bus-price-text">
+          Tuyến đường
+          <small
+            class="p-error"
+            *ngIf="(_priceDefaultForm['minDistance'].errors?.['required'] || _priceDefaultForm['maxDistance'].errors?.['required']) && isSubmit"
+          >
+            Không được trống</small
+          >
+          <small
+            class="p-error"
+            *ngIf="_priceDefaultForm['maxDistance'].errors?.['mustMoreThan']"
+          >
+            giá trị khoảng cách không được nhỏ hơn khoảng cách ban đầu</small
+          >
+        </div>
+        <div class="grid">
+          <div class="col-6">
+            <div class="input-custom">
+              <p-inputNumber
+                [style]="{
+                  width: '202px',
+                  height: '28px'
+                }"
+                formControlName="minDistance"
+                (keyup.enter)="onSavePriceDefautl()"
+              ></p-inputNumber>
+              <span class="input-icon">Km</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="input-custom">
+              <p-inputNumber
+                [style]="{
+                  width: '202px',
+                  height: '28px'
+                }"
+                formControlName="maxDistance"
+                (keyup.enter)="onSavePriceDefautl()"
+              ></p-inputNumber>
+              <span class="input-icon">Km</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="bus-price-text">
+          Giá cơ bản
+          <small
+            class="p-error"
+            *ngIf="(_priceDefaultForm['price'].errors?.['required'])&&isSubmit"
+            >Không được trống</small
+          >
+        </div>
+
+        <div class="input-custom">
+          <p-inputNumber
+            [style]="{ width: '420px', height: '28px' }"
+            (keyup.enter)="onSavePriceDefautl()"
+            formControlName="price"
+          ></p-inputNumber>
+          <span class="input-icon">VND</span>
+        </div>
+
+        <div></div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      (click)="cancelDialog()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Lưu"
+      (click)="onSavePriceDefautl()"
+    ></button>
+  </ng-template>
+</p-dialog>
 <tourism-smart-transportation-confirm-close-dialog></tourism-smart-transportation-confirm-close-dialog>
 <p-toast position="top-right"></p-toast>

@@ -12,6 +12,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { STATUS_BUS_PRICE } from '../../../../constant/status';
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { checkMoreThanMinDistance } from '../../../../providers/CustomValidators';
 
 @Component({
   selector: 'tourism-smart-transportation-bus-price',
@@ -25,12 +26,13 @@ export class BusPriceComponent implements OnInit {
   busPriceStatus: any = [];
   busPrices: BusPrice[] = [];
   displayDialog = false;
-
+  displaySetPriceDefault = false;
   //
   fillterByStatus = 1;
   //
 
   busPriceForm!: FormGroup;
+  priceDefaultForm!: FormGroup;
   isSubmit = false;
   constructor(
     private confirmationService: ConfirmationService,
@@ -43,6 +45,7 @@ export class BusPriceComponent implements OnInit {
     this._mapBusPriceStatus();
     this.getAllBusPrice();
     this._initBusPriceForm();
+    this._initPriceDefaultForm();
   }
   private _mapBusPriceStatus() {
     this.busPriceStatus = Object.keys(STATUS_BUS_PRICE).map((key) => {
@@ -61,7 +64,7 @@ export class BusPriceComponent implements OnInit {
         this.busPrices = busPriceRes.body;
       });
   }
-  _initBusPriceForm() {
+  private _initBusPriceForm() {
     this.busPriceForm = this.fb.group({
       id: '',
       mode: ['distance', [Validators.required]],
@@ -73,6 +76,21 @@ export class BusPriceComponent implements OnInit {
       minStation: [0],
       maxStation: [0],
     });
+  }
+  private _initPriceDefaultForm() {
+    this.priceDefaultForm = this.fb.group(
+      {
+        maxDistance: ['', [Validators.required]],
+        minDistance: ['', [Validators.required]],
+        price: ['', [Validators.required]],
+      },
+      {
+        validator: [checkMoreThanMinDistance('minDistance', 'maxDistance')],
+      }
+    );
+  }
+  get _priceDefaultForm() {
+    return this.priceDefaultForm.controls;
   }
   get _busPriceForms() {
     return this.busPriceForm.controls;
@@ -130,10 +148,12 @@ export class BusPriceComponent implements OnInit {
   }
   cancelDialog() {
     this.displayDialog = false;
+    this.displaySetPriceDefault = false;
     this.confirmationService.confirm({
       key: 'confirmCloseDialog',
       accept: () => {
-        this.displayDialog = true;
+        this.displaySetPriceDefault = true;
+        // this.displayDialog = true;
       },
     });
   }
@@ -209,6 +229,39 @@ export class BusPriceComponent implements OnInit {
       this._busPriceForms['maxDistance'].setValue(0);
       this._busPriceForms['minStation'].setValidators([Validators.required]);
       this._busPriceForms['maxStation'].setValidators([Validators.required]);
+    }
+  }
+
+  createPriceDefault() {
+    this.isSubmit = false;
+    this.displaySetPriceDefault = true;
+    this.priceDefaultForm.reset();
+  }
+  onSavePriceDefautl() {
+    this.isSubmit = true;
+    if (this.isSubmit && this.priceDefaultForm.invalid) {
+      return;
+    }
+    if (this.isSubmit) {
+      const busPriceUpdate: BusPrice = {
+        minDistance: this._priceDefaultForm['minDistance'].value * 1000,
+        maxDistance: this._priceDefaultForm['maxDistance'].value * 1000,
+        price: this._priceDefaultForm['price'].value,
+      };
+      this.busConfigService
+        .createBusPrice(busPriceUpdate)
+        .subscribe((busPriceRes: any) => {
+          if (busPriceRes?.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: busPriceRes.message,
+            });
+          }
+          this.displaySetPriceDefault = false;
+
+          this.getAllBusPrice();
+        });
     }
   }
 }

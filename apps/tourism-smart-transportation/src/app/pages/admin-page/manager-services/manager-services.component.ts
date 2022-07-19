@@ -1,7 +1,7 @@
+import { STATUS_PACKAGE } from './../../../constant/status';
 import { PackageService } from './../../../services/package.service';
 import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { STATUS_TIER } from './../../../constant/status';
 import { Router } from '@angular/router';
 import { Service } from '../../../models/ServicesResponse';
 import { Component, OnInit } from '@angular/core';
@@ -47,11 +47,11 @@ export class ManagerServicesComponent implements OnInit {
     this.router.navigate(['admin/manage-service/create-package']);
   }
   private _mapPackageStatus() {
-    this.PackageStatus = Object.keys(STATUS_TIER).map((key) => {
+    this.PackageStatus = Object.keys(STATUS_PACKAGE).map((key) => {
       return {
-        id: STATUS_TIER[key].id,
-        lable: STATUS_TIER[key].lable,
-        class: STATUS_TIER[key].class,
+        id: STATUS_PACKAGE[key].id,
+        lable: STATUS_PACKAGE[key].lable,
+        class: STATUS_PACKAGE[key].class,
       };
     });
   }

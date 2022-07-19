@@ -108,3 +108,27 @@ export function checkMoreThanTodayValidator(controlName: string) {
     }
   };
 }
+export function checkMoreThanMinDistance(
+  minControlName: string,
+  maxDistanceControlName: string
+) {
+  return (formGroup: FormGroup) => {
+    const minDistanceControl = formGroup.controls[minControlName];
+    const maxDistanceControl = formGroup.controls[maxDistanceControlName];
+    if (
+      maxDistanceControl.errors &&
+      !maxDistanceControl.errors['mustMoreThan']
+    ) {
+      // return if another validator has already found an error on the matchingControl
+      return;
+    }
+    if (
+      parseFloat(minDistanceControl.value) >=
+      parseFloat(maxDistanceControl.value)
+    ) {
+      maxDistanceControl.setErrors({ mustMoreThan: true });
+    } else {
+      maxDistanceControl.setErrors(null);
+    }
+  };
+}
