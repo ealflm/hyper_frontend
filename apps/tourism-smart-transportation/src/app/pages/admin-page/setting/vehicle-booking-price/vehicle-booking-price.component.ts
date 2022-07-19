@@ -10,6 +10,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { VehicleTypesService } from '../../../../services/vehicle-types.service';
 import { isFakeMousedownFromScreenReader } from '@angular/cdk/a11y';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'tourism-smart-transportation-vehicle-booking-price',
@@ -29,7 +30,7 @@ export class VehicleBookingPriceComponent implements OnInit {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 7;
+  itemsPerPage?: number = 10;
   bookingPriceForm!: FormGroup;
   isSubmit = false;
   constructor(
@@ -77,7 +78,9 @@ export class VehicleBookingPriceComponent implements OnInit {
     this.bookingService
       .getListBookingConfig(this.filterByStatus)
       .subscribe((res) => {
-        this.bookingPrices = res.body;
+        this.bookingPrices = res.body.sort(
+          (a, b) => a.fixedPrice - b.fixedPrice
+        );
       });
   }
   createBookingPrice() {

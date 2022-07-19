@@ -12,6 +12,7 @@ import { STATUS_VEHICLE_RENTING_PRICE } from './../../../../constant/status';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'tourism-smart-transportation-vehicle-renting-price',
@@ -36,7 +37,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 7;
+  itemsPerPage?: number = 10;
   isSubmit = false;
   constructor(
     private confirmationService: ConfirmationService,
@@ -144,9 +145,14 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   getListRentingPrice() {
     this.rentingService
       .getListRentingConfig(this.filterByStatus)
-      .subscribe((res) => {
-        this.rentingPrices = res.body;
-      });
+      .pipe(
+        map((res) => {
+          this.rentingPrices = res.body.sort(
+            (a, b) => a.fixedPrice - b.fixedPrice
+          );
+        })
+      )
+      .subscribe();
   }
   cancelDialog() {
     this.displayDialog = false;

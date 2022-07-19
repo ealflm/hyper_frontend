@@ -54,7 +54,7 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 7;
+  itemsPerPage?: number = 10;
   //
   uploadedFiles: any[] = [];
   imagePreview?: string | ArrayBuffer | null =

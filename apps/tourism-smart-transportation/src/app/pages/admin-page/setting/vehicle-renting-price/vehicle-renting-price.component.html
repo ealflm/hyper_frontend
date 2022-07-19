@@ -10,14 +10,14 @@
           label="Xuất excel"
           class="p-button-outlined p-button-rounded"
         ></button> -->
-        <button
+        <!-- <button
           pButton
           pRipple
           type="button"
           label="Tạo mới"
           (click)="createRentingPrice()"
           class="p-button-rounded button-background"
-        ></button>
+        ></button> -->
       </div>
     </div>
     <div class="header-search">
@@ -43,8 +43,8 @@
       [value]="rentingPrices"
       responsiveLayout="scroll"
       scrollDirection="both"
-      [rows]="7"
-      [rowsPerPageOptions]="[7, 25, 50]"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="rentingPrices.length > 0 ? true : false"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {totalRecords} mục"

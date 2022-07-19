@@ -5,12 +5,12 @@ export class RentingPrice {
   publishYearName?: string;
   categoryId?: string;
   categoryName?: string;
-  minTime?: number;
-  maxTime?: number;
-  pricePerHour?: number;
-  fixedPrice?: number;
-  weekendPrice?: number;
-  holidayPrice?: number;
+  minTime!: number;
+  maxTime!: number;
+  pricePerHour!: number;
+  fixedPrice!: number;
+  weekendPrice!: number;
+  holidayPrice!: number;
   status?: number;
 }
 export class RentingPriceResponse {

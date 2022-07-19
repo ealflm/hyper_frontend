@@ -64,6 +64,7 @@ export class VehicleComponent
   partnerId = '';
   filterByName = '';
   filterByStatus = 1;
+  vehicleTypeArrCur: VehicleType[] = [];
   createStatus = false;
   currentLicensePlates? = '';
   ServiceTypeEnum = ServiceTypeEnum;
@@ -132,7 +133,8 @@ export class VehicleComponent
   }
   private _getVehicleTypes() {
     this.vehicleTypeService.getListVehicleTypeForPartner(1).subscribe((res) => {
-      this.vehicleTypes = res.body;
+      // this.vehicleTypes = res.body;
+      this.vehicleTypeArrCur = res.body;
     });
   }
   private _getServiceTypes() {
@@ -234,13 +236,27 @@ export class VehicleComponent
       this._vehiclesForm['publishYearId'].setValue(null);
       this._vehiclesForm['vehicleClassId'].setValue(null);
     }
+    if (
+      this._vehiclesForm['serviceTypeId'].value == ServiceTypeEnum.BusService
+    ) {
+      this.vehicleTypes = this.vehicleTypeArrCur.filter(
+        (value) => value.seats > 7
+      );
+      console.log(this.vehicleTypes);
+    } else {
+      this.vehicleTypes = this.vehicleTypeArrCur.filter(
+        (value) => value.seats <= 7
+      );
+    }
     this.vehicleForm.updateValueAndValidity();
   }
   createVehicle() {
+    this.isSubmit = false;
     this.displayDialog = true;
     this.editMode = false;
     this.createStatus = true;
     this.vehicleForm.reset();
+    this.vehicleTypes = [];
     this.setEnableForm();
     this._vehiclesForm['rentStationId'].clearValidators();
     this._vehiclesForm['publishYearId'].clearValidators();
@@ -259,13 +275,19 @@ export class VehicleComponent
         this._vehiclesForm['rentStationId'].setValidators(Validators.required);
         this._vehiclesForm['publishYearId'].setValidators(Validators.required);
         this._vehiclesForm['vehicleClassId'].setValidators(Validators.required);
-      } else if (res.body.serviceTypeId !== ServiceTypeEnum.RentCarService) {
+      } else if (
+        res.body.serviceTypeId == ServiceTypeEnum.BusService ||
+        res.body.serviceTypeId == ServiceTypeEnum.BookCarService
+      ) {
         this._vehiclesForm['rentStationId'].clearValidators();
         this._vehiclesForm['publishYearId'].clearValidators();
         this._vehiclesForm['vehicleClassId'].clearValidators();
         this._vehiclesForm['rentStationId'].setValue(null);
         this._vehiclesForm['publishYearId'].setValue(null);
         this._vehiclesForm['vehicleClassId'].setValue(null);
+        this.vehicleTypes = this.vehicleTypeArrCur.filter(
+          (value) => value.seats > 7
+        );
       }
       this.currentLicensePlates = res?.body?.licensePlates;
       this._vehiclesForm['vehicleId'].setValue(res.body.id);
@@ -318,6 +340,7 @@ export class VehicleComponent
             detail: 'Tạo phương tiện thành công',
           });
         }
+        this.displayDialog = false;
         this.getListVehicleOfPartner();
       });
     }
