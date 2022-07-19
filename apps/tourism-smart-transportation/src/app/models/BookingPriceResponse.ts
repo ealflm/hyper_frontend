@@ -4,10 +4,10 @@ export class BookingPrice {
   vehicleLabel?: string;
   vehicleSeats?: string;
   vehicleFuel?: string;
-  fixedPrice?: number;
-  fixedDistance?: number;
-  pricePerKilometer?: number;
-  status?: number;
+  fixedPrice!: number;
+  fixedDistance!: number;
+  pricePerKilometer!: number;
+  status!: number;
 }
 export class BookingPriceResponse {
   statusCode?: number;

@@ -1,6 +1,8 @@
+import { PartnersService } from './../../services/partners.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './../../auth/localstorage.service';
 import { Component, OnInit } from '@angular/core';
+import { Partner, PartnerResponse } from '../../models/PartnerResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-side-bar-partner',
@@ -18,22 +20,30 @@ export class SideBarPartnerComponent implements OnInit {
   displayAvatar = false;
   statusName = true;
   user: any;
+  partner!: Partner;
   photoUrl = '';
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private partnersService: PartnersService
   ) {}
 
   ngOnInit(): void {
     this.localStorageService.setUserTokenDecode();
     this.user = this.localStorageService.getUser;
-    if (this.user) {
-      this.photoUrl =
-        'https://se32.blob.core.windows.net/partner/' + this.user.photoUrl;
-    }
+    this._getPartnerProfile();
   }
-
+  private _getPartnerProfile() {
+    this.partnersService
+      .getProfileForPartner(this.user.id)
+      .subscribe((partnerRes) => {
+        this.partner = partnerRes.body;
+        this.partner.photoUrl =
+          'https://se32.blob.core.windows.net/partner/' +
+          partnerRes.body.photoUrl;
+      });
+  }
   onToggle() {
     this.locked = !this.locked;
   }

@@ -35,7 +35,7 @@ export class CustomersComponent implements OnInit {
   totalItems = 0;
   //
   pageIndex?: number = 0;
-  itemsPerPage?: number = 7;
+  itemsPerPage?: number = 10;
   //
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';

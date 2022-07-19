@@ -1,7 +1,7 @@
 export class VehicleType {
   id?: string;
   label?: string;
-  seats?: number;
+  seats!: number;
   fuel?: string;
   status?: number;
 }

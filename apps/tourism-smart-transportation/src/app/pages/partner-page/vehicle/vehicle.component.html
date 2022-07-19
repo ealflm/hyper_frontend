@@ -43,8 +43,8 @@
       [value]="vehicles"
       responsiveLayout="scroll"
       scrollDirection="both"
-      [rows]="7"
-      [rowsPerPageOptions]="[7, 25, 50]"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="vehicles.length > 0 ? true : false"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="Đang xem {first} đến {last} trong tổng {totalRecords} mục"
@@ -149,6 +149,8 @@
   [(visible)]="displayDialog"
   [style]="{ width: '450px' }"
   [contentStyle]="{
+    'overflow-y': 'auto',
+    'overflow-x': 'hidden',
     overflow: 'visible'
   }"
   [blockScroll]="true"
@@ -234,37 +236,13 @@
                     (keyup.enter)="onSaveVehicle()"
                   />
                 </div>
-                <div class="col-12 vehicle-input-long">
-                  <div class="vehicle-text">
-                    Loại xe
-                    <small
-                      *ngIf="_vehiclesForm['vehicleTypeId'].errors?.['required'] && isSubmit"
-                      class="p-error"
-                    >
-                      không được bỏ trống</small
-                    >
-                  </div>
-                  <p-dropdown
-                    [style]="{ height: '28px' }"
-                    class="dropdown"
-                    placeholder="Chọn loại xe"
-                    optionValue="id"
-                    formControlName="vehicleTypeId"
-                    [options]="vehicleTypes"
-                  >
-                    <ng-template let-item pTemplate="item">
-                      {{ item.label }} - {{ item.seats + ' chỗ' }}
-                    </ng-template>
-
-                    <ng-template let-item pTemplate="selectedItem">
-                      {{ item.label }} - {{ item.seats + ' chỗ' }}
-                    </ng-template>
-                  </p-dropdown>
-                </div>
                 <div class="col-12" style="margin-top: 10px">
                   <div class="vehicle-subtitle">Thông tin dịch vụ</div>
                 </div>
-                <div class="col-12 vehicle-input-long" style="margin-top: 5px">
+                <div
+                  class="col-12 vehicle-input-long"
+                  style="margin-top: -10px"
+                >
                   <div class="vehicle-text">
                     Loại dịch vụ
                     <small
@@ -377,6 +355,43 @@
                       </ng-template>
                     </p-dropdown>
                   </div>
+                </div>
+                <div class="col-12 vehicle-input-long">
+                  <div class="vehicle-text">
+                    Loại xe
+                    <small
+                      *ngIf="_vehiclesForm['vehicleTypeId'].errors?.['required'] && isSubmit"
+                      class="p-error"
+                    >
+                      không được bỏ trống</small
+                    >
+                  </div>
+                  <p-dropdown
+                    [style]="{ height: '28px' }"
+                    class="dropdown"
+                    placeholder="Chọn loại xe"
+                    optionValue="id"
+                    formControlName="vehicleTypeId"
+                    [options]="vehicleTypes"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      {{ item.label }} -
+                      {{
+                        item.seats <= 2
+                          ? 'Xe máy'
+                          : 'Ô tô ' + item.seats + ' Chỗ'
+                      }}
+                    </ng-template>
+
+                    <ng-template let-item pTemplate="selectedItem">
+                      {{ item.label }} -
+                      {{
+                        item.seats <= 2
+                          ? 'Xe máy'
+                          : 'Ô tô ' + item.seats + ' Chỗ'
+                      }}
+                    </ng-template>
+                  </p-dropdown>
                 </div>
               </div>
             </div>
