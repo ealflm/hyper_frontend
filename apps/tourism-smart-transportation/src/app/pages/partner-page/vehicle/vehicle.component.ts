@@ -275,6 +275,9 @@ export class VehicleComponent
         this._vehiclesForm['rentStationId'].setValidators(Validators.required);
         this._vehiclesForm['publishYearId'].setValidators(Validators.required);
         this._vehiclesForm['vehicleClassId'].setValidators(Validators.required);
+        this.vehicleTypes = this.vehicleTypeArrCur.filter(
+          (value) => value.seats <= 7
+        );
       } else if (
         res.body.serviceTypeId == ServiceTypeEnum.BusService ||
         res.body.serviceTypeId == ServiceTypeEnum.BookCarService

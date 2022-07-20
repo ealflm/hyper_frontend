@@ -270,6 +270,24 @@
           >
             Không được trống
           </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['minTime'].errors?.['pattern'] || _rentingForms['maxTime'].errors?.['pattern']) && isSubmit "
+          >
+            Không được có ký tự khác
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['maxTime'].errors?.['max']) && isSubmit "
+          >
+            thời gian phải bé hơn 24 giờ
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['maxTime'].errors?.['mustMoreThan']) && isSubmit "
+          >
+            thời gian kết thúc phải lớn hơn thời gian bắt đầu
+          </small>
         </div>
         <div class="grid">
           <div class="col-6">
@@ -309,6 +327,18 @@
           >
             Không được trống
           </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['pricePerHour'].errors?.['pattern']) && isSubmit "
+          >
+            không được có ký tự khác
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['pricePerHour'].errors?.['min']) && isSubmit "
+          >
+            không được bé hơn hoặc bằng 0
+          </small>
         </div>
         <div class="input-custom">
           <p-inputNumber
@@ -332,6 +362,18 @@
             *ngIf="_rentingForms['fixedPrice'].errors?.['required'] && isSubmit"
           >
             Không được trống
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['fixedPrice'].errors?.['pattern']) && isSubmit "
+          >
+            không được có ký tự khác
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['fixedPrice'].errors?.['min']) && isSubmit "
+          >
+            không được bé hơn hoặc bằng 0
           </small>
         </div>
         <div class="input-custom">
@@ -357,6 +399,18 @@
           >
             Không được trống
           </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['weekendPrice'].errors?.['pattern']) && isSubmit "
+          >
+            không được có ký tự khác
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['weekendPrice'].errors?.['min']) && isSubmit "
+          >
+            không được bé hơn hoặc bằng 0
+          </small>
         </div>
         <div class="input-custom">
           <p-inputNumber
@@ -380,6 +434,18 @@
             *ngIf="_rentingForms['holidayPrice'].errors?.['required'] && isSubmit"
           >
             Không được trống
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['holidayPrice'].errors?.['pattern']) && isSubmit "
+          >
+            không được có ký tự khác
+          </small>
+          <small
+            class="p-error"
+            *ngIf="(_rentingForms['holidayPrice'].errors?.['min']) && isSubmit "
+          >
+            không được bé hơn hoặc bằng 0
           </small>
         </div>
         <div class="input-custom">

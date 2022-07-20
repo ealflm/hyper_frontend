@@ -1,3 +1,4 @@
+import { checkMoreThanMinDistance } from '../../../../providers/CustomValidators';
 import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { Category } from './../../../../models/CategoryResponse';
 import { PublishYear } from './../../../../models/PublishYearResponse';
@@ -12,7 +13,7 @@ import { STATUS_VEHICLE_RENTING_PRICE } from './../../../../constant/status';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map } from 'rxjs';
+import { map, min } from 'rxjs';
 
 @Component({
   selector: 'tourism-smart-transportation-vehicle-renting-price',
@@ -76,17 +77,64 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
     });
   }
   private _initRentingForm() {
-    this.rentingPriceForm = this.fb.group({
-      id: '',
-      publishYearId: ['', Validators.required],
-      categoryId: ['', Validators.required],
-      minTime: ['', Validators.required],
-      maxTime: ['', Validators.required],
-      pricePerHour: ['', Validators.required],
-      fixedPrice: ['', Validators.required],
-      weekendPrice: ['', Validators.required],
-      holidayPrice: ['', Validators.required],
-    });
+    this.rentingPriceForm = this.fb.group(
+      {
+        id: '',
+        publishYearId: ['', Validators.required],
+        categoryId: ['', Validators.required],
+        minTime: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[0-9]\d*$/),
+            Validators.min(0),
+          ],
+        ],
+        maxTime: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[0-9]\d*$/),
+            Validators.max(24),
+          ],
+        ],
+        pricePerHour: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[0-9]\d*$/),
+            Validators.min(1),
+          ],
+        ],
+        fixedPrice: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[0-9]\d*$/),
+            Validators.min(1),
+          ],
+        ],
+        weekendPrice: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[0-9]\d*$/),
+            Validators.min(1),
+          ],
+        ],
+        holidayPrice: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^[0-9]\d*$/),
+            Validators.min(1),
+          ],
+        ],
+      },
+      {
+        validator: [checkMoreThanMinDistance('minTime', 'maxTime')],
+      }
+    );
   }
   get _rentingForms() {
     return this.rentingPriceForm.controls;
