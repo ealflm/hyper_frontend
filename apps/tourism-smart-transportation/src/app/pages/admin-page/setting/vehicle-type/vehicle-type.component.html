@@ -207,6 +207,12 @@
           >
             Không được trống
           </small>
+          <small
+            class="p-error"
+            *ngIf="_vehicleTypeForm['seats'].errors?.['min'] && isSubmit"
+          >
+            Không bé hơn hoặc bằng 0
+          </small>
         </div>
         <p-inputNumber
           formControlName="seats"

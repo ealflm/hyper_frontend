@@ -61,7 +61,7 @@ export class VehicleTypeComponent implements OnInit {
     this.vehicleTypeForm = this.fb.group({
       id: [''],
       label: ['', [Validators.required]],
-      seats: ['', [Validators.required]],
+      seats: ['', [Validators.required, Validators.min(1)]],
       fuel: ['', [Validators.required]],
     });
   }

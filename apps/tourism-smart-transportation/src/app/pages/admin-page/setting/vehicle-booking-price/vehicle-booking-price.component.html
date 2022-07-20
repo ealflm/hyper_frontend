@@ -217,6 +217,12 @@
             *ngIf="_bookingForms['fixedDistance'].errors?.['required'] && isSubmit"
             >Không được trống</small
           >
+          <small
+            class="p-error"
+            *ngIf="(_bookingForms['fixedDistance'].errors?.['min']) && isSubmit "
+          >
+            không được bé hơn hoặc bằng 0
+          </small>
         </div>
         <div class="input-custom">
           <p-inputNumber
@@ -235,6 +241,12 @@
             *ngIf="_bookingForms['fixedPrice'].errors?.['required'] && isSubmit"
             >Không được trống</small
           >
+          <small
+            class="p-error"
+            *ngIf="_bookingForms['fixedPrice'].errors?.['min'] && isSubmit "
+          >
+            không được bé hơn hoặc bằng 0
+          </small>
         </div>
         <div class="input-custom">
           <p-inputNumber
@@ -253,6 +265,12 @@
             *ngIf="_bookingForms['pricePerKilometer'].errors?.['required'] && isSubmit"
             >Không được trống</small
           >
+          <small
+            class="p-error"
+            *ngIf="_bookingForms['pricePerKilometer'].errors?.['min'] && isSubmit "
+          >
+            không được bé hơn hoặc bằng 0
+          </small>
         </div>
         <div class="input-custom">
           <p-inputNumber

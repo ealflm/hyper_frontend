@@ -65,9 +65,9 @@ export class VehicleBookingPriceComponent implements OnInit {
     this.bookingPriceForm = this.fb.group({
       id: [''],
       vehicleTypeId: ['', Validators.required],
-      fixedPrice: ['', Validators.required],
-      fixedDistance: ['', Validators.required],
-      pricePerKilometer: ['', Validators.required],
+      fixedPrice: ['', [Validators.required, Validators.min(1)]],
+      fixedDistance: ['', [Validators.required, Validators.min(1)]],
+      pricePerKilometer: ['', [Validators.required, Validators.min(1)]],
       status: [''],
     });
   }

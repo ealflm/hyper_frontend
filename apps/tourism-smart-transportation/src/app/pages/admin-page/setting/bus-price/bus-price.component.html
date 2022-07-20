@@ -396,6 +396,12 @@
           >
             giá trị khoảng cách không được nhỏ hơn khoảng cách ban đầu</small
           >
+          <small
+            class="p-error"
+            *ngIf="(_priceDefaultForm['minDistance'].errors?.['min'] || _priceDefaultForm['maxDistance'].errors?.['min']) && isSubmit"
+          >
+            Không được bé hơn 0</small
+          >
         </div>
         <div class="grid">
           <div class="col-6">
@@ -434,6 +440,11 @@
             class="p-error"
             *ngIf="(_priceDefaultForm['price'].errors?.['required'])&&isSubmit"
             >Không được trống</small
+          >
+          <small
+            class="p-error"
+            *ngIf="(_priceDefaultForm['price'].errors?.['min'])&&isSubmit"
+            >Không được bé hơn hoặc bằng 0</small
           >
         </div>
 

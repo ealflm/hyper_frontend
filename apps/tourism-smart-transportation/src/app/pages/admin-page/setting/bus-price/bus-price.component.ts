@@ -80,9 +80,9 @@ export class BusPriceComponent implements OnInit {
   private _initPriceDefaultForm() {
     this.priceDefaultForm = this.fb.group(
       {
-        maxDistance: ['', [Validators.required]],
-        minDistance: ['', [Validators.required]],
-        price: ['', [Validators.required]],
+        maxDistance: ['', [Validators.required, Validators.min(0)]],
+        minDistance: ['', [Validators.required, Validators.min(1)]],
+        price: ['', [Validators.required, Validators.min(1)]],
       },
       {
         validator: [checkMoreThanMinDistance('minDistance', 'maxDistance')],
