@@ -54,7 +54,7 @@ Licensed under the MIT License. */
 }
 
 ::ng-deep .report-container {
-  height: 100vh;
+  height: 104vh;
 }
 
 .controls {
@@ -102,4 +102,9 @@ button:hover {
   font: Regular 16px/21px 'Segoe UI';
   letter-spacing: 0;
   text-decoration: underline;
+}
+:host {
+  &.position-static {
+    display: none;
+  }
 }
