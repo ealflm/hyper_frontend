@@ -52,7 +52,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.embedReportPowerBI();
   }
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    // (document.querySelector('.position-static') as HTMLElement).style.display =
+    //   'none';
+  }
   ngOnDestroy(): void {
     // this.$sub.complete();
     this.$sub.unsubscribe();
@@ -74,6 +77,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         if (reportDiv) {
           reportDiv.classList.remove('hidden');
         }
+
         this.loading = false;
       });
 

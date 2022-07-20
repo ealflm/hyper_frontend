@@ -1,3 +1,4 @@
+import { DashboardService } from './../../services/dashboard.service';
 import { MapBoxService } from './../../services/map-box.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './../../auth/localstorage.service';
@@ -10,6 +11,7 @@ import {
   OnInit,
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { take, takeUntil, Subject } from 'rxjs';
 
 @Component({
   selector: 'tourism-smart-transportation-side-bar',
@@ -28,11 +30,13 @@ export class SideBarComponent implements OnInit {
   statusName = true;
   user: any;
   photoUrl = '';
+  $sub: Subject<any> = new Subject();
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
     private mapboxService: MapBoxService
-  ) {}
+  ) // private httpService: DashboardService
+  {}
 
   ngOnInit(): void {
     this.localStorage.setUserTokenDecode();

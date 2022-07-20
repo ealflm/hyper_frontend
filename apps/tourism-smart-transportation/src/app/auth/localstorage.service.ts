@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 const TOKEN = 'jwtToken';
+const POWERBI_TOKEN = 'PowerBIToken';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,6 +14,12 @@ export class LocalStorageService {
   }
   removeToken() {
     localStorage.removeItem(TOKEN);
+  }
+  setPowerBIToken(powerBItoken: string) {
+    localStorage.setItem(POWERBI_TOKEN, powerBItoken);
+  }
+  getPowerBIToken(): string | null {
+    return localStorage.getItem(POWERBI_TOKEN);
   }
   setUserTokenDecode() {
     const token = this.getToken();
