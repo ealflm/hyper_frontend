@@ -11,6 +11,7 @@ import { Station } from '../../../../models/StationResponse';
 import * as mapboxgl from 'mapbox-gl';
 import { Route } from '../../../../models/RouteResponse';
 import { Location } from '@angular/common';
+import { validateEmty } from '../../../../providers/CustomValidators';
 
 @Component({
   selector: 'tourism-smart-transportation-route-form',
@@ -52,7 +53,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
   }
   private initRouteForm() {
     this.routeForm = this.fb.group({
-      routeName: ['', [Validators.required]],
+      routeName: ['', [Validators.required, validateEmty]],
       routeDescription: [''],
       distance: [''],
       stationList: [null, Validators.required],
@@ -162,6 +163,10 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
       },
       reject: () => {},
     });
+  }
+  onEditAgain() {
+    this.blockLayout = false;
+    this.mapBoxService.removeRouteMiniMap();
   }
   onCancle() {
     this.confirmationService.confirm({

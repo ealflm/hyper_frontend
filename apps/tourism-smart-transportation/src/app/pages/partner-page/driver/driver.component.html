@@ -180,10 +180,10 @@
                   <div class="driver-text">
                     Tên
                     <small
-                      *ngIf="_driversForm['firstName'].errors?.['required'] && isSubmit"
+                      *ngIf="(_driversForm['firstName'].errors?.['required'] || _driversForm['firstName'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
 
@@ -202,7 +202,7 @@
                   <div class="driver-text">
                     Họ
                     <small
-                      *ngIf="_driversForm['lastName'].errors?.['required'] && isSubmit"
+                      *ngIf="(_driversForm['lastName'].errors?.['required'] || _driversForm['lastName'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống</small
@@ -240,6 +240,7 @@
                   </div>
                   <div class="input-calendar-custom">
                     <p-calendar
+                      [defaultDate]="minDate"
                       inputId="basic"
                       formControlName="dateOfBirth"
                       dateFormat="dd/mm/yy"
@@ -258,7 +259,7 @@
                   <div class="driver-text">
                     Giới tính
                     <small
-                      *ngIf="_driversForm['dateOfBirth'].errors?.['required'] && isSubmit "
+                      *ngIf="_driversForm['selectedGender'].errors?.['required'] && isSubmit "
                       class="p-error"
                     >
                       không được bỏ trống</small
@@ -268,6 +269,7 @@
                     class="dropdown"
                     [style]="{ height: '28px' }"
                     [options]="gender"
+                    placeholder="Chọn giới tính"
                     formControlName="selectedGender"
                     optionLabel="lable"
                     optionValue="id"

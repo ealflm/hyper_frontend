@@ -175,7 +175,7 @@
                   <div class="vehicle-text">
                     Tên
                     <small
-                      *ngIf="_vehiclesForm['name'].errors?.['required'] && isSubmit"
+                      *ngIf="(_vehiclesForm['name'].errors?.['required'] || _vehiclesForm['name'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống</small
@@ -197,7 +197,7 @@
                   <div class="vehicle-text">
                     Số hiệu
                     <small
-                      *ngIf="_vehiclesForm['licensePlates'].errors?.['required'] && isSubmit"
+                      *ngIf="(_vehiclesForm['licensePlates'].errors?.['required'] || _vehiclesForm['licensePlates'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống</small
@@ -219,7 +219,7 @@
                   <div class="vehicle-text">
                     Màu
                     <small
-                      *ngIf="_vehiclesForm['color'].errors?.['required'] && isSubmit "
+                      *ngIf="(_vehiclesForm['color'].errors?.['required'] || _vehiclesForm['color'].errors?.['whitespace']) && isSubmit "
                       class="p-error"
                     >
                       không được bỏ trống</small

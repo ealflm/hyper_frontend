@@ -233,5 +233,30 @@ export class ProfileComponent implements OnInit {
   onChangePassword() {
     this.changePasswordDialog = true;
   }
-  onSavePassword() {}
+  onSavePassword() {
+    if (this.changePassForm.invalid) return;
+    const formData = new FormData();
+    formData.append('Username', this.profile.username);
+    formData.append(
+      'OldPassowrd',
+      this._changePassForm['currentPassword'].value
+    );
+    formData.append('NewPassword', this._changePassForm['password'].value);
+
+    this.partnerService.changePasswordPartner(formData).subscribe(
+      (res) => {
+        if (res.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: res.message,
+          });
+          this.changePasswordDialog = false;
+        }
+      },
+      (error) => {
+        this.changePasswordDialog = true;
+      }
+    );
+  }
 }

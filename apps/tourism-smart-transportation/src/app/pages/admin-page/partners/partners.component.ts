@@ -4,7 +4,11 @@ import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { ServiceTypeService } from './../../../services/service-type.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AgeCheck, MustMatch } from '../../../providers/CustomValidators';
+import {
+  AgeCheck,
+  MustMatch,
+  validateEmty,
+} from '../../../providers/CustomValidators';
 import {
   PartnerResponse,
   PartnersResponse,
@@ -63,6 +67,10 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
   $sub: Subject<any> = new Subject();
   gender = Gender;
   menuValue = MenuFilterStatus;
+
+  today = new Date(Date.now()).getFullYear();
+  defaultDate = new Date(this.today - 18, 1, 1);
+
   serviceTypes: ServiceType[] = [];
   private searchSubscription?: Subscription;
   private readonly searchSubject = new Subject<string>();
@@ -111,19 +119,19 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         id: [''],
         // userName: ['', Validators.required],
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        companyName: ['', Validators.required],
+        firstName: ['', [Validators.required, validateEmty]],
+        lastName: ['', [Validators.required, validateEmty]],
+        companyName: ['', [Validators.required, validateEmty]],
         // password: ['', Validators.required],
         // confirmPassword: ['', Validators.required],
-        addressUser: [''],
-        addressCompany: [''],
+        addressUser: ['', [Validators.required, validateEmty]],
+        addressCompany: ['', [Validators.required, validateEmty]],
         serviceType: ['', Validators.required],
         phone: [
           '',
           [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
         ],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email, validateEmty]],
         dateOfBirth: ['', Validators.required],
         selectedGender: ['', Validators.required],
         DeleteFile: [''],
@@ -355,9 +363,8 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
           this._getAllPartners();
         },
         (error: HttpErrorResponse) => {
-          this.loading = false;
-        },
-        () => {
+          this.isSubmit = false;
+          this.displayDialog = true;
           this.loading = false;
         }
       );

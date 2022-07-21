@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { STATUS_TRIP } from './../../../constant/status';
 import { DriverService } from './../../../services/driver.service';
 import { Driver } from './../../../models/DriverResponse';
@@ -15,6 +16,10 @@ import { Component, OnInit } from '@angular/core';
 import { Route } from '../../../models/RouteResponse';
 import { RouteService } from '../../../services/route.service';
 import { convertTime, formatDateToFE } from '../../../providers/ConvertDate';
+import {
+  checkMoreThanTimeStart,
+  validateEmty,
+} from '../../../providers/CustomValidators';
 @Component({
   selector: 'tourism-smart-transportation-schedule',
   templateUrl: './schedule.component.html',
@@ -97,9 +102,14 @@ export class ScheduleComponent implements OnInit {
   private _getDriverDropdown() {
     this.driverService
       .getListDriverOfPartner(this.partnerId, null, 1)
-      .subscribe((res) => {
-        this.drivers = res.body;
-      });
+      .pipe(
+        map((driverRes) => {
+          this.drivers = driverRes.body.filter(
+            (value) => value.vehicleId == null
+          );
+        })
+      )
+      .subscribe();
   }
   private _getListTrip(tripName?: string) {
     this.tripService
@@ -109,16 +119,21 @@ export class ScheduleComponent implements OnInit {
       });
   }
   private _initScheduleForm() {
-    this.scheduleForm = this.fb.group({
-      tripId: [''],
-      tripName: ['', [Validators.required]],
-      vehicleId: ['', [Validators.required]],
-      driverId: ['', Validators.required],
-      routeId: ['', [Validators.required]],
-      dateOfWeek: ['', [Validators.required]],
-      timeStart: ['', [Validators.required]],
-      timeEnd: ['', [Validators.required]],
-    });
+    this.scheduleForm = this.fb.group(
+      {
+        tripId: [''],
+        tripName: ['', [Validators.required, validateEmty]],
+        vehicleId: ['', [Validators.required]],
+        driverId: ['', Validators.required],
+        routeId: ['', [Validators.required]],
+        dateOfWeek: ['', [Validators.required]],
+        timeStart: ['', [Validators.required]],
+        timeEnd: ['', [Validators.required]],
+      },
+      {
+        validator: [checkMoreThanTimeStart('timeStart', 'timeEnd')],
+      }
+    );
   }
   get _schedulesForm() {
     return this.scheduleForm.controls;

@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { Driver } from '../../../models/DriverResponse';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { AgeCheck } from '../../../providers/CustomValidators';
+import { AgeCheck, validateEmty } from '../../../providers/CustomValidators';
 import {
   debounceTime,
   Subscription,
@@ -53,6 +53,10 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   dialogDetail = false;
   statusBiding = 1;
   loading = false;
+
+  today = new Date(Date.now()).getFullYear();
+  minDate = new Date(this.today - 18, 1, 1);
+
   private searchSubscription?: Subscription;
   private readonly searchSubject = new Subject<string>();
   constructor(
@@ -99,8 +103,8 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     this.driverForm = this.fb.group(
       {
         id: [''],
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
+        firstName: ['', [Validators.required, validateEmty]],
+        lastName: ['', [Validators.required, validateEmty]],
         dateOfBirth: ['', Validators.required],
         phone: [
           '',
@@ -163,6 +167,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onSave() {
     this.isSubmit = true;
+
     if (this.driverForm.invalid) return;
     this.loading = true;
     const dobRes = new Date(this._driversForm['dateOfBirth'].value);
@@ -188,12 +193,18 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
               summary: 'Thành công',
               detail: 'Cập nhật thành công',
             });
+            this.loading = false;
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.getListDriverOfPartner();
           }
-          this.loading = false;
-          this.getListDriverOfPartner();
         },
         (error) => {
+          this.isSubmit = false;
           this.loading = false;
+          this.editMode = true;
+          this.displayDialog = true;
         }
       );
     } else {
@@ -215,18 +226,21 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
               summary: 'Thành công',
               detail: 'Tạo tài xế thành công',
             });
+            this.displayDialog = false;
+            this.loading = false;
+            this.isSubmit = false;
+            this.editMode = false;
+            this.getListDriverOfPartner();
           }
-          this.loading = false;
-          this.getListDriverOfPartner();
         },
         (error) => {
+          this.editMode = false;
+          this.isSubmit = false;
           this.loading = false;
+          this.displayDialog = true;
         }
       );
     }
-    this.editMode = false;
-    this.isSubmit = false;
-    this.displayDialog = false;
   }
   onCancel() {
     this.displayDialog = false;

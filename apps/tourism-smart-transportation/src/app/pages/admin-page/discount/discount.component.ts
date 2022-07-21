@@ -8,7 +8,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DiscountService } from './../../../services/discount.service';
 import { STATUS_DISCOUNT } from './../../../constant/status';
 import { Component, OnInit } from '@angular/core';
-import { checkMoreThanTodayValidator } from '../../../providers/CustomValidators';
+import {
+  checkMoreThanTodayValidator,
+  validateEmty,
+} from '../../../providers/CustomValidators';
 import {
   animate,
   state,
@@ -100,8 +103,11 @@ export class DiscountComponent implements OnInit {
     this.discountForm = this.fb.group(
       {
         id: [''],
-        title: ['', [Validators.required]],
-        description: ['', [Validators.required, Validators.maxLength(50)]],
+        title: ['', [Validators.required, validateEmty]],
+        description: [
+          '',
+          [Validators.required, Validators.maxLength(50), validateEmty],
+        ],
         serviceType: ['', [Validators.required]],
         time: ['', [Validators.required]],
         photoUrl: [''],
@@ -169,6 +175,7 @@ export class DiscountComponent implements OnInit {
     this.confirmationService.confirm({});
   }
   showDialog(editMode: boolean, id?: string, comebackStatus?: boolean) {
+    this.isSubmit = false;
     this.displayDialog = !this.displayDialog;
     this.editMode = editMode;
     if (id && editMode) {
@@ -265,17 +272,16 @@ export class DiscountComponent implements OnInit {
                 summary: 'Thành công',
                 detail: updatePartnerRes.message,
               });
+              this._getAllDiscount();
+              this.editMode = false;
+              this.displayDialog = false;
             }
-            this._getAllDiscount();
-            this.editMode = false;
+          },
+          (error: HttpErrorResponse) => {
+            this.displayDialog = true;
+            this.isSubmit = false;
+            this.editMode = true;
           }
-          // (error: HttpErrorResponse) => {
-          //   this.messageService.add({
-          //     severity: 'error',
-          //     summary: 'Thất bại',
-          //     detail: error.error.message,
-          //   });
-          // }
         );
       }
     } else if (!this.editMode) {
@@ -315,16 +321,16 @@ export class DiscountComponent implements OnInit {
               summary: 'Thành công',
               detail: discountRes.message,
             });
+            this._getAllDiscount();
+            this.displayDialog = false;
+            this.isSubmit = false;
           }
-          this._getAllDiscount();
+        },
+        (error: HttpErrorResponse) => {
+          this.editMode = false;
+          this.isSubmit = false;
+          this.displayDialog = true;
         }
-        // (error: HttpErrorResponse) => {
-        //   this.messageService.add({
-        //     severity: 'error',
-        //     summary: 'Thất bại',
-        //     detail: error.error.message,
-        //   });
-        // }
       );
     }
   }

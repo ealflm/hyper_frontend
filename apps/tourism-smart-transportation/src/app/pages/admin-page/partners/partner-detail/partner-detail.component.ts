@@ -13,7 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PartnersService } from './../../../../services/partners.service';
 import { Component, OnInit } from '@angular/core';
-import { AgeCheck } from '../../../../providers/CustomValidators';
+import { AgeCheck, validateEmty } from '../../../../providers/CustomValidators';
 import { PartnerResponse } from '../../../../models/PartnerResponse';
 import { DatePipe } from '@angular/common';
 import { convertDateToVN } from '../../../../providers/ConvertDate';
@@ -149,17 +149,35 @@ export class PartnerDetailComponent implements OnInit {
     this.inforForm = this.formBuilder.group(
       {
         id: [''],
-        firstName: [{ value: '', disabled: true }, Validators.required],
-        lastName: [{ value: '', disabled: true }, Validators.required],
-        companyName: [{ value: '', disabled: true }, Validators.required],
-        addressUser: [{ value: '', disabled: true }],
-        addressCompany: [{ value: '', disabled: true }],
+        firstName: [
+          { value: '', disabled: true },
+          [Validators.required, validateEmty],
+        ],
+        lastName: [
+          { value: '', disabled: true },
+          [Validators.required, validateEmty],
+        ],
+        companyName: [
+          { value: '', disabled: true },
+          [Validators.required, validateEmty],
+        ],
+        addressUser: [
+          { value: '', disabled: true },
+          [Validators.required, validateEmty],
+        ],
+        addressCompany: [
+          { value: '', disabled: true },
+          [Validators.required, validateEmty],
+        ],
         serviceType: [{ value: '', disabled: true }, Validators.required],
         phone: [
           { value: '', disabled: true },
           [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
         ],
-        email: [{ value: '', disabled: true }],
+        email: [
+          { value: '', disabled: true },
+          [Validators.required, Validators.email, validateEmty],
+        ],
         dateOfBirth: [{ value: '', disabled: true }, Validators.required],
         selectedGender: [{ value: '', disabled: true }, Validators.required],
         DeleteFile: [''],
