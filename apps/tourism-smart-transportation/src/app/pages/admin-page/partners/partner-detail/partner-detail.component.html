@@ -53,7 +53,7 @@
               <div class="partner-text">
                 Tên
                 <small
-                  *ngIf="_inforsForm['firstName'].errors?.['required'] && isSubmit"
+                  *ngIf="(_inforsForm['firstName'].errors?.['required'] || _inforsForm['firstName'].errors?.['whitespace']) && isSubmit"
                   class="p-error"
                   >không được bỏ trống</small
                 >
@@ -71,7 +71,7 @@
               <div class="partner-text">
                 Họ
                 <small
-                  *ngIf="_inforsForm['lastName'].errors?.['required'] && isSubmit"
+                  *ngIf="(_inforsForm['lastName'].errors?.['required'] || _inforsForm['lastName'].errors?.['whitespace']) && isSubmit"
                   class="p-error"
                   >không được bỏ trống</small
                 >
@@ -155,7 +155,19 @@
               <div></div>
             </div>
             <div class="col-12 partner-input-long" style="margin-top: 10px">
-              <div class="partner-text">Email</div>
+              <div class="partner-text">
+                Email
+                <small
+                  *ngIf="(_inforsForm['email'].errors?.['required'] || _inforsForm['email'].errors?.['whitespace']) && isSubmit"
+                  class="p-error"
+                  >không được bỏ trống</small
+                >
+                <small
+                  *ngIf="_inforsForm['email'].errors?.['email'] && isSubmit"
+                  class="p-error"
+                  >Không đúng định dạng email</small
+                >
+              </div>
               <input
                 class="partner-input-text-long"
                 type="email"
@@ -172,7 +184,14 @@
               </div>
             </div>
             <div class="col-12 partner-input-long" style="margin-top: 10px">
-              <div class="partner-text">Địa chỉ</div>
+              <div class="partner-text">
+                Địa chỉ
+                <small
+                  *ngIf="_inforsForm['addressUser'].invalid && isSubmit"
+                  class="p-error"
+                  >không được trống</small
+                >
+              </div>
               <input
                 class="partner-input-text-long"
                 type="text"
@@ -218,7 +237,14 @@
               <div></div>
             </div>
             <div class="col-12 partner-input-long" style="margin-top: 10px">
-              <div class="partner-text">Địa chỉ</div>
+              <div class="partner-text">
+                Địa chỉ
+                <small
+                  *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
+                  class="p-error"
+                  >không được trống</small
+                >
+              </div>
               <input
                 class="partner-input-text-long"
                 type="text"

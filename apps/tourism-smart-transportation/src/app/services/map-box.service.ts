@@ -88,6 +88,14 @@ export class MapBoxService {
       },
     });
   }
+  removeRouteMiniMap() {
+    if (this.miniMap.getLayer('route')) {
+      this.miniMap.removeLayer('route');
+    }
+    if (this.miniMap.getSource('route')) {
+      this.miniMap.removeSource('route');
+    }
+  }
   getRouteMiniMap(routeRes: any) {
     const data = routeRes;
     const route = data.geometry.coordinates;

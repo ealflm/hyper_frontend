@@ -89,12 +89,10 @@
             <div class="tier-text">
               Tên gói
               <small
-                *ngIf="
-              _tiersForm['tierName'].errors?.['required'] && isSubmit
-          "
+                *ngIf="_tiersForm['tierName'].invalid && isSubmit"
                 class="p-error"
               >
-                không được bỏ trống
+                Không được bỏ trống
               </small>
             </div>
             <input
@@ -108,12 +106,10 @@
             <div class="tier-text">
               Mô tả
               <small
-                *ngIf="
-              _tiersForm['description'].errors?.['required']  && isSubmit
-          "
+                *ngIf="_tiersForm['description'].invalid && isSubmit"
                 class="p-error"
               >
-                không được bỏ trống
+                Không được bỏ trống
               </small>
             </div>
             <input
@@ -128,11 +124,19 @@
               Giá
               <small
                 *ngIf="
-              _tiersForm['price'].errors?.['required']  && isSubmit
+              (_tiersForm['price'].errors?.['required'] )  && isSubmit
           "
                 class="p-error"
               >
-                không được bỏ trống
+                Không được bỏ trống
+              </small>
+              <small
+                *ngIf="
+            _tiersForm['price'].errors?.['min']  && isSubmit
+        "
+                class="p-error"
+              >
+                Không được bé hơn hoặc bằng 0
               </small>
             </div>
             <p-inputNumber
@@ -148,12 +152,10 @@
             <div class="tier-text">
               Tiêu đề quảng cáo
               <small
-                *ngIf="
-              _tiersForm['promotedTitle'].errors?.['required']  && isSubmit
-          "
+                *ngIf="_tiersForm['promotedTitle'].invalid && isSubmit"
                 class="p-error"
               >
-                không được bỏ trống
+                Không được bỏ trống
               </small>
             </div>
             <input
@@ -194,11 +196,12 @@
                       formControlName="packageName"
                     /><small
                       *ngIf="
-                      _packagesForm.controls[i].get('packageName')?.errors?.['required']  && isSubmit
+                        _packagesForm.controls[i].get('packageName')?.invalid &&
+                        isSubmit
                       "
                       class="p-error"
                     >
-                      không được bỏ trống
+                      Không được bỏ trống
                     </small>
                   </div>
                 </td>
@@ -220,7 +223,7 @@
                       "
                       class="p-error"
                     >
-                      không được bỏ trống
+                      Không được bỏ trống
                     </small>
                   </div>
                 </td>
@@ -244,7 +247,15 @@
                       "
                       class="p-error"
                     >
-                      không được bỏ trống
+                      Không được bỏ trống
+                    </small>
+                    <small
+                      *ngIf="
+                    _packagesForm.controls[i].get('limit')?.errors?.['min']  && isSubmit
+                    "
+                      class="p-error"
+                    >
+                      Không được bé hơn hoặc bằng 0
                     </small>
                   </div>
                 </td>
@@ -269,7 +280,15 @@
                       "
                       class="p-error"
                     >
-                      không được bỏ trống
+                      Không được bỏ trống
+                    </small>
+                    <small
+                      *ngIf="
+                    _packagesForm.controls[i].get('value')?.errors?.['min']  && isSubmit
+                    "
+                      class="p-error"
+                    >
+                      Không được bé hơn hoặc bằng 0
                     </small>
                   </div>
                 </td>

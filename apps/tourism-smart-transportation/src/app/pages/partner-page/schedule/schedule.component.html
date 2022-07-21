@@ -152,10 +152,10 @@
                   <div class="schedule-text">
                     Tên
                     <small
-                      *ngIf="_schedulesForm['tripName'].errors?.['required'] && isSubmit"
+                      *ngIf="(_schedulesForm['tripName'].errors?.['required'] || _schedulesForm['tripName'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
 
@@ -177,7 +177,7 @@
                       *ngIf="_schedulesForm['vehicleId'].errors?.['required'] && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <p-dropdown
@@ -206,7 +206,7 @@
                       *ngIf="_schedulesForm['vehicleId'].errors?.['required'] && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <p-dropdown
@@ -233,7 +233,7 @@
                       *ngIf="_schedulesForm['routeId'].errors?.['required'] && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <p-dropdown
@@ -260,7 +260,7 @@
                       *ngIf="_schedulesForm['dateOfWeek'].errors?.['required'] && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <p-dropdown
@@ -287,7 +287,7 @@
                       *ngIf="_schedulesForm['timeStart'].errors?.['required'] && isSubmit "
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <p-calendar
@@ -309,7 +309,13 @@
                       *ngIf="_schedulesForm['timeEnd'].errors?.['required'] && isSubmit "
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
+                    >
+                    <small
+                      *ngIf="_schedulesForm['timeEnd'].errors?.['MustMoreStart']"
+                      class="p-error"
+                    >
+                      Thời gian kết thúc lớn hơn thời gian bắt đầu</small
                     >
                   </div>
                   <p-calendar

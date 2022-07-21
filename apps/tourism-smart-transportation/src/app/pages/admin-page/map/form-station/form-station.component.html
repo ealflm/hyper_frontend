@@ -87,9 +87,7 @@
                   <div class="station-text">
                     Tên Trạm
                     <small
-                      *ngIf="
-                _locationForm['title'].errors?.['required']
-            "
+                      *ngIf="_locationForm['title'].invalid && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống
@@ -107,9 +105,7 @@
                   <div class="station-text">
                     Mô tả
                     <small
-                      *ngIf="
-                _locationForm['description'].errors?.['required']
-            "
+                      *ngIf="_locationForm['description'].invalid && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống
@@ -127,9 +123,7 @@
                   <div class="station-text">
                     Địa chỉ
                     <small
-                      *ngIf="
-                _locationForm['address'].errors?.['required']
-            "
+                      *ngIf="_locationForm['address'].invalid && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống

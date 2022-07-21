@@ -80,7 +80,7 @@ export function AgeCheck(controlName: string) {
       return;
     }
 
-    if (GetAge(control?.value) <= 18) {
+    if (GetAge(control?.value) < 18) {
       control.setErrors({ under18: true });
       return;
     } else {
@@ -129,6 +129,32 @@ export function checkMoreThanMinDistance(
       maxDistanceControl.setErrors({ mustMoreThan: true });
     } else {
       maxDistanceControl.setErrors(null);
+    }
+  };
+}
+export function validateEmty(control: FormControl) {
+  const isWhitespace = (control.value || '').trim().length === 0;
+  const isValid = !isWhitespace;
+  return isValid ? null : { whitespace: true };
+}
+export function checkMoreThanTimeStart(
+  controlNameTimeStart: string,
+  controlNameTimeEnd: string
+) {
+  return (formGroup: FormGroup) => {
+    const controlTimeStart = formGroup.controls[controlNameTimeStart];
+    const controlTimeEnd = formGroup.controls[controlNameTimeEnd];
+    const timeStart = new Date(controlTimeStart.value).getTime();
+    const timeEnd = new Date(controlTimeEnd.value).getTime();
+
+    if (controlTimeEnd?.errors && !controlTimeEnd.errors['MustMoreStart']) {
+      return;
+    }
+    const isMoreThanTodyValid = timeStart < timeEnd;
+    if (isMoreThanTodyValid) {
+      return;
+    } else {
+      controlTimeEnd.setErrors({ MustMoreStart: true });
     }
   };
 }

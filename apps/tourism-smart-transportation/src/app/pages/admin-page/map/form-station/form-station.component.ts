@@ -1,3 +1,4 @@
+import { validateEmty } from '../../../../providers/CustomValidators';
 import { MessageService } from 'primeng/api';
 import { MapService } from './../../../../services/map.service';
 import { Station, StationResponse } from './../../../../models/StationResponse';
@@ -49,6 +50,7 @@ export class FormStationComponent
   locationForm!: FormGroup;
   editMode = false;
   successChange = false;
+  isSubmit = false;
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -102,6 +104,7 @@ export class FormStationComponent
         this.setEmtyInitForm();
         this.addMarker();
         this.editMode = false;
+        this.isSubmit = false;
       }
       this.mapboxService.iniViewMiniMapAdmin$.next(true);
     }
@@ -124,17 +127,18 @@ export class FormStationComponent
     this.onCloseDialog();
   }
   onCloseDialog() {
+    this.isSubmit = false;
     this.setEmtyInitForm();
     this.mapboxService.iniViewMiniMapAdmin$.next(true);
     this.hiddenDialog.emit({ successChange: this.successChange });
     this._dialog = false;
   }
-  _initLocationForm() {
+  private _initLocationForm() {
     this.locationForm = this.fb.group({
       id: [''],
-      title: ['', [Validators.required]],
-      description: [''],
-      address: ['', Validators.required],
+      title: ['', [Validators.required, validateEmty]],
+      description: ['', [Validators.required, validateEmty]],
+      address: ['', [Validators.required, validateEmty]],
       longitude: [{ value: '', disabled: true }, [Validators.required]],
       latitude: [{ value: '', disabled: true }, [Validators.required]],
     });
@@ -186,6 +190,7 @@ export class FormStationComponent
     });
   }
   onSaveStation() {
+    this.isSubmit = true;
     this._locationForm['longitude'].enable();
     this._locationForm['latitude'].enable();
     if (this.locationForm.invalid) return;
@@ -208,6 +213,7 @@ export class FormStationComponent
               summary: 'Thành công',
               detail: response.message,
             });
+            this.isSubmit = false;
           }
           this.editMode = false;
         });
@@ -230,6 +236,7 @@ export class FormStationComponent
             summary: 'Thành công',
             detail: stationRes.message,
           });
+          this.isSubmit = false;
         }
       });
       this.successChange = true;

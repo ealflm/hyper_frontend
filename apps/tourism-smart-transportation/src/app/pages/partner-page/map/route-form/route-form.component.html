@@ -48,7 +48,7 @@
                   Tên tuyến
                   <small
                     *ngIf="
-                  _routesForm['routeName'].errors?.['required'] && isSubmit
+                  (_routesForm['routeName'].errors?.['required'] || _routesForm['routeName'].errors?.['whitespace']) && isSubmit
               "
                     class="p-error"
                   >
@@ -122,9 +122,10 @@
               </div>
             </div>
           </form>
-          <div class="footer-btn" [ngClass]="blockLayout ? 'block-layout' : ''">
+          <div class="footer-btn">
             <button
-              [style]="{ width: '57', height: '32px' }"
+              *ngIf="!blockLayout"
+              [style]="{ width: 'auto', height: '32px' }"
               class="p-button-rounded button-rounded"
               pButton
               pRipple
@@ -132,6 +133,16 @@
               type="button"
               label="Xác nhận trạm"
               (click)="onConfirmListStation($event)"
+            ></button>
+            <button
+              *ngIf="blockLayout"
+              [style]="{ width: '143px', height: '32px' }"
+              class="p-button-outlined"
+              pButton
+              pRipple
+              type="button"
+              label="Chỉnh sửa lại"
+              (click)="onEditAgain()"
             ></button>
           </div>
         </div>

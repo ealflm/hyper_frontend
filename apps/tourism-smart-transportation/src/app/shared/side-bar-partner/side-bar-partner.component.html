@@ -52,6 +52,28 @@
             </div>
           </li>
         </div>
+        <!-- Bản đồ -->
+        <li
+          [class]="status ? 'nav-item' : 'nav-item-off'"
+          routerLinkActive="active-link"
+          #map="routerLinkActive"
+        >
+          <div class="nav-link" routerLink="partner/map">
+            <mat-icon
+              [ngClass]="
+                map.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{ map.isActive ? 'map' : 'map_outlined' }}</mat-icon
+            >
+
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Bản đồ
+            </div>
+          </div>
+        </li>
         <li
           [class]="status ? 'nav-item' : 'nav-item-off '"
           routerLinkActive="active-link"
@@ -68,7 +90,7 @@
               class="icon-title"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
-              Tài xế
+              Tài xế ( Đặt xe )
             </div>
           </div>
         </li>
@@ -114,29 +136,7 @@
               class="icon-title"
               [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
             >
-              Lịch trình
-            </div>
-          </div>
-        </li>
-        <!-- Bản đồ -->
-        <li
-          [class]="status ? 'nav-item' : 'nav-item-off'"
-          routerLinkActive="active-link"
-          #map="routerLinkActive"
-        >
-          <div class="nav-link" routerLink="partner/map">
-            <mat-icon
-              [ngClass]="
-                map.isActive ? 'material-icons' : 'material-icons-outlined'
-              "
-              >{{ map.isActive ? 'map' : 'map_outlined' }}</mat-icon
-            >
-
-            <div
-              class="icon-title"
-              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
-            >
-              Bản đồ
+              Lịch trình (Xe buýt)
             </div>
           </div>
         </li>

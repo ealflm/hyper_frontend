@@ -20,6 +20,7 @@ import { Injectable } from '@angular/core';
 export class PartnersService {
   apiURL = environment.apiURL + 'admin/partners';
   partnerAPIProfile = environment.apiURL + 'partner/profile';
+  partnerAPIChangePass = environment.apiURL + 'partner/profile/change-password';
   constructor(private http: HttpClient) {}
   getAllPartners(
     userName?: string | null,
@@ -85,5 +86,8 @@ export class PartnersService {
       `${this.partnerAPIProfile}/${partnerId}`,
       partnerProfile
     );
+  }
+  changePasswordPartner(formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.partnerAPIChangePass}`, formData);
   }
 }

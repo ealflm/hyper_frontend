@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Location } from '@angular/common';
+import { validateEmty } from '../../../../providers/CustomValidators';
 
 @Component({
   selector: 'tourism-smart-transportation-service-detail',
@@ -55,10 +56,10 @@ export class ServiceDetailComponent implements OnInit {
   _initTierForm() {
     this.tierForm = this.fb.group({
       id: [''],
-      tierName: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', Validators.required],
-      promotedTitle: ['', Validators.required],
+      tierName: ['', [Validators.required, validateEmty]],
+      description: ['', [Validators.required, validateEmty]],
+      price: ['', [Validators.required, Validators.min(1)]],
+      promotedTitle: ['', [Validators.required, validateEmty]],
       deleteFile: [''],
       uploadFile: [''],
       packages: this.fb.array([]),
@@ -128,10 +129,10 @@ export class ServiceDetailComponent implements OnInit {
     const packageForm = this.fb.group({
       id: [''],
       tierId: [''],
-      packageName: ['', Validators.required],
+      packageName: ['', [Validators.required, validateEmty]],
       serviceType: ['', Validators.required],
-      limit: ['', Validators.required],
-      value: ['', Validators.required],
+      limit: ['', [Validators.required, Validators.min(1)]],
+      value: ['', [Validators.required, Validators.min(1)]],
     });
     this._packagesForm.push(packageForm);
     this.checkDropDownDisableInput();
@@ -305,17 +306,14 @@ export class ServiceDetailComponent implements OnInit {
               summary: 'Thành công',
               detail: res.message,
             });
-          }
-          this.loading = false;
-          if (!this.loading) {
-            this.router.navigate(['admin/manage-service']);
+            this.loading = false;
+            if (!this.loading) {
+              this.router.navigate(['admin/manage-service']);
+            }
           }
         },
         (error: HttpErrorResponse) => {
           this.loading = false;
-          if (!this.loading) {
-            this.router.navigate(['admin/manage-service']);
-          }
         }
       );
   }
@@ -396,17 +394,14 @@ export class ServiceDetailComponent implements OnInit {
             summary: 'Thành công',
             detail: res.message,
           });
-        }
-        this.loading = false;
-        if (!this.loading) {
-          this.router.navigate(['admin/manage-service']);
+          if (!this.loading) {
+            this.router.navigate(['admin/manage-service']);
+          }
+          this.loading = false;
         }
       },
       (error: HttpErrorResponse) => {
         this.loading = false;
-        if (!this.loading) {
-          this.router.navigate(['admin/manage-service']);
-        }
       }
     );
   }

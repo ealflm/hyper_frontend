@@ -190,7 +190,7 @@
                     <div class="discount-text">
                       Tên
                       <small
-                        *ngIf="_discountsForm['title'].errors?.['required'] && isSubmit"
+                        *ngIf="_discountsForm['title'].invalid && isSubmit"
                         class="p-error"
                       >
                         không được bỏ trống</small
@@ -216,7 +216,7 @@
                     <div class="discount-text">
                       Mô tả
                       <small
-                        *ngIf="_discountsForm['description'].errors?.['required'] && isSubmit"
+                        *ngIf="(_discountsForm['description'].errors?.['required'] || _discountsForm['description'].errors?.['whitespace']) && isSubmit"
                         class="p-error"
                       >
                         không được bỏ trống</small
