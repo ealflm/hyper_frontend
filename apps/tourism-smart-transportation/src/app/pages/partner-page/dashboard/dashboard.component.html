@@ -1,17 +1,46 @@
 <div class="report-page">
-  <p-chart
-    type="doughnut"
-    [data]="data"
-    [options]="chartOptions"
-    [style]="{ width: '30%' }"
-  ></p-chart>
-  <p-chart
-    type="line"
-    [data]="basicData"
-    [options]="basicOptions"
-    [style]="{ width: '30%' }"
-  ></p-chart>
-  <div style="width: 500px; height: 500px">
-    <canvas id="lineChart" width="400" height="400"></canvas>
+  <div class="title">THỐNG KÊ HÀNG THÁNG</div>
+  <div class="grid header-card">
+    <div class="col-3">
+      <p-card [style]="{ height: '130px' }">
+        <div>Số lượng đơn hàng</div>
+        <div class="number-card">19</div>
+      </p-card>
+    </div>
+    <div class="col-3">
+      <p-card [style]="{ height: '130px' }">
+        <div>Số lượng tài xế</div>
+        <div class="number-card">20</div>
+      </p-card>
+    </div>
+    <div class="col-3">
+      <p-card [style]="{ height: '130px' }">
+        <div>Số lượng xe</div>
+        <div class="number-card">20</div>
+      </p-card>
+    </div>
+    <div class="col-3">
+      <p-card [style]="{ height: '130px' }">
+        <div>Số lượng chuyến xe buýt</div>
+        <div class="number-card">8</div>
+      </p-card>
+    </div>
+  </div>
+  <div class="title-chart">
+    <div [style]="{ width: '65%' }" style="text-align: center">
+      Biểu đồ thống kê danh thu từng tháng
+    </div>
+    <div [style]="{ width: '35%' }" style="text-align: center">
+      Biểu đồ thống kê các loại xe thuộc từng dịch vụ
+    </div>
+  </div>
+  <div class="body-chart">
+    <p-chart type="bar" [data]="barChart" [style]="{ width: '65%' }"></p-chart>
+    <p-chart
+      type="doughnut"
+      [data]="pieChartData"
+      [options]="chartOptions"
+      [style]="{ width: '30%' }"
+    ></p-chart>
   </div>
 </div>
