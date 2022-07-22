@@ -312,9 +312,6 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           (error: HttpErrorResponse) => {
             this.loading = false;
-          },
-          () => {
-            this.loading = false;
           }
         );
       }
@@ -358,9 +355,11 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
               summary: 'Thành công',
               detail: partnerRes.message,
             });
+            this.isSubmit = false;
+            this.loading = false;
+            this.displayDialog = false;
+            this._getAllPartners();
           }
-          this.loading = false;
-          this._getAllPartners();
         },
         (error: HttpErrorResponse) => {
           this.isSubmit = false;

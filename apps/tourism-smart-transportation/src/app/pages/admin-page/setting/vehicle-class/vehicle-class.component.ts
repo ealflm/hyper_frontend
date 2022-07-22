@@ -1,3 +1,4 @@
+import { validateEmty } from '../../../../providers/CustomValidators';
 import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -27,6 +28,7 @@ export class VehicleClassComponent implements OnInit {
   displayDialog = false;
   categoryForm!: FormGroup;
   isSubmit = false;
+  loading = false;
   currentVehicleClass?: Category;
   constructor(
     private categoryService: CategorySerivce,
@@ -51,8 +53,8 @@ export class VehicleClassComponent implements OnInit {
   private _initCategoryForm() {
     this.categoryForm = this.fb.group({
       id: [''],
-      name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      name: ['', [Validators.required, validateEmty]],
+      description: ['', [Validators.required, validateEmty]],
     });
   }
   get _categoryForm() {
@@ -104,6 +106,7 @@ export class VehicleClassComponent implements OnInit {
   onSaveVehicleClass() {
     this.isSubmit = true;
     if (this.categoryForm.invalid) return;
+    this.loading = true;
     if (this.isSubmit && this.editMode) {
       const id = this._categoryForm['id'].value;
       let vehicleType: Category;
@@ -120,36 +123,57 @@ export class VehicleClassComponent implements OnInit {
         };
       }
 
-      this.categoryService.updateCategory(id, vehicleType).subscribe((res) => {
-        if (res?.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: res.message,
-          });
+      this.categoryService.updateCategory(id, vehicleType).subscribe(
+        (res) => {
+          if (res?.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+            this.getAllCategory();
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
+          }
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = true;
+          this.displayDialog = true;
+          this.loading = false;
         }
-        this.getAllCategory();
-      });
+      );
     } else if (this.isSubmit && !this.editMode) {
       const vehicleType: Category = {
         name: this._categoryForm['name'].value,
         description: this._categoryForm['description'].value,
         status: 1,
       };
-      this.categoryService.createCategory(vehicleType).subscribe((res) => {
-        if (res?.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: res.message,
-          });
+      this.categoryService.createCategory(vehicleType).subscribe(
+        (res) => {
+          if (res?.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+            this.getAllCategory();
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
+          }
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = false;
+          this.displayDialog = true;
+          this.loading = false;
         }
-        this.getAllCategory();
-      });
+      );
     }
-    this.isSubmit = false;
-    this.editMode = false;
-    this.displayDialog = false;
   }
   cancelDialog() {
     this.displayDialog = false;

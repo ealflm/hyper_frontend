@@ -34,6 +34,7 @@ export class BusPriceComponent implements OnInit {
   busPriceForm!: FormGroup;
   priceDefaultForm!: FormGroup;
   isSubmit = false;
+  loading = false;
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -81,7 +82,7 @@ export class BusPriceComponent implements OnInit {
     this.priceDefaultForm = this.fb.group(
       {
         maxDistance: ['', [Validators.required, Validators.min(0)]],
-        minDistance: ['', [Validators.required, Validators.min(1)]],
+        minDistance: ['', [Validators.required, Validators.min(0)]],
         price: ['', [Validators.required, Validators.min(1)]],
       },
       {
@@ -162,6 +163,7 @@ export class BusPriceComponent implements OnInit {
     if (this.isSubmit && this.busPriceForm.invalid) {
       return;
     }
+    this.loading = true;
     if (this.isSubmit && this.editMode) {
       const id = this._busPriceForms['id'].value;
       const busPriceUpdate: BusPrice = {
@@ -174,18 +176,28 @@ export class BusPriceComponent implements OnInit {
         maxStation: this._busPriceForms['maxStation'].value,
         price: this._busPriceForms['price'].value,
       };
-      this.busConfigService
-        .updateBusPrice(id, busPriceUpdate)
-        .subscribe((busPriceRes: any) => {
+      this.busConfigService.updateBusPrice(id, busPriceUpdate).subscribe(
+        (busPriceRes: any) => {
           if (busPriceRes?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: busPriceRes.message,
             });
+            this.getAllBusPrice();
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
           }
-          this.getAllBusPrice();
-        });
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = true;
+          this.displayDialog = true;
+          this.loading = false;
+        }
+      );
     } else if (this.isSubmit && !this.editMode) {
       const busPrice: BusPrice = {
         mode: this._busPriceForms['mode'].value,
@@ -197,22 +209,29 @@ export class BusPriceComponent implements OnInit {
         maxStation: this._busPriceForms['maxStation'].value,
         price: this._busPriceForms['price'].value,
       };
-      this.busConfigService
-        .createBusPrice(busPrice)
-        .subscribe((busPriceRes: any) => {
+      this.busConfigService.createBusPrice(busPrice).subscribe(
+        (busPriceRes: any) => {
           if (busPriceRes?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: busPriceRes.message,
             });
+            this.getAllBusPrice();
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
           }
-          this.getAllBusPrice();
-        });
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = false;
+          this.displayDialog = true;
+          this.loading = false;
+        }
+      );
     }
-    this.isSubmit = false;
-    this.editMode = false;
-    this.displayDialog = false;
   }
   onSetValidatorForm() {
     if (this._busPriceForms['mode'].value === 'distance') {
@@ -242,26 +261,31 @@ export class BusPriceComponent implements OnInit {
     if (this.isSubmit && this.priceDefaultForm.invalid) {
       return;
     }
+    this.loading = true;
     if (this.isSubmit) {
       const busPriceUpdate: BusPrice = {
         minDistance: this._priceDefaultForm['minDistance'].value * 1000,
         maxDistance: this._priceDefaultForm['maxDistance'].value * 1000,
         price: this._priceDefaultForm['price'].value,
       };
-      this.busConfigService
-        .createBusPrice(busPriceUpdate)
-        .subscribe((busPriceRes: any) => {
+      this.busConfigService.createBusPrice(busPriceUpdate).subscribe(
+        (busPriceRes: any) => {
           if (busPriceRes?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: busPriceRes.message,
             });
+            this.displaySetPriceDefault = false;
+            this.getAllBusPrice();
+            this.loading = false;
           }
-          this.displaySetPriceDefault = false;
-
-          this.getAllBusPrice();
-        });
+        },
+        (error) => {
+          this.displaySetPriceDefault = true;
+          this.loading = false;
+        }
+      );
     }
   }
 }

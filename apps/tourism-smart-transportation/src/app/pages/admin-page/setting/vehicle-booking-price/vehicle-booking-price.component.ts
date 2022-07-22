@@ -33,6 +33,7 @@ export class VehicleBookingPriceComponent implements OnInit {
   itemsPerPage?: number = 10;
   bookingPriceForm!: FormGroup;
   isSubmit = false;
+  loading = false;
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -137,6 +138,7 @@ export class VehicleBookingPriceComponent implements OnInit {
   onSaveBookingPrice() {
     this.isSubmit = true;
     if (this.bookingPriceForm.invalid) return;
+    this.loading = true;
     const id = this._bookingForms['id'].value;
     const bookingPrice: BookingPrice = {
       vehicleTypeId: this._bookingForms['vehicleTypeId'].value,
@@ -146,32 +148,51 @@ export class VehicleBookingPriceComponent implements OnInit {
       status: 1,
     };
     if (this.isSubmit && this.editMode) {
-      this.bookingService
-        .updateBookingPrice(id, bookingPrice)
-        .subscribe((res) => {
+      this.bookingService.updateBookingPrice(id, bookingPrice).subscribe(
+        (res) => {
           if (res?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: res.message,
             });
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
+            this.getAllBookingPrice();
           }
-          this.getAllBookingPrice();
-        });
-    } else if (!this.editMode && this.isSubmit) {
-      this.bookingService.createBookingPrice(bookingPrice).subscribe((res) => {
-        if (res?.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: res.message,
-          });
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = true;
+          this.displayDialog = true;
+          this.loading = false;
         }
-        this.getAllBookingPrice();
-      });
+      );
+    } else if (!this.editMode && this.isSubmit) {
+      this.bookingService.createBookingPrice(bookingPrice).subscribe(
+        (res) => {
+          if (res?.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+            this.getAllBookingPrice();
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
+          }
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = false;
+          this.displayDialog = true;
+          this.loading = false;
+        }
+      );
     }
-    this.isSubmit = false;
-    this.editMode = false;
-    this.displayDialog = false;
   }
 }

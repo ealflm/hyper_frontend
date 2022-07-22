@@ -56,6 +56,7 @@ export class DiscountComponent implements OnInit {
   editMode = false;
   comebackStatus = false;
   isSubmit = false;
+  loading = false;
   discountForm!: FormGroup;
 
   uploadedFiles: any[] = [];
@@ -128,7 +129,7 @@ export class DiscountComponent implements OnInit {
   onToggle() {
     this.isOpenIconFillter = !this.isOpenIconFillter;
   }
-  _getAllDiscount() {
+  private _getAllDiscount() {
     this.discountService
       .getAllDiscounts(
         this.fillterByName,
@@ -228,6 +229,7 @@ export class DiscountComponent implements OnInit {
   onSaveInfor() {
     this.isSubmit = true;
     if (this.discountForm.invalid) return;
+    this.loading = true;
     console.log(this._discountsForm['time'].value[0]);
     console.log(this._discountsForm['time'].value[1]);
 
@@ -275,12 +277,14 @@ export class DiscountComponent implements OnInit {
               this._getAllDiscount();
               this.editMode = false;
               this.displayDialog = false;
+              this.loading = false;
             }
           },
           (error: HttpErrorResponse) => {
             this.displayDialog = true;
             this.isSubmit = false;
             this.editMode = true;
+            this.loading = false;
           }
         );
       }
@@ -324,12 +328,15 @@ export class DiscountComponent implements OnInit {
             this._getAllDiscount();
             this.displayDialog = false;
             this.isSubmit = false;
+            this.loading = false;
+            this.editMode = false;
           }
         },
         (error: HttpErrorResponse) => {
           this.editMode = false;
           this.isSubmit = false;
           this.displayDialog = true;
+          this.loading = false;
         }
       );
     }

@@ -1,3 +1,4 @@
+import { validateEmty } from '../../../../providers/CustomValidators';
 import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PublishYear } from './../../../../models/PublishYearResponse';
@@ -22,6 +23,7 @@ export class YearOfManufactureComponent implements OnInit {
   status: any = [];
   publishYearForm!: FormGroup;
   isSubmit = false;
+  loading = false;
   constructor(
     private publishYearService: PublishYearService,
     private fb: FormBuilder,
@@ -44,11 +46,11 @@ export class YearOfManufactureComponent implements OnInit {
     });
   }
 
-  _initPublishYearForm() {
+  private _initPublishYearForm() {
     this.publishYearForm = this.fb.group({
       id: [''],
       name: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', [Validators.required, validateEmty]],
     });
   }
   get _publishYearForm() {
@@ -67,6 +69,7 @@ export class YearOfManufactureComponent implements OnInit {
       });
   }
   createVehicleYearOfPublish() {
+    this.isSubmit = false;
     this.editMode = false;
     this.displayDialog = true;
     this.publishYearForm.reset();
@@ -112,6 +115,8 @@ export class YearOfManufactureComponent implements OnInit {
   }
   onSaveVehicleYearOfPublish() {
     this.isSubmit = true;
+    this.loading = true;
+    if (this.publishYearForm.invalid) return;
     if (this.isSubmit && this.editMode) {
       const id = this._publishYearForm['id'].value;
       const publishYear: PublishYear = {
@@ -122,18 +127,26 @@ export class YearOfManufactureComponent implements OnInit {
         description: this._publishYearForm['description'].value,
         status: 1,
       };
-      this.publishYearService
-        .updatePublishYearById(id, publishYear)
-        .subscribe((res) => {
+      this.publishYearService.updatePublishYearById(id, publishYear).subscribe(
+        (res) => {
           if (res.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: res.message,
             });
+            this.displayDialog = false;
+            this.editMode = false;
+            this.loading = false;
             this.getAllVehiclePublishYear();
           }
-        });
+        },
+        (error) => {
+          this.displayDialog = true;
+          this.editMode = true;
+          this.loading = false;
+        }
+      );
     } else if (this.isSubmit && !this.editMode) {
       const publishYear: PublishYear = {
         name:
@@ -142,9 +155,8 @@ export class YearOfManufactureComponent implements OnInit {
           this.convertTime(this._publishYearForm['name'].value[1]),
         description: this._publishYearForm['description'].value,
       };
-      this.publishYearService
-        .createPublishYear(publishYear)
-        .subscribe((res) => {
+      this.publishYearService.createPublishYear(publishYear).subscribe(
+        (res) => {
           if (res.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -152,12 +164,18 @@ export class YearOfManufactureComponent implements OnInit {
               detail: res.message,
             });
             this.getAllVehiclePublishYear();
+            this.displayDialog = false;
+            this.editMode = false;
+            this.loading = false;
           }
-        });
+        },
+        (error) => {
+          this.displayDialog = true;
+          this.editMode = false;
+          this.loading = false;
+        }
+      );
     }
-
-    this.displayDialog = false;
-    this.editMode = false;
   }
   convertTime(value: string) {
     const time = new Date(value);
