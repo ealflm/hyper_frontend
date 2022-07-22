@@ -51,6 +51,7 @@ export class FormStationComponent
   editMode = false;
   successChange = false;
   isSubmit = false;
+  isInsidePolygon = false;
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -158,19 +159,44 @@ export class FormStationComponent
     el.style.cursor = 'pointer';
     const marker = new mapboxgl.Marker(el, { draggable: true });
     this.mapboxService.miniMap.on('click', (e) => {
-      marker
-        .setLngLat([e.lngLat.lng, e.lngLat.lat])
-        .addTo(this.mapboxService.miniMap);
-      this._locationForm['longitude'].setValue(e.lngLat.lng);
-      this._locationForm['latitude'].setValue(e.lngLat.lat);
-      marker.on('dragend', () => {
-        const lngLat = marker.getLngLat();
-        this._locationForm['longitude'].setValue(lngLat.lng);
-        this._locationForm['latitude'].setValue(lngLat.lat);
-      });
+      if (
+        this.mapboxService.checkMarkerInsidePolygon(e.lngLat.lng, e.lngLat.lat)
+      ) {
+        marker
+          .setLngLat([e.lngLat.lng, e.lngLat.lat])
+          .addTo(this.mapboxService.miniMap);
+        this._locationForm['longitude'].setValue(e.lngLat.lng);
+        this._locationForm['latitude'].setValue(e.lngLat.lat);
+        this.isInsidePolygon = true;
+        marker.on('dragend', () => {
+          const lngLat = marker.getLngLat();
+          if (
+            this.mapboxService.checkMarkerInsidePolygon(lngLat.lng, lngLat.lat)
+          ) {
+            this.isInsidePolygon = true;
+            this._locationForm['longitude'].setValue(lngLat.lng);
+            this._locationForm['latitude'].setValue(lngLat.lat);
+          } else {
+            this.isInsidePolygon = false;
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cảnh báo',
+              detail: 'Trạm xe buýt không được nằm ngoài Phú Quốc',
+            });
+          }
+        });
+      } else {
+        this.isInsidePolygon = false;
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Cảnh báo',
+          detail: 'Trạm xe buýt không được nằm ngoài Phú Quốc',
+        });
+      }
     });
   }
   setSationMarker(longitude: number, latitude: number) {
+    this.isInsidePolygon = true;
     const el = document.createElement('div');
     const width = 40;
     const height = 40;
@@ -185,8 +211,18 @@ export class FormStationComponent
       .addTo(this.mapboxService.miniMap);
     marker.on('dragend', () => {
       const lngLat = marker.getLngLat();
-      this._locationForm['longitude'].setValue(lngLat.lng);
-      this._locationForm['latitude'].setValue(lngLat.lat);
+      if (this.mapboxService.checkMarkerInsidePolygon(lngLat.lng, lngLat.lat)) {
+        this.isInsidePolygon = true;
+        this._locationForm['longitude'].setValue(lngLat.lng);
+        this._locationForm['latitude'].setValue(lngLat.lat);
+      } else {
+        this.isInsidePolygon = false;
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Cảnh báo',
+          detail: 'Trạm xe buýt không được nằm ngoài Phú Quốc',
+        });
+      }
     });
   }
   onSaveStation() {
@@ -194,6 +230,14 @@ export class FormStationComponent
     this._locationForm['longitude'].enable();
     this._locationForm['latitude'].enable();
     if (this.locationForm.invalid) return;
+    if (this.isInsidePolygon == false) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Cảnh báo',
+        detail: 'Trạm xe buýt không được nằm ngoài Phú Quốc',
+      });
+      return;
+    }
     if (this.editMode) {
       const station: Station = {
         id: this._locationForm['id'].value,

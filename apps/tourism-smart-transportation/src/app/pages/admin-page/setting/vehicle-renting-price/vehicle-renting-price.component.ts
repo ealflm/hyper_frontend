@@ -40,6 +40,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   pageIndex?: number = 0;
   itemsPerPage?: number = 10;
   isSubmit = false;
+  loading = false;
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -214,6 +215,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   onSaveRentingPrice() {
     this.isSubmit = true;
     if (this.rentingPriceForm.invalid) return;
+    this.loading = true;
     const rentingPrice: RentingPrice = {
       categoryId: this._rentingForms['categoryId'].value,
       publishYearId: this._rentingForms['publishYearId'].value,
@@ -226,32 +228,51 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
     };
     if (this.isSubmit && this.editMode) {
       const id = this._rentingForms['id'].value;
-      this.rentingService
-        .updateRentingConfig(id, rentingPrice)
-        .subscribe((res) => {
+      this.rentingService.updateRentingConfig(id, rentingPrice).subscribe(
+        (res) => {
           if (res?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: res.message,
             });
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
+            this.getListRentingPrice();
           }
-          this.getListRentingPrice();
-        });
-    } else if (this.isSubmit && !this.editMode) {
-      this.rentingService.createRentingConfig(rentingPrice).subscribe((res) => {
-        if (res?.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: res.message,
-          });
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = true;
+          this.displayDialog = true;
+          this.loading = false;
         }
-        this.getListRentingPrice();
-      });
+      );
+    } else if (this.isSubmit && !this.editMode) {
+      this.rentingService.createRentingConfig(rentingPrice).subscribe(
+        (res) => {
+          if (res?.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: res.message,
+            });
+            this.isSubmit = false;
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
+            this.getListRentingPrice();
+          }
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = false;
+          this.displayDialog = true;
+          this.loading = false;
+        }
+      );
     }
-    this.isSubmit = false;
-    this.editMode = false;
-    this.displayDialog = false;
   }
 }

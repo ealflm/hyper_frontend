@@ -1,3 +1,4 @@
+import { validateEmty } from '../../../../providers/CustomValidators';
 import { MenuFilterStatus } from './../../../../constant/menu-filter-status';
 import { STATUS_BUS_PRICE } from './../../../../constant/status';
 import {
@@ -36,6 +37,7 @@ export class VehicleTypeComponent implements OnInit {
   vehicleTypeForm!: FormGroup;
   filterByLabel = '';
   isSubmit = false;
+  loading = false;
   constructor(
     private vehicleTypeService: VehicleTypesService,
     private fb: FormBuilder,
@@ -60,7 +62,7 @@ export class VehicleTypeComponent implements OnInit {
   private _initVehicleTypeForm() {
     this.vehicleTypeForm = this.fb.group({
       id: [''],
-      label: ['', [Validators.required]],
+      label: ['', [Validators.required, validateEmty]],
       seats: ['', [Validators.required, Validators.min(1)]],
       fuel: ['', [Validators.required]],
     });
@@ -69,6 +71,7 @@ export class VehicleTypeComponent implements OnInit {
     return this.vehicleTypeForm.controls;
   }
   createVehicleType() {
+    this.isSubmit = false;
     this.editMode = false;
     this.displayDialog = true;
     this.vehicleTypeForm.reset();
@@ -114,6 +117,7 @@ export class VehicleTypeComponent implements OnInit {
   onSaveVehicleType() {
     this.isSubmit = true;
     if (this.vehicleTypeForm.invalid) return;
+    this.loading = true;
     if (this.isSubmit && this.editMode) {
       const id = this._vehicleTypeForm['id'].value;
       const vehicleType: VehicleType = {
@@ -121,39 +125,53 @@ export class VehicleTypeComponent implements OnInit {
         seats: this._vehicleTypeForm['seats'].value,
         fuel: this._vehicleTypeForm['fuel'].value,
       };
-      this.vehicleTypeService
-        .updateVehicleType(id, vehicleType)
-        .subscribe((res) => {
+      this.vehicleTypeService.updateVehicleType(id, vehicleType).subscribe(
+        (res) => {
           if (res?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: res.message,
             });
+            this.getAllVehicleType();
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
           }
-          this.getAllVehicleType();
-        });
+        },
+        (error) => {
+          this.editMode = true;
+          this.displayDialog = true;
+          this.loading = false;
+        }
+      );
     } else if (this.isSubmit && !this.editMode) {
       const vehicleType: VehicleType = {
         label: this._vehicleTypeForm['label'].value,
         seats: this._vehicleTypeForm['seats'].value,
         fuel: this._vehicleTypeForm['fuel'].value,
       };
-      this.vehicleTypeService
-        .createVehicleType(vehicleType)
-        .subscribe((res) => {
+      this.vehicleTypeService.createVehicleType(vehicleType).subscribe(
+        (res) => {
           if (res?.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: res.message,
             });
+            this.getAllVehicleType();
+            this.editMode = false;
+            this.displayDialog = false;
+            this.loading = false;
           }
-          this.getAllVehicleType();
-        });
+        },
+        (error) => {
+          this.editMode = false;
+          this.displayDialog = true;
+          this.loading = false;
+        }
+      );
     }
-    this.editMode = false;
-    this.displayDialog = false;
   }
   cancelDialog() {
     this.displayDialog = false;

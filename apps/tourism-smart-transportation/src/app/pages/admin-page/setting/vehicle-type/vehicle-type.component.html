@@ -1,3 +1,6 @@
+<tourism-smart-transportation-loading-progress
+  *ngIf="loading"
+></tourism-smart-transportation-loading-progress>
 <div class="header-vehicle-type-service">
   <div class="header-vehicle-type-service-content">
     <div class="header-content-item">
@@ -165,7 +168,7 @@
           Nhãn hiệu
           <small
             class="p-error"
-            *ngIf="_vehicleTypeForm['label'].errors?.['required'] && isSubmit"
+            *ngIf="_vehicleTypeForm['label'].invalid && isSubmit"
           >
             Không được trống
           </small>

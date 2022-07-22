@@ -281,6 +281,21 @@
             class="nav-item-content"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
             routerLinkActive="active-link-content"
+            #price1="routerLinkActive"
+          >
+            <div
+              class="nav-link-content"
+              routerLink="/admin/setting/vehicle-booking-price"
+            >
+              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+                Giá đặt xe
+              </div>
+            </div>
+          </li>
+          <li
+            class="nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link-content"
             #price4="routerLinkActive"
           >
             <div
@@ -311,33 +326,6 @@
             class="nav-item-content"
             [ngClass]="statusLink ? 'navLinkDar' : ''"
             routerLinkActive="active-link-content"
-            #price="routerLinkActive"
-          >
-            <div class="nav-link-content" routerLink="/admin/setting/bus-price">
-              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
-                Giá xe buýt
-              </div>
-            </div>
-          </li>
-          <li
-            class="nav-item-content"
-            [ngClass]="statusLink ? 'navLinkDar' : ''"
-            routerLinkActive="active-link-content"
-            #price1="routerLinkActive"
-          >
-            <div
-              class="nav-link-content"
-              routerLink="/admin/setting/vehicle-booking-price"
-            >
-              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
-                Giá đặt xe
-              </div>
-            </div>
-          </li>
-          <li
-            class="nav-item-content"
-            [ngClass]="statusLink ? 'navLinkDar' : ''"
-            routerLinkActive="active-link-content"
             #price2="routerLinkActive"
           >
             <div
@@ -346,6 +334,18 @@
             >
               <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
                 Giá thuê xe
+              </div>
+            </div>
+          </li>
+          <li
+            class="nav-item-content"
+            [ngClass]="statusLink ? 'navLinkDar' : ''"
+            routerLinkActive="active-link-content"
+            #price="routerLinkActive"
+          >
+            <div class="nav-link-content" routerLink="/admin/setting/bus-price">
+              <div [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow '">
+                Giá xe buýt
               </div>
             </div>
           </li>
