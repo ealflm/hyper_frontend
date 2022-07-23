@@ -102,7 +102,7 @@ export class ScheduleComponent implements OnInit {
   }
   private _getDriverDropdown() {
     this.driverService
-      .getListDriverOfPartner(this.partnerId, null, 1)
+      .getDriverByPartnerIdDropdown(this.partnerId)
       .pipe(
         map((driverRes) => {
           this.drivers = driverRes.body.filter(

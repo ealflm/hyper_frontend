@@ -1,4 +1,6 @@
-import { Subscription } from 'rxjs';
+import { LocalStorageService } from './../../../auth/localstorage.service';
+import { DashboardService } from './../../../services/dashboard.service';
+import { map, Subscription } from 'rxjs';
 import {
   Component,
   ElementRef,
@@ -20,8 +22,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   pieChartData: any;
   barChart: any;
   barChartOption: any;
-  constructor() {}
+  statictis: any;
+  partnerId = '';
+  constructor(
+    private dashboardService: DashboardService,
+    private localStorageService: LocalStorageService
+  ) {}
   ngOnInit() {
+    const partner = this.localStorageService.getUser;
+    this.partnerId = partner.id;
+    this.getStatictis();
+    this.getVehicleOfServiceType();
+    this.getRevenueOfMonth();
     // const data = {
     //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     //   datasets: [
@@ -77,60 +89,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     // };
     //
 
-    this.pieChartData = {
-      labels: ['Đặt xe', 'Thuê xe', 'Đi theo chuyến'],
-      datasets: [
-        {
-          data: [300, 50, 100],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-          hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-        },
-      ],
-    };
-
     //
 
-    this.barChart = {
-      labels: [
-        'Tháng 1',
-        'Tháng 2',
-        'Tháng 3',
-        'Tháng 4',
-        'Tháng 5',
-        'Tháng 6',
-        'Tháng 7',
-        'Tháng 8',
-        'Tháng 9',
-        'Tháng 10',
-        'Tháng 11',
-        'Tháng 12',
-      ],
-      datasets: [
-        {
-          label: 'Danh thu từng tháng',
-          data: [65, 59, 80, 81, 56, 55, 40, 81, 56, 55, 40, 56],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 205, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(201, 203, 207, 0.2)',
-          ],
-          borderColor: [
-            'rgb(255, 99, 132)',
-            'rgb(255, 159, 64)',
-            'rgb(255, 205, 86)',
-            'rgb(75, 192, 192)',
-            'rgb(54, 162, 235)',
-            'rgb(153, 102, 255)',
-            'rgb(201, 203, 207)',
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
     this.barChartOption = {
       plugins: {
         legend: {
@@ -143,7 +103,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         y: {
           ticks: {
             callback: (data: any, index: any, labels: any) => {
-              return data + ' Triệu';
+              return data / 1000000 + ' Triệu';
             },
           },
 
@@ -154,5 +114,83 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
     };
   }
+
   ngAfterViewInit(): void {}
+  private getStatictis() {
+    this.dashboardService.getStatistic(this.partnerId).subscribe((res) => {
+      this.statictis = res.body;
+    });
+  }
+  private getVehicleOfServiceType() {
+    this.dashboardService
+      .getStatisticVehicleOfServiceType(this.partnerId)
+      .pipe(
+        map((res) => {
+          let labels = [];
+          let data = [];
+          labels = res.body.map((res: any) => {
+            return res.name;
+          });
+          data = res.body.map((res: any) => {
+            return res.count;
+          });
+          this.pieChartData = {
+            labels: labels,
+            datasets: [
+              {
+                data: data,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+              },
+            ],
+          };
+        })
+      )
+      .subscribe();
+  }
+  private getRevenueOfMonth() {
+    const date = new Date();
+    const year = date.getFullYear();
+
+    this.dashboardService
+      .getRevenueOfMonthForPartner(this.partnerId)
+      .pipe(
+        map((res) => {
+          let labels: any = [];
+          let data: any = [];
+          for (const [key, value] of Object.entries(res.body[year])) {
+            labels = [...labels, 'Tháng ' + key];
+            data = [...data, value];
+            this.barChart = {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Danh thu từng tháng',
+                  data: data,
+                  backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                  ],
+                  borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            };
+            console.log(this.barChart);
+          }
+        })
+      )
+      .subscribe();
+  }
 }

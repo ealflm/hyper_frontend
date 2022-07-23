@@ -1,28 +1,31 @@
 <div class="report-page">
-  <div class="title">THỐNG KÊ HÀNG THÁNG</div>
+  <div class="title">THỐNG KÊ</div>
   <div class="grid header-card">
     <div class="col-3">
       <p-card [style]="{ height: '130px' }">
-        <div>Số lượng đơn hàng</div>
-        <div class="number-card">19</div>
+        <div>Danh thu</div>
+        <div class="number-card">
+          {{ statictis?.order / 1000000 }}
+          <small style="font-size: 50%">Triệu VND</small>
+        </div>
       </p-card>
     </div>
     <div class="col-3">
       <p-card [style]="{ height: '130px' }">
         <div>Số lượng tài xế</div>
-        <div class="number-card">20</div>
+        <div class="number-card">{{ statictis?.driver }}</div>
       </p-card>
     </div>
     <div class="col-3">
       <p-card [style]="{ height: '130px' }">
         <div>Số lượng xe</div>
-        <div class="number-card">20</div>
+        <div class="number-card">{{ statictis?.vehicle }}</div>
       </p-card>
     </div>
     <div class="col-3">
       <p-card [style]="{ height: '130px' }">
         <div>Số lượng chuyến xe buýt</div>
-        <div class="number-card">8</div>
+        <div class="number-card">{{ statictis?.trip }}</div>
       </p-card>
     </div>
   </div>
