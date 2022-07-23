@@ -335,7 +335,7 @@ export class MapPageComponent
   onHiddenDialog(event: any) {
     this.idStation = '';
     this.showDialog = false;
-    this.mapboxService.iniViewMiniMapAdmin$.next(true);
+    this.onShowSideBarList();
     if (event.successChange) {
       this.mapService.getStationOnMap().subscribe((stationRes) => {
         this.busStationsOnMap = stationRes.body.items;
@@ -343,10 +343,7 @@ export class MapPageComponent
         this.setBusStationMarkers(stationRes.body.items);
       });
     }
-    if (event) {
-      this.getAllStations();
-    }
-    this.onShowSideBarList();
+    this.getAllStations();
   }
 
   // fillter function

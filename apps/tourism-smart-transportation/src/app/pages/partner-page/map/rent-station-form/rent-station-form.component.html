@@ -39,7 +39,7 @@
                   *ngIf="_rent-stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
-                  không được bỏ trống</small
+                  Không được bỏ trống</small
                 > -->
                     </div>
 
@@ -61,7 +61,7 @@
                   *ngIf="_rent-stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
-                  không được bỏ trống</small
+                  Không được bỏ trống</small
                 > -->
                     </div>
 
@@ -90,9 +90,7 @@
                   <div class="rent-station-text">
                     Tên Trạm
                     <small
-                      *ngIf="
-                _locationForm['title'].errors?.['required'] && isSubmit
-            "
+                      *ngIf="_locationForm['title'].invalid && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống
@@ -111,7 +109,7 @@
                     Mô tả
                     <!-- <small
                       *ngIf="
-                _locationForm['description'].errors?.['required']
+                _locationForm['description'].invalid
             "
                       class="p-error"
                     >
@@ -130,12 +128,10 @@
                   <div class="rent-station-text">
                     Địa chỉ
                     <small
-                      *ngIf="
-                _locationForm['address'].errors?.['required'] && isSubmit
-            "
+                      *ngIf="_locationForm['address'].invalid && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống
+                      Không được bỏ trống
                     </small>
                   </div>
                   <input

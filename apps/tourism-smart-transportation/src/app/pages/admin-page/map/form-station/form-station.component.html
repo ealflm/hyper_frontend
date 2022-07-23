@@ -1,3 +1,6 @@
+<tourism-smart-transportation-loading-progress
+  *ngIf="loading"
+></tourism-smart-transportation-loading-progress>
 <div class="station-dialog">
   <p-dialog
     [header]="editMode ? 'Chỉnh sửa trạm xe buýt' : 'Tạo mới trạm xe buýt'"
@@ -165,4 +168,5 @@
     </div>
   </p-dialog>
 </div>
+<tourism-smart-transportation-confirm-close-dialog></tourism-smart-transportation-confirm-close-dialog>
 <p-toast position="top-right"></p-toast>

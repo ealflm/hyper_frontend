@@ -1,5 +1,5 @@
 import { validateEmty } from '../../../../providers/CustomValidators';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { MapService } from './../../../../services/map.service';
 import { Station, StationResponse } from './../../../../models/StationResponse';
 import { map } from 'rxjs';
@@ -19,6 +19,7 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 
@@ -52,26 +53,33 @@ export class FormStationComponent
   successChange = false;
   isSubmit = false;
   isInsidePolygon = false;
+  loading = false;
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
     private mapService: MapService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
 
     if (this.idStation) {
       this.editMode = true;
+      this.isSubmit = false;
     } else {
       this.editMode = false;
+      this.isSubmit = false;
     }
   }
   ngOnInit(): void {
     this._initLocationForm();
   }
   // khoi tao dom
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.iniViewMiniMapAdmin$.value) {
@@ -114,21 +122,29 @@ export class FormStationComponent
     // this.mapboxService.initView$.unsubscribe();
   }
   setEmtyInitForm() {
-    this._locationForm['id'].setValue('');
-    this._locationForm['longitude'].setValue('');
-    this._locationForm['latitude'].setValue('');
-    this._locationForm['title'].setValue('');
-    this._locationForm['description'].setValue('');
-    this._locationForm['address'].setValue('');
+    this.locationForm.reset();
+    // this._locationForm['id'].setValue('');
+    // this._locationForm['longitude'].setValue('');
+    // this._locationForm['latitude'].setValue('');
+    // this._locationForm['title'].setValue('');
+    // this._locationForm['description'].setValue('');
+    // this._locationForm['address'].setValue('');
   }
   cancelDialog() {
-    this.setEmtyInitForm();
-    this.successChange = false;
-    this.editMode = false;
-    this.onCloseDialog();
+    this._dialog = false;
+    this.confirmationService.confirm({
+      key: 'confirmCloseDialog',
+      accept: () => {
+        this.successChange = false;
+        this._dialog = true;
+        this.mapboxService.initViewMiniMapPartner$.next(false);
+      },
+      reject: () => {
+        this.onCloseDialog();
+      },
+    });
   }
   onCloseDialog() {
-    this.isSubmit = false;
     this.setEmtyInitForm();
     this.mapboxService.iniViewMiniMapAdmin$.next(true);
     this.hiddenDialog.emit({ successChange: this.successChange });
@@ -226,9 +242,9 @@ export class FormStationComponent
     });
   }
   onSaveStation() {
+    this.cdr.detectChanges();
     this.isSubmit = true;
-    this._locationForm['longitude'].enable();
-    this._locationForm['latitude'].enable();
+
     if (this.locationForm.invalid) return;
     if (this.isInsidePolygon == false) {
       this.messageService.add({
@@ -238,7 +254,10 @@ export class FormStationComponent
       });
       return;
     }
+    this.loading = true;
     if (this.editMode) {
+      this._locationForm['longitude'].enable();
+      this._locationForm['latitude'].enable();
       const station: Station = {
         id: this._locationForm['id'].value,
         title: this._locationForm['title'].value,
@@ -248,9 +267,8 @@ export class FormStationComponent
         latitude: this._locationForm['latitude'].value,
         status: 1,
       };
-      this.mapService
-        .updateStation(station.id, station)
-        .subscribe((response) => {
+      this.mapService.updateStation(station.id, station).subscribe(
+        (response) => {
           if (response.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -258,11 +276,22 @@ export class FormStationComponent
               detail: response.message,
             });
             this.isSubmit = false;
+            this.editMode = false;
+            this.successChange = true;
+            this.loading = false;
+            this.onCloseDialog();
           }
-          this.editMode = false;
-        });
-      this.successChange = true;
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = true;
+          this.loading = false;
+          this.successChange = false;
+        }
+      );
     } else {
+      this._locationForm['longitude'].enable();
+      this._locationForm['latitude'].enable();
       const station: Station = {
         id: '',
         title: this._locationForm['title'].value,
@@ -272,23 +301,32 @@ export class FormStationComponent
         latitude: this._locationForm['latitude'].value,
         status: 1,
       };
-      this.mapService.createStation(station).subscribe((stationRes) => {
-        // console.log(stationRes);
-        if (stationRes.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: stationRes.message,
-          });
+      this.mapService.createStation(station).subscribe(
+        (stationRes) => {
+          // console.log(stationRes);
+          if (stationRes.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: stationRes.message,
+            });
+            this.isSubmit = false;
+            this.successChange = true;
+            this.editMode = false;
+            this.loading = false;
+            this.onCloseDialog();
+          }
+        },
+        (error) => {
           this.isSubmit = false;
+          this.editMode = false;
+          this.loading = false;
+          this.successChange = false;
         }
-      });
-      this.successChange = true;
-      this.editMode = false;
+      );
     }
     this._locationForm['longitude'].disable();
     this._locationForm['latitude'].disable();
-    this.onCloseDialog();
   }
   // FORM ARRAY
   // _initLocationFormArray() {

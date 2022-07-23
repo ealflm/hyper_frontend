@@ -181,6 +181,8 @@ export class ScheduleComponent implements OnInit {
     this.displayDialog = true;
     this.createStatus = false;
     this.editMode = false;
+    this.isSubmit = false;
+
     this._setDisableForm();
     this.tripService.getTripById(id).subscribe((tripRes) => {
       this._schedulesForm['tripId'].setValue(tripRes.body.tripId);
