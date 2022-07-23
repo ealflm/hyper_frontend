@@ -37,7 +37,10 @@ import {
 import { VehicleTypesService } from '../../../services/vehicle-types.service';
 import { ServiceTypeService } from '../../../services/service-type.service';
 import { PublishYearService } from '../../../services/publish-year.service';
-import { validateEmty } from '../../../providers/CustomValidators';
+import {
+  LICENSE_PLATES_REGEX,
+  validateEmty,
+} from '../../../providers/CustomValidators';
 
 @Component({
   selector: 'tourism-smart-transportation-vehicle',
@@ -129,7 +132,14 @@ export class VehicleComponent
       publishYearId: [''],
       vehicleClassId: [''],
       name: ['', [Validators.required, validateEmty]],
-      licensePlates: ['', [Validators.required, validateEmty]],
+      licensePlates: [
+        '',
+        [
+          Validators.required,
+          validateEmty,
+          Validators.pattern(LICENSE_PLATES_REGEX),
+        ],
+      ],
       color: ['', [Validators.required, validateEmty]],
     });
   }

@@ -13,7 +13,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { PartnersService } from './../../../../services/partners.service';
 import { Component, OnInit } from '@angular/core';
-import { AgeCheck, validateEmty } from '../../../../providers/CustomValidators';
+import {
+  AgeCheck,
+  PHONE_NUMBER_REGEX,
+  validateEmty,
+} from '../../../../providers/CustomValidators';
 import { PartnerResponse } from '../../../../models/PartnerResponse';
 import { DatePipe } from '@angular/common';
 import { convertDateToVN } from '../../../../providers/ConvertDate';
@@ -172,10 +176,7 @@ export class PartnerDetailComponent implements OnInit {
         serviceType: [{ value: '', disabled: true }, Validators.required],
         phone: [
           { value: '', disabled: true },
-          [
-            Validators.required,
-            Validators.pattern(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/),
-          ],
+          [Validators.required, Validators.pattern(PHONE_NUMBER_REGEX)],
         ],
         email: [
           { value: '', disabled: true },

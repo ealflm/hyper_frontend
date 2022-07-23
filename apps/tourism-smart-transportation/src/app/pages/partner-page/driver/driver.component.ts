@@ -17,7 +17,11 @@ import {
 } from '@angular/core';
 import { Driver } from '../../../models/DriverResponse';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { AgeCheck, validateEmty } from '../../../providers/CustomValidators';
+import {
+  AgeCheck,
+  PHONE_NUMBER_REGEX,
+  validateEmty,
+} from '../../../providers/CustomValidators';
 import {
   debounceTime,
   Subscription,
@@ -53,7 +57,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
   dialogDetail = false;
   statusBiding = 1;
   loading = false;
-
+  hiddenDropdownVehicle = false;
   today = new Date(Date.now()).getFullYear();
   minDate = new Date(this.today - 18, 1, 1);
 
@@ -108,13 +112,11 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         dateOfBirth: ['', Validators.required],
         phone: [
           '',
-          [
-            Validators.required,
-            Validators.pattern(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/),
-          ],
+          [Validators.required, Validators.pattern(PHONE_NUMBER_REGEX)],
         ],
         selectedGender: ['', Validators.required],
         vehicleId: [''],
+        vehicleName: [{ value: '', disabled: true }],
         createdDate: [{ value: '', disabled: true }],
         modifiedDate: [{ value: '', disabled: true }],
       },
@@ -282,9 +284,28 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         res.body.gender ? res.body.gender.toString() : ''
       );
       this._driversForm['vehicleId'].setValue(res.body.vehicleId);
+      if (res.body.vehicleName) {
+        this._driversForm['vehicleName'].setValue(
+          res.body.vehicleTypeLabel + ' ' + res.body.vehicleName
+        );
+      }
+
       res.body.photoUrl == '' || res.body?.photoUrl == null
         ? (this.imagePreview = '../assets/image/imagePreview.png')
         : (this.imagePreview = `https://se32.blob.core.windows.net/driver/${res.body?.photoUrl}`);
+      if (res.body.vehicleId) {
+        this.vehicleService
+          .getVehicleByIdForPartner(res.body.vehicleId)
+          .subscribe((vehicleRes) => {
+            if (vehicleRes.body.serviceTypeId === ServiceTypeEnum.BusService) {
+              this.hiddenDropdownVehicle = true;
+            } else {
+              this.hiddenDropdownVehicle = false;
+            }
+          });
+      } else {
+        this.hiddenDropdownVehicle = false;
+      }
     });
   }
   enableForm() {

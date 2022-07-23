@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import {
   AgeCheck,
   MustMatch,
+  PHONE_NUMBER_REGEX,
   validateEmty,
 } from '../../../providers/CustomValidators';
 import {
@@ -129,10 +130,7 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
         serviceType: ['', Validators.required],
         phone: [
           '',
-          [
-            Validators.required,
-            Validators.pattern(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/),
-          ],
+          [Validators.required, Validators.pattern(PHONE_NUMBER_REGEX)],
         ],
         email: ['', [Validators.required, Validators.email, validateEmty]],
         dateOfBirth: ['', Validators.required],

@@ -13,23 +13,24 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class VehicleService {
-  adminApiURLTrackingVehicle = environment.apiURL + 'admin/tracking-vehicle';
-  adminApiURLVehicle = environment.apiURL + 'admin/vehicle';
+  adminTrackingVehicleAPI = environment.apiURL + 'admin/tracking-vehicle';
+  adminUrlVehicleAPI = environment.apiURL + 'admin/vehicle';
   //
-  partnerApiURLVehicle = environment.apiURL + 'partner/vehicle';
+  partnerUrlVehicleAPI = environment.apiURL + 'partner/vehicle';
+  partnerUrlDriverAPI = environment.apiURL + 'partner/driver';
   constructor(private http: HttpClient) {}
   // ADMIN
   getListVehicle(name?: string | null): Observable<VehiclesResponse> {
-    return this.http.get<VehiclesResponse>(`${this.adminApiURLVehicle}`);
+    return this.http.get<VehiclesResponse>(`${this.adminUrlVehicleAPI}`);
   }
   getListVehicleTracking(): Observable<any> {
-    return this.http.get(`${this.adminApiURLTrackingVehicle}`);
+    return this.http.get(`${this.adminTrackingVehicleAPI}`);
   }
   getVehicleById(id: string): Observable<VehicleResponse> {
-    return this.http.get<VehicleResponse>(`${this.adminApiURLVehicle}/${id}`);
+    return this.http.get<VehicleResponse>(`${this.adminUrlVehicleAPI}/${id}`);
   }
   getVehicleTrackingById(id: string): Observable<any> {
-    return this.http.get(`${this.adminApiURLTrackingVehicle}/${id}`);
+    return this.http.get(`${this.adminTrackingVehicleAPI}/${id}`);
   }
   getListVehicleByPartnerId(
     partnerId?: string | null
@@ -38,7 +39,7 @@ export class VehicleService {
     if (partnerId != null) {
       queryParams = queryParams.append('PartnerId', partnerId);
     }
-    return this.http.get<VehiclesResponse>(`${this.adminApiURLVehicle}`, {
+    return this.http.get<VehiclesResponse>(`${this.adminUrlVehicleAPI}`, {
       params: queryParams,
     });
   }
@@ -57,7 +58,7 @@ export class VehicleService {
     if (status != null) {
       queryParams = queryParams.append('Status', status);
     }
-    return this.http.get<VehiclesResponse>(`${this.partnerApiURLVehicle}`, {
+    return this.http.get<VehiclesResponse>(`${this.partnerUrlVehicleAPI}`, {
       params: queryParams,
     });
   }
@@ -70,28 +71,28 @@ export class VehicleService {
     queryParams = queryParams.append('ServiceTypeId', serviceTypeId);
 
     return this.http.get<VehiclesResponse>(
-      `${this.partnerApiURLVehicle}/dropdown-options`,
+      `${this.partnerUrlDriverAPI}/vehicle-dropdown-options`,
       {
         params: queryParams,
       }
     );
   }
   createVehicleForPartner(vehicle: Vehicle): Observable<any> {
-    return this.http.post<Vehicle>(`${this.partnerApiURLVehicle}`, vehicle);
+    return this.http.post<Vehicle>(`${this.partnerUrlVehicleAPI}`, vehicle);
   }
   getVehicleByIdForPartner(id: string): Observable<VehicleResponse> {
-    return this.http.get<VehicleResponse>(`${this.partnerApiURLVehicle}/${id}`);
+    return this.http.get<VehicleResponse>(`${this.partnerUrlVehicleAPI}/${id}`);
   }
   updateVehicleForPartner(
     vehicleId: string,
     vehicle: Vehicle
   ): Observable<any> {
     return this.http.put<Vehicle>(
-      `${this.partnerApiURLVehicle}/${vehicleId}`,
+      `${this.partnerUrlVehicleAPI}/${vehicleId}`,
       vehicle
     );
   }
   deleteVehicleForPartner(vehicleId: string): Observable<any> {
-    return this.http.delete(`${this.partnerApiURLVehicle}/${vehicleId}`);
+    return this.http.delete(`${this.partnerUrlVehicleAPI}/${vehicleId}`);
   }
 }
