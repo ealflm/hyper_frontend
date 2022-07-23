@@ -129,7 +129,10 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
         serviceType: ['', Validators.required],
         phone: [
           '',
-          [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
+          [
+            Validators.required,
+            Validators.pattern(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/),
+          ],
         ],
         email: ['', [Validators.required, Validators.email, validateEmty]],
         dateOfBirth: ['', Validators.required],

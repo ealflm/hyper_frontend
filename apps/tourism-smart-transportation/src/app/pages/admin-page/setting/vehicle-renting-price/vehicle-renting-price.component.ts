@@ -88,7 +88,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
           [
             Validators.required,
             Validators.pattern(/^[0-9]\d*$/),
-            Validators.min(0),
+            Validators.min(1),
           ],
         ],
         maxTime: [
@@ -96,7 +96,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
           [
             Validators.required,
             Validators.pattern(/^[0-9]\d*$/),
-            Validators.max(24),
+            Validators.max(6),
           ],
         ],
         pricePerHour: [

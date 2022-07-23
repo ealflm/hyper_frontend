@@ -1,3 +1,4 @@
+import { ServiceTypeEnum } from './../../../../constant/service-type';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PackageService } from './../../../../services/package.service';
 import { ServiceTypeService } from './../../../../services/service-type.service';
@@ -76,7 +77,9 @@ export class ServiceDetailComponent implements OnInit {
   }
   private _getServiceType() {
     this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
-      this.serviceTypes = serviceTypeRes.body.items;
+      this.serviceTypes = serviceTypeRes.body.items.filter(
+        (value: any) => value.id !== ServiceTypeEnum.RentCarService
+      );
     });
   }
   private _getPackageId(id: string) {

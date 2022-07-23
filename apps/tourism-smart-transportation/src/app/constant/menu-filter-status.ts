@@ -1,11 +1,15 @@
 export const MenuFilterStatus = [
   {
     value: 1,
-    lable: 'Kích hoạt',
+    lable: 'Chuẩn bị',
   },
   {
     value: 0,
     lable: 'Vô hiệu hóa',
+  },
+  {
+    value: 2,
+    lable: 'Đã cho thuê',
   },
   {
     value: null,

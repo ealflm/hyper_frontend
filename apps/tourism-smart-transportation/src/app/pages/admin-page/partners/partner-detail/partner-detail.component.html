@@ -55,7 +55,7 @@
                 <small
                   *ngIf="(_inforsForm['firstName'].errors?.['required'] || _inforsForm['firstName'].errors?.['whitespace']) && isSubmit"
                   class="p-error"
-                  >không được bỏ trống</small
+                  >Không được bỏ trống</small
                 >
               </div>
               <input
@@ -73,7 +73,7 @@
                 <small
                   *ngIf="(_inforsForm['lastName'].errors?.['required'] || _inforsForm['lastName'].errors?.['whitespace']) && isSubmit"
                   class="p-error"
-                  >không được bỏ trống</small
+                  >Không được bỏ trống</small
                 >
               </div>
               <input
@@ -92,7 +92,7 @@
                   *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
-                  không được bỏ trống</small
+                  Không được bỏ trống</small
                 >
                 <small
                   *ngIf="
@@ -137,12 +137,12 @@
                 <small
                   *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
                   class="p-error"
-                  >không được bỏ trống</small
+                  >Không được bỏ trống</small
                 >
                 <small
                   *ngIf="_inforsForm['phone'].errors?.['pattern'] "
                   class="p-error"
-                  >sai định dạng (từ 0-9 và 10 số)</small
+                  >Không đúng định dạng</small
                 >
               </div>
               <input
@@ -160,7 +160,7 @@
                 <small
                   *ngIf="(_inforsForm['email'].errors?.['required'] || _inforsForm['email'].errors?.['whitespace']) && isSubmit"
                   class="p-error"
-                  >không được bỏ trống</small
+                  >Không được bỏ trống</small
                 >
                 <small
                   *ngIf="_inforsForm['email'].errors?.['email'] && isSubmit"
@@ -179,7 +179,7 @@
                 <!-- <small
           *ngIf="_inforsForm['email'].errors?.['required'] && isSubmit"
           class="p-error"
-          >Tên không được bỏ trống</small
+          >Tên Không được bỏ trống</small
         > -->
               </div>
             </div>
@@ -189,7 +189,7 @@
                 <small
                   *ngIf="_inforsForm['addressUser'].invalid && isSubmit"
                   class="p-error"
-                  >không được trống</small
+                  >Không được trống</small
                 >
               </div>
               <input
@@ -203,7 +203,7 @@
                 <!-- <small
           *ngIf="_inforsForm['addressUser'].errors?.['required'] && isSubmit "
           class="p-error"
-          >Địa chỉ không được bỏ trống</small
+          >Địa chỉ Không được bỏ trống</small
         > -->
               </div>
             </div>
@@ -224,7 +224,7 @@
                 <small
                   *ngIf="_inforsForm['companyName'].invalid && isSubmit"
                   class="p-error"
-                  >không được trống</small
+                  >Không được trống</small
                 >
               </div>
               <input
@@ -242,7 +242,7 @@
                 <small
                   *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
                   class="p-error"
-                  >không được trống</small
+                  >Không được trống</small
                 >
               </div>
               <input
@@ -257,7 +257,7 @@
               <!-- <small
                       *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
                       class="p-error"
-                      >Địa chỉ không được trống</small
+                      >Địa chỉ Không được trống</small
                       > -->
               <!-- </div> -->
             </div>
@@ -271,7 +271,7 @@
                 <small
                   *ngIf="_inforsForm['serviceType'].invalid && isSubmit"
                   class="p-error"
-                  >không được trống</small
+                  >Không được trống</small
                 >
               </div>
               <p-multiSelect

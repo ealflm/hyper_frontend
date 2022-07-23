@@ -172,7 +172,10 @@ export class PartnerDetailComponent implements OnInit {
         serviceType: [{ value: '', disabled: true }, Validators.required],
         phone: [
           { value: '', disabled: true },
-          [Validators.required, Validators.pattern(/^-?(0|[0-9]{10}\d*)?$/)],
+          [
+            Validators.required,
+            Validators.pattern(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/),
+          ],
         ],
         email: [
           { value: '', disabled: true },
