@@ -15,7 +15,12 @@ import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { Component, OnInit } from '@angular/core';
 import { Route } from '../../../models/RouteResponse';
 import { RouteService } from '../../../services/route.service';
-import { convertTime, formatDateToFE } from '../../../providers/ConvertDate';
+import {
+  convertHoursMinutes,
+  convertHoursToDateString,
+  convertTime,
+  formatDateToFE,
+} from '../../../providers/ConvertDate';
 import {
   checkMoreThanTimeStart,
   validateEmty,
@@ -193,10 +198,10 @@ export class ScheduleComponent implements OnInit {
       this._schedulesForm['dateOfWeek'].setValue(tripRes.body.dayOfWeek);
       this._schedulesForm['vehicleId'].setValue(tripRes.body.vehicleId);
       this._schedulesForm['timeStart'].setValue(
-        formatDateToFE(tripRes.body.timeStart)
+        convertHoursToDateString(tripRes.body.timeStart)
       );
       this._schedulesForm['timeEnd'].setValue(
-        formatDateToFE(tripRes.body.timeEnd)
+        convertHoursToDateString(tripRes.body.timeEnd)
       );
     });
   }
@@ -235,7 +240,7 @@ export class ScheduleComponent implements OnInit {
   }
   onSaveSchedule() {
     this.isSubmit = true;
-    if (this.scheduleForm.invalid) return;
+    // if (this.scheduleForm.invalid) return;
     this.loading = true;
     const trip: Trip = {
       routeId: this._schedulesForm['routeId'].value,
@@ -243,9 +248,11 @@ export class ScheduleComponent implements OnInit {
       driverId: this._schedulesForm['driverId'].value,
       dayOfWeek: this._schedulesForm['dateOfWeek'].value,
       vehicleId: this._schedulesForm['vehicleId'].value,
-      timeStart: convertTime(this._schedulesForm['timeStart'].value),
-      timeEnd: convertTime(this._schedulesForm['timeEnd'].value),
+      timeStart: convertHoursMinutes(this._schedulesForm['timeStart'].value),
+      timeEnd: convertHoursMinutes(this._schedulesForm['timeEnd'].value),
     };
+    console.log(trip);
+
     this.tripService.createTrip(trip).subscribe(
       (res) => {
         if (res.statusCode === 201) {
@@ -279,10 +286,11 @@ export class ScheduleComponent implements OnInit {
       driverId: this._schedulesForm['driverId'].value,
       dayOfWeek: this._schedulesForm['dateOfWeek'].value,
       vehicleId: this._schedulesForm['vehicleId'].value,
-      timeStart: convertTime(this._schedulesForm['timeStart'].value),
-      timeEnd: convertTime(this._schedulesForm['timeEnd'].value),
+      timeStart: convertHoursMinutes(this._schedulesForm['timeStart'].value),
+      timeEnd: convertHoursMinutes(this._schedulesForm['timeEnd'].value),
       status: 1,
     };
+
     this.tripService
       .updateTripById(this._schedulesForm['tripId'].value, trip)
       .subscribe(

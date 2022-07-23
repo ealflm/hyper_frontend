@@ -14,6 +14,9 @@ export class Driver {
   status?: number;
   vehicleName?: string;
   vehicleTypeLabel?: string;
+  vehicleTypeName?: string;
+  serviceTypeName?: string;
+  name?: string;
 }
 
 export class DriversResponse {

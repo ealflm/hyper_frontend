@@ -57,11 +57,10 @@
         <tr>
           <th>Họ và tên</th>
           <th>Phương tiện</th>
+          <th>Dịch vụ</th>
           <th>Giới tính</th>
           <th>Ngày sinh</th>
           <th>Số điện thoại</th>
-          <th>Ngày tạo</th>
-          <th>Ngày sửa</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
@@ -84,11 +83,12 @@
             />&nbsp;{{ driver.firstName + ' ' + driver.lastName }}
           </td>
           <td>{{ driver.licensePlates }}</td>
+          <td></td>
           <td>{{ driver.gender ? 'Nam' : 'Nữ' }}</td>
           <td>{{ driver.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
           <td>{{ driver.phone }}</td>
-          <td>{{ driver.createdDate | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ driver.modifiedDate | date: 'dd/MM/yyyy' }}</td>
+          <!-- <td>{{ driver.createdDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ driver.modifiedDate | date: 'dd/MM/yyyy' }}</td> -->
           <td>
             <div [class]="status[driver.status].class">
               {{ status[driver.status].lable }}
@@ -133,8 +133,10 @@
   [header]="editMode ? 'Chỉnh sửa tài xế' : 'Tạo mới tài xế'"
   [(visible)]="displayDialog"
   [style]="
-    editMode
+    editMode && !hiddenDropdownVehicle
       ? { width: '459px', height: '710px' }
+      : editMode && hiddenDropdownVehicle
+      ? { width: '459px', height: '400px' }
       : { width: '459px', height: '400px' }
   "
   [contentStyle]="{
@@ -204,7 +206,7 @@
                       *ngIf="(_driversForm['lastName'].errors?.['required'] || _driversForm['lastName'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
 
@@ -226,7 +228,7 @@
                       *ngIf="_driversForm['dateOfBirth'].errors?.['required'] && isSubmit "
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                     <small
                       *ngIf="
@@ -261,7 +263,7 @@
                       *ngIf="_driversForm['selectedGender'].errors?.['required'] && isSubmit "
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <p-dropdown
@@ -280,12 +282,12 @@
                     <small
                       *ngIf="_driversForm['phone'].errors?.['required'] && isSubmit"
                       class="p-error"
-                      >không được trống</small
+                      >Không được trống</small
                     >
                     <small
                       *ngIf="_driversForm['phone'].errors?.['pattern']"
                       class="p-error"
-                      >sai định dạng (từ 0-9 và 10 số)</small
+                      >Không đúng định dạng</small
                     >
                   </div>
                   <input
@@ -295,10 +297,20 @@
                     formControlName="phone"
                   />
                 </div>
-                <div class="col-12" style="margin-top: 10px" *ngIf="editMode">
+
+                <div
+                  class="col-12"
+                  [ngClass]="hiddenDropdownVehicle ? 'hidden' : ''"
+                  style="margin-top: 10px"
+                  *ngIf="editMode"
+                >
                   <div class="driver-subtitle">Thông tin phương tiện</div>
                 </div>
-                <div class="col-12 driver-input-long" *ngIf="editMode">
+                <div
+                  class="col-12 driver-input-long"
+                  [ngClass]="hiddenDropdownVehicle ? 'hidden' : ''"
+                  *ngIf="editMode"
+                >
                   <div class="driver-text">
                     Số hiệu phương tiện
                     <small
@@ -468,7 +480,13 @@
                     </div>
                     <div class="col-12 driver-input-long">
                       <div class="driver-text">Số hiệu phương tiện</div>
-                      <p-dropdown
+                      <input
+                        class="driver-input-text-long"
+                        type="text"
+                        pInputText
+                        formControlName="vehicleName"
+                      />
+                      <!-- <p-dropdown
                         [style]="{ height: '28px' }"
                         class="dropdown"
                         id="season"
@@ -484,7 +502,7 @@
                         <ng-template let-item pTemplate="selectedItem">
                           {{ item.name }}-{{ item.licensePlates }}
                         </ng-template>
-                      </p-dropdown>
+                      </p-dropdown> -->
                     </div>
                   </div>
                 </div>

@@ -24,7 +24,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, of, Subscription, throwIfEmpty } from 'rxjs';
 import { CustomerResponse } from '../../../../models/CustomerResponse';
-import { AgeCheck, validateEmty } from '../../../../providers/CustomValidators';
+import {
+  AgeCheck,
+  PHONE_NUMBER_REGEX,
+  validateEmty,
+} from '../../../../providers/CustomValidators';
 import { Payment, PaymentsResponse } from '../../../../models/PaymentResponse';
 import {
   PackageHistory,
@@ -173,10 +177,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         phone: [
           { value: '', disabled: true },
 
-          [
-            Validators.required,
-            Validators.pattern(/(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/),
-          ],
+          [Validators.required, Validators.pattern(PHONE_NUMBER_REGEX)],
           // Validators.minLength(9),
           // Validators.maxLength(15),
         ],
