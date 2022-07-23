@@ -30,6 +30,7 @@ export class ScheduleComponent implements OnInit {
   dialogDetail = false;
   editMode = false;
   displayDialog = false;
+  loading = false;
 
   scheduleForm!: FormGroup;
   isSubmit = false;
@@ -233,7 +234,7 @@ export class ScheduleComponent implements OnInit {
   onSaveSchedule() {
     this.isSubmit = true;
     if (this.scheduleForm.invalid) return;
-
+    this.loading = true;
     const trip: Trip = {
       routeId: this._schedulesForm['routeId'].value,
       tripName: this._schedulesForm['tripName'].value,
@@ -243,23 +244,33 @@ export class ScheduleComponent implements OnInit {
       timeStart: convertTime(this._schedulesForm['timeStart'].value),
       timeEnd: convertTime(this._schedulesForm['timeEnd'].value),
     };
-    this.tripService.createTrip(trip).subscribe((res) => {
-      if (res.statusCode === 201) {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Thành công',
-          detail: 'Tạo chuyến đi thành công',
-        });
+    this.tripService.createTrip(trip).subscribe(
+      (res) => {
+        if (res.statusCode === 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: 'Tạo chuyến đi thành công',
+          });
+          this.loading = false;
+          this.editMode = false;
+          this.displayDialog = false;
+          this.isSubmit = false;
+          this._getListTrip();
+        }
+      },
+      (error) => {
+        this.loading = false;
+        this.editMode = false;
+        this.displayDialog = true;
+        this.isSubmit = false;
       }
-      this.displayDialog = false;
-      this.isSubmit = false;
-      this._getListTrip();
-    });
+    );
   }
   onSaveChange() {
     this.isSubmit = true;
     if (this.scheduleForm.invalid) return;
-
+    this.loading = true;
     const trip: Trip = {
       routeId: this._schedulesForm['routeId'].value,
       tripName: this._schedulesForm['tripName'].value,
@@ -272,17 +283,27 @@ export class ScheduleComponent implements OnInit {
     };
     this.tripService
       .updateTripById(this._schedulesForm['tripId'].value, trip)
-      .subscribe((res) => {
-        if (res.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: 'Cập nhật chuyến đi thành công',
-          });
+      .subscribe(
+        (res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Cập nhật chuyến đi thành công',
+            });
+            this.displayDialog = false;
+            this.isSubmit = false;
+            this.loading = false;
+            this.editMode = false;
+            this._getListTrip();
+          }
+        },
+        (error) => {
+          this.displayDialog = true;
+          this.isSubmit = false;
+          this.loading = false;
+          this.editMode = true;
         }
-        this.displayDialog = false;
-        this.isSubmit = false;
-        this._getListTrip();
-      });
+      );
   }
 }

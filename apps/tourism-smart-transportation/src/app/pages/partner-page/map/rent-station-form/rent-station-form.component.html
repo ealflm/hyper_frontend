@@ -1,3 +1,6 @@
+<tourism-smart-transportation-loading-progress
+  *ngIf="loading"
+></tourism-smart-transportation-loading-progress>
 <div class="rent-station-dialog">
   <p-dialog
     [header]="editMode ? 'Chỉnh sửa trạm thuê xe' : 'Tạo mới trạm thuê xe'"
@@ -88,7 +91,7 @@
                     Tên Trạm
                     <small
                       *ngIf="
-                _locationForm['title'].errors?.['required']
+                _locationForm['title'].errors?.['required'] && isSubmit
             "
                       class="p-error"
                     >
@@ -106,14 +109,14 @@
                 <div class="col-12 rent-station-input-long">
                   <div class="rent-station-text">
                     Mô tả
-                    <small
+                    <!-- <small
                       *ngIf="
                 _locationForm['description'].errors?.['required']
             "
                       class="p-error"
                     >
                       không được bỏ trống
-                    </small>
+                    </small> -->
                   </div>
                   <input
                     class="rent-station-input-text-long"
@@ -128,7 +131,7 @@
                     Địa chỉ
                     <small
                       *ngIf="
-                _locationForm['address'].errors?.['required']
+                _locationForm['address'].errors?.['required'] && isSubmit
             "
                       class="p-error"
                     >

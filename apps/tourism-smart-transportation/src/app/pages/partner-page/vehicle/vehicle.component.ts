@@ -53,7 +53,6 @@ export class VehicleComponent
   menuValue = MenuFilterStatus;
   vehicles: Vehicle[] = [];
   vehicleForm!: FormGroup;
-  isSubmit = false;
   vehicleTypes: VehicleType[] = [];
   serviceTypes: ServiceType[] = [];
   serviceTypeFilter = ServiceTypeFilter;
@@ -69,6 +68,8 @@ export class VehicleComponent
   createStatus = false;
   currentLicensePlates? = '';
   ServiceTypeEnum = ServiceTypeEnum;
+  isSubmit = false;
+  loading = false;
   constructor(
     private confirmationService: ConfirmationService,
     private fb: FormBuilder,
@@ -323,6 +324,7 @@ export class VehicleComponent
   onSaveVehicle() {
     this.isSubmit = true;
     if (this.vehicleForm.invalid) return;
+    this.loading = true;
     if (!this.editMode) {
       const vehicle: Vehicle = {
         partnerId: this.partnerId,
@@ -335,18 +337,28 @@ export class VehicleComponent
         color: this._vehiclesForm['color'].value,
         serviceTypeId: this._vehiclesForm['serviceTypeId'].value,
       };
-      console.log(vehicle);
-      this.vehicleService.createVehicleForPartner(vehicle).subscribe((res) => {
-        if (res.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: 'Tạo phương tiện thành công',
-          });
+      this.vehicleService.createVehicleForPartner(vehicle).subscribe(
+        (res) => {
+          if (res.statusCode === 201) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Tạo phương tiện thành công',
+            });
+            this.displayDialog = false;
+            this.loading = false;
+            this.editMode = false;
+            this.isSubmit = false;
+            this.getListVehicleOfPartner();
+          }
+        },
+        (error) => {
+          this.displayDialog = true;
+          this.loading = false;
+          this.editMode = false;
+          this.isSubmit = false;
         }
-        this.displayDialog = false;
-        this.getListVehicleOfPartner();
-      });
+      );
     }
   }
   onSaveChange() {
@@ -379,19 +391,28 @@ export class VehicleComponent
         };
       }
 
-      this.vehicleService
-        .updateVehicleForPartner(vehicleId, vehicle)
-        .subscribe((res) => {
+      this.vehicleService.updateVehicleForPartner(vehicleId, vehicle).subscribe(
+        (res) => {
           if (res.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
               summary: 'Thành công',
               detail: 'Cập nhật phương tiện thành công',
             });
+            this.getListVehicleOfPartner();
+            this.displayDialog = false;
+            this.loading = false;
+            this.editMode = false;
+            this.isSubmit = false;
           }
-          this.getListVehicleOfPartner();
-          this.displayDialog = false;
-        });
+        },
+        (error) => {
+          this.displayDialog = true;
+          this.editMode = true;
+          this.loading = false;
+          this.isSubmit = false;
+        }
+      );
     }
   }
   restoreVehicle(id: string) {

@@ -1,3 +1,4 @@
+import { validateEmty } from '../../../../providers/CustomValidators';
 import { LocalStorageService } from './../../../../auth/localstorage.service';
 import { RentStation } from './../../../../models/RentStationResponse';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -17,6 +18,7 @@ import {
   EventEmitter,
   ElementRef,
   SimpleChanges,
+  ChangeDetectorRef,
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { RentStationResponse } from '../../../../models/RentStationResponse';
@@ -47,8 +49,10 @@ export class RentStationFormComponent
   markerArray: any[] = [];
   //
   locationForm!: FormGroup;
+  isSubmit = false;
   editMode = false;
   successChange = false;
+  loading = false;
   isInsidePolygon = false;
   constructor(
     private mapboxService: MapBoxService,
@@ -56,22 +60,25 @@ export class RentStationFormComponent
     private mapService: MapService,
     private messageService: MessageService,
     private localStorageService: LocalStorageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes);
-
     if (this.rentStationId) {
       this.editMode = true;
+      this.isSubmit = false;
     } else {
       this.editMode = false;
+      this.isSubmit = false;
     }
   }
   ngOnInit(): void {
     this._initLocationForm();
   }
   // khoi tao dom
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
     this.getDetailsRentStation();
@@ -112,18 +119,21 @@ export class RentStationFormComponent
         this.setEmtyInitForm();
         this.addMarker();
         this.editMode = false;
+        this.isSubmit = false;
       }
       this.mapboxService.initViewMiniMapPartner$.next(true);
     }
   }
   setEmtyInitForm() {
-    this._locationForm['id'].setValue(null);
-    this._locationForm['partnerId'].setValue(null);
-    this._locationForm['longitude'].setValue(null);
-    this._locationForm['latitude'].setValue(null);
-    this._locationForm['title'].setValue(null);
-    this._locationForm['description'].setValue(null);
-    this._locationForm['address'].setValue(null);
+    this.locationForm.reset();
+    this.cdr.detectChanges();
+    // this._locationForm['id'].setValue(null);
+    // this._locationForm['partnerId'].setValue(null);
+    // this._locationForm['longitude'].setValue(null);
+    // this._locationForm['latitude'].setValue(null);
+    // this._locationForm['title'].setValue('');
+    // this._locationForm['description'].setValue(null);
+    // this._locationForm['address'].setValue('');
   }
   cancelDialog() {
     this._dialog = false;
@@ -133,7 +143,6 @@ export class RentStationFormComponent
         this.successChange = false;
         this._dialog = true;
         this.mapboxService.initViewMiniMapPartner$.next(false);
-        console.log(this.rentStationId);
       },
       reject: () => {
         this.onCloseDialog();
@@ -150,9 +159,9 @@ export class RentStationFormComponent
     this.locationForm = this.fb.group({
       id: [''],
       partnerId: [''],
-      title: ['', [Validators.required]],
+      title: ['', [Validators.required, validateEmty]],
       description: [''],
-      address: ['', Validators.required],
+      address: ['', [Validators.required, validateEmty]],
       longitude: [{ value: '', disabled: true }, [Validators.required]],
       latitude: [{ value: '', disabled: true }, [Validators.required]],
     });
@@ -240,8 +249,8 @@ export class RentStationFormComponent
     });
   }
   onSaveRentStation() {
-    this._locationForm['longitude'].enable();
-    this._locationForm['latitude'].enable();
+    this.cdr.detectChanges();
+    this.isSubmit = true;
     if (this.locationForm.invalid) return;
     if (!this.isInsidePolygon) {
       this.messageService.add({
@@ -251,7 +260,10 @@ export class RentStationFormComponent
       });
       return;
     }
+    this.loading = true;
     if (this.editMode) {
+      this._locationForm['longitude'].enable();
+      this._locationForm['latitude'].enable();
       const rentStation: RentStation = {
         id: this._locationForm['id'].value,
         title: this._locationForm['title'].value,
@@ -262,20 +274,33 @@ export class RentStationFormComponent
       };
       this.mapService
         .updateRentStationForPartner(rentStation.id, rentStation)
-        .subscribe((response) => {
-          if (response.statusCode === 201) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Thành công',
-              detail: response.message,
-            });
+        .subscribe(
+          (response) => {
+            if (response.statusCode === 201) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Thành công',
+                detail: response.message,
+              });
+              this.editMode = false;
+              this.loading = false;
+              this.successChange = true;
+              this.isSubmit = false;
+              this.onCloseDialog();
+            }
+          },
+          (error) => {
+            this.isSubmit = false;
+            this.editMode = true;
+            this.loading = false;
+            this.successChange = false;
           }
-          this.editMode = false;
-        });
-      this.successChange = true;
+        );
     } else {
       const user = this.localStorageService.getUser;
       const partnerId = user.id;
+      this._locationForm['longitude'].enable();
+      this._locationForm['latitude'].enable();
       const rentStation: RentStation = {
         id: '',
         partnerId: partnerId,
@@ -286,9 +311,8 @@ export class RentStationFormComponent
         latitude: this._locationForm['latitude'].value,
         status: 1,
       };
-      this.mapService
-        .createRentStationForPartner(rentStation)
-        .subscribe((response) => {
+      this.mapService.createRentStationForPartner(rentStation).subscribe(
+        (response) => {
           // console.log(stationRes);
           if (response.statusCode === 201) {
             this.messageService.add({
@@ -296,13 +320,22 @@ export class RentStationFormComponent
               summary: 'Thành công',
               detail: response.message,
             });
+            this.isSubmit = false;
+            this.successChange = true;
+            this.editMode = false;
+            this.loading = false;
+            this.onCloseDialog();
           }
-        });
-      this.editMode = false;
-      this.successChange = true;
+        },
+        (error) => {
+          this.isSubmit = false;
+          this.editMode = false;
+          this.loading = false;
+          this.successChange = false;
+        }
+      );
     }
     this._locationForm['longitude'].disable();
     this._locationForm['latitude'].disable();
-    this.onCloseDialog();
   }
 }
