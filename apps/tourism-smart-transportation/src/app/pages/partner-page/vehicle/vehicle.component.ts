@@ -129,7 +129,14 @@ export class VehicleComponent
       publishYearId: [''],
       vehicleClassId: [''],
       name: ['', [Validators.required, validateEmty]],
-      licensePlates: ['', [Validators.required, validateEmty]],
+      licensePlates: [
+        '',
+        [
+          Validators.required,
+          validateEmty,
+          Validators.pattern(/^[0-9]{2}[A-Z]{1}[0-9]{1}-[0-9]{4,5}/),
+        ],
+      ],
       color: ['', [Validators.required, validateEmty]],
     });
   }

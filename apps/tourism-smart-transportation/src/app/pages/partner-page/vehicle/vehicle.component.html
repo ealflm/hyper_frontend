@@ -181,7 +181,7 @@
                       *ngIf="(_vehiclesForm['name'].errors?.['required'] || _vehiclesForm['name'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
 
@@ -203,7 +203,13 @@
                       *ngIf="(_vehiclesForm['licensePlates'].errors?.['required'] || _vehiclesForm['licensePlates'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
+                    >
+                    <small
+                      *ngIf="_vehiclesForm['licensePlates'].errors?.['pattern']"
+                      class="p-error"
+                    >
+                      Không đúng định dạng | Ví dụ: ( 51B2-12345 )</small
                     >
                   </div>
 
@@ -225,7 +231,7 @@
                       *ngIf="(_vehiclesForm['color'].errors?.['required'] || _vehiclesForm['color'].errors?.['whitespace']) && isSubmit "
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <input
@@ -251,7 +257,7 @@
                     <small
                       *ngIf="_vehiclesForm['serviceTypeId'].errors?.['required'] && isSubmit"
                       class="p-error"
-                      >không được trống</small
+                      >Không được trống</small
                     >
                   </div>
                   <p-dropdown
@@ -366,7 +372,7 @@
                       *ngIf="_vehiclesForm['vehicleTypeId'].errors?.['required'] && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống</small
+                      Không được bỏ trống</small
                     >
                   </div>
                   <p-dropdown
