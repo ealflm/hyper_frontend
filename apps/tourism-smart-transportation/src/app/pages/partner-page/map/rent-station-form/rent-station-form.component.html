@@ -1,3 +1,6 @@
+<tourism-smart-transportation-loading-progress
+  *ngIf="loading"
+></tourism-smart-transportation-loading-progress>
 <div class="rent-station-dialog">
   <p-dialog
     [header]="editMode ? 'Chỉnh sửa trạm thuê xe' : 'Tạo mới trạm thuê xe'"
@@ -36,7 +39,7 @@
                   *ngIf="_rent-stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
-                  không được bỏ trống</small
+                  Không được bỏ trống</small
                 > -->
                     </div>
 
@@ -58,7 +61,7 @@
                   *ngIf="_rent-stationsForm['title'].errors?.['required'] && isSubmit"
                   class="p-error"
                 >
-                  không được bỏ trống</small
+                  Không được bỏ trống</small
                 > -->
                     </div>
 
@@ -87,9 +90,7 @@
                   <div class="rent-station-text">
                     Tên Trạm
                     <small
-                      *ngIf="
-                _locationForm['title'].errors?.['required']
-            "
+                      *ngIf="_locationForm['title'].invalid && isSubmit"
                       class="p-error"
                     >
                       không được bỏ trống
@@ -106,14 +107,14 @@
                 <div class="col-12 rent-station-input-long">
                   <div class="rent-station-text">
                     Mô tả
-                    <small
+                    <!-- <small
                       *ngIf="
-                _locationForm['description'].errors?.['required']
+                _locationForm['description'].invalid
             "
                       class="p-error"
                     >
                       không được bỏ trống
-                    </small>
+                    </small> -->
                   </div>
                   <input
                     class="rent-station-input-text-long"
@@ -127,12 +128,10 @@
                   <div class="rent-station-text">
                     Địa chỉ
                     <small
-                      *ngIf="
-                _locationForm['address'].errors?.['required']
-            "
+                      *ngIf="_locationForm['address'].invalid && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống
+                      Không được bỏ trống
                     </small>
                   </div>
                   <input

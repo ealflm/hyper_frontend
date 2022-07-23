@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   //
   pieChartData: any;
   barChart: any;
+  barChartOption: any;
   constructor() {}
   ngOnInit() {
     // const data = {
@@ -90,7 +91,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //
 
     this.barChart = {
-      labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      labels: [
+        'Tháng 1',
+        'Tháng 2',
+        'Tháng 3',
+        'Tháng 4',
+        'Tháng 5',
+        'Tháng 6',
+        'Tháng 7',
+        'Tháng 8',
+        'Tháng 9',
+        'Tháng 10',
+        'Tháng 11',
+        'Tháng 12',
+      ],
       datasets: [
         {
           label: 'Danh thu từng tháng',
@@ -116,6 +130,28 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           borderWidth: 1,
         },
       ],
+    };
+    this.barChartOption = {
+      plugins: {
+        legend: {
+          labels: {
+            color: '#ebedef',
+          },
+        },
+      },
+      scales: {
+        y: {
+          ticks: {
+            callback: (data: any, index: any, labels: any) => {
+              return data + ' Triệu';
+            },
+          },
+
+          grid: {
+            color: 'rgba(255,255,255,0.2)',
+          },
+        },
+      },
     };
   }
   ngAfterViewInit(): void {}

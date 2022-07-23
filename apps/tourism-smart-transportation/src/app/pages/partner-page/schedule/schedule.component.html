@@ -312,7 +312,7 @@
                       Không được bỏ trống</small
                     >
                     <small
-                      *ngIf="_schedulesForm['timeEnd'].errors?.['MustMoreStart']"
+                      *ngIf="_schedulesForm['timeEnd'].errors?.['MustMoreStart'] && isSubmit"
                       class="p-error"
                     >
                       Thời gian kết thúc lớn hơn thời gian bắt đầu</small
