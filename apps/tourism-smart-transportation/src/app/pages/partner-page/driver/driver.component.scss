@@ -356,5 +356,8 @@
       }
     }
     @include custom-dropdown;
+    .p-rating-icon {
+      color: #f7b604 !important;
+    }
   }
 }

@@ -119,6 +119,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         vehicleName: [{ value: '', disabled: true }],
         createdDate: [{ value: '', disabled: true }],
         modifiedDate: [{ value: '', disabled: true }],
+        feedback: [0],
       },
       {
         validator: [AgeCheck('dateOfBirth')],
@@ -284,9 +285,14 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         res.body.gender ? res.body.gender.toString() : ''
       );
       this._driversForm['vehicleId'].setValue(res.body.vehicleId);
+      this._driversForm['feedback'].setValue(res.body.feedbackRating);
       if (res.body.vehicleName) {
         this._driversForm['vehicleName'].setValue(
-          res.body.vehicleTypeLabel + ' ' + res.body.vehicleName
+          res.body.vehicleTypeLabel +
+            ' ' +
+            res.body.vehicleName +
+            ' | ' +
+            res.body.licensePlates
         );
       }
 

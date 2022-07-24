@@ -187,7 +187,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 },
               ],
             };
-            console.log(this.barChart);
           }
         })
       )

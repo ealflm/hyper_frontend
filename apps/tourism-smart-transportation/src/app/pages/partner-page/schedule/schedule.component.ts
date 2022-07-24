@@ -11,7 +11,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DateOfWeek, DateOfWeekMap } from './../../../constant/dates';
 import { Vehicle } from './../../../models/VehicleResponse';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MenuFilterStatus } from './../../../constant/menu-filter-status';
+import {
+  MenuFilterStatus,
+  MenuFilterTrip,
+} from './../../../constant/menu-filter-status';
 import { Component, OnInit } from '@angular/core';
 import { Route } from '../../../models/RouteResponse';
 import { RouteService } from '../../../services/route.service';
@@ -31,7 +34,8 @@ import {
   styleUrls: ['./schedule.component.scss'],
 })
 export class ScheduleComponent implements OnInit {
-  menuValue = MenuFilterStatus;
+  menuValue = MenuFilterTrip;
+  filterStatus = 1;
   dialogDetail = false;
   editMode = false;
   displayDialog = false;
@@ -90,12 +94,11 @@ export class ScheduleComponent implements OnInit {
   // }
   private _getVehicleDropdown() {
     this.vehicleService
-      .getListVehicleDropdownForPartner(
-        this.partnerId,
-        ServiceTypeEnum.BusService
-      )
+      .getListVehicleByPartnerIdForPartner(this.partnerId, null, 1)
       .subscribe((vehicle) => {
-        this.vehicles = vehicle.body;
+        this.vehicles = vehicle.body.filter(
+          (value) => value.serviceTypeId === ServiceTypeEnum.BusService
+        );
       });
   }
   private _getRoutesDropdown() {
@@ -106,20 +109,18 @@ export class ScheduleComponent implements OnInit {
       });
   }
   private _getDriverDropdown() {
-    this.driverService
-      .getDriverByPartnerIdDropdown(this.partnerId)
+    this.tripService
+      .getDriverDropDown(this.partnerId)
       .pipe(
         map((driverRes) => {
-          this.drivers = driverRes.body.filter(
-            (value) => value.vehicleId == null
-          );
+          this.drivers = driverRes.body;
         })
       )
       .subscribe();
   }
   private _getListTrip(tripName?: string) {
     this.tripService
-      .getListTrip(this.partnerId, tripName)
+      .getListTrip(this.partnerId, tripName, this.filterStatus)
       .subscribe((tripRes) => {
         this.trips = tripRes.body.items;
       });
@@ -147,7 +148,10 @@ export class ScheduleComponent implements OnInit {
   onChangeFilterByName(e: any) {
     this._getListTrip(e.target.value);
   }
-  OnGetMenuClick(value: number) {}
+  OnGetMenuClick(value: number) {
+    this.filterStatus = value;
+    this._getListTrip();
+  }
   createSchedule() {
     this.displayDialog = true;
     this.isSubmit = false;
@@ -200,6 +204,7 @@ export class ScheduleComponent implements OnInit {
       this._schedulesForm['timeStart'].setValue(
         convertHoursToDateString(tripRes.body.timeStart)
       );
+
       this._schedulesForm['timeEnd'].setValue(
         convertHoursToDateString(tripRes.body.timeEnd)
       );
@@ -240,7 +245,7 @@ export class ScheduleComponent implements OnInit {
   }
   onSaveSchedule() {
     this.isSubmit = true;
-    // if (this.scheduleForm.invalid) return;
+    if (this.scheduleForm.invalid) return;
     this.loading = true;
     const trip: Trip = {
       routeId: this._schedulesForm['routeId'].value,
@@ -251,7 +256,6 @@ export class ScheduleComponent implements OnInit {
       timeStart: convertHoursMinutes(this._schedulesForm['timeStart'].value),
       timeEnd: convertHoursMinutes(this._schedulesForm['timeEnd'].value),
     };
-    console.log(trip);
 
     this.tripService.createTrip(trip).subscribe(
       (res) => {

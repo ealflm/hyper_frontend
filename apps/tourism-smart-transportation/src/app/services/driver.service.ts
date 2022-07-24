@@ -45,20 +45,20 @@ export class DriverService {
       params: queryParams,
     });
   }
-  getDriverByPartnerIdDropdown(
-    partnerId: string | null
-  ): Observable<DriversResponse> {
-    let queryParams = new HttpParams();
-    if (partnerId != null) {
-      queryParams = queryParams.append('PartnerId', partnerId);
-    }
-    return this.http.get<DriversResponse>(
-      `${this.partnerApiURL}/dropdown-options`,
-      {
-        params: queryParams,
-      }
-    );
-  }
+  // getDriverByPartnerIdDropdown(
+  //   partnerId: string | null
+  // ): Observable<DriversResponse> {
+  //   let queryParams = new HttpParams();
+  //   if (partnerId != null) {
+  //     queryParams = queryParams.append('PartnerId', partnerId);
+  //   }
+  //   return this.http.get<DriversResponse>(
+  //     `${this.partnerApiURL}/dropdown-options`,
+  //     {
+  //       params: queryParams,
+  //     }
+  //   );
+  // }
   getDriverById(id: string): Observable<DriverResponse> {
     return this.http.get<DriverResponse>(`${this.partnerApiURL}/${id}`);
   }
