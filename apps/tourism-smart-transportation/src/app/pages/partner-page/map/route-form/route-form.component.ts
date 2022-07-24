@@ -85,13 +85,18 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
       markerDiv.getElement().addEventListener('click', () => {
         if (!this.stations.includes(marker)) {
           this.stations = [...this.stations, marker];
+          this.stations.map((value) => {
+            elStationMarker.style.backgroundImage = `url('../../../assets/icons/bus-station-selected.svg')`;
+          });
           this._routesForm['stationList'].setValue(this.stations);
         } else {
-          this.messageService.add({
-            severity: 'warn',
-            summary: 'Cảnh báo',
-            detail: 'Trạm đã tồn tại!',
-          });
+          this.removeSationFormList(marker.id);
+          elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+          // this.messageService.add({
+          //   severity: 'warn',
+          //   summary: 'Cảnh báo',
+          //   detail: 'Trạm đã tồn tại!',
+          // });
         }
       });
       this.currentBusStationMarkers.push(markerDiv);
