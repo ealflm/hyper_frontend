@@ -17,6 +17,7 @@ export class Driver {
   vehicleTypeName?: string;
   serviceTypeName?: string;
   name?: string;
+  feedbackRating?: number;
 }
 
 export class DriversResponse {

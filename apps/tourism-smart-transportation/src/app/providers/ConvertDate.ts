@@ -8,8 +8,8 @@ export function convertTime(value: string) {
 export function convertHoursMinutes(value: string) {
   let hoursMinutes = '';
   const date = new Date(value);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
+  const hours = (date.getHours() < 10 ? '0' : '') + date.getHours();
+  const minutes = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
   hoursMinutes = hours + ':' + minutes;
   return hoursMinutes;
 }
@@ -33,7 +33,8 @@ export function convertHoursToDateString(time: string) {
     '-' +
     currentdate.getDate();
   const setTime = new Date(datetime);
-  return setTime.setHours(hours[0], hours[1]);
+  setTime.setHours(hours[0], hours[1]);
+  return setTime;
 }
 export function convertDateOfBirth(value: string) {
   const dobRes = new Date(value ? value.toString() : '');

@@ -32,10 +32,10 @@
       </span>
     </div>
   </div>
-  <!-- <tourism-smart-transportation-header-status
+  <tourism-smart-transportation-header-status
     [menuValue]="menuValue"
     (GetValueMenu)="OnGetMenuClick($event)"
-  ></tourism-smart-transportation-header-status> -->
+  ></tourism-smart-transportation-header-status>
   <div class="mt-5"></div>
   <div class="body-table">
     <p-table
@@ -87,8 +87,8 @@
           </td>
           <td>{{ trip?.tripName | limitLength: 20 }}</td>
           <td>{{ mapDate[trip?.dayOfWeek] }}</td>
-          <td>{{ trip?.timeStart | date: 'HH:mm' }}</td>
-          <td>{{ trip?.timeEnd | date: 'HH:mm' }}</td>
+          <td>{{ trip?.timeStart }}</td>
+          <td>{{ trip?.timeEnd }}</td>
           <td>
             <div [class]="status[trip?.status]?.class">
               {{ status[trip?.status]?.lable }}

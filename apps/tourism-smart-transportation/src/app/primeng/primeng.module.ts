@@ -24,6 +24,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { OrderListModule } from 'primeng/orderlist';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
   declarations: [],
@@ -52,6 +53,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     OrderListModule,
     ChartModule,
     ConfirmPopupModule,
+    RatingModule,
   ],
   exports: [
     CardModule,
@@ -78,6 +80,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     OrderListModule,
     ChartModule,
     ConfirmPopupModule,
+    RatingModule,
   ],
 })
 export class PrimengModule {}

@@ -16,6 +16,24 @@ export const MenuFilterStatus = [
     lable: 'Tất cả',
   },
 ];
+export const MenuFilterTrip = [
+  {
+    value: 1,
+    lable: 'Chuẩn bị',
+  },
+  {
+    value: 0,
+    lable: 'Đã ngừng chạy',
+  },
+  {
+    value: 2,
+    lable: 'Đang chạy',
+  },
+  {
+    value: null,
+    lable: 'Tất cả',
+  },
+];
 export const MenuFilterPartnerDetail = [
   {
     value: 1,

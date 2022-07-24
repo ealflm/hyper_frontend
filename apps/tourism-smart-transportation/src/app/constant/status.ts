@@ -177,6 +177,10 @@ export const STATUS_TRIP: any = {
     class: 'status-disabled',
   },
   1: {
+    lable: 'Chuẩn bị',
+    class: 'status-active',
+  },
+  2: {
     lable: 'Đang chạy',
     class: 'status-completed',
   },

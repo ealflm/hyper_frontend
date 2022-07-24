@@ -56,8 +56,7 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Họ và tên</th>
-          <th>Phương tiện</th>
-          <th>Dịch vụ</th>
+          <th>Phương tiện + Dịch vụ</th>
           <th>Giới tính</th>
           <th>Ngày sinh</th>
           <th>Số điện thoại</th>
@@ -82,8 +81,7 @@
               alt=""
             />&nbsp;{{ driver.firstName + ' ' + driver.lastName }}
           </td>
-          <td>{{ driver.licensePlates }}</td>
-          <td></td>
+          <td>{{ driver.licensePlates }} - {{ driver.serviceTypeName }}</td>
           <td>{{ driver.gender ? 'Nam' : 'Nữ' }}</td>
           <td>{{ driver.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
           <td>{{ driver.phone }}</td>
@@ -510,6 +508,15 @@
               <div class="col-6" style="margin-top: -25px">
                 <div class="col-12">
                   <div class="driver-subtitle">Thông tin khác</div>
+                </div>
+                <div class="col-12 driver-input-long" style="margin-top: 10px">
+                  <div class="driver-text">Đánh giá</div>
+                  <p-rating
+                    formControlName="feedback"
+                    [readonly]="true"
+                    [stars]="5"
+                    [cancel]="false"
+                  ></p-rating>
                 </div>
                 <div class="col-12 driver-input-long" style="margin-top: 10px">
                   <div class="driver-text">Ngày tạo</div>
