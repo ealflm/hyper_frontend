@@ -271,6 +271,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dialogDetail = true;
     this.displayDialog = false;
     this.disableForm();
+    this._getlistVehicleForBookCarService();
     this.driverService.getDriverById(id).subscribe((res) => {
       this.statusBiding = res.body.status ? res.body.status : 1;
       this._driversForm['id'].setValue(res.body.id);
