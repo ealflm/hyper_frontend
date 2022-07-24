@@ -1,3 +1,4 @@
+import { GongMapService } from './../../../../services/gong-map.service';
 import { validateEmty } from '../../../../providers/CustomValidators';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MapService } from './../../../../services/map.service';
@@ -60,7 +61,8 @@ export class FormStationComponent
     private mapService: MapService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private gongMapService: GongMapService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
@@ -163,6 +165,13 @@ export class FormStationComponent
   get _locationForm() {
     return this.locationForm.controls;
   }
+  private _setAddressAutoComplete(latlng: string) {
+    this.gongMapService.getAddressAutoCompleGongMap(latlng).subscribe((res) => {
+      res.results[0].formatted_address;
+      console.log(res.results[0].formatted_address);
+      this._locationForm['address'].setValue(res.results[0].formatted_address);
+    });
+  }
   addMarker() {
     const el = document.createElement('div');
     const width = 40;
@@ -183,6 +192,7 @@ export class FormStationComponent
           .addTo(this.mapboxService.miniMap);
         this._locationForm['longitude'].setValue(e.lngLat.lng);
         this._locationForm['latitude'].setValue(e.lngLat.lat);
+        this._setAddressAutoComplete(e.lngLat.lat + ',' + e.lngLat.lng);
         this.isInsidePolygon = true;
         marker.on('dragend', () => {
           const lngLat = marker.getLngLat();
@@ -192,6 +202,7 @@ export class FormStationComponent
             this.isInsidePolygon = true;
             this._locationForm['longitude'].setValue(lngLat.lng);
             this._locationForm['latitude'].setValue(lngLat.lat);
+            this._setAddressAutoComplete(lngLat.lat + ',' + lngLat.lng);
           } else {
             this.isInsidePolygon = false;
             this.messageService.add({
@@ -231,6 +242,7 @@ export class FormStationComponent
         this.isInsidePolygon = true;
         this._locationForm['longitude'].setValue(lngLat.lng);
         this._locationForm['latitude'].setValue(lngLat.lat);
+        this._setAddressAutoComplete(lngLat.lat + ',' + lngLat.lng);
       } else {
         this.isInsidePolygon = false;
         this.messageService.add({
