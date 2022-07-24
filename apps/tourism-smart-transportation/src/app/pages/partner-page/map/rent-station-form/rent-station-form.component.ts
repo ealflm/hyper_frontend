@@ -1,3 +1,4 @@
+import { GongMapService } from './../../../../services/gong-map.service';
 import { validateEmty } from '../../../../providers/CustomValidators';
 import { LocalStorageService } from './../../../../auth/localstorage.service';
 import { RentStation } from './../../../../models/RentStationResponse';
@@ -61,7 +62,8 @@ export class RentStationFormComponent
     private messageService: MessageService,
     private localStorageService: LocalStorageService,
     private confirmationService: ConfirmationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private gongMapService: GongMapService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.rentStationId) {
@@ -169,6 +171,13 @@ export class RentStationFormComponent
   get _locationForm() {
     return this.locationForm.controls;
   }
+  private _setAddressAutoComplete(latlng: string) {
+    this.gongMapService.getAddressAutoCompleGongMap(latlng).subscribe((res) => {
+      res.results[0].formatted_address;
+      console.log(res.results[0].formatted_address);
+      this._locationForm['address'].setValue(res.results[0].formatted_address);
+    });
+  }
   addMarker() {
     const el = document.createElement('div');
     const width = 30;
@@ -189,8 +198,8 @@ export class RentStationFormComponent
           .addTo(this.mapboxService.miniMap);
         this._locationForm['longitude'].setValue(e.lngLat.lng);
         this._locationForm['latitude'].setValue(e.lngLat.lat);
+        this._setAddressAutoComplete(e.lngLat.lat + ',' + e.lngLat.lng);
         this.isInsidePolygon = true;
-
         marker.on('dragend', () => {
           const lngLat = marker.getLngLat();
           if (
@@ -199,6 +208,7 @@ export class RentStationFormComponent
             this.isInsidePolygon = true;
             this._locationForm['longitude'].setValue(lngLat.lng);
             this._locationForm['latitude'].setValue(lngLat.lat);
+            this._setAddressAutoComplete(lngLat.lat + ',' + lngLat.lng);
           } else {
             this.isInsidePolygon = false;
             this.messageService.add({
@@ -238,6 +248,7 @@ export class RentStationFormComponent
         this.isInsidePolygon = true;
         this._locationForm['longitude'].setValue(lngLat.lng);
         this._locationForm['latitude'].setValue(lngLat.lat);
+        this._setAddressAutoComplete(lngLat.lat + ',' + lngLat.lng);
       } else {
         this.isInsidePolygon = false;
         this.messageService.add({
