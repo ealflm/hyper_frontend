@@ -36,7 +36,10 @@
     <div class="form-edit-container">
       <div class="grid p-fluid form-content">
         <div class="col-7">
-          <div class="map-box-container">
+          <div
+            class="map-box-container"
+            [ngClass]="blockLayout ? 'block-layout' : ''"
+          >
             <div #mapChild id="mini-map" class="map-container"></div>
           </div>
         </div>
