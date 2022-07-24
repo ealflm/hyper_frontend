@@ -145,6 +145,7 @@ export class MapBoxService {
   }
   trackingVehicle(geojson: any) {
     // console.log(geojson);
+
     this.removeLayerTracking();
     this.map.loadImage(
       'https://img.icons8.com/color/48/undefined/car--v1.png',
