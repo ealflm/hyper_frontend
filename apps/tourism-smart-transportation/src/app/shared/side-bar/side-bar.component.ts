@@ -34,9 +34,8 @@ export class SideBarComponent implements OnInit {
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
-    private mapboxService: MapBoxService
-  ) // private httpService: DashboardService
-  {}
+    private mapboxService: MapBoxService // private httpService: DashboardService
+  ) {}
 
   ngOnInit(): void {
     this.localStorage.setUserTokenDecode();
@@ -70,11 +69,11 @@ export class SideBarComponent implements OnInit {
       this.status = true;
       if (this.statusLink) {
         this.statusLink = false;
-        if (this.status) {
-          setTimeout(() => {
-            this.statusName = true;
-          }, 100);
-        }
+        // if (this.status) {
+        // setTimeout(() => {
+        this.statusName = true;
+        // }, 100);
+        // }
       }
     }
     // console.log(this.status);

@@ -217,9 +217,9 @@ ul {
 }
 
 .showName {
-  opacity: 1;
-  animation: ease-out;
-  animation-duration: 5s;
+  // opacity: 1;
+  // animation: ease-out;
+  // animation-duration: 5s;
 }
 
 .avatar-fade-up {
@@ -314,8 +314,8 @@ ul {
       align-items: center;
       justify-items: center;
       justify-content: space-around;
-      animation: ease-out;
-      animation-duration: 2s;
+      -webkit-animation: fadein 0.5s none ease-in-out;
+      animation: fadein 0.5s none ease-in-out;
       span {
         display: block;
       }
@@ -344,5 +344,27 @@ ul {
 
   100% {
     transform: translateY(0px);
+  }
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

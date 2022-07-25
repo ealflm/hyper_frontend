@@ -373,7 +373,9 @@
         <span>{{ user?.name | limitLength: 10 }} (Admin) </span>
         <i
           class="{{
-            displayAvatar ? 'pi pi-chevron-down' : 'pi pi-chevron-up'
+            displayAvatar && statusName
+              ? 'pi pi-chevron-down'
+              : 'pi pi-chevron-up'
           }}"
         ></i>
       </div>

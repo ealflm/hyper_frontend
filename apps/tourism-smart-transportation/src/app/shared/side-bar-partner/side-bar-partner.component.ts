@@ -99,9 +99,9 @@ export class SideBarPartnerComponent implements OnInit {
       if (this.statusLink) {
         this.statusLink = false;
         if (this.status) {
-          setTimeout(() => {
-            this.statusName = true;
-          }, 100);
+          // setTimeout(() => {
+          this.statusName = true;
+          // }, 100);
         }
       }
     }
