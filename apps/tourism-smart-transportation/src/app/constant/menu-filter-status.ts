@@ -114,3 +114,51 @@ export const MenuDataMap = [
     lable: 'Tuyến xe buýt',
   },
 ];
+export const MenuDataBusService = [
+  {
+    name: 'vehicle',
+    class: '',
+    hiddenCheckbox: false,
+    icon: 'directions_car',
+    lable: 'Phương tiện',
+  },
+  {
+    name: 'bus-station',
+    class: '',
+    hiddenCheckbox: false,
+    icon: 'directions_bus',
+    lable: 'Trạm xe buýt',
+  },
+  {
+    name: 'route',
+    class: '',
+    hiddenCheckbox: true,
+    icon: 'route',
+    lable: 'Tuyến xe buýt',
+  },
+];
+export const MenuDataRentService = [
+  {
+    name: 'vehicle',
+    class: '',
+    hiddenCheckbox: false,
+    icon: 'directions_car',
+    lable: 'Phương tiện',
+  },
+  {
+    name: 'rent-station',
+    class: '',
+    hiddenCheckbox: false,
+    icon: 'car_rental',
+    lable: 'Trạm thuê xe',
+  },
+];
+export const MenuDataBookService = [
+  {
+    name: 'vehicle',
+    class: '',
+    hiddenCheckbox: false,
+    icon: 'directions_car',
+    lable: 'Phương tiện',
+  },
+];

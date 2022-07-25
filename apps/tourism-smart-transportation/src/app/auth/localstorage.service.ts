@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 const TOKEN = 'jwtToken';
 const POWERBI_TOKEN = 'PowerBIToken';
+const PARTNER_ROLE = 'Role';
 @Injectable({
   providedIn: 'root',
 })
@@ -32,6 +33,7 @@ export class LocalStorageService {
         username: tokenDecode.Username,
         role: tokenDecode.Role,
         name: tokenDecode.FirstName + ' ' + tokenDecode.LastName,
+        serviceTypeList: tokenDecode.ServiceTypeList,
       };
       localStorage.setItem('user', JSON.stringify(user));
     }
@@ -46,5 +48,19 @@ export class LocalStorageService {
       user = JSON.parse(userStr ? userStr : '');
     }
     return user;
+  }
+  setRoleForPartner(role: any) {
+    localStorage.setItem(PARTNER_ROLE, JSON.stringify(role));
+  }
+  get getRolePartner() {
+    let role = localStorage.getItem(PARTNER_ROLE);
+    if (role) {
+      role = JSON.parse(role);
+      return role;
+    }
+    return null;
+  }
+  removeServiceToken() {
+    localStorage.removeItem(PARTNER_ROLE);
   }
 }

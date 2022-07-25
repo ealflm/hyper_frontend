@@ -2,6 +2,7 @@ import { UtilPaging } from './UtilPaging';
 export class Trip {
   tripId?: string;
   routeId?: string;
+  routeName?: string;
   vehicleId?: string;
   driverId?: string;
   tripName?: string;
