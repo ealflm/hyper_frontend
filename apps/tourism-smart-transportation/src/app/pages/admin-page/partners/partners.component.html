@@ -76,9 +76,7 @@
                     partner.photoUrl
               "
               alt=""
-            />&nbsp;{{
-              partner.firstName + ' ' + partner.lastName | limitLength: 10
-            }}
+            />{{ partner.firstName + ' ' + partner.lastName | limitLength: 10 }}
           </td>
           <td [pTooltip]="partner?.companyName" tooltipPosition="bottom">
             <!-- {{
@@ -277,6 +275,21 @@
                     class="p-error"
                     >Không được bỏ trống</small
                   >
+                  <small
+                    *ngIf="_inforsForm['firstName'].errors?.['minlength']"
+                    class="p-error"
+                    >Không được ít hơn 3 ký tự</small
+                  >
+                  <small
+                    *ngIf="_inforsForm['firstName'].errors?.['maxlength']"
+                    class="p-error"
+                    >Không được hơn 50 ký tự</small
+                  >&nbsp;
+                  <small
+                    *ngIf="_inforsForm['firstName'].errors?.['pattern']"
+                    class="p-error"
+                    >Không được có ký tự khác</small
+                  >
                 </div>
                 <input
                   class="partner-input-text-short"
@@ -294,6 +307,22 @@
                     *ngIf="(_inforsForm['lastName'].errors?.['required'] || _inforsForm['lastName'].errors?.['whitespace']) && isSubmit"
                     class="p-error"
                     >Không được bỏ trống</small
+                  >
+                  <small
+                    *ngIf="_inforsForm['lastName'].errors?.['minlength']"
+                    class="p-error"
+                    >Không được ít hơn 3 ký tự</small
+                  >
+                  <small
+                    *ngIf="_inforsForm['lastName'].errors?.['maxlength']"
+                    class="p-error"
+                    >Không được hơn 50 ký tự</small
+                  >
+                  &nbsp;
+                  <small
+                    *ngIf="_inforsForm['lastName'].errors?.['pattern']"
+                    class="p-error"
+                    >Không được có ký tự khác</small
                   >
                 </div>
                 <input
@@ -388,6 +417,16 @@
                     class="p-error"
                     >Không đúng định dạng email</small
                   >
+                  <small
+                    *ngIf="_inforsForm['email'].errors?.['minlength']"
+                    class="p-error"
+                    >Không được ít hơn 3 ký tự</small
+                  >
+                  <small
+                    *ngIf="_inforsForm['email'].errors?.['maxlength']"
+                    class="p-error"
+                    >Không được hơn 255 ký tự</small
+                  >
                 </div>
                 <input
                   class="partner-input-text-long"
@@ -405,6 +444,11 @@
                     *ngIf="_inforsForm['addressUser'].invalid && isSubmit"
                     class="p-error"
                     >Không được trống</small
+                  >
+                  <small
+                    *ngIf="_inforsForm['addressUser'].errors?.['minlength']"
+                    class="p-error"
+                    >Không được ít hơn 10 ký tự</small
                   >
                 </div>
                 <input
@@ -441,6 +485,11 @@
                     class="p-error"
                     >Không được trống</small
                   >
+                  <small
+                    *ngIf="_inforsForm['companyName'].errors?.['minlength']"
+                    class="p-error"
+                    >Không được ít hơn 3 ký tự</small
+                  >
                 </div>
                 <input
                   class="partner-input-text-long"
@@ -458,6 +507,11 @@
                     *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
                     class="p-error"
                     >Không được trống</small
+                  >
+                  <small
+                    *ngIf="_inforsForm['addressCompany'].errors?.['minlength']"
+                    class="p-error"
+                    >Không được ít hơn 10 ký tự</small
                   >
                 </div>
                 <input

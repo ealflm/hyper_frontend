@@ -81,6 +81,7 @@ export class BusPriceComponent implements OnInit {
   private _initPriceDefaultForm() {
     this.priceDefaultForm = this.fb.group(
       {
+        id: [''],
         maxDistance: ['', [Validators.required, Validators.min(0)]],
         minDistance: ['', [Validators.required, Validators.min(0)]],
         price: ['', [Validators.required, Validators.min(1)]],
@@ -115,7 +116,7 @@ export class BusPriceComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Thành công',
-            detail: 'Đã khóa đối tác',
+            detail: 'Đã xóa giá xe buýt thành công',
           });
           this.getAllBusPrice();
         });
@@ -124,37 +125,49 @@ export class BusPriceComponent implements OnInit {
   }
   updateBusPrice(id: string) {
     this.editMode = true;
-    this.displayDialog = true;
-    this.busConfigService
-      .getBusPriceById(id)
-      .subscribe((busPriceRes: BusPriceResponse) => {
-        this._busPriceForms['id'].setValue(busPriceRes.body.id);
-        this._busPriceForms['mode'].setValue(busPriceRes.body.mode);
-        this._busPriceForms['minRouteDistance'].setValue(
-          busPriceRes.body.minRouteDistance
-        );
-        this._busPriceForms['maxRouteDistance'].setValue(
-          busPriceRes.body.maxRouteDistance
-        );
-        this._busPriceForms['minDistance'].setValue(
-          busPriceRes.body.minDistance
-        );
-        this._busPriceForms['maxDistance'].setValue(
-          busPriceRes.body.maxDistance
-        );
-        this._busPriceForms['minStation'].setValue(busPriceRes.body.minStation);
-        this._busPriceForms['maxStation'].setValue(busPriceRes.body.maxStation);
-        this._busPriceForms['price'].setValue(busPriceRes.body.price);
-      });
+    // this.displayDialog = true;
+    this.displaySetPriceDefault = true;
+    this.busConfigService.getBusPriceById(id).subscribe((busPriceRes) => {
+      // this._busPriceForms['id'].setValue(busPriceRes.body.id);
+      // this._busPriceForms['mode'].setValue(busPriceRes.body.mode);
+      // this._busPriceForms['minRouteDistance'].setValue(
+      //   busPriceRes.body.minRouteDistance
+      // );
+      // this._busPriceForms['maxRouteDistance'].setValue(
+      //   busPriceRes.body.maxRouteDistance
+      // );
+      // this._busPriceForms['minDistance'].setValue(
+      //   busPriceRes.body.minDistance
+      // );
+      // this._busPriceForms['maxDistance'].setValue(
+      //   busPriceRes.body.maxDistance
+      // );
+      // this._busPriceForms['minStation'].setValue(busPriceRes.body.minStation);
+      // this._busPriceForms['maxStation'].setValue(busPriceRes.body.maxStation);
+      // this._busPriceForms['price'].setValue(busPriceRes.body.price);
+      this._priceDefaultForm['id'].setValue(
+        busPriceRes.body.basePriceOfBusServiceId
+      );
+      this._priceDefaultForm['price'].setValue(busPriceRes.body.price);
+      this._priceDefaultForm['minDistance'].setValue(
+        busPriceRes.body.minDistance / 1000
+      );
+      this._priceDefaultForm['maxDistance'].setValue(
+        busPriceRes.body.maxDistance / 1000
+      );
+    });
   }
   cancelDialog() {
-    this.displayDialog = false;
+    // this.displayDialog = false;
     this.displaySetPriceDefault = false;
     this.confirmationService.confirm({
       key: 'confirmCloseDialog',
       accept: () => {
         this.displaySetPriceDefault = true;
         // this.displayDialog = true;
+      },
+      reject: () => {
+        this.editMode = false;
       },
     });
   }
@@ -254,6 +267,7 @@ export class BusPriceComponent implements OnInit {
   createPriceDefault() {
     this.isSubmit = false;
     this.displaySetPriceDefault = true;
+    this.editMode = false;
     this.priceDefaultForm.reset();
   }
   onSavePriceDefautl() {
@@ -262,7 +276,35 @@ export class BusPriceComponent implements OnInit {
       return;
     }
     this.loading = true;
-    if (this.isSubmit) {
+    if (this.isSubmit && this.editMode) {
+      const busPriceUpdate: BusPrice = {
+        minDistance: this._priceDefaultForm['minDistance'].value * 1000,
+        maxDistance: this._priceDefaultForm['maxDistance'].value * 1000,
+        price: this._priceDefaultForm['price'].value,
+      };
+      this.busConfigService
+        .updateBusPrice(this._priceDefaultForm['id'].value, busPriceUpdate)
+        .subscribe(
+          (busPriceRes: any) => {
+            if (busPriceRes?.statusCode === 201) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Thành công',
+                detail: busPriceRes.message,
+              });
+              this.displaySetPriceDefault = false;
+              this.loading = false;
+              this.editMode = false;
+              this.getAllBusPrice();
+            }
+          },
+          (error) => {
+            this.displaySetPriceDefault = true;
+            this.editMode = true;
+            this.loading = false;
+          }
+        );
+    } else if (this.isSubmit && !this.editMode) {
       const busPriceUpdate: BusPrice = {
         minDistance: this._priceDefaultForm['minDistance'].value * 1000,
         maxDistance: this._priceDefaultForm['maxDistance'].value * 1000,
@@ -270,16 +312,14 @@ export class BusPriceComponent implements OnInit {
       };
       this.busConfigService.createBusPrice(busPriceUpdate).subscribe(
         (busPriceRes: any) => {
-          if (busPriceRes?.statusCode === 201) {
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Thành công',
-              detail: busPriceRes.message,
-            });
-            this.displaySetPriceDefault = false;
-            this.getAllBusPrice();
-            this.loading = false;
-          }
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: busPriceRes.message,
+          });
+          this.displaySetPriceDefault = false;
+          this.loading = false;
+          this.getAllBusPrice();
         },
         (error) => {
           this.displaySetPriceDefault = true;

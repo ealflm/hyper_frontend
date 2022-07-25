@@ -62,58 +62,40 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Tuyến đường (Km)</th>
-          <th>Khoảng cách (Km)</th>
-          <th>Số trạm</th>
+          <th>Khoảng cách bắt đầu (Km)</th>
+          <th>Khoảng cách kết thúc (Km)</th>
           <th pSortableColumn="price">
             <div>
               Giá
               <p-sortIcon field="price"></p-sortIcon>
             </div>
           </th>
-          <th>Chế độ</th>
           <th>Trạng thái</th>
-          <!-- <th>Hành động</th> -->
+          <th style="text-align: center">Hành động</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-busPrice let-i="rowIndex">
         <tr>
           <td>
-            {{ busPrice.baseMinDistance / 1000 }}-{{
-              busPrice.baseMaxDistance / 1000
-            }}
+            {{ busPrice.minDistance / 1000 }}
           </td>
           <td>
-            {{
-              busPrice?.mode === 'distance'
-                ? busPrice?.minDistance / 1000 +
-                  '-' +
-                  busPrice?.maxDistance / 1000
-                : '-'
-            }}
-          </td>
-          <td>
-            {{
-              busPrice?.mode === 'station'
-                ? busPrice?.minStation + '-' + busPrice?.maxStation
-                : '-'
-            }}
+            {{ busPrice?.maxDistance / 1000 }}
           </td>
           <td>
             {{ busPrice?.price | currency: busPrice?.price:'':'.0-0' }} VND
           </td>
-          <td>{{ busPrice?.mode === 'distance' ? 'Khoảng cách' : 'Trạm' }}</td>
 
           <td>
             <div [class]="busPriceStatus[busPrice.status].class">
               {{ busPriceStatus[busPrice.status].lable }}
             </div>
           </td>
-          <!-- <td style="text-align: center">
+          <td style="text-align: center">
             <span
               class="material-icons-outlined enable"
               style="margin-right: 10px"
-              (click)="onDeleteBusPrice(busPrice.id)"
+              (click)="onDeleteBusPrice(busPrice.basePriceOfBusServiceId)"
               *ngIf="busPrice.status !== 0"
             >
               delete
@@ -127,11 +109,11 @@
             </span>
             <span
               class="material-icons-outlined iconEdit"
-              (click)="updateBusPrice(busPrice.id)"
+              (click)="updateBusPrice(busPrice.basePriceOfBusServiceId)"
             >
               edit
             </span>
-          </td> -->
+          </td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
@@ -367,7 +349,7 @@
 <p-dialog
   [(visible)]="displaySetPriceDefault"
   header="Tạo giá khoảng cách tuyến"
-  [style]="{ width: '464px', height: '170px' }"
+  [style]="{ width: '464px', height: '180px' }"
   [contentStyle]="{
     'overflow-y': 'auto',
     'overflow-x': 'hidden',

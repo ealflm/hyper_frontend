@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import {
   AgeCheck,
   MustMatch,
+  NAME_REGEX,
   PHONE_NUMBER_REGEX,
   validateEmty,
 } from '../../../providers/CustomValidators';
@@ -120,19 +121,56 @@ export class PartnersComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         id: [''],
         // userName: ['', Validators.required],
-        firstName: ['', [Validators.required, validateEmty]],
-        lastName: ['', [Validators.required, validateEmty]],
-        companyName: ['', [Validators.required, validateEmty]],
+        firstName: [
+          '',
+          [
+            Validators.required,
+            validateEmty,
+            Validators.pattern(NAME_REGEX),
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
+        ],
+        lastName: [
+          '',
+          [
+            Validators.required,
+            validateEmty,
+            Validators.pattern(NAME_REGEX),
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
+        ],
+        companyName: [
+          '',
+          [Validators.required, validateEmty, Validators.minLength(3)],
+        ],
         // password: ['', Validators.required],
         // confirmPassword: ['', Validators.required],
-        addressUser: ['', [Validators.required, validateEmty]],
-        addressCompany: ['', [Validators.required, validateEmty]],
+        addressUser: [
+          '',
+          [Validators.required, validateEmty, Validators.minLength(10)],
+        ],
+        addressCompany: [
+          '',
+
+          [Validators.required, validateEmty, Validators.minLength(10)],
+        ],
         serviceType: ['', Validators.required],
         phone: [
           '',
           [Validators.required, Validators.pattern(PHONE_NUMBER_REGEX)],
         ],
-        email: ['', [Validators.required, Validators.email, validateEmty]],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.email,
+            validateEmty,
+            Validators.minLength(3),
+            Validators.maxLength(255),
+          ],
+        ],
         dateOfBirth: ['', Validators.required],
         selectedGender: ['', Validators.required],
         DeleteFile: [''],
