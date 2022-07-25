@@ -1,3 +1,4 @@
+import { ServiceTypeEnum } from './../../../constant/service-type';
 import { ServiceTypeService } from './../../../services/service-type.service';
 import { ServiceType } from './../../../models/ServiceTypeResponse';
 import { MenuFilterStatusDiscount } from './../../../constant/menu-filter-status';
@@ -88,7 +89,9 @@ export class DiscountComponent implements OnInit {
   }
   private _getServiceType() {
     this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
-      this.serviceTypes = serviceTypeRes.body.items;
+      this.serviceTypes = serviceTypeRes.body.items.filter(
+        (value: any) => value.id !== ServiceTypeEnum.BusService
+      );
     });
   }
   private _mapDiscountStatus() {

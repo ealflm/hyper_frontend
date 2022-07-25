@@ -1,3 +1,5 @@
+import { ServiceTypeEnum } from './../../constant/service-type';
+import { ServiceType } from './../../models/ServiceTypeResponse';
 import { PartnersService } from './../../services/partners.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './../../auth/localstorage.service';
@@ -22,6 +24,12 @@ export class SideBarPartnerComponent implements OnInit {
   user: any;
   partner!: Partner;
   photoUrl = '';
+  serviceTypeList: any;
+  checkServiceType = {
+    BusService: false,
+    RentService: false,
+    BookService: false,
+  };
   constructor(
     private localStorage: LocalStorageService,
     private router: Router,
@@ -32,6 +40,33 @@ export class SideBarPartnerComponent implements OnInit {
   ngOnInit(): void {
     this.localStorageService.setUserTokenDecode();
     this.user = this.localStorageService.getUser;
+    if (this.user) {
+      this.serviceTypeList = this.user.serviceTypeList.split('|');
+      if (
+        this.serviceTypeList.includes(ServiceTypeEnum.BusService) &&
+        this.serviceTypeList.includes(ServiceTypeEnum.RentCarService)
+      ) {
+        this.checkServiceType.BusService = true;
+        this.checkServiceType.BookService = true;
+        this.checkServiceType.RentService = true;
+        this.localStorage.setRoleForPartner(this.checkServiceType);
+      } else if (this.serviceTypeList.includes(ServiceTypeEnum.BusService)) {
+        this.checkServiceType.BusService = true;
+        this.checkServiceType.BookService = true;
+        this.localStorage.setRoleForPartner(this.checkServiceType);
+      } else if (
+        this.serviceTypeList.includes(ServiceTypeEnum.BookCarService)
+      ) {
+        this.checkServiceType.RentService = true;
+        this.checkServiceType.BookService = true;
+        this.localStorage.setRoleForPartner(this.checkServiceType);
+      } else if (
+        this.serviceTypeList.includes(ServiceTypeEnum.RentCarService)
+      ) {
+        this.checkServiceType.RentService = true;
+        this.localStorage.setRoleForPartner(this.checkServiceType);
+      }
+    }
     this._getPartnerProfile();
   }
   private _getPartnerProfile() {
@@ -90,6 +125,7 @@ export class SideBarPartnerComponent implements OnInit {
   onLogout() {
     this.localStorage.removeToken();
     this.localStorage.removeUserStorage();
+    this.localStorage.removeServiceToken();
     this.router.navigate(['login']);
   }
 }

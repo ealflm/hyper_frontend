@@ -1,3 +1,8 @@
+import {
+  MenuDataBusService,
+  MenuDataRentService,
+  MenuDataBookService,
+} from './../../../constant/menu-filter-status';
 import { RouteResponse } from './../../../models/RouteResponse';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -67,7 +72,7 @@ export class PartnerMapPageComponent
   geojson: any;
   trackingIntervel: any;
   partnerId = '';
-
+  checkRoleParner: any;
   //
 
   private subscription?: Subscription;
@@ -83,6 +88,22 @@ export class PartnerMapPageComponent
 
   ngOnInit(): void {
     const user = this.localStorageService.getUser;
+    this.checkRoleParner = this.localStorageService.getRolePartner;
+    console.log();
+    if (this.checkRoleParner.RentService && this.checkRoleParner.BusService) {
+      this.headerMenu = MenuDataMap;
+    } else if (
+      this.checkRoleParner.BusService &&
+      this.checkRoleParner.BookService
+    ) {
+      this.headerMenu = MenuDataBusService;
+    } else if (this.checkRoleParner.RentService) {
+      this.headerMenu = MenuDataRentService;
+    } else if (this.checkRoleParner.BookService) {
+      this.headerMenu = MenuDataBookService;
+    } else if (this.checkRoleParner.BusService) {
+      this.headerMenu = MenuDataBusService;
+    }
     if (user) {
       this.partnerId = user.id;
     }

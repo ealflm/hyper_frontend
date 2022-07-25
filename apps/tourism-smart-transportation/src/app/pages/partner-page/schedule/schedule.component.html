@@ -53,7 +53,8 @@
         <tr>
           <th>Tên</th>
           <th>Phương tiện</th>
-          <th>Tuyến</th>
+          <th>Chuyến đi</th>
+          <th>Tên Tuyến</th>
           <th>Ngày trong tuần</th>
           <th>Thời gian bắt đầu</th>
           <th>Thời gian kết thúc</th>
@@ -86,6 +87,7 @@
             {{ trip.vehicleName + ' ' + trip?.licensePlates }}
           </td>
           <td>{{ trip?.tripName | limitLength: 20 }}</td>
+          <td>{{ trip?.routeName }}</td>
           <td>{{ mapDate[trip?.dayOfWeek] }}</td>
           <td>{{ trip?.timeStart }}</td>
           <td>{{ trip?.timeEnd }}</td>

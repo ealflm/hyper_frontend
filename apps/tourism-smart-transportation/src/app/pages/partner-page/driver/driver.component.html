@@ -57,9 +57,9 @@
         <tr>
           <th>Họ và tên</th>
           <th>Phương tiện + Dịch vụ</th>
-          <th>Giới tính</th>
           <th>Ngày sinh</th>
           <th>Số điện thoại</th>
+          <th>Đánh giá</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
@@ -82,9 +82,17 @@
             />&nbsp;{{ driver.firstName + ' ' + driver.lastName }}
           </td>
           <td>{{ driver.licensePlates }} - {{ driver.serviceTypeName }}</td>
-          <td>{{ driver.gender ? 'Nam' : 'Nữ' }}</td>
           <td>{{ driver.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
           <td>{{ driver.phone }}</td>
+          <td *ngIf="driver.feedbackRating === 0">Chưa đánh giá</td>
+          <td *ngIf="driver.feedbackRating > 0">
+            <p-rating
+              ngModel="{{ driver.feedbackRating }}"
+              [readonly]="true"
+              [stars]="5"
+              [cancel]="false"
+            ></p-rating>
+          </td>
           <!-- <td>{{ driver.createdDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ driver.modifiedDate | date: 'dd/MM/yyyy' }}</td> -->
           <td>
@@ -512,11 +520,16 @@
                 <div class="col-12 driver-input-long" style="margin-top: 10px">
                   <div class="driver-text">Đánh giá</div>
                   <p-rating
+                    *ngIf="this._driversForm['feedback'].value > 0"
                     formControlName="feedback"
                     [readonly]="true"
                     [stars]="5"
                     [cancel]="false"
                   ></p-rating>
+
+                  <div *ngIf="this._driversForm['feedback'].value === 0">
+                    Chưa đánh giá
+                  </div>
                 </div>
                 <div class="col-12 driver-input-long" style="margin-top: 10px">
                   <div class="driver-text">Ngày tạo</div>

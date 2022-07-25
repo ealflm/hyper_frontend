@@ -160,6 +160,9 @@
               font-size: 20px;
             }
           }
+          .p-rating-icon {
+            color: #f7b604 !important;
+          }
         }
         tr:not(:first-child) {
           border-top: 1px solid $background-color-grey-secondary;

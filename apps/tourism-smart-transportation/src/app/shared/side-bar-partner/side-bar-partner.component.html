@@ -75,6 +75,7 @@
           </div>
         </li>
         <li
+          *ngIf="checkServiceType.BookService || checkServiceType.BusService"
           [class]="status ? 'nav-item' : 'nav-item-off '"
           routerLinkActive="active-link"
           #driver="routerLinkActive"
@@ -95,6 +96,11 @@
           </div>
         </li>
         <li
+          *ngIf="
+            checkServiceType.RentService ||
+            checkServiceType.BookService ||
+            checkServiceType.BusService
+          "
           [class]="status ? 'nav-item' : 'nav-item-off'"
           routerLinkActive="active-link"
           #vehicle="routerLinkActive"
@@ -119,6 +125,7 @@
         </li>
         <!-- Khuyến mãi -->
         <li
+          *ngIf="checkServiceType.BusService"
           [class]="status ? 'nav-item' : 'nav-item-off'"
           routerLinkActive="active-link"
           #schedule="routerLinkActive"
