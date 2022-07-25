@@ -222,8 +222,9 @@
     }
   }
 }
-.status-unpaid {
-  @include status-unpaid;
+.status-unlinked {
+  width: 139px !important;
+  @include status-unlinked;
 }
 .status-paid {
   @include status-paid;
@@ -234,7 +235,12 @@
 .status-active {
   @include status-active;
 }
-
+.status-completed {
+  @include status-completed;
+}
+.status-cancel {
+  @include status-unpaid;
+}
 ::ng-deep {
   p-dialog {
     .table-dialog {

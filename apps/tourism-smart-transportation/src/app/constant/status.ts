@@ -133,12 +133,16 @@ export const STATUS_CARD: any = {
 };
 export const STATUS_TRANSACTION: any = {
   0: {
-    lable: 'Chưa thanh toán',
-    class: 'status-unpaid',
+    lable: 'Hủy hóa đơn',
+    class: 'status-cancel',
   },
   1: {
-    lable: 'Đã thanh toán',
-    class: 'status-paid',
+    lable: 'Chưa thanh toán',
+    class: 'status-unlinked',
+  },
+  2: {
+    lable: 'Hoàn thành',
+    class: 'status-completed',
   },
 };
 export const STATUS_BUS_PRICE: any = {
