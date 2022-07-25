@@ -9,7 +9,7 @@ import { BusPrice, BusPricesResponse } from '../models/BusPriceResponse';
   providedIn: 'root',
 })
 export class BusConfigService {
-  apiUrl = environment.apiURL + 'admin/price-bus-service-config';
+  apiUrl = environment.apiURL + 'admin/base-price-bus-service';
   constructor(private http: HttpClient) {}
   getListBusPrice(status?: number | null): Observable<BusPricesResponse> {
     let queryParams = new HttpParams();
@@ -20,8 +20,8 @@ export class BusConfigService {
       params: queryParams,
     });
   }
-  getBusPriceById(id: string): Observable<BusPriceResponse> {
-    return this.http.get<BusPriceResponse>(`${this.apiUrl}/${id}`);
+  getBusPriceById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
   deleteBusPrice(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);

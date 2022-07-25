@@ -1,6 +1,20 @@
 export const MenuFilterStatus = [
   {
     value: 1,
+    lable: 'Kích hoạt',
+  },
+  {
+    value: 0,
+    lable: 'Vô hiệu hóa',
+  },
+  {
+    value: null,
+    lable: 'Tất cả',
+  },
+];
+export const MenuVehicleFilterStatus = [
+  {
+    value: 1,
     lable: 'Chuẩn bị',
   },
   {
@@ -9,6 +23,10 @@ export const MenuFilterStatus = [
   },
   {
     value: 2,
+    lable: 'Đang chạy',
+  },
+  {
+    value: 3,
     lable: 'Đã cho thuê',
   },
   {

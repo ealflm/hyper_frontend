@@ -185,6 +185,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
   onSave() {
     this.isSubmit = true;
     if (this.routeForm.invalid) return;
+
     if (!this.blockLayout) {
       this.messageService.add({
         severity: 'warn',
@@ -193,6 +194,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
       });
       return;
     }
+    this.loadingProgress = true;
     const routesDataSend: Route = {
       partnerId: this.partnerId,
       name: this._routesForm['routeName'].value,
@@ -201,9 +203,8 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
       stationList: this.childrenStationList,
     };
     if (this.blockLayout && this.isSubmit) {
-      this.routeService
-        .createRouteForPartner(routesDataSend)
-        .subscribe((res) => {
+      this.routeService.createRouteForPartner(routesDataSend).subscribe(
+        (res) => {
           if (res.statusCode === 201) {
             this.messageService.add({
               severity: 'success',
@@ -211,10 +212,15 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
               detail: 'Tạo tuyến đường thành công!',
             });
             setTimeout(() => {
+              this.loadingProgress = false;
               this.location.back();
-            }, 2000);
+            }, 500);
           }
-        });
+        },
+        (error) => {
+          this.loadingProgress = false;
+        }
+      );
     }
   }
 }

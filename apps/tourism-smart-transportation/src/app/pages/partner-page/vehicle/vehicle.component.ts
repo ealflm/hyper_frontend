@@ -16,7 +16,10 @@ import {
   distinctUntilChanged,
 } from 'rxjs';
 import { CategorySerivce } from './../../../services/category.service';
-import { MenuFilterStatus } from './../../../constant/menu-filter-status';
+import {
+  MenuFilterStatus,
+  MenuVehicleFilterStatus,
+} from './../../../constant/menu-filter-status';
 import { VehicleClass } from './../../../models/VehicleClassResponse';
 import { PublishYear } from './../../../models/PublishYearResponse';
 import { RentStation } from './../../../models/RentStationResponse';
@@ -53,7 +56,7 @@ export class VehicleComponent
   editMode = false;
   displayDialog = false;
   status: any = [];
-  menuValue = MenuFilterStatus;
+  menuValue = MenuVehicleFilterStatus;
   vehicles: Vehicle[] = [];
   vehicleForm!: FormGroup;
   vehicleTypes: VehicleType[] = [];

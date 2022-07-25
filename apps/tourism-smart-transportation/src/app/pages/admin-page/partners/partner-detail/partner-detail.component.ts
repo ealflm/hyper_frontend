@@ -15,6 +15,7 @@ import { PartnersService } from './../../../../services/partners.service';
 import { Component, OnInit } from '@angular/core';
 import {
   AgeCheck,
+  NAME_REGEX,
   PHONE_NUMBER_REGEX,
   validateEmty,
 } from '../../../../providers/CustomValidators';
@@ -155,23 +156,35 @@ export class PartnerDetailComponent implements OnInit {
         id: [''],
         firstName: [
           { value: '', disabled: true },
-          [Validators.required, validateEmty],
+          [
+            Validators.required,
+            validateEmty,
+            Validators.pattern(NAME_REGEX),
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
         ],
         lastName: [
           { value: '', disabled: true },
-          [Validators.required, validateEmty],
+          [
+            Validators.required,
+            validateEmty,
+            Validators.pattern(NAME_REGEX),
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
         ],
         companyName: [
           { value: '', disabled: true },
-          [Validators.required, validateEmty],
+          [Validators.required, validateEmty, Validators.minLength(3)],
         ],
         addressUser: [
           { value: '', disabled: true },
-          [Validators.required, validateEmty],
+          [Validators.required, validateEmty, Validators.minLength(10)],
         ],
         addressCompany: [
           { value: '', disabled: true },
-          [Validators.required, validateEmty],
+          [Validators.required, validateEmty, Validators.minLength(10)],
         ],
         serviceType: [{ value: '', disabled: true }, Validators.required],
         phone: [
@@ -180,7 +193,13 @@ export class PartnerDetailComponent implements OnInit {
         ],
         email: [
           { value: '', disabled: true },
-          [Validators.required, Validators.email, validateEmty],
+          [
+            Validators.required,
+            Validators.email,
+            validateEmty,
+            Validators.minLength(3),
+            Validators.maxLength(255),
+          ],
         ],
         dateOfBirth: [{ value: '', disabled: true }, Validators.required],
         selectedGender: [{ value: '', disabled: true }, Validators.required],
