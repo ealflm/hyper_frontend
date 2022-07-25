@@ -51,9 +51,9 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Tên</th>
-          <th>Phương tiện</th>
           <th>Chuyến đi</th>
+          <th>Tên tài xế</th>
+          <th>Phương tiện</th>
           <th>Tên Tuyến</th>
           <th>Ngày trong tuần</th>
           <th>Thời gian bắt đầu</th>
@@ -64,6 +64,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-trip let-i="rowIndex">
         <tr>
+          <td>{{ trip?.tripName | limitLength: 20 }}</td>
           <td
             class="tb-name"
             [pTooltip]="trip.driverFirstName + ' ' + trip.driverLastName"
@@ -86,7 +87,6 @@
           <td>
             {{ trip.vehicleName + ' ' + trip?.licensePlates }}
           </td>
-          <td>{{ trip?.tripName | limitLength: 20 }}</td>
           <td>{{ trip?.routeName }}</td>
           <td>{{ mapDate[trip?.dayOfWeek] }}</td>
           <td>{{ trip?.timeStart }}</td>
