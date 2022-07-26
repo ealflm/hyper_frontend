@@ -1,0 +1,101 @@
+@import '../../../../styles.scss';
+::ng-deep {
+  .driver-history {
+    margin: 2rem;
+    width: auto;
+    height: 95vh;
+    background-color: $white-primary-color;
+    border-radius: 9px;
+    .container {
+      height: 100%;
+      padding: 1.5rem;
+    }
+    .container {
+      position: relative;
+      background-image: linear-gradient(
+        to bottom,
+        #000 40%,
+        rgba(255, 255, 255, 0) 20%
+      );
+      background-position: right;
+      background-size: 1px 15px;
+      background-repeat: repeat-y;
+      // border-right: 1px dotted $black-default;
+      height: 90vh;
+      text-align: center;
+    }
+    .container-name {
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      transform: translate(50%, -50%);
+
+      .driver-avatar {
+        img {
+          border-radius: 50%;
+          width: 150px;
+          height: 150px;
+          object-fit: cover;
+        }
+      }
+      .driver-body-content {
+        text-align: center;
+        .driver-subtitle {
+          @include font-Roboto-Medium-Subtitle2;
+          color: $black-default;
+        }
+        .driver-content {
+          padding: 5px;
+        }
+      }
+      .p-rating-icon {
+        color: #f7b604 !important;
+      }
+    }
+    .card {
+      padding: 0 20px;
+      margin: 15px 5px;
+      width: 99%;
+      height: 100px;
+      border-radius: 9px;
+      // background-image: url(../../../../assets/image/plane.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      box-shadow: 2px 0px 12px rgb(0 0 0 / 12%);
+      background-color: $background-grey;
+      .serivce-name {
+        padding-top: 5px;
+        text-align: center;
+      }
+      .p-rating-icon {
+        color: #f7b604 !important;
+      }
+      &:hover {
+        cursor: pointer;
+        background-color: white;
+      }
+    }
+    .history-content {
+    }
+    .container-history {
+      text-align: center;
+      .driver-history-card {
+        width: 100%;
+        height: 69px;
+        overflow: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .spacing {
+        height: 10px;
+      }
+    }
+
+    &-title {
+      @include font-Roboto-Medium-H6;
+      color: $black-default;
+    }
+  }
+}

@@ -34,7 +34,7 @@ export class DataMapComponent
 
   @Output() GetFillterValue: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetValueCheckBox: EventEmitter<any> = new EventEmitter<any>();
-  fillterValue?: string = 'vehicle';
+  @Input() fillterValue?: string = 'vehicle';
   constructor(private cd: ChangeDetectorRef) {}
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
