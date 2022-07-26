@@ -32,6 +32,7 @@ import {
 } from 'rxjs';
 import { VehicleService } from '../../../services/vehicle.service';
 import { Gender } from '../../../constant/gender';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tourism-smart-transportation-driver',
@@ -70,7 +71,8 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     private vehicleService: VehicleService,
     private confirmationService: ConfirmationService,
     private cd: ChangeDetectorRef,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -295,6 +297,8 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
             ' | ' +
             res.body.licensePlates
         );
+      } else {
+        this._driversForm['vehicleName'].setValue('');
       }
 
       res.body.photoUrl == '' || res.body?.photoUrl == null
@@ -314,6 +318,9 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
         this.hiddenDropdownVehicle = false;
       }
     });
+  }
+  viewDriverTripHistoy(id: string) {
+    this.router.navigate([`partner/driver-trip-history/${id}`]);
   }
   enableForm() {
     this._driversForm['firstName'].enable();

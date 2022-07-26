@@ -117,10 +117,18 @@
 
             <span
               class="material-icons-outlined iconVisit"
-              style="margin-left: 10px"
+              style="margin: 0 10px"
               (click)="viewDriverDetail(driver.id)"
             >
               visibility
+            </span>
+            <span
+              class="material-icons-outlined iconVisit"
+              pTooltip="Lịch sử chuyến đi"
+              tooltipPosition="left"
+              (click)="viewDriverTripHistoy(driver.id)"
+            >
+              history
             </span>
           </td>
         </tr>

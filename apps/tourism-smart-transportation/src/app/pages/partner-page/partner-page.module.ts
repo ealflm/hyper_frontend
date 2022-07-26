@@ -1,3 +1,4 @@
+import { DriverTripHistoryComponent } from './driver-trip-history/driver-trip-history.component';
 import { PipeModule } from './../../pipe/pipe.module';
 import { PartnerGuard } from './../../auth/partner.guard';
 import { ComponentsModule } from './../../components/components.module';
@@ -40,6 +41,10 @@ const PARTNER_ROUTES: Routes = [
       },
       { path: 'partner/dashboard', component: DashboardComponent },
       { path: 'partner/driver', component: DriverComponent },
+      {
+        path: 'partner/driver-trip-history/:id',
+        component: DriverTripHistoryComponent,
+      },
       { path: 'partner/vehicle', component: VehicleComponent },
       { path: 'partner/schedule', component: ScheduleComponent },
       { path: 'partner/map', component: PartnerMapPageComponent },
@@ -55,6 +60,7 @@ const PARTNER_ROUTES: Routes = [
     SideBarPartnerComponent,
     DashboardComponent,
     DriverComponent,
+    DriverTripHistoryComponent,
     VehicleComponent,
     ScheduleComponent,
     PartnerMapPageComponent,
