@@ -177,15 +177,11 @@ export const STATUS_VEHICLE_BOOKING_PRICE: any = {
 };
 export const STATUS_TRIP: any = {
   0: {
-    lable: 'Đã ngừng chạy',
+    lable: 'Vô hiệu hóa',
     class: 'status-disabled',
   },
   1: {
-    lable: 'Chuẩn bị',
+    lable: 'Hoạt động',
     class: 'status-active',
-  },
-  2: {
-    lable: 'Đang chạy',
-    class: 'status-completed',
   },
 };

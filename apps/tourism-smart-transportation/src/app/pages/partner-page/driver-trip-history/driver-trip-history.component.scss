@@ -10,7 +10,7 @@
       height: 100%;
       padding: 1.5rem;
     }
-    .container {
+    .container-driver {
       position: relative;
       background-image: linear-gradient(
         to bottom,
@@ -63,7 +63,7 @@
       background-repeat: no-repeat;
       background-size: cover;
       box-shadow: 2px 0px 12px rgb(0 0 0 / 12%);
-      background-color: $background-grey;
+      background-color: white;
       .serivce-name {
         padding-top: 5px;
         text-align: center;
@@ -72,8 +72,7 @@
         color: #f7b604 !important;
       }
       &:hover {
-        cursor: pointer;
-        background-color: white;
+        background-color: $background-grey;
       }
     }
     .history-content {

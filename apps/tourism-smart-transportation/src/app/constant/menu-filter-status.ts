@@ -37,16 +37,13 @@ export const MenuVehicleFilterStatus = [
 export const MenuFilterTrip = [
   {
     value: 1,
-    lable: 'Chuẩn bị',
+    lable: 'Hoạt động',
   },
   {
     value: 0,
-    lable: 'Đã ngừng chạy',
+    lable: 'Vô hiệu hóa',
   },
-  {
-    value: 2,
-    lable: 'Đang chạy',
-  },
+
   {
     value: null,
     lable: 'Tất cả',

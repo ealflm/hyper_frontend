@@ -1,6 +1,6 @@
 import { LocalStorageService } from './../../../auth/localstorage.service';
 import { DashboardService } from './../../../services/dashboard.service';
-import { map, Subscription } from 'rxjs';
+import { isEmpty, map, Subscription } from 'rxjs';
 import {
   Component,
   ElementRef,
@@ -156,37 +156,66 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       .getRevenueOfMonthForPartner(this.partnerId)
       .pipe(
         map((res) => {
-          let labels: any = [];
-          let data: any = [];
-          for (const [key, value] of Object.entries(res.body[year])) {
-            labels = [...labels, 'Tháng ' + key];
-            data = [...data, value];
-            this.barChart = {
-              labels: labels,
+          // console.log(Object.keys(res.body).length !== 0);
+
+          if (Object.keys(res.body).length === 0) {
+            const data = {
+              labels: [
+                'Tháng 1',
+                'Tháng 2',
+                'Tháng 3',
+                'Tháng 4',
+                'Tháng 5',
+                'Tháng 6',
+                'Tháng 7',
+              ],
               datasets: [
                 {
-                  label: 'Danh thu từng tháng',
-                  data: data,
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
+                  label: 'Looping tension',
+                  data: [
+                    6500000, 5900000, 8000000, 8100000, 2600000, 5500000,
+                    4000000,
                   ],
-                  borderColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(54, 162, 235)',
-                    'rgb(153, 102, 255)',
-                  ],
-                  borderWidth: 1,
+                  fill: false,
+                  borderColor: 'rgb(75, 192, 192)',
                 },
               ],
             };
+            this.barChart = data;
+          } else {
+            let labels: any = [];
+            let data: any = [];
+            for (const [key, value] of Object.entries(res.body[year])) {
+              labels = [...labels, 'Tháng ' + key];
+              data = [...data, value];
+              this.barChart = {
+                labels: labels,
+                datasets: [
+                  {
+                    label: 'Danh thu từng tháng',
+                    data: data,
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 205, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                    ],
+                    borderColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(255, 159, 64)',
+                      'rgb(255, 205, 86)',
+                      'rgb(75, 192, 192)',
+                      'rgb(54, 162, 235)',
+                      'rgb(153, 102, 255)',
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              };
+              // console.log(this.barChart);
+            }
           }
         })
       )

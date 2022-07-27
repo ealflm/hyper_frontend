@@ -1,3 +1,5 @@
+import { ActivatedRoute } from '@angular/router';
+import { DriverService } from './../../../services/driver.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +9,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DriverTripHistoryComponent implements OnInit {
   driverRating = 4;
-  constructor() {}
+  driverHistoryTrip: any = {
+    driver: {},
+    history: [],
+  };
+  loading = false;
 
-  ngOnInit(): void {}
+  constructor(
+    private driverService: DriverService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.loading = true;
+    this.route.paramMap.subscribe((params) => {
+      const driverId = params.get('id');
+      if (driverId) {
+        this.driverService.getHistoryTrip(driverId).subscribe(
+          (driverHistoryTripRes) => {
+            this.driverHistoryTrip.driver =
+              driverHistoryTripRes.body.items[0].driver;
+            this.driverHistoryTrip.history =
+              driverHistoryTripRes.body.items[0].history;
+            console.log(this.driverHistoryTrip);
+            this.loading = false;
+          },
+          (error) => {
+            this.loading = false;
+          }
+        );
+      }
+    });
+  }
 }

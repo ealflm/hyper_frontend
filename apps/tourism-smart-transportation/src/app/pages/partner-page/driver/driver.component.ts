@@ -320,7 +320,7 @@ export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   viewDriverTripHistoy(id: string) {
-    this.router.navigate([`partner/driver-trip-history/${id}`]);
+    this.router.navigate([`partner/driver/trip-history/${id}`]);
   }
   enableForm() {
     this._driversForm['firstName'].enable();
