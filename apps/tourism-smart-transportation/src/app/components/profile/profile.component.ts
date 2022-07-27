@@ -245,6 +245,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
   onChangePassword() {
     this.changePasswordDialog = true;
+    this.changePassForm.reset();
   }
   onSavePassword() {
     if (this.changePassForm.invalid) return;
