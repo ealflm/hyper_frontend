@@ -6,7 +6,13 @@ import { PartnersService } from './../../services/partners.service';
 import { LocalStorageService } from './../../auth/localstorage.service';
 import { STATUS_PARTNER } from './../../constant/status';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ElementRef,
+  Renderer2,
+} from '@angular/core';
 import { AgeCheck, MustMatch } from '../../providers/CustomValidators';
 import { DatePipe } from '@angular/common';
 import { Gender } from '../../constant/gender';
@@ -17,7 +23,7 @@ import { convertDateToVN } from '../../providers/ConvertDate';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, AfterViewInit {
   inforForm!: FormGroup;
   changePassForm!: FormGroup;
   imagePreview?: string | ArrayBuffer | null =
@@ -31,12 +37,15 @@ export class ProfileComponent implements OnInit {
   profile: any;
   serviceTypes: ServiceType[] = [];
   loading = false;
+  walletStatus = false;
   constructor(
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
     private partnerService: PartnersService,
     private serviceTypeService: ServiceTypeService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private renderer: Renderer2,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +57,10 @@ export class ProfileComponent implements OnInit {
       this._getServiceType();
       this._getProfileUser();
     }
+  }
+  ngAfterViewInit(): void {}
+  changeValueCheckBox() {
+    this.walletStatus = !this.walletStatus;
   }
   private _getProfileUser() {
     if (this.profile.role === 'Partner') {
