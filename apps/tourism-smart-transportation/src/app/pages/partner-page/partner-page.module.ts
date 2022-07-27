@@ -42,7 +42,7 @@ const PARTNER_ROUTES: Routes = [
       { path: 'partner/dashboard', component: DashboardComponent },
       { path: 'partner/driver', component: DriverComponent },
       {
-        path: 'partner/driver-trip-history/:id',
+        path: 'partner/driver/trip-history/:id',
         component: DriverTripHistoryComponent,
       },
       { path: 'partner/vehicle', component: VehicleComponent },

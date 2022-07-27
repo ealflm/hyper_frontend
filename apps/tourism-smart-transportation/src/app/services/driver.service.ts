@@ -71,4 +71,11 @@ export class DriverService {
   createDriver(driver: Driver): Observable<any> {
     return this.http.post<Driver>(`${this.partnerApiURL}`, driver);
   }
+  getHistoryTrip(driverId: string): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('DriverId', driverId);
+    return this.http.get<any>(`${this.partnerApiURL}/history-trip`, {
+      params: queryParams,
+    });
+  }
 }
