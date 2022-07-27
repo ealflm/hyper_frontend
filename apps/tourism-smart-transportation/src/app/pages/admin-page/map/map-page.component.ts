@@ -448,7 +448,7 @@ export class MapPageComponent
   }
 
   //Call API Station
-  getBusStationMarkers() {
+  public getBusStationMarkers() {
     this.mapService
       .getStationOnMap()
       .pipe(
@@ -565,7 +565,7 @@ export class MapPageComponent
     }
   }
 
-  setBusStationMarkers(busStations: Station[]) {
+  public setBusStationMarkers(busStations: Station[]) {
     busStations.map((marker) => {
       const elStationMarker = document.createElement('div');
       elStationMarker.id = marker.id;
@@ -594,7 +594,7 @@ export class MapPageComponent
       this.currentBusStationMarkers.push(markerDiv);
     });
   }
-  removeBusStationMarker() {
+  public removeBusStationMarker() {
     if (this.currentBusStationMarkers !== null) {
       for (let i = this.currentBusStationMarkers.length - 1; i >= 0; i--) {
         this.currentBusStationMarkers[i].remove();

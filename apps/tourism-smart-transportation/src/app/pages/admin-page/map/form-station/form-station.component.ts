@@ -2,7 +2,11 @@ import { GongMapService } from './../../../../services/gong-map.service';
 import { validateEmty } from '../../../../providers/CustomValidators';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MapService } from './../../../../services/map.service';
-import { Station, StationResponse } from './../../../../models/StationResponse';
+import {
+  Station,
+  StationResponse,
+  StationsResponse,
+} from './../../../../models/StationResponse';
 import { map } from 'rxjs';
 import { FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
 import { environment } from './../../../../../environments/environment.prod';
@@ -23,6 +27,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
+import { MapPageComponent } from '../map-page.component';
 
 @Component({
   selector: 'tourism-smart-transportation-form-station',
@@ -50,6 +55,9 @@ export class FormStationComponent
   markerArray: any[] = [];
   //
   locationForm!: FormGroup;
+  busStationsOnMap: Station[] = [];
+  currentBusStationMarkers: any = [];
+
   editMode = false;
   successChange = false;
   isSubmit = false;
@@ -77,6 +85,7 @@ export class FormStationComponent
   }
   ngOnInit(): void {
     this._initLocationForm();
+    this.getBusStationMarkers();
   }
   // khoi tao dom
   ngAfterViewInit() {
@@ -85,8 +94,12 @@ export class FormStationComponent
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.iniViewMiniMapAdmin$.value) {
+      this.getBusStationMarkers();
+      console.log('chạy');
+
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
+      this.setBusStationMarkers(this.busStationsOnMap);
       if (this.idStation) {
         this.editMode = true;
         this.mapService
@@ -117,6 +130,7 @@ export class FormStationComponent
         this.editMode = false;
         this.isSubmit = false;
       }
+      // this.removeBusStationMarker();
       this.mapboxService.iniViewMiniMapAdmin$.next(true);
     }
   }
@@ -174,8 +188,8 @@ export class FormStationComponent
   }
   addMarker() {
     const el = document.createElement('div');
-    const width = 40;
-    const height = 40;
+    const width = 30;
+    const height = 30;
     el.className = 'marker';
     el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
     el.style.width = `${width}px`;
@@ -225,8 +239,8 @@ export class FormStationComponent
   setSationMarker(longitude: number, latitude: number) {
     this.isInsidePolygon = true;
     const el = document.createElement('div');
-    const width = 40;
-    const height = 40;
+    const width = 30;
+    const height = 30;
     el.className = 'marker';
     el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
     el.style.width = `${width}px`;
@@ -361,6 +375,57 @@ export class FormStationComponent
   //   this.locationsForm.removeAt(i);
   // }
   //
+  public getBusStationMarkers() {
+    this.mapService
+      .getStationOnMap()
+      .pipe(
+        map((stationRes: StationsResponse) => {
+          this.busStationsOnMap = stationRes.body.items.map(
+            (station: Station) => {
+              return {
+                id: station.id,
+                title: station.title,
+                description: station.description,
+                address: station.address,
+                longitude: station.longitude,
+                latitude: station.latitude,
+                status: station.status,
+              };
+            }
+          );
+        })
+      )
+      .subscribe();
+  }
+  public setBusStationMarkers(busStations: Station[]) {
+    busStations.map((marker) => {
+      const elStationMarker = document.createElement('div');
+      elStationMarker.id = marker.id;
+      const width = 25;
+      const height = 25;
+      elStationMarker.className = 'marker';
+      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      elStationMarker.style.width = `${width}px`;
+      elStationMarker.style.height = `${height}px`;
+      elStationMarker.style.backgroundSize = '100%';
+      elStationMarker.style.cursor = 'pointer';
+
+      const markerDiv = new mapboxgl.Marker(elStationMarker)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapboxService.miniMap);
+      markerDiv.getElement().addEventListener('click', () => {
+        alert('bạn không thể đặt trạm ở đây');
+      });
+      this.currentBusStationMarkers.push(markerDiv);
+    });
+  }
+  public removeBusStationMarker() {
+    if (this.currentBusStationMarkers !== null) {
+      for (let i = this.currentBusStationMarkers.length - 1; i >= 0; i--) {
+        this.currentBusStationMarkers[i].remove();
+      }
+    }
+  }
   addMutipleMarkers() {
     this.mapboxService.miniMap.on('click', (e) => {
       const el = document.createElement('div');

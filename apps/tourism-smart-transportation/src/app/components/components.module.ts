@@ -23,6 +23,8 @@ import { LoadingComponent } from './loading/loading.component';
 import { LoadingProgressComponent } from './loading-progress/loading-progress.component';
 import { ConfirmCloseDialogComponent } from './confirm-close-dialog/confirm-close-dialog.component';
 import { CardCreditComponent } from './card/card-credit.component';
+import { SwitchTabsComponent } from './switch-tabs/switch-tabs.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { CardCreditComponent } from './card/card-credit.component';
     LoadingProgressComponent,
     ConfirmCloseDialogComponent,
     CardCreditComponent,
+    SwitchTabsComponent,
+    WalletComponent,
   ],
   exports: [
     StationDetailComponent,
@@ -68,6 +72,8 @@ import { CardCreditComponent } from './card/card-credit.component';
     LoadingProgressComponent,
     ConfirmCloseDialogComponent,
     CardCreditComponent,
+    SwitchTabsComponent,
+    WalletComponent,
   ],
   imports: [
     CommonModule,
