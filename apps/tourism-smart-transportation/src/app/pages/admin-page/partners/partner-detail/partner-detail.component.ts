@@ -254,8 +254,8 @@ export class PartnerDetailComponent implements OnInit {
   onChangeEdit() {
     this.editModeStatus = !this.editModeStatus;
 
-    this._inforsForm['firstName'].enable();
-    this._inforsForm['lastName'].enable();
+    // this._inforsForm['firstName'].enable();
+    // this._inforsForm['lastName'].enable();
     this._inforsForm['companyName'].enable();
     this._inforsForm['addressUser'].enable();
     this._inforsForm['addressCompany'].enable();
@@ -284,8 +284,8 @@ export class PartnerDetailComponent implements OnInit {
     this.loading = true;
     const formData = new FormData();
     const idPartner = this._inforsForm['id'].value;
-    formData.append('FirstName', this._inforsForm['firstName'].value);
-    formData.append('LastName', this._inforsForm['lastName'].value);
+    // formData.append('FirstName', this._inforsForm['firstName'].value);
+    // formData.append('LastName', this._inforsForm['lastName'].value);
     formData.append('CompanyName', this._inforsForm['companyName'].value);
     formData.append('Address1', this._inforsForm['addressUser'].value);
     formData.append('Address2', this._inforsForm['addressCompany'].value);

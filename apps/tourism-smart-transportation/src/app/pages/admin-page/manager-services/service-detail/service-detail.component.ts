@@ -95,7 +95,9 @@ export class ServiceDetailComponent implements OnInit {
         : (this.imagePreview = `https://se32.blob.core.windows.net/admin/${packageRes.body?.photoUrl}`);
       this.deleteFile = packageRes.body?.photoUrl?.trim();
       packageRes.body.packageItems.map((packageValue: any, index: any) => {
-        if (index - 1) {
+        // console.log(index);
+
+        if (index) {
           this.addNewPackgeForm();
         }
         this._packagesForm
@@ -310,9 +312,9 @@ export class ServiceDetailComponent implements OnInit {
               detail: res.message,
             });
             this.loading = false;
-            if (!this.loading) {
-              this.router.navigate(['admin/manage-service']);
-            }
+            // if (!this.loading) {
+            //   this.router.navigate(['admin/manage-service']);
+            // }
           }
         },
         (error: HttpErrorResponse) => {
