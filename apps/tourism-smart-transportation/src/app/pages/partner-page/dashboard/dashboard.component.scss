@@ -15,7 +15,15 @@
       align-items: center;
     }
     .header-card {
-      margin: 20px;
+      margin: 30px;
+      .p-card {
+        margin: auto;
+        width: 90%;
+        background-color: #00cd7f;
+        border-radius: 20px;
+        color: white;
+        box-shadow: 0 3px 6px rgb(74, 214, 151);
+      }
       .p-card-content {
         text-align: center;
       }
