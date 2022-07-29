@@ -18,12 +18,14 @@
           <div>
             <b> {{ transaction.serviceTypeName }}</b>
           </div>
-          <div>{{ transaction.transactions[0]?.createdDate }}</div>
+          <div>
+            {{ transaction.transactions[0]?.createdDate | date: 'short' }}
+          </div>
         </div>
         <div class="wallet-money">
           <b>{{ transaction.transactions[0]?.amount | currency: 'VND' }} </b>
         </div>
-        <div>{{ transaction.transactions[0]?.content }}</div>
+        <div style="width: 35%">{{ transaction.transactions[0]?.content }}</div>
       </div>
     </p-scrollPanel>
   </div>
