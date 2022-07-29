@@ -26,8 +26,8 @@
 }
 ::ng-deep {
   .body-station-content {
-    @include custom-scrollbar;
-    overflow: auto;
+    // @include custom-scrollbar;
+    // overflow: auto;
     height: 50vh;
     margin-top: 12px;
     .body-card {

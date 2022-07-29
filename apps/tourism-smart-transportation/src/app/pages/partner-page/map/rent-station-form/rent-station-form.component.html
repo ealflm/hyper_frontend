@@ -7,7 +7,7 @@
     [(visible)]="showDialog"
     [blockScroll]="false"
     [modal]="true"
-    [style]="{ width: '674px', height: '680px' }"
+    [style]="{ width: '674px', height: '700px' }"
     [contentStyle]="{
       'overflow-y': 'auto',
       'overflow-x': 'hidden',
@@ -93,7 +93,7 @@
                       *ngIf="_locationForm['title'].invalid && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống
+                      Không được bỏ trống
                     </small>
                   </div>
                   <input
@@ -107,24 +107,26 @@
                 <div class="col-12 rent-station-input-long">
                   <div class="rent-station-text">
                     Mô tả
-                    <!-- <small
-                      *ngIf="
-                _locationForm['description'].invalid
-            "
+                    <small
+                      *ngIf="_locationForm['description'].invalid && isSubmit"
                       class="p-error"
                     >
-                      không được bỏ trống
-                    </small> -->
+                      Không được bỏ trống
+                    </small>
                   </div>
-                  <input
+                  <textarea
+                    pInputTextarea
+                    style="height: 42px; padding-left: 10px"
                     class="rent-station-input-text-long"
                     type="text"
-                    pInputText
                     formControlName="description"
                     (keyup.enter)="onSaveRentStation()"
-                  />
+                  ></textarea>
                 </div>
-                <div class="col-12 rent-station-input-long">
+                <div
+                  class="col-12 rent-station-input-long"
+                  style="margin-top: 20px"
+                >
                   <div class="rent-station-text">
                     Địa chỉ
                     <small

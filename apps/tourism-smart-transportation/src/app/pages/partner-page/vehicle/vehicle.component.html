@@ -198,7 +198,7 @@
                 </div>
                 <div class="col-12 vehicle-input-long">
                   <div class="vehicle-text">
-                    Số hiệu
+                    Số hiệu | Ví dụ: ( 51B2-12345 )
                     <small
                       *ngIf="(_vehiclesForm['licensePlates'].errors?.['required'] || _vehiclesForm['licensePlates'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
@@ -209,8 +209,8 @@
                       *ngIf="_vehiclesForm['licensePlates'].errors?.['pattern']"
                       class="p-error"
                     >
-                      Không đúng định dạng | Ví dụ: ( 51B2-12345 )</small
-                    >
+                      Không đúng định dạng
+                    </small>
                   </div>
 
                   <input

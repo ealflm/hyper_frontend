@@ -5,8 +5,14 @@
       <p-card [style]="{ height: '130px' }">
         <div>Doanh thu</div>
         <div class="number-card">
-          {{ statictis?.order / 1000000 }}
-          <small style="font-size: 50%">Triệu VND</small>
+          {{
+            statictis?.order > 1000000
+              ? statictis?.order / 1000000
+              : (statictis?.order | currency: 'VND')
+          }}
+          <small *ngIf="statictis?.order > 1000000" style="font-size: 50%"
+            >Triệu VND</small
+          >
         </div>
       </p-card>
     </div>

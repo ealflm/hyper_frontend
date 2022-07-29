@@ -53,20 +53,15 @@
               <div class="partner-text">
                 Tên
                 <small
-                  *ngIf="(_inforsForm['firstName'].errors?.['required'] || _inforsForm['firstName'].errors?.['whitespace']) && isSubmit"
+                  *ngIf="(_inforsForm['firstName'].errors?.['required'] || _inforsForm['firstName'].errors?.['whitespace'] || _inforsForm['firstName'].errors?.['minlength']) && isSubmit"
                   class="p-error"
-                  >Không được bỏ trống</small
-                >
-                <small
-                  *ngIf="_inforsForm['firstName'].errors?.['minlength']"
-                  class="p-error"
-                  >Không được ít hơn 3 ký tự</small
+                  >Không được bỏ trống và ít hơn 3 ký tự</small
                 >
                 <small
                   *ngIf="_inforsForm['firstName'].errors?.['maxlength']"
                   class="p-error"
                   >Không được hơn 50 ký tự</small
-                >&nbsp;
+                >
                 <small
                   *ngIf="_inforsForm['firstName'].errors?.['pattern']"
                   class="p-error"
@@ -86,21 +81,16 @@
               <div class="partner-text">
                 Họ
                 <small
-                  *ngIf="(_inforsForm['lastName'].errors?.['required'] || _inforsForm['lastName'].errors?.['whitespace']) && isSubmit"
+                  *ngIf="(_inforsForm['lastName'].errors?.['required'] || _inforsForm['lastName'].errors?.['whitespace'] || _inforsForm['lastName'].errors?.['minlength']) && isSubmit"
                   class="p-error"
-                  >Không được bỏ trống</small
-                >
-                <small
-                  *ngIf="_inforsForm['lastName'].errors?.['minlength']"
-                  class="p-error"
-                  >Không được ít hơn 3 ký tự</small
+                  >Không được bỏ trống và ít hơn 3 ký tự</small
                 >
                 <small
                   *ngIf="_inforsForm['lastName'].errors?.['maxlength']"
                   class="p-error"
                   >Không được hơn 50 ký tự</small
                 >
-                &nbsp;
+
                 <small
                   *ngIf="_inforsForm['lastName'].errors?.['pattern']"
                   class="p-error"
@@ -166,14 +156,14 @@
               <div class="partner-text">
                 Số điện thoại
                 <small
-                  *ngIf="_inforsForm['phone'].errors?.['required'] && isSubmit"
+                  *ngIf="(_inforsForm['phone'].errors?.['required'] || _inforsForm['phone'].errors?.['whitespace']) && isSubmit"
                   class="p-error"
                   >Không được bỏ trống</small
                 >
                 <small
-                  *ngIf="_inforsForm['phone'].errors?.['pattern'] "
+                  *ngIf="_inforsForm['phone'].errors?.['pattern']"
                   class="p-error"
-                  >Không đúng định dạng</small
+                  >Không đúng định dạng | Ví dụ:( 0982354461 )</small
                 >
               </div>
               <input
@@ -189,19 +179,14 @@
               <div class="partner-text">
                 Email
                 <small
-                  *ngIf="(_inforsForm['email'].errors?.['required'] || _inforsForm['email'].errors?.['whitespace']) && isSubmit"
+                  *ngIf="(_inforsForm['email'].errors?.['required'] || _inforsForm['email'].errors?.['whitespace'] || _inforsForm['email'].errors?.['minlength']) && isSubmit"
                   class="p-error"
-                  >Không được bỏ trống</small
+                  >Không được trống và ít hơn 3 ký tự</small
                 >
                 <small
                   *ngIf="_inforsForm['email'].errors?.['email'] && isSubmit"
                   class="p-error"
                   >Không đúng định dạng email</small
-                >
-                <small
-                  *ngIf="_inforsForm['email'].errors?.['minlength']"
-                  class="p-error"
-                  >Không được ít hơn 3 ký tự</small
                 >
                 <small
                   *ngIf="_inforsForm['email'].errors?.['maxlength']"
@@ -230,12 +215,7 @@
                 <small
                   *ngIf="_inforsForm['addressUser'].invalid && isSubmit"
                   class="p-error"
-                  >Không được trống</small
-                >
-                <small
-                  *ngIf="_inforsForm['addressUser'].errors?.['minlength']"
-                  class="p-error"
-                  >Không được ít hơn 10 ký tự</small
+                  >Không được trống và ít hơn 10 ký tự</small
                 >
               </div>
               <input
@@ -270,12 +250,7 @@
                 <small
                   *ngIf="_inforsForm['companyName'].invalid && isSubmit"
                   class="p-error"
-                  >Không được trống</small
-                >
-                <small
-                  *ngIf="_inforsForm['companyName'].errors?.['minlength']"
-                  class="p-error"
-                  >Không được ít hơn 3 ký tự</small
+                  >Không được trống và ít hơn 3 ký tự</small
                 >
               </div>
               <input
@@ -293,12 +268,7 @@
                 <small
                   *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
                   class="p-error"
-                  >Không được trống</small
-                >
-                <small
-                  *ngIf="_inforsForm['addressCompany'].errors?.['minlength']"
-                  class="p-error"
-                  >Không được ít hơn 10 ký tự</small
+                  >Không được trống và ít hơn 10 ký tự</small
                 >
               </div>
               <input

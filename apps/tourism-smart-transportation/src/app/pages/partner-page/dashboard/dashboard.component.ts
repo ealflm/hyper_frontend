@@ -199,14 +199,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 y: {
                   ticks: {
                     callback: (data: any, index: any, labels: any) => {
-                      console.log(data);
-
-                      if (data > 1000) {
-                        return data / 1000 + ' Trăm';
-                      } else if (data < 1000) {
-                        return data + ' Trăm';
-                      } else if (data > 1000000) {
-                        return data / 1000 + '';
+                      if (data >= 1000000000) {
+                        return data / 1000000000 + ' Tỷ';
+                      } else if (data > 1000000 && data <= 1000000000) {
+                        return data / 1000000 + ' Triệu';
+                      } else if (data > 100000 && data <= 1000000) {
+                        return data / 100000 + ' Trăm';
+                      } else if (data > 1000 && data <= 100000) {
+                        return data / 1000 + ' Nghìn';
+                      } else {
+                        return data + ' VND';
                       }
                     },
                   },

@@ -95,7 +95,6 @@ export class FormStationComponent
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.iniViewMiniMapAdmin$.value) {
       this.getBusStationMarkers();
-      console.log('chạy');
 
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();

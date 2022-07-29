@@ -349,7 +349,9 @@
       class="profile-wallet wallet animate__animated animate__backInLeft"
       *ngIf="walletStatus"
     >
-      <tourism-smart-transportation-wallet></tourism-smart-transportation-wallet>
+      <tourism-smart-transportation-wallet
+        [Wallet]="Wallet"
+      ></tourism-smart-transportation-wallet>
     </div>
   </div>
   <p-dialog

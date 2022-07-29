@@ -26,9 +26,14 @@ $bg-color-wallet: #fef5e4;
   margin-left: 25px;
 }
 .transaction-history-card {
+  display: flex;
   border-bottom: 1px solid $background-color-grey;
   height: 80px;
   width: 94%;
   margin: 20px;
   padding: 20px;
+  justify-content: space-between;
+}
+.wallet-money {
+  color: #f69e01;
 }

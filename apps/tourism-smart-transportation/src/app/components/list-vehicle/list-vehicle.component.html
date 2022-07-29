@@ -12,20 +12,25 @@
 </div>
 
 <div class="body-bottom-content">
-  <div
-    class="body-card"
-    *ngFor="let vehicle of vehicles"
-    (click)="showDetail(vehicle.id)"
+  <p-scrollPanel
+    [style]="{ width: '100%', height: '55vh' }"
+    styleClass="custom"
   >
-    <div class="card-header">
-      <div>{{ vehicle?.licensePlates }}</div>
-      <div>{{ vehicle?.name }}</div>
-      <div class="isOnline" *ngIf="vehicle?.status === 4"></div>
-      <div class="isOffline" *ngIf="vehicle?.status !== 4"></div>
+    <div
+      class="body-card"
+      *ngFor="let vehicle of vehicles"
+      (click)="showDetail(vehicle.id)"
+    >
+      <div class="card-header">
+        <div>{{ vehicle?.licensePlates }}</div>
+        <div>{{ vehicle?.name }}</div>
+        <div class="isOnline" *ngIf="vehicle?.status === 4"></div>
+        <div class="isOffline" *ngIf="vehicle?.status !== 4"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-left">{{ vehicle?.serviceTypeName }}</div>
+        <div class="card-body-right">{{ vehicle?.companyName }}</div>
+      </div>
     </div>
-    <div class="card-body">
-      <div class="card-body-left">{{ vehicle?.serviceTypeName }}</div>
-      <div class="card-body-right">{{ vehicle?.companyName }}</div>
-    </div>
-  </div>
+  </p-scrollPanel>
 </div>
