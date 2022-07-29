@@ -9,6 +9,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Chart } from 'chart.js';
+import { CurrencyPipe } from '@angular/common';
 @Component({
   selector: 'tourism-smart-transportation-dashboard',
   templateUrl: './dashboard.component.html',
@@ -90,29 +91,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //
 
     //
-
-    this.barChartOption = {
-      plugins: {
-        legend: {
-          labels: {
-            color: '#ebedef',
-          },
-        },
-      },
-      scales: {
-        y: {
-          ticks: {
-            callback: (data: any, index: any, labels: any) => {
-              return data / 1000000 + ' Triệu';
-            },
-          },
-
-          grid: {
-            color: 'rgba(255,255,255,0.2)',
-          },
-        },
-      },
-    };
   }
 
   ngAfterViewInit(): void {}
@@ -168,23 +146,80 @@ export class DashboardComponent implements OnInit, AfterViewInit {
                 'Tháng 5',
                 'Tháng 6',
                 'Tháng 7',
+                'Tháng 8',
+                'Tháng 9',
+                'Tháng 10',
+                'Tháng 11',
+                'Tháng 12',
               ],
               datasets: [
                 {
                   label: 'Looping tension',
-                  data: [
-                    6500000, 5900000, 8000000, 8100000, 2600000, 5500000,
-                    4000000,
-                  ],
+                  data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   fill: false,
                   borderColor: 'rgb(75, 192, 192)',
                 },
               ],
             };
             this.barChart = data;
+            this.barChartOption = {
+              plugins: {
+                legend: {
+                  labels: {
+                    color: '#ebedef',
+                  },
+                },
+              },
+              scales: {
+                y: {
+                  ticks: {
+                    callback: (data: any, index: any, labels: any) => {
+                      return data + ' Triệu';
+                    },
+                  },
+
+                  grid: {
+                    color: 'rgba(255,255,255,0.2)',
+                  },
+                },
+              },
+            };
           } else {
             let labels: any = [];
             let data: any = [];
+            this.barChartOption = {
+              plugins: {
+                legend: {
+                  labels: {
+                    color: '#ebedef',
+                  },
+                },
+              },
+              scales: {
+                y: {
+                  ticks: {
+                    callback: (data: any, index: any, labels: any) => {
+                      if (data >= 1000000000) {
+                        return data / 1000000000 + ' Tỷ';
+                      } else if (data > 1000000 && data <= 1000000000) {
+                        return data / 1000000 + ' Triệu';
+                      } else if (data > 100000 && data <= 1000000) {
+                        return data / 100000 + ' Trăm';
+                      } else if (data > 1000 && data <= 100000) {
+                        return data / 1000 + ' Nghìn';
+                      } else {
+                        return data + ' VND';
+                      }
+                    },
+                  },
+
+                  grid: {
+                    color: 'rgba(255,255,255,0.2)',
+                  },
+                },
+              },
+            };
+
             for (const [key, value] of Object.entries(res.body[year])) {
               labels = [...labels, 'Tháng ' + key];
               data = [...data, value];

@@ -7,7 +7,7 @@
     [(visible)]="showDialog"
     [blockScroll]="false"
     [modal]="true"
-    [style]="{ width: '674px', height: '680px' }"
+    [style]="{ width: '674px', height: '700px' }"
     [contentStyle]="{
       'overflow-y': 'auto',
       'overflow-x': 'hidden',
@@ -114,15 +114,16 @@
                       Không được bỏ trống
                     </small>
                   </div>
-                  <input
+                  <textarea
+                    pInputTextarea
+                    style="height: 42px; padding-left: 10px"
                     class="station-input-text-long"
                     type="text"
-                    pInputText
                     formControlName="description"
                     (keyup.enter)="onSaveStation()"
-                  />
+                  ></textarea>
                 </div>
-                <div class="col-12 station-input-long">
+                <div class="col-12 station-input-long" style="margin-top: 20px">
                   <div class="station-text">
                     Địa chỉ
                     <small

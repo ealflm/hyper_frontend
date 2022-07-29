@@ -19,7 +19,7 @@ import {
   PHONE_NUMBER_REGEX,
   validateEmty,
 } from '../../../../providers/CustomValidators';
-import { PartnerResponse } from '../../../../models/PartnerResponse';
+import { Partner, PartnerResponse } from '../../../../models/PartnerResponse';
 import { DatePipe } from '@angular/common';
 import { convertDateToVN } from '../../../../providers/ConvertDate';
 
@@ -42,6 +42,7 @@ export class PartnerDetailComponent implements OnInit {
   gender = Gender;
   drivers: Driver[] = [];
   vehicles: Vehicle[] = [];
+  currentUser!: Partner;
   fillterStatus = 1;
   serviceTypes: ServiceType[] = [];
   usernameBiding? = '';
@@ -73,6 +74,7 @@ export class PartnerDetailComponent implements OnInit {
         this.partnerService
           .getPartnerById(params['id'])
           .subscribe((partnerResponse: PartnerResponse) => {
+            this.currentUser = partnerResponse.body;
             this._inforsForm['id'].setValue(partnerResponse.body?.id);
             // this._inforsForm['userName'].setValue(partnerResponse.body?.username);
             this._inforsForm['firstName'].setValue(
@@ -254,8 +256,8 @@ export class PartnerDetailComponent implements OnInit {
   onChangeEdit() {
     this.editModeStatus = !this.editModeStatus;
 
-    this._inforsForm['firstName'].enable();
-    this._inforsForm['lastName'].enable();
+    // this._inforsForm['firstName'].enable();
+    // this._inforsForm['lastName'].enable();
     this._inforsForm['companyName'].enable();
     this._inforsForm['addressUser'].enable();
     this._inforsForm['addressCompany'].enable();
@@ -277,6 +279,28 @@ export class PartnerDetailComponent implements OnInit {
     this._inforsForm['email'].disable();
     this._inforsForm['dateOfBirth'].disable();
     this._inforsForm['selectedGender'].disable();
+    const dobRes = new Date(this.currentUser.dateOfBirth);
+
+    this._inforsForm['dateOfBirth'].setValue(dobRes);
+    this._inforsForm['selectedGender'].setValue(
+      this.currentUser?.gender?.toString()
+    );
+    this._inforsForm['phone'].setValue(this.currentUser?.phone);
+    this._inforsForm['email'].setValue(this.currentUser?.email);
+    this._inforsForm['addressUser'].setValue(this.currentUser?.address1);
+    let serivceTypeIdList: any = [];
+    this.currentUser?.serviceTypeList?.map((serviceType) => {
+      serivceTypeIdList = [...serivceTypeIdList, serviceType.id];
+    });
+    this._inforsForm['serviceType'].setValue(serivceTypeIdList);
+
+    this._inforsForm['companyName'].setValue(this.currentUser?.companyName);
+    this._inforsForm['addressCompany'].setValue(this.currentUser?.address2);
+    this._inforsForm['photoUrl'].setValue(this.currentUser?.photoUrl);
+    this.currentUser?.photoUrl == '' || this.currentUser?.photoUrl == null
+      ? (this.imagePreview = '../assets/image/imagePreview.png')
+      : (this.imagePreview = `https://se32.blob.core.windows.net/partner/${this.currentUser?.photoUrl}`);
+    this.deleteFile = this.currentUser.photoUrl?.trim();
   }
   onSaveChange() {
     this.isSubmit = true;
@@ -284,8 +308,8 @@ export class PartnerDetailComponent implements OnInit {
     this.loading = true;
     const formData = new FormData();
     const idPartner = this._inforsForm['id'].value;
-    formData.append('FirstName', this._inforsForm['firstName'].value);
-    formData.append('LastName', this._inforsForm['lastName'].value);
+    // formData.append('FirstName', this._inforsForm['firstName'].value);
+    // formData.append('LastName', this._inforsForm['lastName'].value);
     formData.append('CompanyName', this._inforsForm['companyName'].value);
     formData.append('Address1', this._inforsForm['addressUser'].value);
     formData.append('Address2', this._inforsForm['addressCompany'].value);

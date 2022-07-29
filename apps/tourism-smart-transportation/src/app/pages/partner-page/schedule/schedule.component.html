@@ -56,8 +56,8 @@
           <th>Phương tiện</th>
           <th>Tên Tuyến</th>
           <th>Ngày trong tuần</th>
-          <th>Thời gian bắt đầu</th>
-          <th>Thời gian kết thúc</th>
+          <th>Thời gian dự kiến bắt đầu</th>
+          <th>Thời gian dự kiến kết thúc</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
@@ -284,7 +284,7 @@
                 </div>
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Thời gian bắt đầu
+                    Thời gian dự kiến bắt đầu
                     <small
                       *ngIf="_schedulesForm['timeStart'].errors?.['required'] && isSubmit "
                       class="p-error"
@@ -306,7 +306,7 @@
                 </div>
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Thời gian kết thúc
+                    Thời gian dự kiến kết thúc
                     <small
                       *ngIf="_schedulesForm['timeEnd'].errors?.['required'] && isSubmit "
                       class="p-error"

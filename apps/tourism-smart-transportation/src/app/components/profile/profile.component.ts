@@ -1,3 +1,4 @@
+import { WalletService } from './../../services/wallet.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { ServiceType } from './../../models/ServiceTypeResponse';
@@ -38,6 +39,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   serviceTypes: ServiceType[] = [];
   loading = false;
   walletStatus = false;
+  Wallet: any;
   constructor(
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
@@ -45,7 +47,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     private serviceTypeService: ServiceTypeService,
     private messageService: MessageService,
     private renderer: Renderer2,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private walletService: WalletService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.profile = user;
       this._getServiceType();
       this._getProfileUser();
+      this._getWalletAndHistory();
     }
   }
   ngAfterViewInit(): void {}
@@ -99,6 +103,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
             : (this.imagePreview = `https://se32.blob.core.windows.net/partner/${res?.body.photoUrl}`);
           this.deleteFile = res?.body.photoUrl?.trim();
           this.usernameBiding = res?.body.username;
+        });
+    }
+  }
+  private _getWalletAndHistory() {
+    if (this.profile.role === 'Partner') {
+      this.walletService
+        .getWalletAndHistoryPartner(this.profile.id)
+        .subscribe((walletRes) => {
+          this.Wallet = walletRes.body;
         });
     }
   }
@@ -158,8 +171,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   onChangeEdit() {
     this.editModeStatus = true;
 
-    this._inforsForm['firstName'].enable();
-    this._inforsForm['lastName'].enable();
+    // this._inforsForm['firstName'].enable();
+    // this._inforsForm['lastName'].enable();
     this._inforsForm['companyName'].enable();
     this._inforsForm['addressUser'].enable();
     this._inforsForm['addressCompany'].enable();
@@ -170,8 +183,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
   onCancleEdit() {
     this.editModeStatus = false;
-    this._inforsForm['firstName'].disable();
-    this._inforsForm['lastName'].disable();
     this._inforsForm['companyName'].disable();
     this._inforsForm['addressUser'].disable();
     this._inforsForm['addressCompany'].disable();
@@ -203,8 +214,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.loading = true;
     const formData = new FormData();
     const idPartner = this._inforsForm['id'].value;
-    formData.append('FirstName', this._inforsForm['firstName'].value);
-    formData.append('LastName', this._inforsForm['lastName'].value);
+    // formData.append('FirstName', this._inforsForm['firstName'].value);
+    // formData.append('LastName', this._inforsForm['lastName'].value);
     formData.append('CompanyName', this._inforsForm['companyName'].value);
     formData.append('Address1', this._inforsForm['addressUser'].value);
     formData.append('Address2', this._inforsForm['addressCompany'].value);
@@ -245,6 +256,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
   onChangePassword() {
     this.changePasswordDialog = true;
+    this.changePassForm.reset();
   }
   onSavePassword() {
     if (this.changePassForm.invalid) return;

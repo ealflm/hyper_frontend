@@ -26,6 +26,7 @@ import { ChartModule } from 'primeng/chart';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { RatingModule } from 'primeng/rating';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [],
@@ -56,6 +57,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     ConfirmPopupModule,
     RatingModule,
     ScrollPanelModule,
+    InputTextareaModule,
   ],
   exports: [
     CardModule,
@@ -84,6 +86,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     ConfirmPopupModule,
     RatingModule,
     ScrollPanelModule,
+    InputTextareaModule,
   ],
 })
 export class PrimengModule {}

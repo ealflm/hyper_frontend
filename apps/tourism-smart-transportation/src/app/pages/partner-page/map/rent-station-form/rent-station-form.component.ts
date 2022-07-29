@@ -162,7 +162,7 @@ export class RentStationFormComponent
       id: [''],
       partnerId: [''],
       title: ['', [Validators.required, validateEmty]],
-      description: [''],
+      description: ['', [Validators.required, validateEmty]],
       address: ['', [Validators.required, validateEmty]],
       longitude: [{ value: '', disabled: true }, [Validators.required]],
       latitude: [{ value: '', disabled: true }, [Validators.required]],

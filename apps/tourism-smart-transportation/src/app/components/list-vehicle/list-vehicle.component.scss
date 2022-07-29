@@ -20,8 +20,8 @@
 }
 ::ng-deep {
   .body-bottom-content {
-    @include custom-scrollbar;
-    overflow: auto;
+    // @include custom-scrollbar;
+    // overflow: auto;
     height: 55vh;
     margin-top: 12px;
     .body-card {
