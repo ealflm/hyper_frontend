@@ -99,6 +99,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
           // });
         }
       });
+
       this.currentBusStationMarkers.push(markerDiv);
     });
   }

@@ -1,7 +1,13 @@
 import { GongMapService } from './../../../../services/gong-map.service';
-import { validateEmty } from '../../../../providers/CustomValidators';
+import {
+  checkDistance,
+  validateEmty,
+} from '../../../../providers/CustomValidators';
 import { LocalStorageService } from './../../../../auth/localstorage.service';
-import { RentStation } from './../../../../models/RentStationResponse';
+import {
+  RentStation,
+  RentStationsResponse,
+} from './../../../../models/RentStationResponse';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { MapService } from './../../../../services/map.service';
 import { MapBoxService } from './../../../../services/map-box.service';
@@ -23,6 +29,7 @@ import {
 } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { RentStationResponse } from '../../../../models/RentStationResponse';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'tourism-smart-transportation-rent-station-form',
@@ -48,6 +55,9 @@ export class RentStationFormComponent
   markers: any[] = [];
   markerIndex = 1;
   markerArray: any[] = [];
+  // If dataType is any ex : currentRentStationMarkers: any then the ngAfterViewinitChecked dectect change compoent infinity request
+  currentRentStationMarkers: any = [];
+  rentStationOnMap: RentStation[] = [];
   //
   locationForm!: FormGroup;
   isSubmit = false;
@@ -55,6 +65,8 @@ export class RentStationFormComponent
   successChange = false;
   loading = false;
   isInsidePolygon = false;
+  isNearOtherRentStaion = false;
+  lnglat: any = [];
   constructor(
     private mapboxService: MapBoxService,
     private fb: FormBuilder,
@@ -76,6 +88,7 @@ export class RentStationFormComponent
   }
   ngOnInit(): void {
     this._initLocationForm();
+    this.getRentStationMarkers();
   }
   // khoi tao dom
   ngAfterViewInit() {
@@ -83,15 +96,10 @@ export class RentStationFormComponent
   }
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
-    this.getDetailsRentStation();
-  }
-  ngOnDestroy(): void {
-    // this.mapboxService.initViewMiniMapPartner$.unsubscribe();
-  }
-  getDetailsRentStation() {
     if (this._dialog && !this.mapboxService.initViewMiniMapPartner$.value) {
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
+      this.setListRentStationMarkers(this.rentStationOnMap);
       if (this.rentStationId) {
         this.editMode = true;
         this.mapService
@@ -126,6 +134,10 @@ export class RentStationFormComponent
       this.mapboxService.initViewMiniMapPartner$.next(true);
     }
   }
+  ngOnDestroy(): void {
+    // this.mapboxService.initViewMiniMapPartner$.unsubscribe();
+  }
+
   setEmtyInitForm() {
     this.locationForm.reset();
     this.cdr.detectChanges();
@@ -190,6 +202,16 @@ export class RentStationFormComponent
     el.style.cursor = 'pointer';
     const marker = new mapboxgl.Marker(el, { draggable: true });
     this.mapboxService.miniMap.on('click', (e) => {
+      if (checkDistance(this.lnglat, [e.lngLat.lng, e.lngLat.lat])) {
+        this.isNearOtherRentStaion = false;
+
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Cảnh báo',
+          detail: 'Trạm thuê xe phải cách xa trạm khác 1 km',
+        });
+        return;
+      }
       if (
         this.mapboxService.checkMarkerInsidePolygon(e.lngLat.lng, e.lngLat.lat)
       ) {
@@ -199,12 +221,23 @@ export class RentStationFormComponent
         this._locationForm['longitude'].setValue(e.lngLat.lng);
         this._locationForm['latitude'].setValue(e.lngLat.lat);
         this._setAddressAutoComplete(e.lngLat.lat + ',' + e.lngLat.lng);
+        this.isNearOtherRentStaion = true;
         this.isInsidePolygon = true;
         marker.on('dragend', () => {
           const lngLat = marker.getLngLat();
+          if (checkDistance(this.lnglat, [lngLat.lng, lngLat.lat])) {
+            this.isNearOtherRentStaion = false;
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cảnh báo',
+              detail: 'Trạm thuê xe phải cách xa trạm khác 1 km',
+            });
+            return;
+          }
           if (
             this.mapboxService.checkMarkerInsidePolygon(lngLat.lng, lngLat.lat)
           ) {
+            this.isNearOtherRentStaion = true;
             this.isInsidePolygon = true;
             this._locationForm['longitude'].setValue(lngLat.lng);
             this._locationForm['latitude'].setValue(lngLat.lat);
@@ -228,6 +261,34 @@ export class RentStationFormComponent
       }
     });
   }
+
+  //
+  getRentStationMarkers() {
+    this.mapService
+      .getListRentStationForPartner()
+      .pipe(
+        map((rentStationRes: RentStationsResponse) => {
+          this.lnglat = rentStationRes.body.items.map((value) => {
+            return [value.longitude, value.latitude];
+          });
+          this.rentStationOnMap = rentStationRes.body.items.map(
+            (rentStation: RentStation) => {
+              return {
+                id: rentStation.id,
+                address: rentStation.address,
+                companyName: rentStation.companyName,
+                longitude: rentStation.longitude,
+                latitude: rentStation.latitude,
+                partnerId: rentStation.partnerId,
+                status: rentStation.status,
+                title: rentStation.title,
+              };
+            }
+          );
+        })
+      )
+      .subscribe();
+  }
   setRentSationMarker(longitude: number, latitude: number) {
     this.isInsidePolygon = true;
     const el = document.createElement('div');
@@ -244,8 +305,18 @@ export class RentStationFormComponent
       .addTo(this.mapboxService.miniMap);
     marker.on('dragend', () => {
       const lngLat = marker.getLngLat();
+      if (checkDistance(this.lnglat, [lngLat.lng, lngLat.lat])) {
+        this.isNearOtherRentStaion = false;
+        this.messageService.add({
+          severity: 'warn',
+          summary: 'Cảnh báo',
+          detail: 'Trạm thuê xe phải cách xa trạm khác 1 km',
+        });
+        return;
+      }
       if (this.mapboxService.checkMarkerInsidePolygon(lngLat.lng, lngLat.lat)) {
         this.isInsidePolygon = true;
+        this.isNearOtherRentStaion = true;
         this._locationForm['longitude'].setValue(lngLat.lng);
         this._locationForm['latitude'].setValue(lngLat.lat);
         this._setAddressAutoComplete(lngLat.lat + ',' + lngLat.lng);
@@ -259,10 +330,36 @@ export class RentStationFormComponent
       }
     });
   }
+  setListRentStationMarkers(rentStations: RentStation[]) {
+    rentStations.map((marker) => {
+      const el = document.createElement('div');
+      el.id = marker.id;
+      const width = 35;
+      const height = 35;
+      el.className = 'marker';
+      el.style.backgroundImage = `url('../../../assets/image/rent-station-grey.svg')`;
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
+      el.style.backgroundSize = '100%';
+      el.style.cursor = 'pointer';
+      const markerDiv = new mapboxgl.Marker(el)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapboxService.miniMap);
+      markerDiv.getElement().addEventListener('click', () => {});
+    });
+  }
   onSaveRentStation() {
     this.cdr.detectChanges();
     this.isSubmit = true;
     if (this.locationForm.invalid) return;
+    if (!this.isNearOtherRentStaion) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Cảnh báo',
+        detail: 'Trạm thuê xe phải cách xa trạm khác 1 km',
+      });
+      return;
+    }
     if (!this.isInsidePolygon) {
       this.messageService.add({
         severity: 'warn',

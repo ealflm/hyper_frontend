@@ -6,8 +6,8 @@ export class RentStation {
   partnerId?: string;
   companyName?: string;
   description?: string;
-  longitude?: number;
-  latitude?: number;
+  longitude!: number;
+  latitude!: number;
   status?: number;
 }
 export abstract class RentStationsResponse {

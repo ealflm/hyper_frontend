@@ -190,7 +190,9 @@ export class FormStationComponent
     const width = 30;
     const height = 30;
     el.className = 'marker';
-    el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+    // el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+    el.style.backgroundImage = `url('../../../assets/image/rent-station-grey.svg')`;
+
     el.style.width = `${width}px`;
     el.style.height = `${height}px`;
     el.style.backgroundSize = '100%';
@@ -412,9 +414,7 @@ export class FormStationComponent
       const markerDiv = new mapboxgl.Marker(elStationMarker)
         .setLngLat([marker.longitude, marker.latitude] as [number, number])
         .addTo(this.mapboxService.miniMap);
-      markerDiv.getElement().addEventListener('click', () => {
-        alert('bạn không thể đặt trạm ở đây');
-      });
+      markerDiv.getElement().addEventListener('click', () => {});
       this.currentBusStationMarkers.push(markerDiv);
     });
   }

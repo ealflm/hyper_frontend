@@ -157,12 +157,14 @@ export class MapService {
   //  API FOR PARTNER
   // Rentstation
   getListRentStationForPartner(
-    partnerId: string,
+    partnerId?: string,
     title?: string | null,
     status?: number | null
   ): Observable<RentStationsResponse> {
     let queryParams = new HttpParams();
-    queryParams = queryParams.append('PartnerId', partnerId);
+    if (partnerId != null) {
+      queryParams = queryParams.append('PartnerId', partnerId);
+    }
     if (title != null) {
       queryParams = queryParams.append('Title', title);
     }

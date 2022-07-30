@@ -18,6 +18,7 @@ import { AgeCheck, MustMatch } from '../../providers/CustomValidators';
 import { DatePipe } from '@angular/common';
 import { Gender } from '../../constant/gender';
 import { convertDateToVN } from '../../providers/ConvertDate';
+import { Partner } from '../../models/PartnerResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-profile',
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   loading = false;
   walletStatus = false;
   Wallet: any;
+  currentPartner!: Partner;
   constructor(
     private fb: FormBuilder,
     private localStorageService: LocalStorageService,
@@ -71,6 +73,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.partnerService
         .getProfileForPartner(this.profile.id)
         .subscribe((res) => {
+          this.currentPartner = res.body;
           this._inforsForm['id'].setValue(res?.body.id);
           this._inforsForm['firstName'].setValue(res.body.firstName);
           this._inforsForm['lastName'].setValue(res.body.lastName);
@@ -191,6 +194,36 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this._inforsForm['email'].disable();
     this._inforsForm['dateOfBirth'].disable();
     this._inforsForm['selectedGender'].disable();
+    this._inforsForm['firstName'].setValue(this.currentPartner.firstName);
+    this._inforsForm['lastName'].setValue(this.currentPartner.lastName);
+    this._inforsForm['companyName'].setValue(this.currentPartner.companyName);
+    this._inforsForm['addressUser'].setValue(this.currentPartner.address1);
+    this._inforsForm['addressCompany'].setValue(this.currentPartner.address2);
+    let serivceTypeIdList: any = [];
+    this.currentPartner.serviceTypeList?.map((serviceType) => {
+      serivceTypeIdList = [...serivceTypeIdList, serviceType.id];
+    });
+    this._inforsForm['serviceType'].setValue(serivceTypeIdList);
+    this._inforsForm['phone'].setValue(this.currentPartner.phone);
+    this._inforsForm['email'].setValue(this.currentPartner.email);
+
+    const dobRes = new Date(this.currentPartner.dateOfBirth);
+
+    this._inforsForm['dateOfBirth'].setValue(dobRes);
+    this._inforsForm['selectedGender'].setValue(
+      this.currentPartner.gender?.toString()
+    );
+    this._inforsForm['createdDate'].setValue(
+      convertDateToVN(this.currentPartner.createdDate.toString())
+    );
+    this._inforsForm['modifiedDate'].setValue(
+      convertDateToVN(this.currentPartner.modifiedDate.toString())
+    );
+    this._inforsForm['photoUrl'].setValue(this.currentPartner.photoUrl);
+    this.currentPartner.photoUrl == '' || this.currentPartner.photoUrl == null
+      ? (this.imagePreview = '../assets/image/imagePreview.png')
+      : (this.imagePreview = `https://se32.blob.core.windows.net/partner/${this.currentPartner.photoUrl}`);
+    this.deleteFile = this.currentPartner.photoUrl?.trim();
   }
   onUpload(event: any) {
     const avatarFile = event.target.files[0];

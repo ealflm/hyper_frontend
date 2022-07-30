@@ -77,10 +77,12 @@ export class MapPageComponent
 
   currentRentStationMarkers: any = [];
   currentBusStationMarkers: any = [];
+  currentBusStationSelectedRoute: any = [];
   geojson: any;
   trackingIntervel: any;
   listVehicleTracking: any;
   loading = true;
+  hasShowRoute = false;
   private subscription?: Subscription;
   constructor(
     private mapboxService: MapBoxService,
@@ -179,7 +181,12 @@ export class MapPageComponent
   onShowSideBarList() {
     this.showSideBarList = true;
     this.showSideBarDetail = false;
-    this.mapboxService.removeRoute();
+    if (this.hasShowRoute) {
+      this.mapboxService.removeRoute();
+      this.removeBusStationSelectedRoute();
+      this.setBusStationMarkers(this.busStationsOnMap);
+      this.hasShowRoute = false;
+    }
   }
   // recive data menu form child components
   onGetFillterMenu(event: any) {
@@ -209,6 +216,8 @@ export class MapPageComponent
       clearInterval(this.trackingIntervel);
       this.removeBusStationMarker();
       this.removeRentStationMarker();
+      this.removeBusStationSelectedRoute();
+      this.mapboxService.removeRoute();
       this.mapboxService.removeLayerTracking();
     } else if (valueCheckbox.length > 0) {
       this.getBusStationMarkers();
@@ -218,6 +227,8 @@ export class MapPageComponent
           clearInterval(this.trackingIntervel);
           this.removeBusStationMarker();
           this.removeRentStationMarker();
+          this.mapboxService.removeRoute();
+          this.removeBusStationSelectedRoute();
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
           }, 2000);
@@ -225,6 +236,8 @@ export class MapPageComponent
         case 'bus-station':
           clearInterval(this.trackingIntervel);
           this.mapboxService.removeLayerTracking();
+          this.removeBusStationSelectedRoute();
+          this.mapboxService.removeRoute();
           this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.removeRentStationMarker();
@@ -232,14 +245,18 @@ export class MapPageComponent
           break;
         case 'rent-station':
           clearInterval(this.trackingIntervel);
+          this.mapboxService.removeRoute();
           this.mapboxService.removeLayerTracking();
           this.removeRentStationMarker();
           this.setRentStationMarkers(this.rentStationsOnMap);
+          this.removeBusStationSelectedRoute();
           this.removeBusStationMarker();
           break;
         case 'rent-station-vehicle':
           clearInterval(this.trackingIntervel);
+          this.removeBusStationSelectedRoute();
           this.removeBusStationMarker();
+          this.mapboxService.removeRoute();
           this.setRentStationMarkers(this.rentStationsOnMap);
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
@@ -247,7 +264,9 @@ export class MapPageComponent
           break;
         case 'bus-station-vehicle':
           clearInterval(this.trackingIntervel);
+          this.removeBusStationSelectedRoute();
           this.removeRentStationMarker();
+          this.mapboxService.removeRoute();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
@@ -257,12 +276,16 @@ export class MapPageComponent
           clearInterval(this.trackingIntervel);
           this.mapboxService.removeLayerTracking();
           this.removeRentStationMarker();
+          this.mapboxService.removeRoute();
+          this.removeBusStationSelectedRoute();
           this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.setRentStationMarkers(this.rentStationsOnMap);
           break;
         case 'bus-station-rent-station-vehicle':
           clearInterval(this.trackingIntervel);
+          this.removeBusStationSelectedRoute();
+          this.mapboxService.removeRoute();
           this.removeRentStationMarker();
           this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
@@ -275,6 +298,8 @@ export class MapPageComponent
           clearInterval(this.trackingIntervel);
           this.mapboxService.removeLayerTracking();
           this.removeBusStationMarker();
+          this.mapboxService.removeRoute();
+          this.removeBusStationSelectedRoute();
           this.removeRentStationMarker();
           break;
       }
@@ -370,6 +395,11 @@ export class MapPageComponent
       .getRouteById(event.id)
       .subscribe((routeRes: RouteResponse) => {
         this.routeDetail = routeRes.body;
+        this.removeBusStationMarker();
+        this.setBusStationSelectedRoute(
+          this.busStationsOnMap,
+          routeRes.body.stationList
+        );
         let stationList: any = [];
         routeRes.body.stationList?.map((stations: Station) => {
           const lnglat = stations.longitude + ',' + stations.latitude;
@@ -601,7 +631,49 @@ export class MapPageComponent
       }
     }
   }
+  public setBusStationSelectedRoute(
+    busStations: Station[],
+    busOnRoute?: Station[]
+  ) {
+    this.hasShowRoute = true;
 
+    busStations.map((marker) => {
+      const elStationMarker = document.createElement('div');
+      elStationMarker.id = marker.id;
+      let width = 35;
+      let height = 35;
+      elStationMarker.className = 'marker';
+      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      if (busOnRoute) {
+        busOnRoute.map((value) => {
+          if (value.id === marker.id) {
+            width = 40;
+            height = 40;
+            elStationMarker.style.backgroundImage = `url('../../../assets/icons/bus-station-selected.svg')`;
+          }
+        });
+      }
+      elStationMarker.style.width = `${width}px`;
+      elStationMarker.style.height = `${height}px`;
+      elStationMarker.style.backgroundSize = '100%';
+      const markerDiv = new mapboxgl.Marker(elStationMarker)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapboxService.map);
+
+      this.currentBusStationSelectedRoute.push(markerDiv);
+    });
+  }
+  public removeBusStationSelectedRoute() {
+    if (this.currentBusStationSelectedRoute !== null) {
+      for (
+        let i = this.currentBusStationSelectedRoute.length - 1;
+        i >= 0;
+        i--
+      ) {
+        this.currentBusStationSelectedRoute[i].remove();
+      }
+    }
+  }
   getVehicleTrackingOnMap() {
     this.mapService
       .getVehicleTrackingOnMap()

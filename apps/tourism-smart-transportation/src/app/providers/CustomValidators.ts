@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import * as turf from '@turf/turf';
 import {
   AbstractControl,
   ValidatorFn,
@@ -161,4 +162,19 @@ export function checkMoreThanTimeStart(
       controlTimeEnd.setErrors({ MustMoreStart: true });
     }
   };
+}
+export function checkDistance(
+  lnglat: [[number, number]],
+  currentPoint: [number, number]
+): boolean {
+  let isLessThan1Km = false;
+  for (let index = 0; index < lnglat.length; index++) {
+    const distance = turf.distance(lnglat[index], currentPoint);
+    console.log(distance);
+    if (distance < 1) {
+      isLessThan1Km = true;
+      break;
+    }
+  }
+  return isLessThan1Km;
 }

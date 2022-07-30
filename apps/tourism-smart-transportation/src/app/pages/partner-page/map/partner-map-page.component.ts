@@ -69,11 +69,13 @@ export class PartnerMapPageComponent
 
   currentRentStationMarkers: any = [];
   currentBusStationMarkers: any = [];
+  currentBusStationSelectedRoute: any = [];
   geojson: any;
   trackingIntervel: any;
   partnerId = '';
   checkRoleParner: any;
   //
+  hasShowRoute = false;
 
   private subscription?: Subscription;
   constructor(
@@ -135,6 +137,12 @@ export class PartnerMapPageComponent
     this.showSideBarList = true;
     this.showSideBarDetail = false;
     this.mapboxService.removeRoute();
+    if (this.hasShowRoute) {
+      this.mapboxService.removeRoute();
+      this.removeBusStationSelectedRoute();
+      this.setBusStationMarkers(this.busStationsOnMap);
+      this.hasShowRoute = false;
+    }
   }
   onGetFillterMenu(event: any) {
     this.fillterMenu = event;
@@ -157,6 +165,8 @@ export class PartnerMapPageComponent
       clearInterval(this.trackingIntervel);
       this.removeBusStationMarker();
       this.removeRentStationMarker();
+      this.removeBusStationSelectedRoute();
+      this.mapboxService.removeRoute();
       this.mapboxService.removeLayerTracking();
     } else if (valueCheckbox.length > 0) {
       this.getListStationByPartnerIdOnMap();
@@ -165,6 +175,8 @@ export class PartnerMapPageComponent
         case 'vehicle':
           clearInterval(this.trackingIntervel);
           this.removeBusStationMarker();
+          this.mapboxService.removeRoute();
+          this.removeBusStationSelectedRoute();
           this.removeRentStationMarker();
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
@@ -173,21 +185,26 @@ export class PartnerMapPageComponent
         case 'bus-station':
           clearInterval(this.trackingIntervel);
           this.mapboxService.removeLayerTracking();
+          this.removeBusStationSelectedRoute();
+          this.mapboxService.removeRoute();
           this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.removeRentStationMarker();
-
           break;
         case 'rent-station':
           clearInterval(this.trackingIntervel);
           this.mapboxService.removeLayerTracking();
           this.removeRentStationMarker();
+          this.mapboxService.removeRoute();
           this.setRentStationMarkers(this.rentStationsOnMap);
+          this.removeBusStationSelectedRoute();
           this.removeBusStationMarker();
           break;
         case 'rent-station-vehicle':
           clearInterval(this.trackingIntervel);
+          this.removeBusStationSelectedRoute();
           this.removeBusStationMarker();
+          this.mapboxService.removeRoute();
           this.setRentStationMarkers(this.rentStationsOnMap);
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
@@ -195,7 +212,9 @@ export class PartnerMapPageComponent
           break;
         case 'bus-station-vehicle':
           clearInterval(this.trackingIntervel);
+          this.removeBusStationSelectedRoute();
           this.removeRentStationMarker();
+          this.mapboxService.removeRoute();
           this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.trackingIntervel = setInterval(() => {
@@ -206,6 +225,8 @@ export class PartnerMapPageComponent
           clearInterval(this.trackingIntervel);
           this.mapboxService.removeLayerTracking();
           this.removeRentStationMarker();
+          this.mapboxService.removeRoute();
+          this.removeBusStationSelectedRoute();
           this.removeBusStationMarker();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.setRentStationMarkers(this.rentStationsOnMap);
@@ -213,7 +234,9 @@ export class PartnerMapPageComponent
         case 'bus-station-rent-station-vehicle':
           clearInterval(this.trackingIntervel);
           this.removeRentStationMarker();
+          this.mapboxService.removeRoute();
           this.removeBusStationMarker();
+          this.removeBusStationSelectedRoute();
           this.setBusStationMarkers(this.busStationsOnMap);
           this.setRentStationMarkers(this.rentStationsOnMap);
           this.trackingIntervel = setInterval(() => {
@@ -224,7 +247,9 @@ export class PartnerMapPageComponent
           clearInterval(this.trackingIntervel);
           this.mapboxService.removeLayerTracking();
           this.removeBusStationMarker();
+          this.mapboxService.removeRoute();
           this.removeRentStationMarker();
+          this.removeBusStationSelectedRoute();
           break;
       }
     }
@@ -320,6 +345,11 @@ export class PartnerMapPageComponent
     this.mapService
       .getRouteById(event.id)
       .subscribe((routeRes: RouteResponse) => {
+        this.removeBusStationMarker();
+        this.setBusStationSelectedRoute(
+          this.busStationsOnMap,
+          routeRes.body.stationList
+        );
         this.routeDetail = routeRes.body;
         let stationList: any = [];
         routeRes.body.stationList?.map((stations: Station) => {
@@ -482,6 +512,49 @@ export class PartnerMapPageComponent
     if (this.currentBusStationMarkers !== null) {
       for (let i = this.currentBusStationMarkers.length - 1; i >= 0; i--) {
         this.currentBusStationMarkers[i].remove();
+      }
+    }
+  }
+  public setBusStationSelectedRoute(
+    busStations: Station[],
+    busOnRoute?: Station[]
+  ) {
+    this.hasShowRoute = true;
+
+    busStations.map((marker) => {
+      const elStationMarker = document.createElement('div');
+      elStationMarker.id = marker.id;
+      let width = 35;
+      let height = 35;
+      elStationMarker.className = 'marker';
+      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      if (busOnRoute) {
+        busOnRoute.map((value) => {
+          if (value.id === marker.id) {
+            width = 40;
+            height = 40;
+            elStationMarker.style.backgroundImage = `url('../../../assets/icons/bus-station-selected.svg')`;
+          }
+        });
+      }
+      elStationMarker.style.width = `${width}px`;
+      elStationMarker.style.height = `${height}px`;
+      elStationMarker.style.backgroundSize = '100%';
+      const markerDiv = new mapboxgl.Marker(elStationMarker)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapboxService.map);
+
+      this.currentBusStationSelectedRoute.push(markerDiv);
+    });
+  }
+  public removeBusStationSelectedRoute() {
+    if (this.currentBusStationSelectedRoute !== null) {
+      for (
+        let i = this.currentBusStationSelectedRoute.length - 1;
+        i >= 0;
+        i--
+      ) {
+        this.currentBusStationSelectedRoute[i].remove();
       }
     }
   }
