@@ -149,6 +149,13 @@
             ></button>
           </div>
         </div>
+        <p
+          style="text-align: center; width: 70%; margin-top: -20px"
+          class="p-error"
+          *ngIf="blockLayout"
+        >
+          Độ dài của tuyến là {{ distance / 1000 }} km
+        </p>
       </div>
     </div>
   </div>

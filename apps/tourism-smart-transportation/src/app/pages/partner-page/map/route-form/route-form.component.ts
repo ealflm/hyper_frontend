@@ -28,6 +28,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
   private partnerId = '';
   private childrenStationList: any[] = [];
   loadingProgress = false;
+  distance: any;
   constructor(
     private fb: FormBuilder,
     private mapBoxService: MapBoxService,
@@ -149,6 +150,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
         this.mapService.getRouteDirection(coordinates).subscribe((res) => {
           this.mapBoxService.getRouteMiniMap(res.routes[0]);
           this._routesForm['distance'].setValue(res.routes[0]?.distance);
+          this.distance = res.routes[0]?.distance;
           this.childrenStationList = this._routesForm['stationList'].value.map(
             (station: Station, index: number) => {
               // console.log(index);
