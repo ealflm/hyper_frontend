@@ -295,10 +295,7 @@ export class VehicleComponent
         this.vehicleTypes = this.vehicleTypeArrCur.filter(
           (value) => value.seats <= 7
         );
-      } else if (
-        res.body.serviceTypeId == ServiceTypeEnum.BusService ||
-        res.body.serviceTypeId == ServiceTypeEnum.BookCarService
-      ) {
+      } else if (res.body.serviceTypeId == ServiceTypeEnum.BusService) {
         this._vehiclesForm['rentStationId'].clearValidators();
         this._vehiclesForm['publishYearId'].clearValidators();
         this._vehiclesForm['vehicleClassId'].clearValidators();
@@ -308,6 +305,16 @@ export class VehicleComponent
         this.vehicleTypes = this.vehicleTypeArrCur.filter(
           (value) => value.seats > 7
         );
+      } else if (res.body.serviceTypeId == ServiceTypeEnum.BookCarService) {
+        this.vehicleTypes = this.vehicleTypeArrCur.filter(
+          (value) => value.seats <= 7
+        );
+        this._vehiclesForm['rentStationId'].clearValidators();
+        this._vehiclesForm['publishYearId'].clearValidators();
+        this._vehiclesForm['vehicleClassId'].clearValidators();
+        this._vehiclesForm['rentStationId'].setValue(null);
+        this._vehiclesForm['publishYearId'].setValue(null);
+        this._vehiclesForm['vehicleClassId'].setValue(null);
       }
       this.currentLicensePlates = res?.body?.licensePlates;
       this._vehiclesForm['vehicleId'].setValue(res.body.id);
