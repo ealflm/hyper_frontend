@@ -134,6 +134,14 @@
             >
               visibility
             </span>
+            <span
+              class="material-icons-outlined enable"
+              style="margin-left: 5px; cursor: pointer"
+              (click)="updateVehicleReady(vehicle.id)"
+              *ngIf="vehicle.status === 3"
+            >
+              cached
+            </span>
           </td>
         </tr>
       </ng-template>
@@ -234,7 +242,24 @@
                       Không được bỏ trống</small
                     >
                   </div>
-                  <input
+                  <p-dropdown
+                    [style]="{ height: '28px' }"
+                    class="dropdown"
+                    placeholder="Chọn màu xe"
+                    optionValue="name"
+                    formControlName="color"
+                    [options]="vehicleColors"
+                    (onChange)="onChangeServiceType()"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      {{ item.color }}
+                    </ng-template>
+
+                    <ng-template let-item pTemplate="selectedItem">
+                      {{ item.color }}
+                    </ng-template>
+                  </p-dropdown>
+                  <!-- <input
                     [style]="{
                       height: '28px'
                     }"
@@ -243,7 +268,7 @@
                     pInputText
                     formControlName="color"
                     (keyup.enter)="onSaveVehicle()"
-                  />
+                  /> -->
                 </div>
                 <div class="col-12" style="margin-top: 10px">
                   <div class="vehicle-subtitle">Thông tin dịch vụ</div>
@@ -528,6 +553,37 @@
       type="button"
       label="Kích hoạt"
       (click)="rsCf.accept()"
+    ></button>
+  </ng-template>
+</p-confirmDialog>
+<p-confirmDialog
+  key="readyStatusConfirm"
+  #rtc
+  [style]="{ width: '450px', height: '101px' }"
+>
+  <ng-template pTemplate="header">
+    <div class="confirm-dialog-subtitle">
+      Bạn có muốn thay đổi trạng thái phương tiện?
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-outlined p-button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Hủy"
+      (click)="rtc.reject()"
+    ></button>
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Kích hoạt"
+      (click)="rtc.accept()"
     ></button>
   </ng-template>
 </p-confirmDialog>

@@ -15,7 +15,7 @@ export const MenuFilterStatus = [
 export const MenuVehicleFilterStatus = [
   {
     value: 1,
-    lable: 'Chuẩn bị',
+    lable: 'Sẵn sàng',
   },
   {
     value: 0,

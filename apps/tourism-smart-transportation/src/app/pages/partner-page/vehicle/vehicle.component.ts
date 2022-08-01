@@ -1,3 +1,4 @@
+import { VEHICLE_COLOR } from './../../../constant/vehicle-color';
 import { MapService } from './../../../services/map.service';
 import {
   ServiceTypeEnum,
@@ -62,6 +63,7 @@ export class VehicleComponent
   vehicleTypes: VehicleType[] = [];
   serviceTypes: ServiceType[] = [];
   serviceTypeFilter = ServiceTypeFilter;
+  vehicleColors = VEHICLE_COLOR;
   rentStations: RentStation[] = [];
   publishYears: PublishYear[] = [];
   vehicleClass: VehicleClass[] = [];
@@ -373,6 +375,29 @@ export class VehicleComponent
         }
       );
     }
+  }
+  updateVehicleReady(vehicleId: string) {
+    const vehicle: Vehicle = {
+      status: 1,
+    };
+    this.confirmationService.confirm({
+      key: 'readyStatusConfirm',
+      accept: () => {
+        this.vehicleService
+          .updateVehicleForPartner(vehicleId, vehicle)
+          .subscribe((res) => {
+            if (res.statusCode === 201) {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Thành công',
+                detail: 'Thay đổi trạng thái phương tiện thành công',
+              });
+            }
+            this.getListVehicleOfPartner();
+            this.displayDialog = false;
+          });
+      },
+    });
   }
   onSaveChange() {
     const valueChange = this._vehiclesForm['licensePlates'].value;

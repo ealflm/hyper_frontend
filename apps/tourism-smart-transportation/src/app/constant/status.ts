@@ -35,22 +35,18 @@ export const STATUS_VEHICLE: any = {
     class: 'status-disabled',
   },
   1: {
-    lable: 'Chuẩn bị',
-    class: 'status-active',
-  },
-  2: {
     lable: 'Sẵn sàng',
     class: 'status-active',
   },
-  3: {
-    lable: 'Đang đón khách',
-    class: 'status-completed',
-  },
-  4: {
+  2: {
     lable: 'Đang chạy',
     class: 'status-completed',
   },
-  5: {
+  3: {
+    lable: 'Đã cho thuê',
+    class: 'status-completed',
+  },
+  4: {
     lable: 'Quá hạn',
     class: 'status-expired',
   },

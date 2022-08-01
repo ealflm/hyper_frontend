@@ -97,6 +97,7 @@ export class RentStationFormComponent
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.initViewMiniMapPartner$.value) {
+      this.getRentStationMarkers();
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
       this.setListRentStationMarkers(this.rentStationOnMap);
