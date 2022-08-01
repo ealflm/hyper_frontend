@@ -164,7 +164,19 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
               };
             }
           );
+          let distance;
+          for (
+            let index = 1;
+            index < this.childrenStationList.length;
+            index++
+          ) {
+            distance = this.childrenStationList[index].distance +=
+              this.childrenStationList[index - 1]?.distance;
+            this.childrenStationList[index].distance = distance;
+          }
+
           // console.log(this.childrenStationList);
+
           this.loadingProgress = false;
         });
         this.blockLayout = true;

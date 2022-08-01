@@ -25,7 +25,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   barChartOption: any;
   statictis: any;
   partnerId = '';
-  date = new Date();
   constructor(
     private dashboardService: DashboardService,
     private localStorageService: LocalStorageService
@@ -36,7 +35,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.getStatictis();
     this.getVehicleOfServiceType();
     this.getRevenueOfMonth();
-    console.log(this.date);
 
     // const data = {
     //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
