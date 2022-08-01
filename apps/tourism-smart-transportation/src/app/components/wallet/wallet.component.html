@@ -2,7 +2,10 @@
   <div class="col-12">
     <div class="card-wallet">
       <div class="total-price">
-        {{ Wallet?.wallet?.accountBalance | currency: 'VND' }}
+        {{
+          Wallet?.wallet?.accountBalance
+            | currency: Wallet?.wallet?.accountBalance:'':'.0-0'
+        }}đ
       </div>
       <div class="wallet-text">Số dư</div>
     </div>
@@ -23,7 +26,13 @@
           </div>
         </div>
         <div class="wallet-money">
-          <b>+ {{ transaction.transactions[0]?.amount | currency: 'VND' }} </b>
+          <b
+            >+
+            {{
+              transaction.transactions[0]?.amount
+                | currency: transaction.transactions[0]?.amount:'':'.0-0'
+            }}đ
+          </b>
         </div>
         <div style="width: 35%">{{ transaction.transactions[0]?.content }}</div>
       </div>
