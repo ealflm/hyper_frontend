@@ -190,8 +190,8 @@ export class FormStationComponent
     const width = 30;
     const height = 30;
     el.className = 'marker';
-    // el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
-    el.style.backgroundImage = `url('../../../assets/image/rent-station-grey.svg')`;
+    el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+    // el.style.backgroundImage = `url('../../../assets/image/rent-station-grey.svg')`;
 
     el.style.width = `${width}px`;
     el.style.height = `${height}px`;
@@ -405,7 +405,7 @@ export class FormStationComponent
       const width = 25;
       const height = 25;
       elStationMarker.className = 'marker';
-      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      elStationMarker.style.backgroundImage = `url('../../../assets/image/rent-station-grey.svg')`;
       elStationMarker.style.width = `${width}px`;
       elStationMarker.style.height = `${height}px`;
       elStationMarker.style.backgroundSize = '100%';
