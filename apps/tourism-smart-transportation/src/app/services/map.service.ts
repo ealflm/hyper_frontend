@@ -121,7 +121,7 @@ export class MapService {
   }
   getRouteDirection(coordinates: string): Observable<any> {
     return this.http.get<any>(
-      `${this.mapboxAPIDirection}/v5/mapbox/driving-traffic/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${environment.mapbox.accessToken}`
+      `${this.mapboxAPIDirection}/v5/mapbox/driving-traffic/${coordinates}?alternatives=true&geometries=geojson&language=en&overview=full&steps=true&access_token=${environment.mapbox.accessToken}`
     );
   }
   // getAllVehicle
