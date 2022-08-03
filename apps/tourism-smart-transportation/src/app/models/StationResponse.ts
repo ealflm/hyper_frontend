@@ -5,8 +5,8 @@ export class Station {
   title?: string;
   description?: string;
   address?: string;
-  longitude?: number;
-  latitude?: number;
+  longitude!: number;
+  latitude!: number;
   status?: number;
 }
 export abstract class StationsResponse {

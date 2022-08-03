@@ -103,10 +103,9 @@ export class RentStationFormComponent
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.initViewMiniMapPartner$.value) {
       // console.log(this.mapChild);
-      this.getRentStationMarkers();
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
-      this.setListRentStationMarkers(this.rentStationOnMap);
+      this.getRentStationMarkers();
       if (this.rentStationId) {
         this.editMode = true;
         this.mapService
@@ -121,6 +120,10 @@ export class RentStationFormComponent
               stationRes.body.description
             );
             this._locationForm['address'].setValue(stationRes.body.address);
+            this.filterRentStationWillEdit(
+              this.rentStationOnMap,
+              stationRes.body.id
+            );
             if (stationRes.body.longitude && stationRes.body.latitude) {
               this.setRentSationMarker(
                 stationRes.body.longitude,
@@ -133,6 +136,7 @@ export class RentStationFormComponent
             }
           });
       } else if (!this.rentStationId) {
+        this.getRentStationAndSetMarkers();
         this.setEmtyInitForm();
         this.addMarker();
         this.editMode = false;
@@ -296,11 +300,42 @@ export class RentStationFormComponent
       )
       .subscribe();
   }
+  getRentStationAndSetMarkers() {
+    this.mapService
+      .getListRentStationForPartner()
+      .pipe(
+        map((rentStationRes: RentStationsResponse) => {
+          this.lnglat = rentStationRes.body.items.map((value) => {
+            return [value.longitude, value.latitude];
+          });
+          this.rentStationOnMap = rentStationRes.body.items.map(
+            (rentStation: RentStation) => {
+              return {
+                id: rentStation.id,
+                address: rentStation.address,
+                companyName: rentStation.companyName,
+                longitude: rentStation.longitude,
+                latitude: rentStation.latitude,
+                partnerId: rentStation.partnerId,
+                status: rentStation.status,
+                title: rentStation.title,
+              };
+            }
+          );
+          this.setListRentStationMarkers(this.rentStationOnMap);
+        })
+      )
+      .subscribe();
+  }
+  filterRentStationWillEdit(rentStations: RentStation[], id: string) {
+    this.rentStationOnMap = rentStations.filter((value) => value.id !== id);
+    this.setListRentStationMarkers(this.rentStationOnMap);
+  }
   setRentSationMarker(longitude: number, latitude: number) {
     this.isInsidePolygon = true;
     const el = document.createElement('div');
-    const width = 30;
-    const height = 30;
+    const width = 40;
+    const height = 40;
     el.className = 'marker';
     el.style.backgroundImage = `url('../../../assets/image/rent-station.png')`;
     el.style.width = `${width}px`;

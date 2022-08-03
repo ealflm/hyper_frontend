@@ -53,8 +53,14 @@ export class MapBoxService {
     if (this.map.getLayer('route')) {
       this.map.removeLayer('route');
     }
+    if (this.map.getLayer('arrow-layer')) {
+      this.map.removeLayer('arrow-layer');
+    }
     if (this.map.getSource('route')) {
       this.map.removeSource('route');
+    }
+    if (this.map.getSource('mapDataSourceId')) {
+      this.map.removeSource('mapDataSourceId');
     }
   }
   getRoute(routeRes: any) {
@@ -68,9 +74,12 @@ export class MapBoxService {
         coordinates: route,
       },
     };
-    turf;
-    // if the route already exists on the map, we'll reset it using setData
     this.removeRoute();
+    this.map.addSource('mapDataSourceId', {
+      type: 'geojson',
+      data: geojson,
+    });
+    // if the route already exists on the map, we'll reset it using setData
 
     this.map.addLayer({
       id: 'route',
@@ -84,10 +93,33 @@ export class MapBoxService {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': '#3887be',
+        'line-color': '#3cb2d0',
         'line-width': 5,
         'line-opacity': 0.75,
       },
+    });
+    const url = 'https://i.imgur.com/LcIng3L.png';
+    this.map.loadImage(url, (err, image) => {
+      if (err) throw err;
+      if (!this.map.hasImage('arrow')) {
+        if (image) {
+          this.map.addImage('arrow', image);
+        }
+      }
+      this.map.addLayer({
+        id: 'arrow-layer',
+        type: 'symbol',
+        source: 'mapDataSourceId',
+        layout: {
+          'symbol-placement': 'line',
+          'symbol-spacing': 1,
+          'icon-allow-overlap': true,
+          // 'icon-ignore-placement': true,
+          'icon-image': 'arrow',
+          'icon-size': 0.045,
+          visibility: 'visible',
+        },
+      });
     });
   }
   removeRouteMiniMap() {
@@ -182,6 +214,13 @@ export class MapBoxService {
   flyToMarker(longitude: number, latitude: number) {
     this.map.flyTo({
       zoom: 17,
+      center: [longitude, latitude],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    });
+  }
+  flyToRoute(longitude: number, latitude: number) {
+    this.map.flyTo({
+      zoom: 12,
       center: [longitude, latitude],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });

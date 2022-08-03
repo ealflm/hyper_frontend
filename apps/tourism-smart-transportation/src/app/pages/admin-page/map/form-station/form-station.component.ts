@@ -94,11 +94,9 @@ export class FormStationComponent
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.iniViewMiniMapAdmin$.value) {
-      this.getBusStationMarkers();
-
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
-      this.setBusStationMarkers(this.busStationsOnMap);
+      this.getBusStationMarkers();
       if (this.idStation) {
         this.editMode = true;
         this.mapService
@@ -112,6 +110,10 @@ export class FormStationComponent
               stationRes.body.description
             );
             this._locationForm['address'].setValue(stationRes.body.address);
+            this.filterBusStationWillEdit(
+              this.busStationsOnMap,
+              stationRes.body.id
+            );
             if (stationRes.body.longitude && stationRes.body.latitude) {
               this.setSationMarker(
                 stationRes.body.longitude,
@@ -124,6 +126,7 @@ export class FormStationComponent
             }
           });
       } else if (!this.idStation) {
+        this.getBusStationAndSetMarkers();
         this.setEmtyInitForm();
         this.addMarker();
         this.editMode = false;
@@ -240,8 +243,8 @@ export class FormStationComponent
   setSationMarker(longitude: number, latitude: number) {
     this.isInsidePolygon = true;
     const el = document.createElement('div');
-    const width = 30;
-    const height = 30;
+    const width = 35;
+    const height = 35;
     el.className = 'marker';
     el.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
     el.style.width = `${width}px`;
@@ -397,6 +400,33 @@ export class FormStationComponent
         })
       )
       .subscribe();
+  }
+  public getBusStationAndSetMarkers() {
+    this.mapService
+      .getStationOnMap()
+      .pipe(
+        map((stationRes: StationsResponse) => {
+          this.busStationsOnMap = stationRes.body.items.map(
+            (station: Station) => {
+              return {
+                id: station.id,
+                title: station.title,
+                description: station.description,
+                address: station.address,
+                longitude: station.longitude,
+                latitude: station.latitude,
+                status: station.status,
+              };
+            }
+          );
+          this.setBusStationMarkers(this.busStationsOnMap);
+        })
+      )
+      .subscribe();
+  }
+  filterBusStationWillEdit(rentStations: Station[], id: string) {
+    this.busStationsOnMap = rentStations.filter((value) => value.id !== id);
+    this.setBusStationMarkers(this.busStationsOnMap);
   }
   public setBusStationMarkers(busStations: Station[]) {
     busStations.map((marker) => {
