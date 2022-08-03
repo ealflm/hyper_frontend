@@ -51,13 +51,26 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Chuyến đi</th>
-          <th>Tên tài xế</th>
+          <th pSortableColumn="tripName">
+            Chuyến đi <p-sortIcon field="tripName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="driverFirstName">
+            Tên tài xế <p-sortIcon field="driverFirstName"></p-sortIcon>
+          </th>
           <th>Phương tiện</th>
           <th>Tên Tuyến</th>
-          <th>Ngày trong tuần</th>
-          <th>Thời gian dự kiến bắt đầu</th>
-          <th>Thời gian dự kiến kết thúc</th>
+          <th pSortableColumn="dayOfWeek">
+            Ngày trong tuần <p-sortIcon field="dayOfWeek"></p-sortIcon>
+          </th>
+          <th pSortableColumn="timeStart">
+            Thời gian dự kiến bắt đầu
+            <p-sortIcon field="timeStart"></p-sortIcon>
+          </th>
+          <th pSortableColumn="timeEnd">
+            Thời gian dự kiến kết thúc
+            <p-sortIcon field="timeEnd"></p-sortIcon>
+          </th>
+
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>

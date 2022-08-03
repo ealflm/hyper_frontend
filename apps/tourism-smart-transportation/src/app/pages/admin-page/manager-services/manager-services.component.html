@@ -46,9 +46,13 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Tên gói</th>
+          <th pSortableColumn="name">
+            Tên gói <p-sortIcon field="name"></p-sortIcon>
+          </th>
           <th>Mô tả</th>
-          <th>Giá</th>
+          <th pSortableColumn="price">
+            Giá <p-sortIcon field="price"></p-sortIcon>
+          </th>
           <th>Tiêu đề quảng cáo</th>
           <th>Trạng thái</th>
           <th>Hành động</th>

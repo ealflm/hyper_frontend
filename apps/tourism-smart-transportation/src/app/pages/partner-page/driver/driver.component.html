@@ -55,11 +55,15 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Họ và tên</th>
+          <th pSortableColumn="firstName">
+            Họ và tên <p-sortIcon field="firstName"></p-sortIcon>
+          </th>
           <th>Phương tiện + Dịch vụ</th>
           <th>Ngày sinh</th>
           <th>Số điện thoại</th>
-          <th>Đánh giá</th>
+          <th pSortableColumn="feedbackRating">
+            Đánh giá<p-sortIcon field="feedbackRating"></p-sortIcon>
+          </th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>

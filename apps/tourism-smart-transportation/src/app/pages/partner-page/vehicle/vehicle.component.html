@@ -54,10 +54,14 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Tên phương tiện</th>
+          <th pSortableColumn="name">
+            Tên phương tiện <p-sortIcon field="name"></p-sortIcon>
+          </th>
           <th>Số hiệu</th>
           <th>Màu</th>
-          <th>Loại xe</th>
+          <th pSortableColumn="vehicleTypeName">
+            Loại xe <p-sortIcon field="vehicleTypeName"></p-sortIcon>
+          </th>
           <th>
             Loại dịch vụ
             <p-columnFilter

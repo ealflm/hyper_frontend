@@ -50,11 +50,19 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Tên</th>
+          <th pSortableColumn="title">
+            Tên <p-sortIcon field="title"></p-sortIcon>
+          </th>
           <th>Mô tả</th>
-          <th>Thời gian bắt đầu</th>
-          <th>Thời gian kết thúc</th>
-          <th>Giá trị</th>
+          <th pSortableColumn="timeStart">
+            Thời gian bắt đầu <p-sortIcon field="timeStart"></p-sortIcon>
+          </th>
+          <th pSortableColumn="timeEnd">
+            Thời gian kết thúc <p-sortIcon field="timeEnd"></p-sortIcon>
+          </th>
+          <th pSortableColumn="value">
+            Giá trị <p-sortIcon field="value"></p-sortIcon>
+          </th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
