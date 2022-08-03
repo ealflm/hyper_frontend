@@ -364,12 +364,7 @@
   [modal]="true"
 >
   <div class="table-dialog table-order-details">
-    <p-table
-      #td
-      *ngIf="!paymentDialogStatus"
-      [value]="orderDetails"
-      style="border-bottom: 9px"
-    >
+    <p-table #td *ngIf="!paymentDialogStatus" [value]="orderDetails">
       <!-- [rows]="2"
     [rowsPerPageOptions]="[2, 5]"
     [showCurrentPageReport]="true"
