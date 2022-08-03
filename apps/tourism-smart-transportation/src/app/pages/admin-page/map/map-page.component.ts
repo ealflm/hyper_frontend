@@ -401,7 +401,13 @@ export class MapPageComponent
           routeRes.body.stationList
         );
         let stationList: any = [];
-        routeRes.body.stationList?.map((stations: Station) => {
+        routeRes.body.stationList?.map((stations: Station, index) => {
+          if (index == 1) {
+            this.mapboxService.flyToRoute(
+              stations.longitude,
+              stations.latitude
+            );
+          }
           const lnglat = stations.longitude + ',' + stations.latitude;
           stationList = [...stationList, lnglat];
         });
