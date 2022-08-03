@@ -93,7 +93,7 @@ export class MapBoxService {
         'line-cap': 'round',
       },
       paint: {
-        'line-color': '#3cb2d0',
+        'line-color': '#03afff',
         'line-width': 5,
         'line-opacity': 0.75,
       },
