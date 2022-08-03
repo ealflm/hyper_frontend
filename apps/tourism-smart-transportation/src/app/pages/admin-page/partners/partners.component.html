@@ -49,13 +49,17 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Họ và tên</th>
+          <th pSortableColumn="firstName">
+            Họ và tên <p-sortIcon field="firstName"></p-sortIcon>
+          </th>
           <th>Công ty</th>
           <th>Giới tính</th>
           <th>Ngày sinh</th>
           <th>Số điện thoại</th>
           <th>Email</th>
-          <th>Ngày tạo</th>
+          <th pSortableColumn="createdDate">
+            Ngày tạo <p-sortIcon field="createdDate"></p-sortIcon>
+          </th>
           <th>Ngày sửa</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
