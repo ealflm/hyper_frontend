@@ -408,7 +408,7 @@
             <td>
               {{ driver.firstName + ' ' + driver.lastName }}
             </td>
-            <td *ngIf="driver.vehicleTypeLabel === null"></td>
+            <td *ngIf="driver.vehicleTypeLabel === null">Chưa có xe</td>
             <td *ngIf="driver.vehicleTypeLabel !== null">
               {{ driver.vehicleTypeLabel + ' ' + driver.vehicleName }}
             </td>

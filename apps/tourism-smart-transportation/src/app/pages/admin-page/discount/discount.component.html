@@ -82,7 +82,7 @@
           </td>
           <td>{{ discount.timeStart | date: 'dd/MM/yyyy, h:mm a' }}</td>
           <td>{{ discount.timeEnd | date: 'dd/MM/yyyy, h:mm a' }}</td>
-          <td>{{ discount.value }}</td>
+          <td>{{ discount.value * 100 }}%</td>
 
           <td>
             <div [class]="discountStatus[discount.status].class">
