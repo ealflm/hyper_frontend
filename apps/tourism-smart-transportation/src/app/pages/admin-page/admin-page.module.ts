@@ -1,3 +1,4 @@
+import { DirectiveModule } from './../../directive/directive.module';
 import { ProfileComponent } from './../../components/profile/profile.component';
 import { PipeModule } from './../../pipe/pipe.module';
 import { CheckedComponent } from './../../shared/checked/checked.component';
@@ -116,6 +117,7 @@ const ADMIN_ROUTES: Routes = [
     ComponentsModule,
     PipeModule,
     PowerBIEmbedModule,
+    DirectiveModule,
   ],
 })
 export class AdminPageModule {}

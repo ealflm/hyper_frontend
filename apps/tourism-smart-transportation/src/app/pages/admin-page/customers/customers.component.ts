@@ -93,7 +93,9 @@ export class CustomersComponent implements OnInit {
   }
 
   createCustomer() {}
-
+  public handleMissingImage(event: Event) {
+    (event.target as HTMLImageElement).style.display = 'none';
+  }
   showConfirmDialog(id: string) {
     if (id) {
       this.confirmationService.confirm({

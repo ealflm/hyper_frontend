@@ -70,7 +70,9 @@
             [pTooltip]="customer.firstName + ' ' + customer.lastName"
             tooltipPosition="bottom"
           >
+            <!-- (error)="handleMissingImage($event)" -->
             <img
+              appHideMissing
               [src]="
                 customer.photoUrl === '' || customer.photoUrl === null
                   ? '../assets/image/imagePreview.png'

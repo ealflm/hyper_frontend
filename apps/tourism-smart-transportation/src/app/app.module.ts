@@ -6,7 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +21,7 @@ import { NzZorroAntdModule } from './nz-zorro-antd/nz-zorro-antd.module';
 import { en_US, NZ_I18N, NzI18nModule } from 'ng-zorro-antd/i18n';
 import { SettingModule } from './pages/admin-page/setting/setting.module';
 import { CheckedComponent } from './shared/checked/checked.component';
+import { HideMissingDirective } from './directive/hide-missing.directive';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +38,7 @@ import { CheckedComponent } from './shared/checked/checked.component';
     MaterialuiModule,
     NzZorroAntdModule,
     NzI18nModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
   ],
   providers: [
     AuthGuardService,
@@ -50,5 +54,4 @@ import { CheckedComponent } from './shared/checked/checked.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
