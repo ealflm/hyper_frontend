@@ -362,7 +362,7 @@ export class PartnerDetailComponent implements OnInit {
               detail: updatePartnerRes.message,
             });
           }
-          this.onCancleEdit();
+          this.disableInput();
           this.isSubmit = false;
           this._getDetailPartner();
         },
@@ -374,6 +374,19 @@ export class PartnerDetailComponent implements OnInit {
         }
       );
     }
+  }
+  private disableInput() {
+    this.editModeStatus = !this.editModeStatus;
+    this._inforsForm['firstName'].disable();
+    this._inforsForm['lastName'].disable();
+    this._inforsForm['companyName'].disable();
+    this._inforsForm['addressUser'].disable();
+    this._inforsForm['addressCompany'].disable();
+    this._inforsForm['serviceType'].disable();
+    this._inforsForm['phone'].disable();
+    this._inforsForm['email'].disable();
+    this._inforsForm['dateOfBirth'].disable();
+    this._inforsForm['selectedGender'].disable();
   }
   getListVehicleFormPartnerId() {
     const id = this._inforsForm['id'].value;

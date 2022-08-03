@@ -21,6 +21,8 @@ import {
   AfterViewChecked,
   OnDestroy,
   ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { MapBoxService } from '../../../services/map-box.service';
 import { MapService } from '../../../services/map.service';
@@ -78,6 +80,7 @@ export class PartnerMapPageComponent
   hasShowRoute = false;
 
   private subscription?: Subscription;
+  @ViewChild('rent_station') rent_station_form!: ElementRef;
   constructor(
     private mapboxService: MapBoxService,
     private mapService: MapService,
@@ -91,7 +94,6 @@ export class PartnerMapPageComponent
   ngOnInit(): void {
     const user = this.localStorageService.getUser;
     this.checkRoleParner = this.localStorageService.getRolePartner;
-    console.log();
     if (this.checkRoleParner.RentService && this.checkRoleParner.BusService) {
       this.headerMenu = MenuDataMap;
     } else if (
@@ -120,6 +122,7 @@ export class PartnerMapPageComponent
   }
   ngAfterViewChecked(): void {
     this.mapboxService.map.resize();
+    // console.log(this.rent_station_form);
   }
   ngOnDestroy(): void {
     clearInterval(this.trackingIntervel);

@@ -45,7 +45,7 @@ export class JwtInterceptor implements HttpInterceptor {
             this.messageService.add({
               severity: 'error',
               summary: 'Thất bại',
-              detail: error.error.message,
+              detail: 'Có lỗi xẩy ra',
             });
           }
           if (error.status === 500) {
@@ -53,7 +53,7 @@ export class JwtInterceptor implements HttpInterceptor {
             this.messageService.add({
               severity: 'error',
               summary: 'Thất bại',
-              detail: error.error.message,
+              detail: 'Có lỗi xẩy ra',
             });
           }
           if (error.status === 404) {

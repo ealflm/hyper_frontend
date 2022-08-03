@@ -30,6 +30,10 @@ export const MenuVehicleFilterStatus = [
     lable: 'Đã cho thuê',
   },
   {
+    value: 4,
+    lable: 'Quá hạn',
+  },
+  {
     value: null,
     lable: 'Tất cả',
   },

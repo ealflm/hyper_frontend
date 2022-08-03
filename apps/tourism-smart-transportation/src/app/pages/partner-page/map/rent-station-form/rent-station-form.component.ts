@@ -78,6 +78,9 @@ export class RentStationFormComponent
     private gongMapService: GongMapService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
+    // console.log(changes);
+    // console.log(this.mapChild);
+
     if (this.rentStationId) {
       this.editMode = true;
       this.isSubmit = false;
@@ -89,14 +92,17 @@ export class RentStationFormComponent
   ngOnInit(): void {
     this._initLocationForm();
     this.getRentStationMarkers();
+    // console.log(this.mapChild);
   }
   // khoi tao dom
   ngAfterViewInit() {
     this.cdr.detectChanges();
+    // console.log(this.mapChild);
   }
   // sau khi khoi tao xong dom
   ngAfterViewChecked(): void {
     if (this._dialog && !this.mapboxService.initViewMiniMapPartner$.value) {
+      // console.log(this.mapChild);
       this.getRentStationMarkers();
       this.mapboxService.initializeMiniMap();
       this.mapboxService.miniMap.resize();
