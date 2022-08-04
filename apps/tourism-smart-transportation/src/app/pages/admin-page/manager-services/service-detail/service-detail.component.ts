@@ -28,7 +28,7 @@ export class ServiceDetailComponent implements OnInit {
   editBtnStatus?: boolean = false;
   createStatus?: boolean = true;
   loading = false;
-
+  checkLengthFormPackageList = false;
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -294,13 +294,18 @@ export class ServiceDetailComponent implements OnInit {
     }
     this.loading = true;
     const formData = new FormData();
+    this.nomalizeDataPackageList(formData);
+    if (this.checkLengthFormPackageList) {
+      this.loading = false;
+      return;
+    }
+
     formData.append('Name', this._tiersForm['tierName'].value);
     formData.append('Description', this._tiersForm['description'].value);
     formData.append('Price', this._tiersForm['price'].value);
     formData.append('PromotedTitle', this._tiersForm['promotedTitle'].value);
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
-    this.nomalizeDataPackageList(formData);
     this.packageService
       .updatePackagebyId(this._tiersForm['id'].value, formData)
       .subscribe(
@@ -331,6 +336,15 @@ export class ServiceDetailComponent implements OnInit {
   nomalizeDataPackageList(formData: FormData) {
     let data: any = [];
     const lengthFormArray = this._packagesForm.length;
+    if (lengthFormArray == 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Thất bại',
+        detail: 'Gói dịch vụ phải có ít nhất 1 dịch vụ',
+      });
+      this.checkLengthFormPackageList = true;
+      return;
+    }
     const checkEmptyData =
       this._packagesForm.controls[lengthFormArray - 1]?.value;
     let isLastedEmptyDataRow = false;
@@ -342,6 +356,7 @@ export class ServiceDetailComponent implements OnInit {
     ) {
       isLastedEmptyDataRow = true;
     }
+    this.checkLengthFormPackageList = false;
     this._tiersForm['packages'].value.map((x: any, index: number) => {
       if (
         index == this._tiersForm['packages'].value.length - 1 &&
@@ -369,7 +384,6 @@ export class ServiceDetailComponent implements OnInit {
       result += JSON.stringify(obj) + ',';
     });
     result = result.substring(0, result.length - 1);
-    console.log(result);
 
     formData.append('PackageItems', `${result}`);
   }
@@ -389,6 +403,11 @@ export class ServiceDetailComponent implements OnInit {
     }
     this.loading = true;
     const formData = new FormData();
+    this.nomalizeDataPackageList(formData);
+    if (this.checkLengthFormPackageList) {
+      this.loading = false;
+      return;
+    }
     formData.append('Name', this._tiersForm['tierName'].value);
     formData.append('Description', this._tiersForm['description'].value);
     formData.append('Price', this._tiersForm['price'].value);
@@ -396,7 +415,6 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
 
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
-    this.nomalizeDataPackageList(formData);
     this.packageService.createPackage(formData).subscribe(
       (res) => {
         if (res.statusCode === 201) {
@@ -405,9 +423,7 @@ export class ServiceDetailComponent implements OnInit {
             summary: 'Thành công',
             detail: res.message,
           });
-          if (!this.loading) {
-            this.router.navigate(['admin/manage-service']);
-          }
+          this.router.navigate(['admin/manage-service']);
           this.loading = false;
         }
       },
