@@ -311,6 +311,9 @@ export class ServiceDetailComponent implements OnInit {
               summary: 'Thành công',
               detail: res.message,
             });
+            this.disableAllInputForm();
+            this.editModeStatus = false;
+            this.editBtnStatus = true;
             this.loading = false;
             // if (!this.loading) {
             //   this.router.navigate(['admin/manage-service']);
@@ -318,6 +321,9 @@ export class ServiceDetailComponent implements OnInit {
           }
         },
         (error: HttpErrorResponse) => {
+          this.disableAllInputForm();
+          this.editModeStatus = false;
+          this.editBtnStatus = true;
           this.loading = false;
         }
       );
