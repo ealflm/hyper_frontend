@@ -1,3 +1,5 @@
+import { PartnerServiceGuard } from './../../auth/partner-service.guard';
+import { ServiceTypeEnum } from './../../constant/service-type';
 import { DriverTripHistoryComponent } from './driver-trip-history/driver-trip-history.component';
 import { PipeModule } from './../../pipe/pipe.module';
 import { PartnerGuard } from './../../auth/partner.guard';
@@ -40,16 +42,65 @@ const PARTNER_ROUTES: Routes = [
         pathMatch: 'full',
       },
       { path: 'partner/dashboard', component: DashboardComponent },
-      { path: 'partner/driver', component: DriverComponent },
+      {
+        path: 'partner/driver',
+        component: DriverComponent,
+        data: {
+          userRoles: [
+            ServiceTypeEnum.BookCarService,
+            ServiceTypeEnum.BusService,
+          ], // Multiple Allowed User
+        },
+        canActivate: [PartnerServiceGuard],
+      },
       {
         path: 'partner/driver/trip-history/:id',
         component: DriverTripHistoryComponent,
+        data: {
+          userRoles: [
+            ServiceTypeEnum.BookCarService,
+            ServiceTypeEnum.BusService,
+          ], // Multiple Allowed User
+        },
+        canActivate: [PartnerServiceGuard],
       },
-      { path: 'partner/vehicle', component: VehicleComponent },
-      { path: 'partner/schedule', component: ScheduleComponent },
+      {
+        path: 'partner/vehicle',
+        component: VehicleComponent,
+        data: {
+          userRoles: [
+            ServiceTypeEnum.BookCarService,
+            ServiceTypeEnum.BusService,
+            ServiceTypeEnum.RentCarService,
+          ], // Multiple Allowed User
+        },
+        canActivate: [PartnerServiceGuard],
+      },
+      {
+        path: 'partner/schedule',
+        component: ScheduleComponent,
+        data: {
+          userRoles: [ServiceTypeEnum.BusService], // Multiple Allowed User
+        },
+        canActivate: [PartnerServiceGuard],
+      },
       { path: 'partner/map', component: PartnerMapPageComponent },
-      { path: 'partner/map/route', component: RouteFormComponent },
-      { path: 'partner/map/route/:id', component: RouteFormComponent },
+      {
+        path: 'partner/map/route',
+        component: RouteFormComponent,
+        data: {
+          userRoles: [ServiceTypeEnum.BusService], // Multiple Allowed User
+        },
+        canActivate: [PartnerServiceGuard],
+      },
+      {
+        path: 'partner/map/route/:id',
+        component: RouteFormComponent,
+        data: {
+          userRoles: [ServiceTypeEnum.BusService], // Multiple Allowed User
+        },
+        canActivate: [PartnerServiceGuard],
+      },
       { path: 'partner/profile', component: ProfileComponent },
     ],
   },
