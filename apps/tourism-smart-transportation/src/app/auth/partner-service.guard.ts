@@ -32,7 +32,6 @@ export class PartnerServiceGuard implements CanActivate {
     );
 
     return this.checkPermission(allowedUserRoles, userRoles);
-    // return this.checkPermission(allowedUserRoles,);
   }
   private getRoutePermissions(route: ActivatedRouteSnapshot) {
     if (route.data && route.data['userRoles']) {
@@ -42,8 +41,6 @@ export class PartnerServiceGuard implements CanActivate {
   }
   checkPermission(allowedUserRoles: any[], userRoles: any[]): boolean {
     const isFounded = allowedUserRoles.some((r) => userRoles.includes(r));
-    console.log(isFounded);
-
     if (isFounded) {
       return isFounded;
     } else {

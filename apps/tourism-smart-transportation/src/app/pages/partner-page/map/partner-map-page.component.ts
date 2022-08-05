@@ -468,6 +468,20 @@ export class PartnerMapPageComponent
           this.mapboxService.flyToMarker(marker.longitude, marker.latitude);
         }
       });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+      });
+      popup.setHTML(`<p>${marker.title}</p>`).addTo(this.mapboxService.map);
+      markerDiv.setPopup(popup);
+      popup.remove();
+      markerDiv.getElement().addEventListener('mouseover', () => {
+        markerDiv.togglePopup();
+      });
+      markerDiv.getElement().addEventListener('mouseleave', () => {
+        popup.remove();
+      });
       this.currentRentStationMarkers.push(markerDiv);
     });
   }
@@ -515,6 +529,21 @@ export class PartnerMapPageComponent
           markerDiv.getPopup();
         }
       });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+      });
+      popup.setHTML(`<p>${marker.title}</p>`).addTo(this.mapboxService.map);
+      markerDiv.setPopup(popup);
+      popup.remove();
+      markerDiv.getElement().addEventListener('mouseover', () => {
+        markerDiv.togglePopup();
+      });
+      markerDiv.getElement().addEventListener('mouseleave', () => {
+        popup.remove();
+      });
+
       this.currentBusStationMarkers.push(markerDiv);
     });
   }
