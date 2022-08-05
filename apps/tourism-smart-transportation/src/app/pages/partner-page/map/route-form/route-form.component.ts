@@ -100,7 +100,20 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
           // });
         }
       });
-
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+      });
+      popup.setHTML(`<p>${marker.title}</p>`).addTo(this.mapBoxService.miniMap);
+      markerDiv.setPopup(popup);
+      popup.remove();
+      markerDiv.getElement().addEventListener('mouseover', () => {
+        markerDiv.togglePopup();
+      });
+      markerDiv.getElement().addEventListener('mouseleave', () => {
+        popup.remove();
+      });
       this.currentBusStationMarkers.push(markerDiv);
     });
   }

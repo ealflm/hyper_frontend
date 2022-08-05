@@ -590,6 +590,20 @@ export class MapPageComponent
           this.mapboxService.flyToMarker(marker.longitude, marker.latitude);
         }
       });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+      });
+      popup.setHTML(`<p>${marker.title}</p>`).addTo(this.mapboxService.map);
+      markerDiv.setPopup(popup);
+      popup.remove();
+      markerDiv.getElement().addEventListener('mouseover', () => {
+        markerDiv.togglePopup();
+      });
+      markerDiv.getElement().addEventListener('mouseleave', () => {
+        popup.remove();
+      });
       this.currentRentStationMarkers.push(markerDiv);
     });
   }
@@ -627,6 +641,20 @@ export class MapPageComponent
           markerDiv.getPopup();
         }
       });
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+      });
+      popup.setHTML(`<p>${marker.title}</p>`).addTo(this.mapboxService.map);
+      markerDiv.setPopup(popup);
+      popup.remove();
+      markerDiv.getElement().addEventListener('mouseover', () => {
+        markerDiv.togglePopup();
+      });
+      markerDiv.getElement().addEventListener('mouseleave', () => {
+        popup.remove();
+      });
       this.currentBusStationMarkers.push(markerDiv);
     });
   }
@@ -650,21 +678,37 @@ export class MapPageComponent
       let height = 35;
       elStationMarker.className = 'marker';
       elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
-      if (busOnRoute) {
-        busOnRoute.map((value) => {
-          if (value.id === marker.id) {
-            width = 40;
-            height = 40;
-            elStationMarker.style.backgroundImage = `url('../../../assets/icons/bus-station-selected.svg')`;
-          }
-        });
-      }
       elStationMarker.style.width = `${width}px`;
       elStationMarker.style.height = `${height}px`;
       elStationMarker.style.backgroundSize = '100%';
       const markerDiv = new mapboxgl.Marker(elStationMarker)
         .setLngLat([marker.longitude, marker.latitude] as [number, number])
         .addTo(this.mapboxService.map);
+
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+      });
+      if (busOnRoute) {
+        busOnRoute.map((value) => {
+          if (value.id === marker.id) {
+            width = 40;
+            height = 40;
+            elStationMarker.style.backgroundImage = `url('../../../assets/icons/bus-station-selected.svg')`;
+            popup
+              .setHTML(`<p>${marker.title}</p>`)
+              .addTo(this.mapboxService.map);
+            markerDiv.setPopup(popup);
+            markerDiv.getElement().addEventListener('mouseover', () => {
+              markerDiv.togglePopup();
+            });
+            markerDiv.getElement().addEventListener('mouseleave', () => {
+              popup.remove();
+            });
+          }
+        });
+      }
 
       this.currentBusStationSelectedRoute.push(markerDiv);
     });
