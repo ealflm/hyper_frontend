@@ -90,7 +90,7 @@
           <td [pTooltip]="customer.email">
             {{ customer.email | limitLength: 10 }}
           </td>
-          <td [pTooltip]="customer.createdDate" tooltipPosition="bottom">
+          <td [pTooltip]="customer.address1" tooltipPosition="bottom">
             {{ customer.address1 | limitLength: 10 }}
           </td>
           <td>{{ customer.createdDate | date: 'dd/MM/yyyy' }}</td>
