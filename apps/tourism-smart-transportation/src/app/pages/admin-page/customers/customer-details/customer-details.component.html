@@ -466,7 +466,7 @@
             {{ transaction.amount | currency: transaction?.amount:'':'.0-0' }}
             VND
           </td>
-          <td>{{ transaction.createdDate | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ transaction.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
