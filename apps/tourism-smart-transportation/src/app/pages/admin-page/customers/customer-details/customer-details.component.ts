@@ -319,7 +319,11 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       this.purchaseHistoryService
         .getOrderByCusId(idCus ? idCus : '')
         .subscribe((transRes: OrdersResponse) => {
-          this.orders = transRes.body?.items;
+          this.orders = transRes.body?.items.sort(
+            (a, b) =>
+              new Date(b.createdDate).getTime() -
+              new Date(a.createdDate).getTime()
+          );
         });
     });
   }

@@ -279,8 +279,12 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Loại dịch vụ</th>
-            <th>Thời gian bắt đầu</th>
-            <th>Thời gian kết thúc</th>
+            <th pSortableColumn="timeStart">
+              Thời gian bắt đầu <p-sortIcon field="timeStart"></p-sortIcon>
+            </th>
+            <th pSortableColumn="timeEnd">
+              Thời gian kết thúc <p-sortIcon field="timeEnd"></p-sortIcon>
+            </th>
             <th>Trạng thái</th>
           </tr>
         </ng-template>
@@ -318,7 +322,11 @@
       >
         <ng-template pTemplate="header">
           <tr>
-            <th>Ngày thực hiện giao dịch</th>
+            <th pSortableColumn="createdDate">
+              Ngày thực hiện giao dịch
+              <p-sortIcon field="createdDate"></p-sortIcon>
+            </th>
+            <th>Loại dịch vụ</th>
             <th>Tổng giá</th>
             <th>Trạng thái</th>
             <th style="text-align: center">Hành động</th>
@@ -327,6 +335,10 @@
         <ng-template pTemplate="body" let-order let-i="rowIndex">
           <tr>
             <td>{{ order?.createdDate | date: 'dd/MM/yyyy' }}</td>
+            <td *ngIf="order.serviceTypeName !== null">
+              {{ order.serviceTypeName }}
+            </td>
+            <td *ngIf="order.serviceTypeName === null">Nạp tiền</td>
             <td>
               {{ order?.totalPrice | currency: order?.totalPrice:'':'.0-0' }}
               VND
