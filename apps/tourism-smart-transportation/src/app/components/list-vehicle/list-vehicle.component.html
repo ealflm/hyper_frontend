@@ -24,8 +24,8 @@
       <div class="card-header">
         <div>{{ vehicle?.licensePlates }}</div>
         <div>{{ vehicle?.name }}</div>
-        <div class="isOnline" *ngIf="vehicle?.status === 4"></div>
-        <div class="isOffline" *ngIf="vehicle?.status !== 4"></div>
+        <div class="isOnline" *ngIf="vehicle?.status === 2"></div>
+        <div class="isOffline" *ngIf="vehicle?.status !== 2"></div>
       </div>
       <div class="card-body">
         <div class="card-body-left">{{ vehicle?.serviceTypeName }}</div>
