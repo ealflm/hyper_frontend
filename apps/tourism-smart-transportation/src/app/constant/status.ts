@@ -53,7 +53,7 @@ export const STATUS_VEHICLE: any = {
 };
 export const STATUS_CUSTOMER_TRIP = {
   0: {
-    lable: 'Bị Hủy',
+    lable: 'Đã Hủy',
     class: 'status-disabled',
   },
   1: {
@@ -139,6 +139,10 @@ export const STATUS_TRANSACTION: any = {
   2: {
     lable: 'Hoàn thành',
     class: 'status-active',
+  },
+  3: {
+    lable: 'Chưa thanh toán',
+    class: 'status-unlinked',
   },
 };
 export const STATUS_BUS_PRICE: any = {
