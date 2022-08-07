@@ -133,12 +133,12 @@ export const STATUS_TRANSACTION: any = {
     class: 'status-cancel',
   },
   1: {
-    lable: 'Chưa thanh toán',
-    class: 'status-unlinked',
+    lable: 'Đã thanh toán',
+    class: 'status-completed',
   },
   2: {
     lable: 'Hoàn thành',
-    class: 'status-completed',
+    class: 'status-active',
   },
 };
 export const STATUS_BUS_PRICE: any = {

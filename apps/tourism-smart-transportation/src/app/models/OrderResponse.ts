@@ -4,8 +4,9 @@ export abstract class Order {
   id?: string;
   customerId?: string;
   serviceTypeId?: string;
+  serviceTypeName?: string;
   discountId?: string;
-  createdDate?: Date;
+  createdDate!: Date;
   totalPrice?: number;
   status?: number;
 }

@@ -6,7 +6,7 @@ export abstract class Transaction {
   walletId?: string;
   amount?: number;
   content?: string;
-  createdDate?: Date;
+  createdDate!: Date;
   status?: number;
 }
 export class TransactionsResponse {
