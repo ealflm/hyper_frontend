@@ -1,3 +1,9 @@
+import {
+  Subscription,
+  Subject,
+  debounceTime,
+  distinctUntilChanged,
+} from 'rxjs';
 import { Service } from './../../../models/ServicesResponse';
 import { MenuFilterStatus } from './../../../constant/menu-filter-status';
 import { Gender } from './../../../constant/gender';
@@ -16,20 +22,20 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'tourism-smart-transportation-users',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss'],
 })
-export class CustomersComponent implements OnInit {
+export class CustomersComponent implements OnInit, AfterViewInit, OnDestroy {
   //
   customers: Customer[] = [];
   status: any[] = [];
 
   //
-  fillterLastName?: string | null;
+  fillterLastName = '';
   fillterStatus?: number | null = 1;
   //
   totalItems = 0;
@@ -41,6 +47,8 @@ export class CustomersComponent implements OnInit {
     '../assets/image/imagePreview.png';
   gender = Gender;
   menuValue = MenuFilterStatus;
+  private searchSubscription?: Subscription;
+  private readonly searchSubject = new Subject<string>();
   constructor(
     private customerService: CustomersService,
     private confirmationService: ConfirmationService,
@@ -51,6 +59,17 @@ export class CustomersComponent implements OnInit {
   ngOnInit(): void {
     this._mapStatus();
     this._getAllCustomers();
+  }
+  ngAfterViewInit(): void {
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((value) => {
+        // console.log(value);
+        this._getAllCustomers();
+      });
+  }
+  public ngOnDestroy(): void {
+    this.searchSubscription?.unsubscribe();
   }
   private _mapStatus() {
     this.status = Object.keys(STATUS_CUSTOMER).map((key) => {
@@ -63,7 +82,8 @@ export class CustomersComponent implements OnInit {
   }
   onChangeFillterByLastName(e: any) {
     this.fillterLastName = e.target.value;
-    this._getAllCustomers();
+    // this._getAllCustomers();
+    this.searchSubject.next(this.fillterLastName);
   }
   OnGetMenuClick(e: any) {
     this.fillterStatus = e;
