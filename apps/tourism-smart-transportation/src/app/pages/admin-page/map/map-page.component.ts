@@ -231,7 +231,7 @@ export class MapPageComponent
           this.removeBusStationSelectedRoute();
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
-          }, 2000);
+          }, 5000);
           break;
         case 'bus-station':
           clearInterval(this.trackingIntervel);
@@ -260,7 +260,7 @@ export class MapPageComponent
           this.setRentStationMarkers(this.rentStationsOnMap);
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
-          }, 2000);
+          }, 5000);
           break;
         case 'bus-station-vehicle':
           clearInterval(this.trackingIntervel);
@@ -270,7 +270,7 @@ export class MapPageComponent
           this.setBusStationMarkers(this.busStationsOnMap);
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
-          }, 2000);
+          }, 5000);
           break;
         case 'bus-station-rent-station':
           clearInterval(this.trackingIntervel);
@@ -292,7 +292,7 @@ export class MapPageComponent
           this.setRentStationMarkers(this.rentStationsOnMap);
           this.trackingIntervel = setInterval(() => {
             this.getVehicleTrackingOnMap();
-          }, 2000);
+          }, 5000);
           break;
         default:
           clearInterval(this.trackingIntervel);

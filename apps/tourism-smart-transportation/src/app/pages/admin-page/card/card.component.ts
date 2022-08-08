@@ -4,6 +4,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CardService } from './../../../services/card.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  convertHexToDecimal,
+  convertHexToLittleEndian,
+} from '../../../providers/ConvertDate';
 
 @Component({
   selector: 'tourism-smart-transportation-card',
@@ -20,6 +24,7 @@ export class CardComponent implements OnInit {
   cardForm!: FormGroup;
   checked = false;
   uiCard = '';
+  cardConverted = '';
   isNumber = false;
   filterByStatus = 1;
   constructor(
@@ -99,6 +104,7 @@ export class CardComponent implements OnInit {
   }
   onInput(uiCard: any) {
     this.uiCard = uiCard;
+    this.cardConverted = convertHexToLittleEndian(uiCard);
     if (this.uiCard.length == 10) {
       if (this.uiCard.match(/^[0-9]+$/) != null) {
         this.checked = true;
@@ -116,7 +122,7 @@ export class CardComponent implements OnInit {
       this.isNumber &&
       this.checked
     ) {
-      formData.append('uid', this.uiCard);
+      formData.append('uid', convertHexToLittleEndian(this.uiCard));
       this.cardService.createCard(formData).subscribe((res) => {
         if (res.statusCode === 201) {
           this.messageService.add({
