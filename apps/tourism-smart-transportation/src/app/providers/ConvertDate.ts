@@ -54,3 +54,45 @@ export function convertDateToVN(value: string) {
   }
   return dateCreated;
 }
+
+const convertBase = (function () {
+  function convertBase(baseFrom: any, baseTo: any) {
+    return function (num: any) {
+      return parseInt(num, baseFrom).toString(baseTo);
+    };
+  }
+
+  // binary to decimal
+  convertBase.bin2dec = convertBase(2, 10);
+
+  // binary to hexadecimal
+  convertBase.bin2hex = convertBase(2, 16);
+
+  // decimal to binary
+  convertBase.dec2bin = convertBase(10, 2);
+
+  // decimal to hexadecimal
+  convertBase.dec2hex = convertBase(10, 16);
+
+  // hexadecimal to binary
+  convertBase.hex2bin = convertBase(16, 2);
+
+  // hexadecimal to decimal
+  convertBase.hex2dec = convertBase(16, 10);
+
+  return convertBase;
+})();
+
+export function convertHexToLittleEndian(uiCard: string) {
+  const data = convertBase.dec2hex(uiCard);
+  const dataHex = data.match(/../g);
+  const hexLittleEndian = dataHex
+    ? dataHex.reverse().join('').toUpperCase()
+    : '';
+  return hexLittleEndian;
+}
+export function convertHexToDecimal(hexString: string) {
+  const data = hexString.match(/../g);
+  const hexToDecimal = data ? data.reverse().join('').toUpperCase() : '';
+  return convertBase.hex2dec(hexToDecimal);
+}

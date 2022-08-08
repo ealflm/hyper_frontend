@@ -45,7 +45,7 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th>Khách hàng</th>
+          <th style="width: 50%">Khách hàng</th>
           <th>Mã thẻ</th>
           <th pSortableColumn="status">
             <div>
@@ -73,7 +73,7 @@
                     card.photoUrl
               "
               alt=""
-            />&nbsp;{{ card.customerName | limitLength: 10 }}
+            />&nbsp;{{ card.customerName }}
           </td>
           <td>
             <tourism-smart-transportation-card-credit
@@ -258,7 +258,7 @@
       </div>
       <div class="scanned-content" style="margin-top: 25px">
         <div>Quẹt thành công</div>
-        <div>Mã số thẻ là : {{ uiCard }}</div>
+        <div>Mã số thẻ là : {{ cardConverted }}</div>
       </div>
     </div>
     <div class="completed-scan" *ngIf="checked && !isNumber">
