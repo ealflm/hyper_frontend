@@ -389,6 +389,11 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
               createdDate: x.createdDate,
             };
           });
+          this.transactions = this.transactions.sort(
+            (a, b) =>
+              new Date(b.createdDate).getTime() -
+              new Date(a.createdDate).getTime()
+          );
         })
       )
       .subscribe();
