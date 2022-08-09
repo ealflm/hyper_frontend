@@ -16,17 +16,26 @@
               ><span>01</span>Về chúng tôi</a
             >
           </li>
-          <li class="navigation__item">
+          <li
+            class="navigation__item"
+            (click)="scrollToElement(section_features)"
+          >
             <a routerLink="" class="navigation__link"
               ><span>02</span>Lợi ích của bạn</a
             >
           </li>
-          <li class="navigation__item">
+          <li
+            class="navigation__item"
+            (click)="scrollToElement(section_service)"
+          >
             <a routerLink="" class="navigation__link"
               ><span>03</span>Dịch vụ nổi bật</a
             >
           </li>
-          <li class="navigation__item">
+          <li
+            class="navigation__item"
+            (click)="scrollToElement(section_customer)"
+          >
             <a routerLink="" class="navigation__link"
               ><span>04</span>Khách hàng nói về chúng tôi</a
             >
@@ -57,7 +66,10 @@
           >
         </h1>
 
-        <a href="" class="btn btn--white btn--animated"
+        <a
+          routerLink=""
+          class="btn btn--white btn--animated"
+          (click)="scrollToElement(section_book)"
           >Đăng ký với chúng tôi</a
         >
       </div>
@@ -66,9 +78,7 @@
     <main>
       <section class="section-about" #aboutUs>
         <div class="u-center-text u-margin-bottom-big">
-          <h2 class="heading-secondary">
-            Exciting tours for adventurous people
-          </h2>
+          <h2 class="heading-secondary">Thông tin về chúng tôi</h2>
         </div>
 
         <div class="row">
@@ -90,7 +100,7 @@
               Asperiores nulla deserunt voluptatum nam.
             </p>
 
-            <a href="#" class="btn-text">Learn more &rarr;</a>
+            <a routerLink="" class="btn-text">Learn more &rarr;</a>
           </div>
           <div class="col-1-of-2">
             <div class="composition">
@@ -114,14 +124,15 @@
         </div>
       </section>
 
-      <section class="section-features">
+      <section class="section-features" #section_features>
+        <!-- <div class="u-center-text u-margin-bottom-big">
+          <h2 class="heading-secondary">LỢI ÍCH CỦA BẠN</h2>
+        </div> -->
         <div class="row">
           <div class="col-1-of-4">
             <div class="feature-box">
               <i class="feature-box__icon icon-basic-world"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">
-                Explore the world
-              </h3>
+              <h3 class="heading-tertiary u-margin-bottom-small">Chiếc khấu</h3>
               <p class="feature-box__text">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Aperiam, ipsum sapiente aspernatur.
@@ -132,9 +143,7 @@
           <div class="col-1-of-4">
             <div class="feature-box">
               <i class="feature-box__icon icon-basic-compass"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">
-                Meet nature
-              </h3>
+              <h3 class="heading-tertiary u-margin-bottom-small">Bảo đảm</h3>
               <p class="feature-box__text">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Aperiam, ipsum sapiente aspernatur.
@@ -145,9 +154,7 @@
           <div class="col-1-of-4">
             <div class="feature-box">
               <i class="feature-box__icon icon-basic-map"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">
-                Find your way
-              </h3>
+              <h3 class="heading-tertiary u-margin-bottom-small">Kết nối</h3>
               <p class="feature-box__text">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Aperiam, ipsum sapiente aspernatur.
@@ -158,9 +165,7 @@
           <div class="col-1-of-4">
             <div class="feature-box">
               <i class="feature-box__icon icon-basic-heart"></i>
-              <h3 class="heading-tertiary u-margin-bottom-small">
-                Live a healthier life
-              </h3>
+              <h3 class="heading-tertiary u-margin-bottom-small">Quản lý</h3>
               <p class="feature-box__text">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Aperiam, ipsum sapiente aspernatur.
@@ -170,7 +175,7 @@
         </div>
       </section>
 
-      <section class="section-tours" id="section-tours">
+      <section class="section-tours" id="section-tours" #section_service>
         <div class="u-center-text u-margin-bottom-big">
           <h2 class="heading-secondary">DỊCH VỤ NỔI BẬT</h2>
         </div>
@@ -182,7 +187,7 @@
                 <div class="card__picture card__picture--1">&nbsp;</div>
                 <h4 class="card__heading">
                   <span class="card__heading-span card__heading-span--1"
-                    >The Sea Explorer</span
+                    >Đặt xe</span
                   >
                 </h4>
                 <div class="card__details">
@@ -201,7 +206,7 @@
                     <p class="card__price-only">Only</p>
                     <p class="card__price-value">$297</p>
                   </div>
-                  <a href="#popup" class="btn btn--white">Book now!</a>
+                  <a routerLink="" class="btn btn--white">Book now!</a>
                 </div>
               </div>
             </div>
@@ -213,7 +218,7 @@
                 <div class="card__picture card__picture--2">&nbsp;</div>
                 <h4 class="card__heading">
                   <span class="card__heading-span card__heading-span--2"
-                    >The Forest Hiker</span
+                    >Đi xe buýt</span
                   >
                 </h4>
                 <div class="card__details">
@@ -232,7 +237,7 @@
                     <p class="card__price-only">Only</p>
                     <p class="card__price-value">$497</p>
                   </div>
-                  <a href="#popup" class="btn btn--white">Book now!</a>
+                  <a routerLink="" class="btn btn--white">Book now!</a>
                 </div>
               </div>
             </div>
@@ -244,7 +249,7 @@
                 <div class="card__picture card__picture--3">&nbsp;</div>
                 <h4 class="card__heading">
                   <span class="card__heading-span card__heading-span--3"
-                    >The Snow Adventurer</span
+                    >Thuê xe</span
                   >
                 </h4>
                 <div class="card__details">
@@ -263,7 +268,7 @@
                     <p class="card__price-only">Only</p>
                     <p class="card__price-value">$897</p>
                   </div>
-                  <a href="#popup" class="btn btn--white">Book now!</a>
+                  <a routerLink="" class="btn btn--white">Book now!</a>
                 </div>
               </div>
             </div>
@@ -275,7 +280,7 @@
         </div> -->
       </section>
 
-      <section class="section-stories">
+      <section class="section-stories" #section_customer>
         <div class="bg-video">
           <video class="bg-video__content" autoplay muted loop>
             <source
@@ -349,7 +354,7 @@
         </div> -->
       </section>
 
-      <section class="section-book">
+      <section class="section-book" #section_book>
         <div class="row">
           <div class="book">
             <div class="book__form">
@@ -417,7 +422,6 @@
                     </label>
                   </div>
                 </div>
-
                 <div class="form__group">
                   <button class="btn btn--green">Tiếp tục &rarr;</button>
                 </div>
@@ -441,19 +445,19 @@
           <div class="footer__navigation">
             <ul class="footer__list">
               <li class="footer__item">
-                <a href="#" class="footer__link">Công ty</a>
+                <a routerLink="" class="footer__link">Công ty</a>
               </li>
               <li class="footer__item">
-                <a href="#" class="footer__link">Liên hệ</a>
+                <a routerLink="" class="footer__link">Liên hệ</a>
               </li>
               <li class="footer__item">
-                <a href="#" class="footer__link">Tuyển dụng</a>
+                <a routerLink="" class="footer__link">Tuyển dụng</a>
               </li>
               <li class="footer__item">
-                <a href="#" class="footer__link">Chính sách bảo mật</a>
+                <a routerLink="" class="footer__link">Chính sách bảo mật</a>
               </li>
               <li class="footer__item">
-                <a href="#" class="footer__link">Điều kiện </a>
+                <a routerLink="" class="footer__link">Điều kiện </a>
               </li>
             </ul>
           </div>
@@ -461,7 +465,7 @@
         <div class="col-1-of-2">
           <p class="footer__copyright">
             Xây dựng bởi
-            <a href="#" class="footer__link">Hyper joint stock company </a>
+            <a routerLink="" class="footer__link">Hyper joint stock company </a>
           </p>
           <p class="footer__copyright">
             ĐATN mã nhóm: GSU22SE32 Trường Đại học FPT
@@ -489,7 +493,7 @@
           />
         </div>
         <div class="popup__right">
-          <a href="#section-tours" class="popup__close">&times;</a>
+          <a routerLink="" class="popup__close">&times;</a>
           <h2 class="heading-secondary u-margin-bottom-small">
             Start booking now
           </h2>
@@ -512,7 +516,7 @@
             donec. Sit amet facilisis magna etiam. Imperdiet sed euismod nisi
             porta.
           </p>
-          <a href="#" class="btn btn--green">Book now</a>
+          <a routerLink="" class="btn btn--green">Book now</a>
         </div>
       </div>
     </div>
