@@ -13,27 +13,19 @@
   <div class="col-12">
     <div class="wallet-transaction-title">Lịch sử giao dịch</div>
     <p-scrollPanel [style]="{ width: '100%', height: '58vh' }">
-      <div
-        class="transaction-history-card"
-        *ngFor="let transaction of Wallet?.orders"
-      >
+      <div class="transaction-history-card" *ngFor="let trs of transaction">
         <div>
           <div>
-            <b> {{ transaction.serviceTypeName }}</b>
+            <b> {{ trs.serviceTypeName }}</b>
           </div>
           <div>
-            {{ transaction.transactions[0]?.createdDate | date: 'short' }}
+            {{ trs.createdDate | date: 'short' }}
           </div>
         </div>
         <div class="wallet-money">
-          <b>
-            {{
-              transaction.transactions[0]?.amount
-                | currency: transaction.transactions[0]?.amount:'':'.0-0'
-            }}đ
-          </b>
+          <b> +{{ trs.amount | currency: trs.amount:'':'.0-0' }}đ </b>
         </div>
-        <div style="width: 35%">{{ transaction.transactions[0]?.content }}</div>
+        <div style="width: 35%">{{ trs.content }}</div>
       </div>
     </p-scrollPanel>
   </div>
