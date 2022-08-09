@@ -202,6 +202,8 @@
                     optionValue="id"
                     formControlName="vehicleId"
                     [options]="vehicles"
+                    [filter]="true"
+                    filterBy="name"
                   >
                     <ng-template let-item pTemplate="item">
                       {{ item.vehicleTypeName + ' ' + item.name }}
