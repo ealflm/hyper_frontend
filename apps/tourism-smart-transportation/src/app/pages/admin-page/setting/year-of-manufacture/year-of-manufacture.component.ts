@@ -19,6 +19,8 @@ export class YearOfManufactureComponent implements OnInit {
   displayDialog = false;
   VehicleYearOfPublishes: any = [];
   vehicleYearOfPublishStatus: any = [];
+  currentPublishYear: any = [];
+  filterPublishYear = '';
   fillterPublishYearStatus = 1;
   status: any = [];
   publishYearForm!: FormGroup;
@@ -56,7 +58,23 @@ export class YearOfManufactureComponent implements OnInit {
   get _publishYearForm() {
     return this.publishYearForm.controls;
   }
-  onChangeFillterByName(e: any) {}
+  onChangeFillterByName(e: any) {
+    this.filterPublishYear = e.target.value;
+    if (this.filterPublishYear == '') {
+      this.VehicleYearOfPublishes = this.currentPublishYear;
+    } else {
+      this.VehicleYearOfPublishes = this.VehicleYearOfPublishes.filter(
+        (value: any) => {
+          return (
+            value.name &&
+            value.name
+              .toLowerCase()
+              .includes(this.filterPublishYear.toLowerCase())
+          );
+        }
+      );
+    }
+  }
   onGetValueMenu(e: any) {
     this.fillterPublishYearStatus = e;
     this.getAllVehiclePublishYear();
@@ -66,6 +84,7 @@ export class YearOfManufactureComponent implements OnInit {
       .getListPublishYear(this.fillterPublishYearStatus)
       .subscribe((res) => {
         this.VehicleYearOfPublishes = res.body.items;
+        this.currentPublishYear = res.body.items;
       });
   }
   createVehicleYearOfPublish() {

@@ -130,7 +130,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
 
             this._customersEditForm['dateOfBirth'].setValue(dobRes);
             this._customersEditForm['selectedGender'].setValue(
-              cusRes.body.gender
+              cusRes?.body?.gender && cusRes?.body?.gender.toString()
             );
             this._customersEditForm['phone'].setValue(cusRes.body.phone);
             this._customersEditForm['cardUid'].setValue(cusRes.body.cardUid);
