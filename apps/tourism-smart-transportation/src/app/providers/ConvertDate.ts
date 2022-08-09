@@ -54,6 +54,12 @@ export function convertDateToVN(value: string) {
   }
   return dateCreated;
 }
+export function add7Hours(data: Date) {
+  const currentHours = new Date(data).getHours();
+  const date = new Date(data);
+  date.setHours(currentHours + 7);
+  return date;
+}
 
 const convertBase = (function () {
   function convertBase(baseFrom: any, baseTo: any) {

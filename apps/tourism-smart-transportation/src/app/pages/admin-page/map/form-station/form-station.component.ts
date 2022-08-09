@@ -155,7 +155,7 @@ export class FormStationComponent
       accept: () => {
         this.successChange = false;
         this._dialog = true;
-        this.mapboxService.initViewMiniMapPartner$.next(false);
+        this.mapboxService.iniViewMiniMapAdmin$.next(false);
       },
       reject: () => {
         this.onCloseDialog();

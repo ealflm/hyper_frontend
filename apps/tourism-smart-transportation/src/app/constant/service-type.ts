@@ -5,11 +5,11 @@ export enum ServiceTypeEnum {
 }
 export const SERVICE_TYPE_MAPING = {
   [ServiceTypeEnum.BookCarService]: { name: 'Đặt xe' },
-  [ServiceTypeEnum.BusService]: { name: 'Đi xe theo chuyến' },
+  [ServiceTypeEnum.BusService]: { name: 'Đi xe buýt' },
   [ServiceTypeEnum.RentCarService]: { name: 'Thuê xe' },
 };
 export const ServiceTypeFilter = [
   { label: 'Thuê xe', value: 'Thuê xe' },
-  { label: 'Đi xe theo chuyến', value: 'Đi xe theo chuyến' },
+  { label: 'Đi xe buýt', value: 'Đi xe buýt' },
   { label: 'Đặt xe', value: 'Đặt xe' },
 ];

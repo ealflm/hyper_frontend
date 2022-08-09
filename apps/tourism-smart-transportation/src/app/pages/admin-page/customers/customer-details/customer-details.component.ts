@@ -34,6 +34,7 @@ import {
   PackageHistory,
   PackageHistorysResponse,
 } from '../../../../models/PackageHistoryResponse';
+import { add7Hours } from '../../../../providers/ConvertDate';
 
 @Component({
   selector: 'tourism-smart-transportation-customer-details',
@@ -319,11 +320,18 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       this.purchaseHistoryService
         .getOrderByCusId(idCus ? idCus : '')
         .subscribe((transRes: OrdersResponse) => {
-          this.orders = transRes.body?.items.sort(
-            (a, b) =>
-              new Date(b.createdDate).getTime() -
-              new Date(a.createdDate).getTime()
-          );
+          this.orders = transRes.body?.items
+            .sort(
+              (a, b) =>
+                new Date(b.createdDate).getTime() -
+                new Date(a.createdDate).getTime()
+            )
+            .map((value) => {
+              return {
+                ...value,
+                createdDate: add7Hours(value.createdDate),
+              };
+            });
         });
     });
   }
@@ -382,18 +390,19 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       .getTransactionsByOrderId(e.orderId)
       .pipe(
         map((data) => {
-          this.transactions = data.body.items.map((x: any) => {
-            return {
-              amount: x.amount,
-              content: x.content,
-              createdDate: x.createdDate,
-            };
-          });
-          this.transactions = this.transactions.sort(
-            (a, b) =>
-              new Date(b.createdDate).getTime() -
-              new Date(a.createdDate).getTime()
-          );
+          this.transactions = data.body.items
+            .map((x: any) => {
+              return {
+                amount: x.amount,
+                content: x.content,
+                createdDate: add7Hours(x.createdDate),
+              };
+            })
+            .sort(
+              (a, b) =>
+                new Date(b.createdDate).getTime() -
+                new Date(a.createdDate).getTime()
+            );
         })
       )
       .subscribe();

@@ -31,7 +31,7 @@ export class DriverTripHistoryComponent implements OnInit {
               driverHistoryTripRes.body.items[0].driver;
             this.driverHistoryTrip.history =
               driverHistoryTripRes.body.items[0].history;
-            console.log(this.driverHistoryTrip);
+            // console.log(this.driverHistoryTrip);
             this.loading = false;
           },
           (error) => {
