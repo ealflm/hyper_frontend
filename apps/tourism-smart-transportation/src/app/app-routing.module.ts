@@ -5,8 +5,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { PartnerPageModule } from './pages/partner-page/partner-page.module';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
+  {
+    path: 'home',
+    // canLoad: [AuthGuardService],
+    component: HomeComponent,
+  },
   {
     path: 'admin',
     // canLoad: [AuthGuardService],

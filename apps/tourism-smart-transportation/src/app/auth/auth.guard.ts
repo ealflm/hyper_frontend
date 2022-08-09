@@ -33,12 +33,12 @@ export class AuthGuardService implements CanActivate {
       ) {
         return true;
       } else {
+        this.localStorage.removeToken();
         this.router.navigate(['login']);
         return false;
       }
     } else {
-      this.localStorage.removeToken();
-      this.router.navigate(['login']);
+      this.router.navigate(['home']);
       return false;
     }
   }

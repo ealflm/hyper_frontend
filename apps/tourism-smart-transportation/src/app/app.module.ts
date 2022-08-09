@@ -22,9 +22,10 @@ import { en_US, NZ_I18N, NzI18nModule } from 'ng-zorro-antd/i18n';
 import { SettingModule } from './pages/admin-page/setting/setting.module';
 import { CheckedComponent } from './shared/checked/checked.component';
 import { HideMissingDirective } from './directive/hide-missing.directive';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
