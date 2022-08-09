@@ -3,7 +3,12 @@ import { AuthGuardService } from './auth/auth.guard';
 import { AdminPageModule } from './pages/admin-page/admin-page.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {
+  ExtraOptions,
+  PreloadAllModules,
+  RouterModule,
+  Routes,
+} from '@angular/router';
 import { PartnerPageModule } from './pages/partner-page/partner-page.module';
 import { HomeComponent } from './pages/home/home.component';
 
@@ -29,15 +34,17 @@ const routes: Routes = [
       ),
   },
 ];
+const routerOptions: ExtraOptions = {
+  useHash: false,
+  anchorScrolling: 'enabled',
+  preloadingStrategy: PreloadAllModules,
+  // ...any other options you'd like to use
+};
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules,
-      // useHash: true,
-      // initialNavigation: 'enabled',
-    }),
+    RouterModule.forRoot(routes, routerOptions),
     PartnerPageModule,
     AdminPageModule,
   ],

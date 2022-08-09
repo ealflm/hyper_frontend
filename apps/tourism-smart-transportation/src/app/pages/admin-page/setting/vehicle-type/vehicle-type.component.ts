@@ -31,6 +31,7 @@ export class VehicleTypeComponent implements OnInit {
       name: 'Dầu',
       lable: 'Dầu',
     },
+    { name: 'Điện', lable: 'Điện' },
   ];
   editMode = false;
   filterVehicleTypeStatus = 1;
