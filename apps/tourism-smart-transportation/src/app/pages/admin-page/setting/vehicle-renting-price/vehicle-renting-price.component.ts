@@ -10,6 +10,7 @@ import {
 import { PublishYearService } from './../../../../services/publish-year.service';
 import { CategorySerivce } from './../../../../services/category.service';
 import { STATUS_VEHICLE_RENTING_PRICE } from './../../../../constant/status';
+import { stringToASCII } from '../../../../providers/ConvertUnicode';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -30,6 +31,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   rentingPriceForm!: FormGroup;
   //
   rentingPrices: RentingPrice[] = [];
+  currentPrices: RentingPrice[] = [];
   displayDialog = false;
   category: Category[] = [];
   publishYear: PublishYear[] = [];
@@ -157,6 +159,26 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
   }
   onChangeFillterByName(e: any) {
     this.filterByName = e.target.value;
+    if (this.filterByName == '') {
+      this.rentingPrices = this.currentPrices;
+    } else {
+      this.rentingPrices = this.rentingPrices.filter((value) => {
+        return (
+          value.categoryName &&
+          stringToASCII(value.categoryName.toLowerCase()).includes(
+            stringToASCII(this.filterByName.toLowerCase())
+          )
+        );
+      });
+    }
+  }
+  isDoubleByte(str: any) {
+    for (let i = 0, n = str.length; i < n; i++) {
+      if (str.charCodeAt(i) > 255) {
+        return true;
+      }
+    }
+    return false;
   }
   onGetValueMenu(value: number) {
     this.filterByStatus = value;
@@ -197,6 +219,9 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
       .pipe(
         map((res) => {
           this.rentingPrices = res.body.sort(
+            (a, b) => a.fixedPrice - b.fixedPrice
+          );
+          this.currentPrices = res.body.sort(
             (a, b) => a.fixedPrice - b.fixedPrice
           );
         })

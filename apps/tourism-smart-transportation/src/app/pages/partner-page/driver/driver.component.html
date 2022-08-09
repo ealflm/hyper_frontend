@@ -345,6 +345,8 @@
                     optionValue="id"
                     formControlName="vehicleId"
                     [options]="vehicles"
+                    [filter]="true"
+                    filterBy="name"
                   >
                     <ng-template let-item pTemplate="item">
                       {{ item.name }}-{{ item.licensePlates }}

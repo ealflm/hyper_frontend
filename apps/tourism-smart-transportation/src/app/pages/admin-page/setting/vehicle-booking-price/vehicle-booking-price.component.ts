@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleTypesService } from '../../../../services/vehicle-types.service';
 import { isFakeMousedownFromScreenReader } from '@angular/cdk/a11y';
 import { map } from 'rxjs';
+import { stringToASCII } from '../../../../providers/ConvertUnicode';
 
 @Component({
   selector: 'tourism-smart-transportation-vehicle-booking-price',
@@ -25,6 +26,7 @@ export class VehicleBookingPriceComponent implements OnInit {
   filterByName = '';
   vehicleType: VehicleType[] = [];
   bookingPrices: BookingPrice[] = [];
+  currentBookingPrice: BookingPrice[] = [];
   displayDialog = false;
 
   totalItems = 0;
@@ -82,6 +84,9 @@ export class VehicleBookingPriceComponent implements OnInit {
         this.bookingPrices = res.body.sort(
           (a, b) => a.fixedPrice - b.fixedPrice
         );
+        this.currentBookingPrice = res.body.sort(
+          (a, b) => a.fixedPrice - b.fixedPrice
+        );
       });
   }
   createBookingPrice() {
@@ -93,7 +98,21 @@ export class VehicleBookingPriceComponent implements OnInit {
     // this._bookingForms['fixedDistance'].setValue('');
     // this._bookingForms['pricePerKilometer'].setValue('');
   }
-  onChangeFillterByName(e: any) {}
+  onChangeFillterByName(e: any) {
+    this.filterByName = e.target.value;
+    if (this.filterByName == '') {
+      this.bookingPrices = this.currentBookingPrice;
+    } else {
+      this.bookingPrices = this.bookingPrices.filter((value) => {
+        return (
+          value.vehicleLabel &&
+          value.vehicleLabel
+            .toLowerCase()
+            .includes(this.filterByName.toLowerCase())
+        );
+      });
+    }
+  }
   onGetValueMenu(value: any) {
     this.filterByStatus = value;
     this.getAllBookingPrice();

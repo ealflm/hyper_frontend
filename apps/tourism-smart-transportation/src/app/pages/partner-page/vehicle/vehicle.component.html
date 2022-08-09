@@ -338,6 +338,8 @@
                       optionValue="id"
                       formControlName="rentStationId"
                       [options]="rentStations"
+                      [filter]="true"
+                      filterBy="title"
                     >
                       <ng-template let-item pTemplate="item">
                         {{ item.title }}
@@ -365,9 +367,13 @@
                       optionValue="id"
                       formControlName="publishYearId"
                       [options]="publishYears"
+                      [filter]="true"
+                      filterBy="name"
                     >
                       <ng-template let-item pTemplate="item">
-                        {{ item.name }}
+                        <div pTooltip=" {{ item.description }}">
+                          {{ item.name }}
+                        </div>
                       </ng-template>
 
                       <ng-template let-item pTemplate="selectedItem">
@@ -391,9 +397,13 @@
                       optionValue="id"
                       formControlName="vehicleClassId"
                       [options]="vehicleClass"
+                      [filter]="true"
+                      filterBy="name"
                     >
                       <ng-template let-item pTemplate="item">
-                        {{ item.name }}
+                        <div pTooltip=" {{ item.description }}">
+                          {{ item.name }}
+                        </div>
                       </ng-template>
 
                       <ng-template let-item pTemplate="selectedItem">
@@ -419,14 +429,18 @@
                     optionValue="id"
                     formControlName="vehicleTypeId"
                     [options]="vehicleTypes"
+                    [filter]="true"
+                    filterBy="label"
                   >
                     <ng-template let-item pTemplate="item">
-                      {{ item.label }} -
-                      {{
-                        item.seats <= 2
-                          ? 'Xe máy'
-                          : 'Ô tô ' + item.seats + ' Chỗ'
-                      }}
+                      <div>
+                        {{ item.label }} -
+                        {{
+                          item.seats <= 2
+                            ? 'Xe máy'
+                            : 'Ô tô ' + item.seats + ' Chỗ'
+                        }}
+                      </div>
                     </ng-template>
 
                     <ng-template let-item pTemplate="selectedItem">

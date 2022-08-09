@@ -45,7 +45,7 @@ export class JwtInterceptor implements HttpInterceptor {
             this.messageService.add({
               severity: 'error',
               summary: 'Thất bại',
-              detail: 'Có lỗi xẩy ra',
+              detail: error.error.message,
             });
           }
           if (error.status === 500) {
