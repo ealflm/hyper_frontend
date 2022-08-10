@@ -19,6 +19,7 @@ export class WalletComponent implements OnInit {
           order.orderId === transaction.orderId
         ) {
           return (this.transaction = [
+            ...this.transaction,
             {
               serviceTypeName: order.serviceTypeName,
               createdDate: add7Hours(transaction.createdDate),
