@@ -37,7 +37,7 @@ export class JwtInterceptor implements HttpInterceptor {
       catchError((error: any) => {
         if (error instanceof HttpErrorResponse) {
           if (error.status === 401) {
-            console.log(error);
+            // console.log(error);
             this.localstorageService.removeToken();
           }
           if (error.status === 400) {

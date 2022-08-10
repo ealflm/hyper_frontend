@@ -22,8 +22,11 @@
             {{ trs.createdDate | date: 'short' }}
           </div>
         </div>
-        <div class="wallet-money">
+        <div class="wallet-money" *ngIf="trs.amount > 0">
           <b> +{{ trs.amount | currency: trs.amount:'':'.0-0' }}đ </b>
+        </div>
+        <div class="wallet-nagative-money" *ngIf="trs.amount < 0">
+          <b> {{ trs.amount | currency: trs.amount:'':'.0-0' }}đ </b>
         </div>
         <div style="width: 35%">{{ trs.content }}</div>
       </div>
