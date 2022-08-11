@@ -95,19 +95,19 @@ export class MapPageComponent
   ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.loading = false;
-    }, 3000);
+    // setTimeout(() => {
+    this.loading = false;
+    // }, 3000);
     this.getBusStationMarkers();
     this.getRentStationMarkers();
   }
   ngAfterViewInit() {
-    if (this.loading) {
-      this.mapboxService.initializeMap(103.9967, 10.22698, 12);
-      // this.listVehicleTracking = setInterval(() => {
-      this.getAllVehicles();
-      // }, 5000);
-    }
+    // if (this.loading) {
+    this.mapboxService.initializeMap(103.9967, 10.22698, 12);
+    // this.listVehicleTracking = setInterval(() => {
+    this.getAllVehicles();
+    // }, 5000);
+    // }
 
     // this.mapboxService.setMarker();
     // console.log('map page after view init');
