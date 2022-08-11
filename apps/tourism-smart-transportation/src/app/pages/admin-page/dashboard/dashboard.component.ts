@@ -50,7 +50,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.embedReportPowerBI();
+    // this.embedReportPowerBI();
+    this.embedReport();
   }
   ngAfterViewInit(): void {
     // (document.querySelector('.position-static') as HTMLElement).style.display =
@@ -80,21 +81,39 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.loading = false;
       });
+  }
+  async embedReport(): Promise<void> {
+    let reportConfigResponse: any;
 
-    // this.httpService
-    //   .getEmbedConfig('https://aka.ms/CaptureViewsReportEmbedConfig')
-    //   .subscribe((reportConfigResponse) => {
-    //     this.reportConfig = {
-    //       ...this.reportConfig,
-    //       id: reportConfigResponse.Id,
-    //       embedUrl: reportConfigResponse.EmbedUrl,
-    //       accessToken: reportConfigResponse.EmbedToken.Token,
-    //     };
-    //     const reportDiv =
-    //       this.element.nativeElement.querySelector('.report-container');
-    //     if (reportDiv) {
-    //       reportDiv.classList.remove('hidden');
-    //     }
-    //   });
+    // Get the embed config from the service and set the reportConfigResponse
+    try {
+      reportConfigResponse = await this.httpService
+        .getEmbeddedTokenPowerBI()
+        .toPromise();
+    } catch (error) {
+      // Prepare status message for Embed failure
+      //      await this.prepareDisplayMessageForEmbed(errorElement, errorClass);
+      //this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;
+      // console.error(this.displayMessage);
+      return;
+    }
+
+    // Update the reportConfig to embed the PowerBI report
+    this.reportConfig = {
+      ...this.reportConfig,
+      id: 'c62daf71-599a-4475-a7aa-22ac491136cb',
+      embedUrl:
+        'https://app.powerbi.com/reportEmbed?reportId=c62daf71-599a-4475-a7aa-22ac491136cb&autoAuth=true&ctid=447080b4-b9c6-4b0b-92fd-b543a68b4e97&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D',
+      accessToken: reportConfigResponse.body.token,
+    };
+    this.loading = false;
+
+    // Get the reference of the report-container div
+    const reportDiv =
+      this.element.nativeElement.querySelector('.report-container');
+    if (reportDiv) {
+      // When Embed report is clicked, show the report container div
+      reportDiv.classList.remove('hidden');
+    }
   }
 }
