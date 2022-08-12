@@ -1,7 +1,7 @@
 import { PartnerServiceGuard } from './../../auth/partner-service.guard';
 import { ServiceTypeEnum } from './../../constant/service-type';
 import { DriverTripHistoryComponent } from './driver-trip-history/driver-trip-history.component';
-import { PipeModule } from './../../pipe/pipe.module';
+import { PipeModule } from '../../primeng/pipe/pipe.module';
 import { PartnerGuard } from './../../auth/partner.guard';
 import { ComponentsModule } from './../../components/components.module';
 import { SettingModule } from './../admin-page/setting/setting.module';

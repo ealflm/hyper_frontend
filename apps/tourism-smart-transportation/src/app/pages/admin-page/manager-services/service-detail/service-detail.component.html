@@ -85,85 +85,142 @@
           />
         </div>
         <div class="grid p-fluid form-content">
-          <div class="col-12 tier-input-long">
-            <div class="tier-text">
-              Tên gói
-              <small
-                *ngIf="_tiersForm['tierName'].invalid && isSubmit"
-                class="p-error"
-              >
-                Không được bỏ trống
-              </small>
-            </div>
-            <input
-              class="tier-input-text-long"
-              type="text"
-              pInputText
-              formControlName="tierName"
-            />
-          </div>
-          <div class="col-12 tier-input-long">
-            <div class="tier-text">
-              Mô tả
-              <small
-                *ngIf="_tiersForm['description'].invalid && isSubmit"
-                class="p-error"
-              >
-                Không được bỏ trống
-              </small>
-            </div>
-            <input
-              class="tier-input-text-long"
-              type="text"
-              pInputText
-              formControlName="description"
-            />
-          </div>
-          <div class="col-12 tier-input-long">
-            <div class="tier-text">
-              Giá
-              <small
-                *ngIf="
-              (_tiersForm['price'].errors?.['required'] )  && isSubmit
+          <div class="col-6">
+            <div class="grid">
+              <div class="col-12 tier-input-long">
+                <div class="tier-text">
+                  Tên gói
+                  <small
+                    *ngIf="_tiersForm['tierName'].invalid && isSubmit"
+                    class="p-error"
+                  >
+                    Không được bỏ trống
+                  </small>
+                </div>
+                <input
+                  class="tier-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="tierName"
+                />
+              </div>
+
+              <div class="col-12 tier-input-long">
+                <div class="tier-text">
+                  Mô tả
+                  <small
+                    *ngIf="_tiersForm['description'].invalid && isSubmit"
+                    class="p-error"
+                  >
+                    Không được bỏ trống
+                  </small>
+                </div>
+                <textarea
+                  style="height: 42px"
+                  class="tier-input-text-long"
+                  type="text"
+                  pInputTextarea
+                  formControlName="description"
+                ></textarea>
+              </div>
+
+              <div class="col-12 tier-input-long">
+                <div class="tier-text">
+                  Giá
+                  <small
+                    *ngIf="
+                (_tiersForm['price'].errors?.['required'] )  && isSubmit
+            "
+                    class="p-error"
+                  >
+                    Không được bỏ trống
+                  </small>
+                  <small
+                    *ngIf="
+              _tiersForm['price'].errors?.['min']  && isSubmit
           "
-                class="p-error"
-              >
-                Không được bỏ trống
-              </small>
-              <small
-                *ngIf="
-            _tiersForm['price'].errors?.['min']  && isSubmit
-        "
-                class="p-error"
-              >
-                Không được bé hơn hoặc bằng 0
-              </small>
+                    class="p-error"
+                  >
+                    Không được bé hơn hoặc bằng 0
+                  </small>
+                </div>
+                <p-inputNumber
+                  class="tier-input-text-long"
+                  type="text"
+                  mode="currency"
+                  currency="VND"
+                  locale="vi-VN"
+                  formControlName="price"
+                ></p-inputNumber>
+              </div>
+              <div class="col-12 tier-input-long">
+                <div class="tier-text">
+                  Tiêu đề quảng cáo
+                  <small
+                    *ngIf="_tiersForm['promotedTitle'].invalid && isSubmit"
+                    class="p-error"
+                  >
+                    Không được bỏ trống
+                  </small>
+                </div>
+                <input
+                  class="tier-input-text-long"
+                  type="text"
+                  pInputText
+                  formControlName="promotedTitle"
+                />
+              </div>
             </div>
-            <p-inputNumber
-              class="tier-input-text-long"
-              type="text"
-              mode="currency"
-              currency="VND"
-              locale="vi-VN"
-              formControlName="price"
-            ></p-inputNumber>
           </div>
-          <div class="col-12 tier-input-long">
-            <div class="tier-text">
-              Tiêu đề quảng cáo
-              <small
-                *ngIf="_tiersForm['promotedTitle'].invalid && isSubmit"
-                class="p-error"
-              >
-                Không được bỏ trống
-              </small>
+          <div class="col-6">
+            <div class="grid">
+              <div class="col-12 tier-input-long">
+                <div class="tier-text">
+                  Số ngày
+                  <small
+                    *ngIf="_tiersForm['duration'].errors?.['required'] && isSubmit"
+                    class="p-error"
+                  >
+                    Không được bỏ trống
+                  </small>
+                  <small
+                    *ngIf="
+                  _tiersForm['duration']?.errors?.['min']  && isSubmit
+                "
+                    class="p-error"
+                  >
+                    Không được bé hơn hoặc bằng 0
+                  </small>
+                </div>
+                <p-inputNumber
+                  class="tier-input-text-long"
+                  formControlName="duration"
+                ></p-inputNumber>
+              </div>
+              <div class="col-12 tier-input-long">
+                <div class="tier-text">
+                  Số người
+                  <small
+                    *ngIf="_tiersForm['peopleQuantity'].errors?.['required'] && isSubmit"
+                    class="p-error"
+                  >
+                    Không được bỏ trống
+                  </small>
+                  <small
+                    *ngIf="
+                _tiersForm['peopleQuantity']?.errors?.['min']  && isSubmit
+              "
+                    class="p-error"
+                  >
+                    Không được bé hơn hoặc bằng 0
+                  </small>
+                </div>
+                <p-inputNumber
+                  class="tier-input-text-long"
+                  formControlName="peopleQuantity"
+                ></p-inputNumber>
+              </div>
             </div>
-            <input
-              class="tier-input-text-long"
-              type="text"
-              pInputText
-              formControlName="promotedTitle"
-            />
           </div>
         </div>
       </div>
