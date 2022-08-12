@@ -71,8 +71,8 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
     busStations.map((marker) => {
       const elStationMarker = document.createElement('div');
       elStationMarker.id = marker.id;
-      const width = 35;
-      const height = 35;
+      const width = 25;
+      const height = 25;
       elStationMarker.className = 'marker';
       elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
       elStationMarker.style.width = `${width}px`;

@@ -570,8 +570,8 @@ export class MapPageComponent
     rentStations.map((marker) => {
       const el = document.createElement('div');
       el.id = marker.id;
-      const width = 40;
-      const height = 40;
+      const width = 30;
+      const height = 30;
       el.className = 'marker';
       el.style.backgroundImage = `url('../../../assets/image/rent-station.svg')`;
       el.style.width = `${width}px`;
@@ -619,8 +619,8 @@ export class MapPageComponent
     busStations.map((marker) => {
       const elStationMarker = document.createElement('div');
       elStationMarker.id = marker.id;
-      const width = 35;
-      const height = 35;
+      const width = 20;
+      const height = 20;
       elStationMarker.className = 'marker';
       elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
       elStationMarker.style.width = `${width}px`;
@@ -674,8 +674,8 @@ export class MapPageComponent
     busStations.map((marker) => {
       const elStationMarker = document.createElement('div');
       elStationMarker.id = marker.id;
-      let width = 35;
-      let height = 35;
+      let width = 20;
+      let height = 20;
       elStationMarker.className = 'marker';
       elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
       elStationMarker.style.width = `${width}px`;
@@ -693,8 +693,8 @@ export class MapPageComponent
       if (busOnRoute) {
         busOnRoute.map((value) => {
           if (value.id === marker.id) {
-            width = 40;
-            height = 40;
+            width = 30;
+            height = 30;
             elStationMarker.style.backgroundImage = `url('../../../assets/icons/bus-station-selected.svg')`;
             popup
               .setHTML(`<p>${marker.title}</p>`)
