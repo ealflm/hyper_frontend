@@ -1,6 +1,6 @@
 import { DirectiveModule } from './../../directive/directive.module';
 import { ProfileComponent } from './../../components/profile/profile.component';
-import { PipeModule } from './../../pipe/pipe.module';
+import { PipeModule } from '../../primeng/pipe/pipe.module';
 import { CheckedComponent } from './../../shared/checked/checked.component';
 import { ComponentsModule } from './../../components/components.module';
 import { MatDialogModule } from '@angular/material/dialog';

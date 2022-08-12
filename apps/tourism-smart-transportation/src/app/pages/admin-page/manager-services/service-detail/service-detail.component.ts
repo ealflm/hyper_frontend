@@ -1,3 +1,4 @@
+import { NUMBER_REGEX } from './../../../../providers/CustomValidators';
 import { ServiceTypeEnum } from './../../../../constant/service-type';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PackageService } from './../../../../services/package.service';
@@ -61,6 +62,8 @@ export class ServiceDetailComponent implements OnInit {
       description: ['', [Validators.required, validateEmty]],
       price: ['', [Validators.required, Validators.min(1)]],
       promotedTitle: ['', [Validators.required, validateEmty]],
+      duration: ['', [Validators.required, Validators.min(1)]],
+      peopleQuantity: ['', [Validators.required, Validators.min(1)]],
       deleteFile: [''],
       uploadFile: [''],
       packages: this.fb.array([]),
@@ -90,6 +93,11 @@ export class ServiceDetailComponent implements OnInit {
       this._tiersForm['price'].setValue(packageRes.body.price);
       this._tiersForm['promotedTitle'].setValue(packageRes.body.promotedTitle);
       this._tiersForm['uploadFile'].setValue(packageRes.body.photoUrl);
+
+      this._tiersForm['duration'].setValue(packageRes.body.duration);
+      this._tiersForm['peopleQuantity'].setValue(
+        packageRes.body.peopleQuantity
+      );
       packageRes.body?.photoUrl == '' || packageRes.body?.photoUrl == null
         ? (this.imagePreview = '../assets/image/imagePreview.png')
         : (this.imagePreview = `https://se32.blob.core.windows.net/admin/${packageRes.body?.photoUrl}`);
@@ -235,6 +243,8 @@ export class ServiceDetailComponent implements OnInit {
     this._tiersForm['price'].disable();
     this._tiersForm['description'].disable();
     this._tiersForm['promotedTitle'].disable();
+    this._tiersForm['duration'].disable();
+    this._tiersForm['peopleQuantity'].disable();
     for (let index = 0; index < this._packagesForm.length; index++) {
       this._packagesForm.at(index)?.get('limit')?.disable();
       this._packagesForm.at(index)?.get('value')?.disable();
@@ -247,6 +257,8 @@ export class ServiceDetailComponent implements OnInit {
     this._tiersForm['price'].enable();
     this._tiersForm['description'].enable();
     this._tiersForm['promotedTitle'].enable();
+    this._tiersForm['duration'].enable();
+    this._tiersForm['peopleQuantity'].enable();
     for (let index = 0; index <= this._packagesForm.length; index++) {
       this._packagesForm.at(index)?.get('limit')?.enable();
       this._packagesForm.at(index)?.get('value')?.enable();
@@ -304,6 +316,10 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('Description', this._tiersForm['description'].value);
     formData.append('Price', this._tiersForm['price'].value);
     formData.append('PromotedTitle', this._tiersForm['promotedTitle'].value);
+
+    formData.append('Duration', this._tiersForm['duration'].value);
+    formData.append('PeopleQuantity', this._tiersForm['peopleQuantity'].value);
+
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
     this.packageService
@@ -413,6 +429,9 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('Price', this._tiersForm['price'].value);
     formData.append('PromotedTitle', this._tiersForm['promotedTitle'].value);
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
+
+    formData.append('Duration', this._tiersForm['duration'].value);
+    formData.append('PeopleQuantity', this._tiersForm['peopleQuantity'].value);
 
     formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
     this.packageService.createPackage(formData).subscribe(

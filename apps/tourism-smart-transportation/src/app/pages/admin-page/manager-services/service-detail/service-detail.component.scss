@@ -30,7 +30,7 @@
     color: $black-default;
   }
   .form-edit {
-    width: 650px;
+    width: 1100px;
     margin: 26px auto;
     border-radius: 9px;
     background-color: $white-primary-color;
@@ -43,7 +43,7 @@
 
       .upload-container {
         position: relative;
-        flex: 30%;
+        flex: 10%;
         margin: 0 auto;
         width: 125px;
         height: 125px;
@@ -148,13 +148,14 @@
       }
       .form-content {
         flex: 70%;
-        width: 415px;
+        width: 330px;
         height: 305px;
         .tier-input-long {
-          width: 413px;
+          margin-bottom: 15px;
+          width: 390px;
           height: 49px;
           .tier-input-text-long {
-            width: 413px;
+            // width: 330px;
             height: 28px;
           }
         }

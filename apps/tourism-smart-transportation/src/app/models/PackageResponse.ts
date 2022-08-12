@@ -3,8 +3,8 @@ import { UtilPaging } from './UtilPaging';
 export abstract class Package {
   id?: string;
   name?: string;
-  peopleQuanitty?: number;
-  duration?: number;
+  peopleQuanitty!: number;
+  duration!: number;
   photoUrl?: string;
   description?: string;
   price?: number;
