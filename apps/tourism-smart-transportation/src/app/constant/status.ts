@@ -51,7 +51,7 @@ export const STATUS_VEHICLE: any = {
     class: 'status-expired',
   },
 };
-export const STATUS_CUSTOMER_TRIP = {
+export const STATUS_CUSTOMER_TRIP: any = {
   0: {
     lable: 'Đã Hủy',
     class: 'status-disabled',
@@ -79,6 +79,10 @@ export const STATUS_CUSTOMER_TRIP = {
   6: {
     lable: 'Hoàn Thành',
     class: 'status-completed',
+  },
+  7: {
+    lable: 'Yêu cầu trả phương tiện',
+    class: 'status-expired',
   },
 };
 export const STATUS_PACKAGE: any = {

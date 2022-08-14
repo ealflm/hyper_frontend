@@ -29,6 +29,7 @@ import { CardComponent } from './card/card.component';
 import { FailureComponent } from '../../shared/failure/failure.component';
 import { PartnerDetailComponent } from './partners/partner-detail/partner-detail.component';
 import { PowerBIEmbedModule } from 'powerbi-client-angular';
+import { OrdersComponent } from './orders/orders.component';
 
 const ADMIN_ROUTES: Routes = [
   {
@@ -55,6 +56,7 @@ const ADMIN_ROUTES: Routes = [
         path: 'admin/account-customers/:id',
         component: CustomerDetailsComponent,
       },
+      { path: 'admin/orders', component: OrdersComponent },
       { path: 'admin/manage-service', component: ManagerServicesComponent },
       {
         path: 'admin/manage-service/create-package',
@@ -102,6 +104,7 @@ const ADMIN_ROUTES: Routes = [
     CardComponent,
     FailureComponent,
     PartnerDetailComponent,
+    OrdersComponent,
   ],
   imports: [
     CommonModule,

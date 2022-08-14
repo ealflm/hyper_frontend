@@ -1,3 +1,7 @@
+import {
+  CustomerTrip,
+  CustomerTripResponse,
+} from './../models/CustomerTripResponse';
 import { TransactionsResponse } from './../models/TransactionResponse';
 import { OrderDetailsResponse } from './../models/OrderResponse';
 import { OrdersResponse } from '../models/OrderResponse';
@@ -14,7 +18,14 @@ export class PurchaseHistoryService {
   apiURL = environment.apiURL + 'admin/order';
   apiURLPayment = environment.apiURL + 'admin/transaction';
   apiURLOderDetail = environment.apiURL + 'admin/order-detail';
+  apiURLCustomerTrip = environment.apiURL + 'admin/customer-trip';
   constructor(private http: HttpClient) {}
+  getListOrders(): Observable<OrdersResponse> {
+    return this.http.get<OrdersResponse>(`${this.apiURL}`);
+  }
+  getListCustomerTrip(): Observable<CustomerTripResponse> {
+    return this.http.get<CustomerTripResponse>(`${this.apiURLCustomerTrip}`);
+  }
   getOrderByCusId(idCus: string): Observable<OrdersResponse> {
     return this.http.get<OrdersResponse>(`${this.apiURL}/${idCus}`);
   }

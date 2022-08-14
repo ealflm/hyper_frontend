@@ -85,6 +85,16 @@ export const MenuFilterStatusDiscount = [
     lable: 'Tất cả',
   },
 ];
+export const MenuFilterOrder = [
+  {
+    value: 1,
+    lable: 'Đơn hàng',
+  },
+  {
+    value: 2,
+    lable: 'Lịch sử chuyến đi',
+  },
+];
 export const MenuFilterCard = [
   {
     value: 1,

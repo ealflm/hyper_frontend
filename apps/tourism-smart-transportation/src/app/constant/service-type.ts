@@ -13,3 +13,10 @@ export const ServiceTypeFilter = [
   { label: 'Đi xe buýt', value: 'Đi xe buýt' },
   { label: 'Đặt xe', value: 'Đặt xe' },
 ];
+export const OrderServiceTypeFilter = [
+  { label: 'Thuê xe', value: 'Thuê xe' },
+  { label: 'Đi xe buýt', value: 'Đi xe buýt' },
+  { label: 'Đặt xe', value: 'Đặt xe' },
+  { label: 'Nạp tiền', value: 'Nạp tiền' },
+  { label: 'Mua gói dịch vụ', value: 'Mua gói dịch vụ' },
+];

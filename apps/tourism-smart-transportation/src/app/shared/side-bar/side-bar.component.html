@@ -101,6 +101,31 @@
             </div>
           </div>
         </li>
+        <!-- Đơn hàng -->
+        <li
+          [class]="status ? 'nav-item' : 'nav-item-off'"
+          routerLinkActive="active-link"
+          #order="routerLinkActive"
+        >
+          <div class="nav-link" routerLink="/admin/orders">
+            <mat-icon
+              [ngClass]="
+                order.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{
+                order.isActive ? 'description' : 'description_outlined'
+              }}</mat-icon
+            >
+
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Đơn hàng
+            </div>
+          </div>
+        </li>
+
         <!-- Gối dịch vụ -->
         <li
           [class]="status ? 'nav-item' : 'nav-item-off'"

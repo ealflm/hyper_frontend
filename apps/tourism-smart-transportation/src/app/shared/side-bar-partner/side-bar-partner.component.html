@@ -150,6 +150,30 @@
             </div>
           </div>
         </li>
+        <!-- Đơn hàng -->
+        <li
+          [class]="status ? 'nav-item' : 'nav-item-off'"
+          routerLinkActive="active-link"
+          #order="routerLinkActive"
+        >
+          <div class="nav-link" routerLink="/partner/orders">
+            <mat-icon
+              [ngClass]="
+                order.isActive ? 'material-icons' : 'material-icons-outlined'
+              "
+              >{{
+                order.isActive ? 'description' : 'description_outlined'
+              }}</mat-icon
+            >
+
+            <div
+              class="icon-title"
+              [ngClass]="statusLink ? 'navLinkDar' : 'navLinkShow'"
+            >
+              Đơn hàng
+            </div>
+          </div>
+        </li>
 
         <!-- <li
           [class]="status ? 'nav-item' : 'nav-item-off'"

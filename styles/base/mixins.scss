@@ -217,9 +217,9 @@
 }
 @mixin status-used {
   @include font-Roboto-Regular-Body2;
-  background-color: $expired-grey;
-  color: $color-grey-text-placeholder;
-  box-shadow: 0rem 0rem 2rem rgb(201, 201, 201);
+  background-color: $using-pink;
+  color: #883864;
+  box-shadow: 0rem 0rem 2rem #e0add9;
   border-radius: 50px;
   text-align: center;
   padding: 2px 15px 2px 15px;
