@@ -19,7 +19,39 @@ export class PurchaseHistoryService {
   apiURLPayment = environment.apiURL + 'admin/transaction';
   apiURLOderDetail = environment.apiURL + 'admin/order-detail';
   apiURLCustomerTrip = environment.apiURL + 'admin/customer-trip';
+
+  //
+  partnerAPIOrder = environment.apiURL + 'partner/order';
+  partnerAPIURLCustomerTrip = environment.apiURL + 'partner/customer-trip';
+  partnerAPIURLTransaction = environment.apiURL + 'partner/transaction';
+  partnerAPIUrlReturnVehicle =
+    environment.apiURL + 'partner/customer-trip/return-vehicle';
   constructor(private http: HttpClient) {}
+  getListOrdersForPartner(partnerId: string): Observable<OrdersResponse> {
+    return this.http.get<OrdersResponse>(
+      `${this.partnerAPIOrder}/${partnerId}`
+    );
+  }
+  getListCustomerTripForPartner(
+    partnerId: string
+  ): Observable<CustomerTripResponse> {
+    return this.http.get<CustomerTripResponse>(
+      `${this.partnerAPIURLCustomerTrip}/${partnerId}`
+    );
+  }
+  getTransactionsByOrderIdForPartner(
+    orderId: string
+  ): Observable<TransactionsResponse> {
+    return this.http.get<TransactionsResponse>(
+      `${this.partnerAPIURLTransaction}/${orderId}`
+    );
+  }
+  returnVehicle(customerTripId: string): Observable<TransactionsResponse> {
+    return this.http.get<TransactionsResponse>(
+      `${this.partnerAPIUrlReturnVehicle}/${customerTripId}`
+    );
+  }
+  // Admin
   getListOrders(): Observable<OrdersResponse> {
     return this.http.get<OrdersResponse>(`${this.apiURL}`);
   }

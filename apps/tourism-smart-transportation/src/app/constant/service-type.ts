@@ -20,3 +20,37 @@ export const OrderServiceTypeFilter = [
   { label: 'Nạp tiền', value: 'Nạp tiền' },
   { label: 'Mua gói dịch vụ', value: 'Mua gói dịch vụ' },
 ];
+export const STATUS_CUSTOMER_TRIP_FILTER = [
+  {
+    label: 'Đã Hủy',
+    value: 0,
+  },
+  {
+    label: 'Mới tạo',
+    value: 1,
+  },
+  {
+    label: 'Đã chấp thuận',
+    value: 2,
+  },
+  {
+    label: 'Đã đón khách',
+    value: 3,
+  },
+  {
+    label: 'Đang thuê',
+    value: 4,
+  },
+  {
+    label: 'Quá hạn',
+    value: 5,
+  },
+  {
+    label: 'Hoàn Thành',
+    value: 6,
+  },
+  {
+    label: 'Yêu cầu trả phương tiện',
+    value: 7,
+  },
+];
