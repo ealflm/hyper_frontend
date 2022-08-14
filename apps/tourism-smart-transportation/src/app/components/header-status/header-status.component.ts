@@ -33,7 +33,9 @@ export class HeaderStatusComponent implements OnInit {
   isOpenIconFillter?: boolean = true;
   fillterStatus?: number = 1;
   @Input() menuValue: any = [];
+
   @Output() GetValueMenu: EventEmitter<any> = new EventEmitter<any>();
+
   constructor() {}
 
   ngOnInit(): void {}

@@ -24,6 +24,7 @@ import { PartnerMapPageComponent } from './map/partner-map-page.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { RentStationFormComponent } from './map/rent-station-form/rent-station-form.component';
 import { RouteFormComponent } from './map/route-form/route-form.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const PARTNER_ROUTES: Routes = [
   {
@@ -42,6 +43,7 @@ const PARTNER_ROUTES: Routes = [
         pathMatch: 'full',
       },
       { path: 'partner/dashboard', component: DashboardComponent },
+      { path: 'partner/orders', component: OrdersComponent },
       {
         path: 'partner/driver',
         component: DriverComponent,
@@ -117,6 +119,7 @@ const PARTNER_ROUTES: Routes = [
     PartnerMapPageComponent,
     RentStationFormComponent,
     RouteFormComponent,
+    OrdersComponent,
   ],
   imports: [
     CommonModule,

@@ -68,9 +68,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((reportConfigResponse) => {
         this.reportConfig = {
           ...this.reportConfig,
-          id: '3e481985-a0d9-4dfc-b89a-5873bdade319',
+          id: '1f3dab4e-e566-458a-9c3c-803b0a74d927',
           embedUrl:
-            'https://app.powerbi.com/reportEmbed?reportId=3e481985-a0d9-4dfc-b89a-5873bdade319&autoAuth=true&ctid=447080b4-b9c6-4b0b-92fd-b543a68b4e97&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D',
+            'https://app.powerbi.com/reportEmbed?reportId=1f3dab4e-e566-458a-9c3c-803b0a74d927&autoAuth=true&ctid=447080b4-b9c6-4b0b-92fd-b543a68b4e97&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D',
           accessToken: reportConfigResponse.body.token,
         };
         const reportDiv =
@@ -91,6 +91,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .getEmbeddedTokenPowerBI()
         .toPromise();
     } catch (error) {
+      // console.log(error);
+      this.loading = false;
       // Prepare status message for Embed failure
       //      await this.prepareDisplayMessageForEmbed(errorElement, errorClass);
       //this.displayMessage = `Failed to fetch config for report. Status: ${error.statusText} Status Code: ${error.status}`;
@@ -101,9 +103,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     // Update the reportConfig to embed the PowerBI report
     this.reportConfig = {
       ...this.reportConfig,
-      id: '3e481985-a0d9-4dfc-b89a-5873bdade319',
+      id: '1f3dab4e-e566-458a-9c3c-803b0a74d927',
       embedUrl:
-        'https://app.powerbi.com/reportEmbed?reportId=3e481985-a0d9-4dfc-b89a-5873bdade319&autoAuth=true&ctid=447080b4-b9c6-4b0b-92fd-b543a68b4e97&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D',
+        'https://app.powerbi.com/reportEmbed?reportId=1f3dab4e-e566-458a-9c3c-803b0a74d927&autoAuth=true&ctid=447080b4-b9c6-4b0b-92fd-b543a68b4e97&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D',
       accessToken: reportConfigResponse.body.token,
     };
     this.loading = false;
