@@ -264,11 +264,15 @@
     @include custom-dropdown;
   }
 }
+.header-schedule {
+  position: relative;
+}
 .header-status-right {
-  position: absolute;
-  right: 35px;
-  top: -10px;
+  // position: absolute;
+  // right: 35px;
+  // top: -10px;
   display: flex;
+  margin-left: 25px;
   text-align: start;
   .dropdown-weeks {
     margin-top: 12px;
@@ -284,9 +288,15 @@
   }
 }
 .status-item-right {
-  display: inline;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: -10px;
+  right: 40px;
   margin: auto 10px;
   padding-top: 13px;
+  .status-item-right-title {
+  }
   i:hover {
     color: $primary-color;
     cursor: pointer;
