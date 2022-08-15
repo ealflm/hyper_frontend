@@ -81,7 +81,7 @@ export const STATUS_CUSTOMER_TRIP: any = {
     class: 'status-completed',
   },
   7: {
-    lable: 'Yêu cầu trả phương tiện',
+    lable: 'Trả phương tiện',
     class: 'status-expired',
   },
 };
@@ -97,7 +97,7 @@ export const STATUS_PACKAGE: any = {
 };
 export const STATUS_DISCOUNT: any = {
   0: {
-    lable: 'Chưa kích hoạt',
+    lable: 'Vô hiệu hóa',
     class: 'status-inactive',
   },
   1: {
@@ -105,10 +105,14 @@ export const STATUS_DISCOUNT: any = {
     class: 'status-active',
   },
   2: {
-    lable: 'Đã sử dụng',
+    lable: 'Đã gửi',
     class: 'status-used',
   },
   3: {
+    lable: 'Đã sử dụng',
+    class: 'status-used',
+  },
+  4: {
     lable: 'Hết hạn',
     class: 'status-expired',
   },

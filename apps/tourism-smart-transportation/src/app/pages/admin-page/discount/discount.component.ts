@@ -25,41 +25,29 @@ import {
   DiscountResponse,
   DiscountsResponse,
 } from '../../../models/DiscountResponse';
+import { CustomersService } from '../../../services/customers.service';
+import { Customer } from '../../../models/CustomerResponse';
 
 @Component({
   selector: 'tourism-smart-transportation-discount',
   templateUrl: './discount.component.html',
   styleUrls: ['./discount.component.scss'],
-  animations: [
-    trigger('openCloseIcon', [
-      state(
-        'openIcon',
-        style({
-          transform: 'rotate(0deg)',
-        })
-      ),
-      state(
-        'closeIcon',
-        style({
-          transform: 'rotate(90deg)',
-        })
-      ),
-      transition('openIcon <=> closeIcon', [animate('1s')]),
-    ]),
-  ],
 })
 export class DiscountComponent implements OnInit {
   isOpenIconFillter?: boolean = true;
   discounts: Discount[] = [];
   discountStatus: any[] = [];
   serviceTypes: ServiceType[] = [];
+  customers: Customer[] = [];
+  selectedCustomer: Customer[] = [];
+  discountId = '';
+  sendDiscountDialog = false;
   displayDialog = false;
   editMode = false;
   comebackStatus = false;
   isSubmit = false;
   loading = false;
   discountForm!: FormGroup;
-
   uploadedFiles: any[] = [];
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
@@ -78,7 +66,8 @@ export class DiscountComponent implements OnInit {
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private serviceTypeService: ServiceTypeService
+    private serviceTypeService: ServiceTypeService,
+    private customerService: CustomersService
   ) {
     this._mapDiscountStatus();
   }
@@ -87,6 +76,7 @@ export class DiscountComponent implements OnInit {
     this._getAllDiscount();
     this._initDiscountForm();
   }
+
   private _getServiceType() {
     this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
       this.serviceTypes = serviceTypeRes.body.items.filter(
@@ -366,5 +356,21 @@ export class DiscountComponent implements OnInit {
         },
       });
     }
+  }
+  sendDiscount(id: string) {
+    this.sendDiscountDialog = true;
+    this.discountId = id;
+    this.customerService.getAllCustomers().subscribe((res) => {
+      this.customers = res.body.items;
+    });
+  }
+  sendToCustomer() {
+    let listCustomerId: any = [];
+    listCustomerId = this.selectedCustomer.map((value: any) => value.id);
+    const result = {
+      discountId: this.discountId,
+      customersId: listCustomerId,
+    };
+    console.log(result);
   }
 }

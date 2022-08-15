@@ -264,3 +264,31 @@
     @include custom-dropdown;
   }
 }
+.header-status-right {
+  position: absolute;
+  right: 35px;
+  top: -10px;
+  display: flex;
+  text-align: start;
+  .dropdown-weeks {
+    margin-top: 12px;
+    margin-left: 5px;
+  }
+  .dropdown-day {
+    margin-top: 12px;
+    margin-left: 5px;
+  }
+  .dropdown-route {
+    margin-top: 12px;
+    margin-left: 5px;
+  }
+}
+.status-item-right {
+  display: inline;
+  margin: auto 10px;
+  padding-top: 13px;
+  i:hover {
+    color: $primary-color;
+    cursor: pointer;
+  }
+}

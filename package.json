@@ -34,6 +34,7 @@
     "mapbox-gl": "^2.9.1",
     "minireset.css": "~0.0.4",
     "moment": "^2.29.4",
+    "moment-range": "^4.0.2",
     "ng-zorro-antd": "^13.2.2",
     "powerbi-client": "^2.19.1",
     "powerbi-client-angular": "^2.0.0",
