@@ -32,13 +32,28 @@
       </span>
     </div>
   </div>
-  <div style="position: relative">
+  <div class="header-schedule">
     <tourism-smart-transportation-header-status
       [menuValue]="menuValue"
       (GetValueMenu)="OnGetMenuClick($event)"
     ></tourism-smart-transportation-header-status>
-    <div class="header-status-right">
-      <!-- <div class="dropdown-route">
+    <div class="status-item-right">
+      <span class="status-item-right-title">Hiển thị bộ lọc</span>
+      <i
+        class="material-icons-outlined"
+        (click)="onToggleIconFillter()"
+        [@openCloseIcon]="isOpenIconFillter ? 'openIcon' : 'closeIcon'"
+      >
+        filter_list
+      </i>
+    </div>
+  </div>
+
+  <div
+    class="header-status-right"
+    [ngClass]="!isOpenIconFillter ? '' : 'hidden'"
+  >
+    <!-- <div class="dropdown-route">
         <p-dropdown
           [options]="routes"
           [(ngModel)]="selectedRoute"
@@ -58,27 +73,27 @@
           </ng-template>
         </p-dropdown>
       </div> -->
-      <div class="dropdown-weeks" *ngIf="!isOpenIconFillter">
-        <p-dropdown
-          [options]="weeks"
-          [(ngModel)]="selectedWeek"
-          placeholder="Chọn tuần"
-          [style]="{ width: '235px', height: '28px' }"
-          (onChange)="onSelectedWeek()"
-        >
-          <ng-template pTemplate="selectedItem">
-            <div class="country-item country-item-value" *ngIf="selectedWeek">
-              <div>{{ selectedWeek.start + ' - ' + selectedWeek.end }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-week pTemplate="item">
-            <div class="country-item">
-              <div>{{ week.start + ' - ' + week.end }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div>
-      <!-- <div class="dropdown-day" *ngIf="!isOpenIconFillter">
+    <div class="dropdown-weeks" *ngIf="!isOpenIconFillter">
+      <p-dropdown
+        [options]="weeks"
+        [(ngModel)]="selectedWeek"
+        placeholder="Chọn tuần"
+        [style]="{ width: '235px', height: '28px' }"
+        (onChange)="onSelectedWeek()"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div class="country-item country-item-value" *ngIf="selectedWeek">
+            <div>{{ selectedWeek.start + ' - ' + selectedWeek.end }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-week pTemplate="item">
+          <div class="country-item">
+            <div>{{ week.start + ' - ' + week.end }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <!-- <div class="dropdown-day" *ngIf="!isOpenIconFillter">
         <p-dropdown
           [style]="{ height: '28px', width: '126px' }"
           class="dropdown"
@@ -97,21 +112,9 @@
           </ng-template>
         </p-dropdown>
       </div> -->
-
-      <div class="status-item-right">
-        <!-- <div class="status-item-right-title">Hiển thị bộ lọc</div> -->
-        <i
-          class="material-icons-outlined"
-          (click)="onToggleIconFillter()"
-          [@openCloseIcon]="isOpenIconFillter ? 'openIcon' : 'closeIcon'"
-        >
-          filter_list
-        </i>
-      </div>
-    </div>
   </div>
+  <div class="mb-3"></div>
 
-  <div class="mt-5"></div>
   <div class="body-table">
     <p-table
       #dt
