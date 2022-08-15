@@ -106,19 +106,20 @@
             </span>
 
             <span
-              class="material-icons-outlined enable"
+              class="material-icons-outlined"
               style="margin-left: 5px"
               (click)="showConfirmDialog(discount.id, true)"
-              *ngIf="discount.status !== 0"
+              [ngClass]="discount.status === 0 ? 'disable' : 'enable'"
             >
               delete
             </span>
             <span
-              class="material-icons-outlined disable"
+              [ngClass]="discount.status === 1 ? 'enable' : 'disable'"
+              class="material-icons-outlined"
               style="margin-left: 5px"
-              *ngIf="discount.status === 0"
+              (click)="sendDiscount(discount.id)"
             >
-              delete
+              send
             </span>
           </td>
         </tr>
@@ -419,4 +420,58 @@
   </ng-template>
 </p-confirmDialog>
 <!-- end confirm dialog -->
+
+<!-- send discount -->
+<p-dialog
+  header="Danh sách khách hàng nhận khuyến mãi"
+  [(visible)]="sendDiscountDialog"
+  [style]="{ width: '500px', height: '250px' }"
+  [contentStyle]="{
+    'overflow-y': 'auto',
+    'overflow-x': 'hidden',
+    overflow: 'visible'
+  }"
+  [blockScroll]="true"
+  [resizable]="true"
+  [modal]="true"
+>
+  <p-multiSelect
+    [options]="customers"
+    [(ngModel)]="selectedCustomer"
+    defaultLabel="Chọn khách hàng"
+    class="multiselect-custom"
+    [style]="{ width: '100%' }"
+  >
+    <ng-template let-value pTemplate="selectedItems">
+      <div
+        class="country-item country-item-value"
+        *ngFor="let option of selectedCustomer"
+      >
+        <div>{{ option.lastName + ' ' + option.firstName }}</div>
+      </div>
+      <div
+        *ngIf="!selectedCustomer || selectedCustomer.length === 0"
+        class="country-placeholder"
+      >
+        Chọn danh sách khách hàng
+      </div>
+    </ng-template>
+    <ng-template let-customer pTemplate="item">
+      <div class="country-item">
+        <div>{{ customer.lastName + ' ' + customer.firstName }}</div>
+      </div>
+    </ng-template>
+  </p-multiSelect>
+  <ng-template pTemplate="footer">
+    <button
+      [style]="{ width: '57', height: '32px' }"
+      class="p-button-rounded button-rounded"
+      pButton
+      pRipple
+      type="button"
+      label="Gửi"
+      (click)="sendToCustomer()"
+    ></button>
+  </ng-template>
+</p-dialog>
 <p-toast position="top-right"></p-toast>

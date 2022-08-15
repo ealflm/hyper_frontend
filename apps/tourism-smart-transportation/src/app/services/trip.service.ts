@@ -14,7 +14,8 @@ export class TripService {
   getListTrip(
     partnerId: string,
     tripName?: string | null,
-    status?: number | null
+    status?: number | null,
+    week?: string | null
   ): Observable<TripsResponse> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('PartnerId', partnerId);
@@ -23,6 +24,9 @@ export class TripService {
     }
     if (status != null) {
       queryParams = queryParams.append('Status', status);
+    }
+    if (week != null) {
+      queryParams = queryParams.append('Week', week);
     }
     return this.http.get<TripsResponse>(`${this.partnerTripAPI}`, {
       params: queryParams,

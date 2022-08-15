@@ -58,4 +58,10 @@ export class DiscountService {
   createDiscount(discountFromData: FormData): Observable<any> {
     return this.http.post<Discount>(`${this.apiURL}`, discountFromData);
   }
+  sendDiscountForCustomer(
+    discountId: string,
+    listCustomer: []
+  ): Observable<any> {
+    return this.http.post(`${this.apiURL}/customer`, listCustomer);
+  }
 }

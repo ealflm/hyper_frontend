@@ -28,12 +28,41 @@ import {
   checkMoreThanTimeStart,
   validateEmty,
 } from '../../../providers/CustomValidators';
+import {
+  getFirstLastDateCurrentWeek,
+  getISOWeeksInYear,
+} from '../../../providers/GetDateOfWeek';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 @Component({
   selector: 'tourism-smart-transportation-schedule',
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss'],
+  animations: [
+    trigger('openCloseIcon', [
+      state(
+        'openIcon',
+        style({
+          transform: 'rotate(0deg)',
+        })
+      ),
+      state(
+        'closeIcon',
+        style({
+          transform: 'rotate(90deg)',
+        })
+      ),
+      transition('openIcon <=> closeIcon', [animate('1s')]),
+    ]),
+  ],
 })
 export class ScheduleComponent implements OnInit {
+  isOpenIconFillter?: boolean = true;
   menuValue = MenuFilterTrip;
   filterStatus = 1;
   dialogDetail = false;
@@ -52,6 +81,9 @@ export class ScheduleComponent implements OnInit {
   mapDate = DateOfWeekMap;
   createStatus = false;
   partnerId = '';
+  weeks: any = [];
+  selectedWeek: any;
+  selectedDay: any;
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
@@ -68,12 +100,26 @@ export class ScheduleComponent implements OnInit {
       this.partnerId = user?.id;
     }
     this._mapStatus();
-    // this._mapDateOfWeek();
+    this.selectedWeek = getFirstLastDateCurrentWeek();
+    this._getFirstLastDateInWeekOfYear();
     this._getListTrip();
     this._getVehicleDropdown();
     this._getRoutesDropdown();
     this._getDriverDropdown();
     this._initScheduleForm();
+  }
+
+  private _getFirstLastDateInWeekOfYear() {
+    this.weeks = getISOWeeksInYear();
+  }
+  onSelectedWeek() {
+    this._getListTrip();
+  }
+  onSelectedDay() {
+    // console.log(this.selectedDay);
+  }
+  onToggleIconFillter() {
+    this.isOpenIconFillter = !this.isOpenIconFillter;
   }
   private _mapStatus() {
     this.status = Object.keys(STATUS_TRIP).map((key) => {
@@ -120,7 +166,12 @@ export class ScheduleComponent implements OnInit {
   }
   private _getListTrip(tripName?: string) {
     this.tripService
-      .getListTrip(this.partnerId, tripName, this.filterStatus)
+      .getListTrip(
+        this.partnerId,
+        tripName,
+        this.filterStatus,
+        this.selectedWeek.start + '-' + this.selectedWeek.end
+      )
       .subscribe((tripRes) => {
         this.trips = tripRes.body.items;
       });

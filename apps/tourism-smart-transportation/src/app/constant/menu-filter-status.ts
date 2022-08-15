@@ -74,10 +74,14 @@ export const MenuFilterStatusDiscount = [
   },
   {
     value: 2,
-    lable: 'Đã sử dụng',
+    lable: 'Đã gửi',
   },
   {
     value: 3,
+    lable: 'Đã sử dụng',
+  },
+  {
+    value: 4,
     lable: 'Hết hạn',
   },
   {
