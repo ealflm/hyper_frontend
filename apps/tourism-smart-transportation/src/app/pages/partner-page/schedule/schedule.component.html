@@ -112,6 +112,13 @@
         </ng-template>
       </p-dropdown>
     </div>
+    <div
+      class="clear-filter animate__animated"
+      [ngClass]="clearFilterStatus ? 'animate__rotateIn' : 'routate'"
+      (click)="clearFilter()"
+    >
+      <span class="material-icons"> close </span>
+    </div>
   </div>
   <div class="mb-3"></div>
 

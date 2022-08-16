@@ -86,6 +86,7 @@ export class ScheduleComponent implements OnInit {
   selectedDay: any;
   routeId = null;
   selectedRoute: any;
+  clearFilterStatus = false;
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
@@ -114,7 +115,17 @@ export class ScheduleComponent implements OnInit {
   private _getFirstLastDateInWeekOfYear() {
     this.weeks = getISOWeeksInYear();
   }
+  clearFilter() {
+    this.routeId = null;
+    this.selectedRoute = null;
+    this.selectedDay = null;
+    this.clearFilterStatus = !this.clearFilterStatus;
+    this._getListTrip();
+  }
   onSelectedWeek() {
+    this.routeId = null;
+    this.selectedRoute = null;
+    this.selectedDay = null;
     this._getListTrip();
   }
   onSelectedDay() {
