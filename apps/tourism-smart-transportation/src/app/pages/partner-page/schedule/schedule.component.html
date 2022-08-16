@@ -1,3 +1,6 @@
+<tourism-smart-transportation-loading-progress
+  *ngIf="loading"
+></tourism-smart-transportation-loading-progress>
 <div class="header-schedules">
   <div class="header-schedules-content">
     <div class="header-content-item">
@@ -48,22 +51,87 @@
       </i>
     </div>
   </div>
+  <div class="filter">
+    <div class="filter-left" [ngClass]="!isOpenIconFillter ? '' : 'hidden'">
+      <div class="dropdown-weeks" *ngIf="!isOpenIconFillter">
+        <p-dropdown
+          [options]="weeks"
+          [(ngModel)]="selectedWeek"
+          placeholder="Chọn tuần"
+          [style]="{ width: '235px', height: '28px' }"
+          (onChange)="onSelectedWeek()"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="country-item country-item-value" *ngIf="selectedWeek">
+              <div>{{ selectedWeek.start + ' - ' + selectedWeek.end }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-week pTemplate="item">
+            <div class="country-item">
+              <div>{{ week.start + ' - ' + week.end }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="dropdown-day" *ngIf="!isOpenIconFillter">
+        <p-dropdown
+          [style]="{ height: '28px', width: '126px' }"
+          class="dropdown"
+          placeholder="Thứ"
+          optionValue="id"
+          [options]="dates"
+          [(ngModel)]="selectedDay"
+          (onChange)="onSelectedDay()"
+        >
+          <ng-template let-item pTemplate="item">
+            {{ item?.name }}
+          </ng-template>
 
-  <div
-    class="header-status-right"
-    [ngClass]="!isOpenIconFillter ? '' : 'hidden'"
-  >
-    <div class="dropdown-weeks" *ngIf="!isOpenIconFillter">
+          <ng-template let-item pTemplate="selectedItem">
+            {{ item?.name }}
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div class="dropdown-route">
+        <p-dropdown
+          [options]="routes"
+          [(ngModel)]="selectedRoute"
+          placeholder="Chọn tuyến"
+          [style]="{ width: '235px', height: '28px' }"
+          (onChange)="onSelectedRoute()"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="country-item country-item-value" *ngIf="selectedRoute">
+              <div>{{ selectedRoute.name }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-route pTemplate="item">
+            <div class="country-item">
+              <div>{{ route.name }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+      <div
+        class="clear-filter animate__animated"
+        [ngClass]="clearFilterStatus ? 'animate__rotateIn' : 'routate'"
+        (click)="clearFilter()"
+      >
+        <span class="material-icons"> close </span>
+      </div>
+    </div>
+    <div class="filter-right" *ngIf="!isOpenIconFillter">
       <p-dropdown
-        [options]="weeks"
-        [(ngModel)]="selectedWeek"
+        [options]="weeksCurrent"
+        [(ngModel)]="selectedWeekCopy"
         placeholder="Chọn tuần"
         [style]="{ width: '235px', height: '28px' }"
-        (onChange)="onSelectedWeek()"
       >
         <ng-template pTemplate="selectedItem">
-          <div class="country-item country-item-value" *ngIf="selectedWeek">
-            <div>{{ selectedWeek.start + ' - ' + selectedWeek.end }}</div>
+          <div class="country-item country-item-value" *ngIf="selectedWeekCopy">
+            <div>
+              {{ selectedWeekCopy.start + ' - ' + selectedWeekCopy.end }}
+            </div>
           </div>
         </ng-template>
         <ng-template let-week pTemplate="item">
@@ -72,54 +140,41 @@
           </div>
         </ng-template>
       </p-dropdown>
-    </div>
-    <div class="dropdown-day" *ngIf="!isOpenIconFillter">
+      <div>&nbsp; Sao chép đến &nbsp;</div>
       <p-dropdown
-        [style]="{ height: '28px', width: '126px' }"
-        class="dropdown"
-        placeholder="Thứ"
-        optionValue="id"
-        [options]="dates"
-        [(ngModel)]="selectedDay"
-        (onChange)="onSelectedDay()"
-      >
-        <ng-template let-item pTemplate="item">
-          {{ item?.name }}
-        </ng-template>
-
-        <ng-template let-item pTemplate="selectedItem">
-          {{ item?.name }}
-        </ng-template>
-      </p-dropdown>
-    </div>
-    <div class="dropdown-route">
-      <p-dropdown
-        [options]="routes"
-        [(ngModel)]="selectedRoute"
-        placeholder="Chọn tuyến"
+        [options]="weeksFeature"
+        [(ngModel)]="selectedWeekToCopy"
+        placeholder="Chọn tuần"
         [style]="{ width: '235px', height: '28px' }"
-        (onChange)="onSelectedRoute()"
       >
         <ng-template pTemplate="selectedItem">
-          <div class="country-item country-item-value" *ngIf="selectedRoute">
-            <div>{{ selectedRoute.name }}</div>
+          <div
+            class="country-item country-item-value"
+            *ngIf="selectedWeekToCopy"
+          >
+            <div>
+              {{ selectedWeekToCopy.start + ' - ' + selectedWeekToCopy.end }}
+            </div>
           </div>
         </ng-template>
-        <ng-template let-route pTemplate="item">
+        <ng-template let-week pTemplate="item">
           <div class="country-item">
-            <div>{{ route.name }}</div>
+            <div>{{ week.start + ' - ' + week.end }}</div>
           </div>
         </ng-template>
       </p-dropdown>
-    </div>
-    <div
-      class="clear-filter animate__animated"
-      [ngClass]="clearFilterStatus ? 'animate__rotateIn' : 'routate'"
-      (click)="clearFilter()"
-    >
-      <span class="material-icons"> close </span>
+      <button
+        [style]="{ width: '57', height: '15px' }"
+        class="p-button-rounded button-rounded"
+        pButton
+        pRipple
+        type="button"
+        label="Sao chép"
+        (click)="onCopySchedule()"
+      ></button>
     </div>
   </div>
+
   <div class="mb-3"></div>
 
   <div class="body-table">

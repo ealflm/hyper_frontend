@@ -282,7 +282,26 @@
   }
 }
 ::ng-deep {
-  .header-status-right {
+  .filter {
+    display: flex;
+  }
+  .filter-right {
+    flex-grow: 6;
+    width: 100%;
+    margin: 12px;
+    margin-right: 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    button {
+      margin-left: 15px;
+    }
+    .p-dropdown-label {
+      padding-top: 2px !important;
+    }
+  }
+  .filter-left {
+    flex-grow: 6;
     // position: absolute;
     // right: 35px;
     // top: -10px;

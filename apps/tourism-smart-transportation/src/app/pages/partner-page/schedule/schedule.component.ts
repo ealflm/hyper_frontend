@@ -30,6 +30,8 @@ import {
 } from '../../../providers/CustomValidators';
 import {
   getFirstLastDateCurrentWeek,
+  getISOCurrentWeeks,
+  getISOCurrentWeekToLastWeekOfYear,
   getISOWeeksInYear,
 } from '../../../providers/GetDateOfWeek';
 import {
@@ -69,24 +71,32 @@ export class ScheduleComponent implements OnInit {
   editMode = false;
   displayDialog = false;
   loading = false;
+  clearFilterStatus = false;
+  createStatus = false;
+  isSubmit = false;
 
   scheduleForm!: FormGroup;
-  isSubmit = false;
+
   vehicles: Vehicle[] = [];
   routes: Route[] = [];
   drivers: Driver[] = [];
   trips: Trip[] = [];
+
   dates = DateOfWeek;
   status: any = [];
   mapDate = DateOfWeekMap;
-  createStatus = false;
   partnerId = '';
+
   weeks: any = [];
+  weeksCurrent: any = [];
+  weeksFeature: any = [];
   selectedWeek: any;
   selectedDay: any;
   routeId = null;
   selectedRoute: any;
-  clearFilterStatus = false;
+
+  selectedWeekCopy: any;
+  selectedWeekToCopy: any;
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
@@ -104,6 +114,9 @@ export class ScheduleComponent implements OnInit {
     }
     this._mapStatus();
     this.selectedWeek = getFirstLastDateCurrentWeek();
+    this.selectedWeekCopy = getFirstLastDateCurrentWeek();
+    this.weeksCurrent = getISOCurrentWeeks();
+    this.weeksFeature = getISOCurrentWeekToLastWeekOfYear();
     this._getFirstLastDateInWeekOfYear();
     this._getListTrip();
     this._getVehicleDropdown();
@@ -114,6 +127,44 @@ export class ScheduleComponent implements OnInit {
 
   private _getFirstLastDateInWeekOfYear() {
     this.weeks = getISOWeeksInYear();
+  }
+  onCopySchedule() {
+    if (!this.selectedWeekToCopy) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Cảnh báo',
+        detail: 'Vui lòng chọn tuần để sao chép',
+      });
+      return;
+    } else {
+      this.loading = true;
+      const data: any = {
+        fromWeek: this.selectedWeekCopy.start + '-' + this.selectedWeekCopy.end,
+        toWeek:
+          this.selectedWeekToCopy.start + '-' + this.selectedWeekToCopy.end,
+        partnerId: this.partnerId,
+      };
+
+      this.tripService.copyTrip(data).subscribe(
+        (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: 'Sao chép lịch trình thành công',
+          });
+          this.loading = false;
+          this._getListTrip();
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Thất bại',
+            detail: 'Sao chép lịch trình thất bại',
+          });
+          this.loading = false;
+        }
+      );
+    }
   }
   clearFilter() {
     this.routeId = null;
