@@ -15,7 +15,9 @@ export class TripService {
     partnerId: string,
     tripName?: string | null,
     status?: number | null,
-    week?: string | null
+    week?: string | null,
+    dayOfWeek?: number | null,
+    routeId?: string | null
   ): Observable<TripsResponse> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('PartnerId', partnerId);
@@ -27,6 +29,12 @@ export class TripService {
     }
     if (week != null) {
       queryParams = queryParams.append('Week', week);
+    }
+    if (dayOfWeek != null) {
+      queryParams = queryParams.append('DayOfWeek', dayOfWeek);
+    }
+    if (routeId != null) {
+      queryParams = queryParams.append('RouteId', routeId);
     }
     return this.http.get<TripsResponse>(`${this.partnerTripAPI}`, {
       params: queryParams,
