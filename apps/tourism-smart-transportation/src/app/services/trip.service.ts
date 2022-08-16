@@ -61,4 +61,7 @@ export class TripService {
       { params: queryParams }
     );
   }
+  copyTrip(data: any): Observable<any> {
+    return this.http.post(`${this.partnerTripAPI}/copy-trip`, data);
+  }
 }
