@@ -84,6 +84,8 @@ export class ScheduleComponent implements OnInit {
   weeks: any = [];
   selectedWeek: any;
   selectedDay: any;
+  routeId = null;
+  selectedRoute: any;
   constructor(
     private fb: FormBuilder,
     private confirmationService: ConfirmationService,
@@ -117,6 +119,14 @@ export class ScheduleComponent implements OnInit {
   }
   onSelectedDay() {
     // console.log(this.selectedDay);
+    this._getListTrip();
+  }
+  onSelectedRoute() {
+    // console.log(this.selectedRoute.id);
+    this.routeId = this.selectedRoute.id;
+    console.log(this.routeId);
+
+    this._getListTrip();
   }
   onToggleIconFillter() {
     this.isOpenIconFillter = !this.isOpenIconFillter;
@@ -170,7 +180,9 @@ export class ScheduleComponent implements OnInit {
         this.partnerId,
         tripName,
         this.filterStatus,
-        this.selectedWeek.start + '-' + this.selectedWeek.end
+        this.selectedWeek.start + '-' + this.selectedWeek.end,
+        this.selectedDay,
+        this.routeId
       )
       .subscribe((tripRes) => {
         this.trips = tripRes.body.items;

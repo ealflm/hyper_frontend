@@ -53,26 +53,6 @@
     class="header-status-right"
     [ngClass]="!isOpenIconFillter ? '' : 'hidden'"
   >
-    <!-- <div class="dropdown-route">
-        <p-dropdown
-          [options]="routes"
-          [(ngModel)]="selectedRoute"
-          placeholder="Chọn tuyến"
-          [style]="{ width: '235px', height: '28px' }"
-          (onChange)="onSelectedWeek()"
-        >
-          <ng-template pTemplate="selectedItem">
-            <div class="country-item country-item-value" *ngIf="selectedRoute">
-              <div>{{ selectedRoute.name }}</div>
-            </div>
-          </ng-template>
-          <ng-template let-route pTemplate="item">
-            <div class="country-item">
-              <div>{{ route.name }}</div>
-            </div>
-          </ng-template>
-        </p-dropdown>
-      </div> -->
     <div class="dropdown-weeks" *ngIf="!isOpenIconFillter">
       <p-dropdown
         [options]="weeks"
@@ -93,25 +73,45 @@
         </ng-template>
       </p-dropdown>
     </div>
-    <!-- <div class="dropdown-day" *ngIf="!isOpenIconFillter">
-        <p-dropdown
-          [style]="{ height: '28px', width: '126px' }"
-          class="dropdown"
-          placeholder="Thứ"
-          optionValue="id"
-          [options]="dates"
-          [(ngModel)]="selectedDay"
-          (onChange)="onSelectedDay()"
-        >
-          <ng-template let-item pTemplate="item">
-            {{ item?.name }}
-          </ng-template>
+    <div class="dropdown-day" *ngIf="!isOpenIconFillter">
+      <p-dropdown
+        [style]="{ height: '28px', width: '126px' }"
+        class="dropdown"
+        placeholder="Thứ"
+        optionValue="id"
+        [options]="dates"
+        [(ngModel)]="selectedDay"
+        (onChange)="onSelectedDay()"
+      >
+        <ng-template let-item pTemplate="item">
+          {{ item?.name }}
+        </ng-template>
 
-          <ng-template let-item pTemplate="selectedItem">
-            {{ item?.name }}
-          </ng-template>
-        </p-dropdown>
-      </div> -->
+        <ng-template let-item pTemplate="selectedItem">
+          {{ item?.name }}
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="dropdown-route">
+      <p-dropdown
+        [options]="routes"
+        [(ngModel)]="selectedRoute"
+        placeholder="Chọn tuyến"
+        [style]="{ width: '235px', height: '28px' }"
+        (onChange)="onSelectedRoute()"
+      >
+        <ng-template pTemplate="selectedItem">
+          <div class="country-item country-item-value" *ngIf="selectedRoute">
+            <div>{{ selectedRoute.name }}</div>
+          </div>
+        </ng-template>
+        <ng-template let-route pTemplate="item">
+          <div class="country-item">
+            <div>{{ route.name }}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
   </div>
   <div class="mb-3"></div>
 
