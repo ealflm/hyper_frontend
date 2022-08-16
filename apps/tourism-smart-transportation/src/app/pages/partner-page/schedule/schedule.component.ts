@@ -156,11 +156,11 @@ export class ScheduleComponent implements OnInit {
           this._getListTrip();
         },
         (error) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Thất bại',
-            detail: 'Sao chép lịch trình thất bại',
-          });
+          // this.messageService.add({
+          //   severity: 'error',
+          //   summary: 'Thất bại',
+          //   detail: 'Sao chép lịch trình thất bại',
+          // });
           this.loading = false;
         }
       );
