@@ -267,6 +267,20 @@
 .header-schedule {
   position: relative;
 }
+.routate {
+  animation: rotation 0.5s linear;
+}
+.clear-filter {
+  margin: 9px 10px;
+  padding-top: 6px;
+  span {
+    font-size: 1.5rem;
+  }
+  &:hover {
+    color: $primary-color;
+    cursor: pointer;
+  }
+}
 ::ng-deep {
   .header-status-right {
     // position: absolute;
@@ -305,5 +319,14 @@
       color: $primary-color;
       cursor: pointer;
     }
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(0deg);
   }
 }
