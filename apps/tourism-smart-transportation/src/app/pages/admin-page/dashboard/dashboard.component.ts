@@ -53,27 +53,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.embedReportPowerBI();
-    this.getEmbedTokenPowerBI();
+    this.embedReportPowerBI();
+    // this.getEmbedTokenPowerBI();
   }
-  ngAfterViewInit(): void {
-    // (document.querySelector('.position-static') as HTMLElement).style.display =
-    //   'none';
-    this.reportConfig = {
-      ...this.reportConfig,
-      id: '8e97b2df-8e3e-436e-a5ba-fefc0d717e6f',
-      embedUrl:
-        'https://app.powerbi.com/reportEmbed?reportId=8e97b2df-8e3e-436e-a5ba-fefc0d717e6f&autoAuth=true&ctid=447080b4-b9c6-4b0b-92fd-b543a68b4e97&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D',
-    };
-    const reportDiv =
-      this.element.nativeElement.querySelector('.report-container');
-    if (reportDiv) {
-      // When Embed report is clicked, show the report container div
-      reportDiv.classList.remove('hidden');
-    }
-  }
+  ngAfterViewInit(): void {}
   ngOnDestroy(): void {
-    // this.$sub.complete();
     this.$sub.unsubscribe();
   }
   embedReportPowerBI() {
@@ -83,7 +67,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((reportConfigResponse) => {
         this.reportConfig = {
           ...this.reportConfig,
-          id: '8e97b2df-8e3e-436e-a5ba-fefc0d717e6f',
           embedUrl:
             'https://app.powerbi.com/reportEmbed?reportId=8e97b2df-8e3e-436e-a5ba-fefc0d717e6f&autoAuth=true&ctid=447080b4-b9c6-4b0b-92fd-b543a68b4e97&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D',
           accessToken: reportConfigResponse.body.token,
@@ -93,33 +76,24 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         if (reportDiv) {
           reportDiv.classList.remove('hidden');
         }
-
         this.loading = false;
       });
   }
 
   getEmbedTokenPowerBI() {
     const checkToken = this.localStorageService.getPowerBIToken;
-    // console.log(checkToken);
     const dateNow = new Date().getTime();
     const expireToken = new Date(checkToken.expireTime).getTime();
-    // console.log(dateNow);
-    // console.log(expireToken);
 
     const checkExpireTimeToken: boolean = dateNow > expireToken;
     if (checkToken) {
       if (checkExpireTimeToken) {
         this.localStorageService.removePowerBIToken();
-        this.embedReport();
-      } else {
-        this.reportConfig = {
-          ...this.reportConfig,
-          accessToken: checkToken.accessToken,
-        };
+        this.embedReportPowerBI();
       }
       this.loading = false;
     } else {
-      this.embedReport();
+      this.embedReportPowerBI();
     }
     // const checkExpireToken =  new Date(checkToken && checkToken.expireTime)
     //  if(checkToken)
