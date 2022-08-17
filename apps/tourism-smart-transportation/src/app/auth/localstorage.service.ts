@@ -16,11 +16,20 @@ export class LocalStorageService {
   removeToken() {
     localStorage.removeItem(TOKEN);
   }
-  setPowerBIToken(powerBItoken: string) {
-    localStorage.setItem(POWERBI_TOKEN, powerBItoken);
+  setPowerBIToken(powerBItoken: any) {
+    localStorage.setItem(POWERBI_TOKEN, JSON.stringify(powerBItoken));
   }
-  getPowerBIToken(): string | null {
-    return localStorage.getItem(POWERBI_TOKEN);
+  get getPowerBIToken(): any {
+    let powerBIToken = localStorage.getItem(POWERBI_TOKEN);
+    if (powerBIToken) {
+      powerBIToken = JSON.parse(powerBIToken);
+      return powerBIToken;
+    } else {
+      return '';
+    }
+  }
+  removePowerBIToken() {
+    localStorage.removeItem(POWERBI_TOKEN);
   }
   setUserTokenDecode() {
     const token = this.getToken();
