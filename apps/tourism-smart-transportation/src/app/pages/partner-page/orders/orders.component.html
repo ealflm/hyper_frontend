@@ -223,18 +223,17 @@
           <td
             style="text-align: center"
             class="view-transaction"
+            *ngIf="customerTrip.status !== 5 && customerTrip.status !== 7"
+          >
+            <span class="material-icons-outlined disable"> rotate_right </span>
+          </td>
+          <td
+            style="text-align: center"
+            class="view-transaction"
+            *ngIf="customerTrip.status === 5 || customerTrip.status === 7"
             (click)="activeVehicle(customerTrip.customerTripId)"
           >
-            <span
-              class="material-icons-outlined"
-              [ngClass]="
-                customerTrip.status !== 5 && customerTrip.status !== 7
-                  ? 'disable'
-                  : ''
-              "
-            >
-              rotate_right
-            </span>
+            <span class="material-icons-outlined"> rotate_right </span>
           </td>
         </tr>
       </ng-template>
