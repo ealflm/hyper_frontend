@@ -1,5 +1,8 @@
 import { ServiceTypeEnum } from './../../../constant/service-type';
-import { MenuFilterStatus } from './../../../constant/menu-filter-status';
+import {
+  DriverMenuFilterStatus,
+  MenuFilterStatus,
+} from './../../../constant/menu-filter-status';
 import { DriverResponse } from './../../../models/DriverResponse';
 import { DatePipe } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -40,14 +43,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./driver.component.scss'],
 })
 export class DriverComponent implements OnInit, OnDestroy, AfterViewInit {
-  menuValue = MenuFilterStatus;
+  menuValue = DriverMenuFilterStatus;
   imagePreview?: string | ArrayBuffer | null =
     '../assets/image/imagePreview.png';
 
   drivers: Driver[] = [];
   driverForm!: FormGroup;
   filterName = '';
-  filterStatus = 1;
+  filterStatus = null;
   status: any = [];
   gender = Gender;
   vehicles: any = [];

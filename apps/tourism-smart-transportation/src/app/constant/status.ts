@@ -28,6 +28,14 @@ export const STATUS_DRIVER: any = {
     lable: 'Kích hoạt',
     class: 'status-active',
   },
+  2: {
+    lable: 'Đang hoạt động',
+    class: 'status-active',
+  },
+  3: {
+    lable: 'Không hoạt động',
+    class: 'status-inactive',
+  },
 };
 export const STATUS_VEHICLE: any = {
   0: {

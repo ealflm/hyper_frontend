@@ -176,6 +176,11 @@
 }
 .status-active {
   @include status-active;
+  width: 143px;
+}
+.status-inactive {
+  @include status-inactive;
+  width: 143px;
 }
 // confirm dialog
 ::ng-deep {

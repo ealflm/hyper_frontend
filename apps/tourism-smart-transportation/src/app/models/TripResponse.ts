@@ -7,6 +7,7 @@ export class Trip {
   driverId?: string;
   tripName?: string;
   dayOfWeek?: number;
+  week?: string;
   timeStart!: string;
   timeEnd!: string;
   driverFirstName?: string;
