@@ -36,7 +36,7 @@ export class DriverService {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('PartnerId', partnerId);
     if (filterName != null) {
-      queryParams = queryParams.append('LastName', filterName);
+      queryParams = queryParams.append('FirstName', filterName);
     }
     if (status != null) {
       queryParams = queryParams.append('Status', status);

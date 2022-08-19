@@ -35,7 +35,11 @@ export class HeaderStatusComponent implements OnInit {
   @Input() menuValue: any = [];
 
   @Output() GetValueMenu: EventEmitter<any> = new EventEmitter<any>();
-
+  @Input() set filterStatus(menu: any) {
+    this.fillterStatus = menu;
+    console.log(menu);
+    console.log(this.fillterStatus);
+  }
   constructor() {}
 
   ngOnInit(): void {}

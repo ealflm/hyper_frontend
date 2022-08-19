@@ -186,7 +186,7 @@ export class ScheduleComponent implements OnInit {
   onSelectedRoute() {
     // console.log(this.selectedRoute.id);
     this.routeId = this.selectedRoute.id;
-    console.log(this.routeId);
+    // console.log(this.routeId);
 
     this._getListTrip();
   }
@@ -261,6 +261,7 @@ export class ScheduleComponent implements OnInit {
         dateOfWeek: ['', [Validators.required]],
         timeStart: ['', [Validators.required]],
         timeEnd: ['', [Validators.required]],
+        week: ['', [Validators.required]],
       },
       {
         validator: [checkMoreThanTimeStart('timeStart', 'timeEnd')],
@@ -293,6 +294,7 @@ export class ScheduleComponent implements OnInit {
     this._schedulesForm['dateOfWeek'].setValue('');
     this._schedulesForm['timeStart'].setValue('');
     this._schedulesForm['timeEnd'].setValue('');
+    this._schedulesForm['week'].setValue('');
   }
   deleteSchedule(id: string) {
     this.confirmationService.confirm({
@@ -320,7 +322,15 @@ export class ScheduleComponent implements OnInit {
     this._setDisableForm();
     this.tripService.getTripById(id).subscribe((tripRes) => {
       this._schedulesForm['tripId'].setValue(tripRes.body.tripId);
-
+      const weeks: any = tripRes.body.week?.split('-');
+      let weekRes: any;
+      this.weeksFeature.forEach((element: any) => {
+        if (element.start == weeks[0]) {
+          weekRes = element;
+          return weekRes;
+        }
+      });
+      this._schedulesForm['week'].setValue(weekRes);
       this._schedulesForm['routeId'].setValue(tripRes.body.routeId);
       this._schedulesForm['tripName'].setValue(tripRes.body.tripName);
       this._schedulesForm['driverId'].setValue(tripRes.body.driverId);
@@ -349,6 +359,7 @@ export class ScheduleComponent implements OnInit {
     this._schedulesForm['vehicleId'].disable();
     this._schedulesForm['timeStart'].disable();
     this._schedulesForm['timeEnd'].disable();
+    this._schedulesForm['week'].disable();
   }
   private _setEnableForm() {
     this._schedulesForm['routeId'].enable();
@@ -358,6 +369,7 @@ export class ScheduleComponent implements OnInit {
     this._schedulesForm['vehicleId'].enable();
     this._schedulesForm['timeStart'].enable();
     this._schedulesForm['timeEnd'].enable();
+    this._schedulesForm['week'].enable();
   }
   onCancel() {
     this.displayDialog = false;
@@ -377,6 +389,10 @@ export class ScheduleComponent implements OnInit {
       tripName: this._schedulesForm['tripName'].value,
       driverId: this._schedulesForm['driverId'].value,
       dayOfWeek: this._schedulesForm['dateOfWeek'].value,
+      week:
+        this._schedulesForm['week'].value.start +
+        '-' +
+        this._schedulesForm['week'].value.end,
       vehicleId: this._schedulesForm['vehicleId'].value,
       timeStart: convertHoursMinutes(this._schedulesForm['timeStart'].value),
       timeEnd: convertHoursMinutes(this._schedulesForm['timeEnd'].value),
@@ -414,6 +430,10 @@ export class ScheduleComponent implements OnInit {
       tripName: this._schedulesForm['tripName'].value,
       driverId: this._schedulesForm['driverId'].value,
       dayOfWeek: this._schedulesForm['dateOfWeek'].value,
+      week:
+        this._schedulesForm['week'].value.start +
+        '-' +
+        this._schedulesForm['week'].value.end,
       vehicleId: this._schedulesForm['vehicleId'].value,
       timeStart: convertHoursMinutes(this._schedulesForm['timeStart'].value),
       timeEnd: convertHoursMinutes(this._schedulesForm['timeEnd'].value),

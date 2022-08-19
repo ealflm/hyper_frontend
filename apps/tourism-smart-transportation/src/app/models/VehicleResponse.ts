@@ -12,6 +12,7 @@ export class Vehicle {
   companyName?: string;
   color?: string;
   status?: number;
+  rate?: number;
   vehicleTypeName?: string;
   publishYearId?: string;
   categoryId?: string;

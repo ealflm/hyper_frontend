@@ -94,6 +94,7 @@
               </ng-template>
             </p-columnFilter>
           </th>
+          <th>Đánh giá</th>
           <th>Trạng thái</th>
           <th>Hành động</th>
         </tr>
@@ -109,6 +110,15 @@
           <td>{{ vehicle?.color }}</td>
           <td>{{ vehicle?.vehicleTypeName }}</td>
           <td>{{ vehicle?.serviceTypeName }}</td>
+          <td *ngIf="vehicle.rate === 0">Chưa đánh giá</td>
+          <td *ngIf="vehicle.rate > 0">
+            <p-rating
+              ngModel="{{ vehicle.rate }}"
+              [readonly]="true"
+              [stars]="5"
+              [cancel]="false"
+            ></p-rating>
+          </td>
           <td>
             <div [class]="status[vehicle?.status]?.class">
               {{ status[vehicle?.status]?.lable }}

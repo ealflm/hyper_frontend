@@ -412,6 +412,33 @@
                 </div>
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
+                    Tuyến
+                    <small
+                      *ngIf="_schedulesForm['routeId'].errors?.['required'] && isSubmit"
+                      class="p-error"
+                    >
+                      Không được bỏ trống</small
+                    >
+                  </div>
+                  <p-dropdown
+                    [options]="weeksFeature"
+                    formControlName="week"
+                    class="dropdown"
+                    placeholder="Chọn tuần"
+                    [style]="{ height: '28px' }"
+                  >
+                    <ng-template let-item pTemplate="item">
+                      {{ item.start + ' - ' + item.end }}
+                    </ng-template>
+
+                    <ng-template let-item pTemplate="selectedItem">
+                      {{ item.start + ' - ' + item.end }}
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+
+                <div class="col-12 schedule-input-long">
+                  <div class="schedule-text">
                     Ngày trong tuần
                     <small
                       *ngIf="_schedulesForm['dateOfWeek'].errors?.['required'] && isSubmit"

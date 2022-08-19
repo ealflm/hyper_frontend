@@ -12,6 +12,16 @@ export const MenuFilterStatus = [
     lable: 'Tất cả',
   },
 ];
+export const DriverMenuFilterStatus = [
+  {
+    value: null,
+    lable: 'Tất cả',
+  },
+  {
+    value: 0,
+    lable: 'Vô hiệu hóa',
+  },
+];
 export const MenuVehicleFilterStatus = [
   {
     value: 1,
