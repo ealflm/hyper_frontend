@@ -350,7 +350,7 @@
             </td>
             <td class="more-vert" style="text-align: center">
               <tourism-smart-transportation-dots-menu
-                [orderId]="order?.id"
+                [order]="order"
                 (GetOrderDetails)="onGetOrderDetails($event)"
                 (GetPaymentDetails)="onGetPaymentDetails($event)"
               ></tourism-smart-transportation-dots-menu>
@@ -369,14 +369,14 @@
 </div>
 <!-- dialog -->
 <p-dialog
-  [header]="paymentDialogStatus ? 'Chi tiết giao dịch' : 'Chi tiết đơn hàng'"
+  header="Chi tiết đơn hàng"
   [(visible)]="displayDialog"
   [blockScroll]="false"
   [resizable]="false"
   [modal]="true"
 >
   <div class="table-dialog table-order-details">
-    <p-table #td *ngIf="!paymentDialogStatus" [value]="orderDetails">
+    <p-table #td [value]="orderDetails">
       <!-- [rows]="2"
     [rowsPerPageOptions]="[2, 5]"
     [showCurrentPageReport]="true"
@@ -449,7 +449,7 @@
       <ng-template pTemplate="paginatorleft"> </ng-template>
     </p-treeTable>
   </div> -->
-    <p-table #tb [value]="transactions" *ngIf="paymentDialogStatus">
+    <!-- <p-table #tb [value]="transactions" *ngIf="paymentDialogStatus">
       <ng-template pTemplate="header">
         <tr>
           <th>Nội dung</th>
@@ -475,8 +475,27 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="paginatorleft"> </ng-template>
-    </p-table>
+    </p-table> -->
   </div>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="paymentDialogStatus"
+  [style]="{ width: '674px', height: '674px' }"
+  [contentStyle]="{
+    'overflow-y': 'auto',
+    'overflow-x': 'hidden',
+    'max-height': '70vh',
+    'min-height': '25vh'
+  }"
+  [blockScroll]="true"
+  [resizable]="true"
+  [modal]="true"
+>
+  <tourism-smart-transportation-invoice-bill
+    [invoiceDetails]="transactions"
+    [invoiceTotal]="invoiceTotal"
+  ></tourism-smart-transportation-invoice-bill>
 </p-dialog>
 <tourism-smart-transportation-loading-progress
   *ngIf="loading"
