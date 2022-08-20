@@ -90,6 +90,7 @@ export class ScheduleComponent implements OnInit {
   weeks: any = [];
   weeksCurrent: any = [];
   weeksFeature: any = [];
+  currentToFeatureWeeks: any = [];
   selectedWeek: any;
   selectedDay: any;
   routeId = null;
@@ -116,7 +117,10 @@ export class ScheduleComponent implements OnInit {
     this.selectedWeek = getFirstLastDateCurrentWeek();
     this.selectedWeekCopy = getFirstLastDateCurrentWeek();
     this.weeksCurrent = getISOCurrentWeeks();
-    this.weeksFeature = getISOCurrentWeekToLastWeekOfYear();
+
+    this.currentToFeatureWeeks = getISOCurrentWeekToLastWeekOfYear();
+    this.weeksFeature = this.currentToFeatureWeeks.slice(1);
+
     this._getFirstLastDateInWeekOfYear();
     this._getListTrip();
     this._getVehicleDropdown();
