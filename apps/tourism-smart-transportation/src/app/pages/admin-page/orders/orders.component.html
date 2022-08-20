@@ -97,12 +97,13 @@
               {{ orderStatus[order.status].lable }}
             </div>
           </td>
-          <td
-            style="text-align: center"
-            class="view-transaction"
-            (click)="viewInvoiceDetail(order.id)"
-          >
-            <span class="material-icons-outlined"> visibility </span>
+          <td style="text-align: center" class="view-transaction">
+            <span
+              class="material-icons-outlined"
+              (click)="viewInvoiceDetail(order)"
+            >
+              visibility
+            </span>
           </td>
         </tr>
       </ng-template>
@@ -211,46 +212,8 @@
   [resizable]="true"
   [modal]="true"
 >
-  <div class="invoice">
-    <div class="invoice-header">
-      <div class="invoice-left">
-        <div class="invoice-logo">
-          <img src="../../../../assets/image/logo.svg" alt="" />
-          <h1>Hyper</h1>
-        </div>
-      </div>
-      <div class="invoice-right">
-        <div>Hóa đơn: {{ invoiceDetails[0]?.orderId | slice: 0:11 }}</div>
-        <div>
-          Ngày tạo: {{ invoiceDetails[0]?.createdDate | date: 'dd/MM/YYYY' }}
-        </div>
-      </div>
-    </div>
-    <div class="invoice-header">
-      <div class="invoice-content">
-        <div>Tên khách hàng</div>
-        <div class="invoice-name">{{ invoiceDetails[0]?.customerName }}</div>
-      </div>
-      <div class="invoice-content">
-        <div>Tên công ty</div>
-        <div class="invoice-name">{{ invoiceDetails[0]?.companyName }}</div>
-      </div>
-    </div>
-    <div class="invoice-item">
-      <table>
-        <tr>
-          <th>Nội dung</th>
-          <th>Số tiền</th>
-        </tr>
-        <tr class="table-content" *ngFor="let item of invoiceDetails">
-          <td>{{ item?.content }}</td>
-          <td>{{ item?.amount }}</td>
-        </tr>
-      </table>
-      <!-- <div class="invoice-total-price">
-        <div>Tổng tiền nhận được</div>
-        <div>{{ totalPrice }}</div>
-      </div> -->
-    </div>
-  </div>
+  <tourism-smart-transportation-invoice-bill
+    [invoiceDetails]="invoiceDetails"
+    [invoiceTotal]="invoiceTotal"
+  ></tourism-smart-transportation-invoice-bill>
 </p-dialog>

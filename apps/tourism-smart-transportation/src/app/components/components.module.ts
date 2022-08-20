@@ -25,6 +25,7 @@ import { ConfirmCloseDialogComponent } from './confirm-close-dialog/confirm-clos
 import { CardCreditComponent } from './card/card-credit.component';
 import { SwitchTabsComponent } from './switch-tabs/switch-tabs.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { InvoiceBillComponent } from './invoice-bill/invoice-bill.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { WalletComponent } from './wallet/wallet.component';
     CardCreditComponent,
     SwitchTabsComponent,
     WalletComponent,
+    InvoiceBillComponent,
   ],
   exports: [
     StationDetailComponent,
@@ -74,6 +76,7 @@ import { WalletComponent } from './wallet/wallet.component';
     CardCreditComponent,
     SwitchTabsComponent,
     WalletComponent,
+    InvoiceBillComponent,
   ],
   imports: [
     CommonModule,

@@ -30,13 +30,14 @@ export class OrdersComponent implements OnInit {
 
   invoiceDetails: any = [];
   totalPrice = 0;
+  invoiceTotal?: Order;
   constructor(private orderService: PurchaseHistoryService) {}
 
   ngOnInit(): void {
     this.getListOrders();
   }
   OnGetMenuClick(value: any) {
-    console.log(value);
+    // console.log(value);
     if (value === 1) {
       this.customerTripFilter = false;
       this.getListOrders();
@@ -55,10 +56,10 @@ export class OrdersComponent implements OnInit {
       this.customerTrips = customerTripRes.body;
     });
   }
-  viewInvoiceDetail(id: string) {
+  viewInvoiceDetail(order: Order) {
     this.invoiceDialog = true;
-
-    this.orderService.getTransactionsByOrderId(id).subscribe((res) => {
+    this.invoiceTotal = order;
+    this.orderService.getTransactionsByOrderId(order.id).subscribe((res) => {
       this.invoiceDetails = res.body.items.sort(
         (a, b) =>
           new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime()
