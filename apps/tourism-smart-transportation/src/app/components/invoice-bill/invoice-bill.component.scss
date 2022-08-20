@@ -1,0 +1,71 @@
+@import '../../../styles.scss';
+// invoice
+.invoice {
+  padding: 0 25px;
+}
+.invoice-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .invoice-left {
+    img {
+      display: block;
+      width: 80px;
+      height: 80px;
+    }
+    .invoice-logo {
+      display: flex;
+      justify-items: center;
+      align-items: center;
+      h1 {
+        margin-left: 10px;
+        color: $primary-color;
+        letter-spacing: 0.6rem;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+      margin-bottom: 2rem;
+    }
+  }
+  .invoice-right {
+    margin: 2rem 0;
+    font-size: 1.2rem;
+  }
+}
+.invoice-content {
+  font-size: 1.2rem;
+  .invoice-name {
+    font-weight: bold;
+  }
+}
+.invoice-item {
+  margin-top: 2rem;
+  padding: 0 1.2rem;
+  table {
+    width: 100%;
+    margin: auto 0;
+    th {
+      text-align: start;
+      font-size: 1.2rem;
+    }
+    th:last-child {
+      text-align: end;
+    }
+
+    td {
+      font-size: 1.2rem;
+      border-bottom: 1px solid $black-default;
+      padding: 10px 0px;
+    }
+    td:last-child {
+      text-align: end;
+    }
+  }
+}
+.invoice-total-price {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  font-weight: 500;
+}

@@ -37,6 +37,7 @@ export class OrdersComponent implements OnInit {
   invoiceDetails: any = [];
   totalPrice = 0;
   partnerId = '';
+  invoiceTotal?: Order;
   constructor(
     private orderService: PurchaseHistoryService,
     private localStorageService: LocalStorageService,
@@ -72,9 +73,10 @@ export class OrdersComponent implements OnInit {
         this.customerTrips = customerTripRes.body;
       });
   }
-  viewInvoiceDetail(id: string) {
+  viewInvoiceDetail(id: string, order: Order) {
     this.invoiceDialog = true;
-
+    console.log(order);
+    this.invoiceTotal = order;
     this.orderService
       .getTransactionsByOrderIdForPartner(id)
       .subscribe((res) => {

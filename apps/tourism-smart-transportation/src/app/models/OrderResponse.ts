@@ -1,13 +1,13 @@
 import { UtilPaging } from './UtilPaging';
 
 export abstract class Order {
-  id?: string;
+  id!: string;
   customerId?: string;
   serviceTypeId?: string;
   serviceTypeName?: string;
   discountId?: string;
   createdDate!: Date;
-  totalPrice?: number;
+  totalPrice!: number;
   status?: number;
 }
 export class OrderDetail {
