@@ -30,7 +30,6 @@ export class WalletComponent implements OnInit {
         }
         return null;
       });
-      console.log(this.transaction);
     });
   }
 }

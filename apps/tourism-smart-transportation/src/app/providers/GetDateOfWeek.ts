@@ -33,7 +33,7 @@ export function getISOWeeksInYear() {
     weekStart.getMonth() < month &&
     (weekStart.getMonth() || month < 12)
   );
-  console.log(weeks);
+  // console.log(weeks);
 
   return weeks;
 }
@@ -75,7 +75,7 @@ export function getISOCurrentWeeks() {
   );
 
   const weekNumber = Math.ceil(days / 7);
-  console.log(weekNumber + 1);
+  // console.log(weekNumber + 1);
 
   let result: any = [];
   result = weeks.slice(0, weekNumber + 1);
@@ -114,10 +114,11 @@ export function getISOCurrentWeekToLastWeekOfYear() {
     weekStart.getMonth() < month &&
     (weekStart.getMonth() || month < 12)
   );
-  let result: any = [];
-  result = weeks.slice(1);
+  // let result: any = [];
 
-  return result;
+  // result = weeks.slice(1);
+
+  return weeks;
 }
 export function getFirstLastDateCurrentWeek() {
   const curr = new Date(); // get current date
