@@ -22,7 +22,7 @@
       <div [class]="orderStatus[invoiceTotal?.status!]?.class">
         {{ orderStatus[invoiceTotal?.status!]?.lable }}
       </div>
-      <div>Tên công ty</div>
+      <div *ngIf="invoiceDetails[0]?.companyName !== null">Tên công ty</div>
       <div class="invoice-name">{{ invoiceDetails[0]?.companyName }}</div>
     </div>
   </div>

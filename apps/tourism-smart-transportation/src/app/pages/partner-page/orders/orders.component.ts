@@ -75,7 +75,7 @@ export class OrdersComponent implements OnInit {
   }
   viewInvoiceDetail(id: string, order: Order) {
     this.invoiceDialog = true;
-    console.log(order);
+    // console.log(order);
     this.invoiceTotal = order;
     this.orderService
       .getTransactionsByOrderIdForPartner(id)

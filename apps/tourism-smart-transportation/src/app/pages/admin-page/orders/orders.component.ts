@@ -37,7 +37,7 @@ export class OrdersComponent implements OnInit {
     this.getListOrders();
   }
   OnGetMenuClick(value: any) {
-    console.log(value);
+    // console.log(value);
     if (value === 1) {
       this.customerTripFilter = false;
       this.getListOrders();

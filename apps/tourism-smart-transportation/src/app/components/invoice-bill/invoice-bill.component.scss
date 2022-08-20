@@ -69,3 +69,28 @@
   font-size: 1.5rem;
   font-weight: 500;
 }
+.status-paid {
+  @include status-paid;
+}
+.status-disabled {
+  @include status-disabled;
+}
+.status-active {
+  @include status-active;
+}
+.status-completed {
+  @include status-completed;
+}
+.status-cancel {
+  @include status-unpaid;
+}
+.status-used {
+  @include status-used;
+}
+.status-expired {
+  @include status-expried;
+}
+.status-unlinked {
+  width: 139px !important;
+  @include status-unlinked;
+}
