@@ -60,6 +60,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   transactions: Transaction[] = [];
   orderDetails: OrderDetail[] = [];
+  invoiceTotal?: Order;
   status: any = [];
   statusBiding? = 1;
   loading = false;
@@ -337,9 +338,8 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
   }
   onGetOrderDetails(e: any) {
     this.displayDialog = true;
-    this.paymentDialogStatus = e.paymentDialogStatus;
     this.purchaseHistoryService
-      .getOrderDetailsByOrderId(e.orderId)
+      .getOrderDetailsByOrderId(e.order.id)
       .pipe(
         map((data: OrderDetailsResponse) => {
           this.orderDetails = data.body.items.map(
@@ -357,8 +357,6 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       .subscribe();
   }
   onGetPaymentDetails(e: any) {
-    this.displayDialog = true;
-    this.paymentDialogStatus = e.paymentDialogStatus;
     // this.purchaseHistoryService
     //   .getPaymentsByOrderId(e.orderId)
     //   .pipe(
@@ -384,17 +382,18 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
     //     })
     //   )
     //   .subscribe();
-    this.displayDialog = true;
     this.paymentDialogStatus = e.paymentDialogStatus;
+    this.invoiceTotal = e.order;
+    console.log(this.invoiceTotal);
+
     this.purchaseHistoryService
-      .getTransactionsByOrderId(e.orderId)
+      .getTransactionsByOrderId(e.order.id)
       .pipe(
         map((data) => {
           this.transactions = data.body.items
             .map((x: any) => {
               return {
-                amount: x.amount,
-                content: x.content,
+                ...x,
                 createdDate: add7Hours(x.createdDate),
               };
             })

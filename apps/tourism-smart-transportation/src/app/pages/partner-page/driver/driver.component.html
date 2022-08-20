@@ -73,26 +73,26 @@
         <tr>
           <td
             class="tb-name"
-            [pTooltip]="driver.firstName + ' ' + driver.lastName"
+            [pTooltip]="driver?.firstName + ' ' + driver?.lastName"
             tooltipPosition="bottom"
           >
             <img
               [src]="
-                driver.photoUrl === '' || driver.photoUrl === null
+                driver?.photoUrl === '' || driver?.photoUrl === null
                   ? '../assets/image/imagePreview.png'
                   : 'https://se32.blob.core.windows.net/driver/' +
-                    driver.photoUrl
+                    driver?.photoUrl
               "
               alt=""
-            />&nbsp;{{ driver.firstName + ' ' + driver.lastName }}
+            />&nbsp;{{ driver?.firstName + ' ' + driver?.lastName }}
           </td>
-          <td>{{ driver.licensePlates }} - {{ driver.serviceTypeName }}</td>
-          <td>{{ driver.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ driver.phone }}</td>
-          <td *ngIf="driver.feedbackRating === 0">Chưa đánh giá</td>
-          <td *ngIf="driver.feedbackRating > 0">
+          <td>{{ driver?.licensePlates }} - {{ driver?.serviceTypeName }}</td>
+          <td>{{ driver?.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ driver?.phone }}</td>
+          <td *ngIf="driver?.feedbackRating === 0">Chưa đánh giá</td>
+          <td *ngIf="driver?.feedbackRating > 0">
             <p-rating
-              ngModel="{{ driver.feedbackRating }}"
+              ngModel="{{ driver?.feedbackRating }}"
               [readonly]="true"
               [stars]="5"
               [cancel]="false"
@@ -101,8 +101,8 @@
           <!-- <td>{{ driver.createdDate | date: 'dd/MM/yyyy' }}</td>
           <td>{{ driver.modifiedDate | date: 'dd/MM/yyyy' }}</td> -->
           <td>
-            <div [class]="status[driver.status].class">
-              {{ status[driver.status].lable }}
+            <div [class]="status[driver?.status]?.class">
+              {{ status[driver?.status]?.lable }}
             </div>
           </td>
           <td style="text-align: center">

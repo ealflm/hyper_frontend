@@ -182,6 +182,10 @@
   @include status-inactive;
   width: 143px;
 }
+.status-used {
+  @include status-used;
+  width: 143px;
+}
 // confirm dialog
 ::ng-deep {
   .confirm-dialog-subtitle {

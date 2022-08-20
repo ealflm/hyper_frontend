@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./dots-menu.component.scss'],
 })
 export class DotsMenuComponent implements OnInit {
-  @Input() orderId: any;
+  @Input() order: any;
   @Output() GetOrderDetails: EventEmitter<any> = new EventEmitter<any>();
   @Output() GetPaymentDetails: EventEmitter<any> = new EventEmitter<any>();
   constructor() {}
@@ -14,13 +14,13 @@ export class DotsMenuComponent implements OnInit {
   ngOnInit(): void {}
   onDetailTransaction(e: any) {
     this.GetOrderDetails.emit({
-      orderId: e,
+      order: e,
       paytmentDialogStatus: false,
     });
   }
   onGetPayment(e: any) {
     this.GetPaymentDetails.emit({
-      orderId: e,
+      order: e,
       paymentDialogStatus: true,
     });
   }
