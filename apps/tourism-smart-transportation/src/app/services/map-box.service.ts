@@ -175,33 +175,44 @@ export class MapBoxService {
       this.map.removeSource('iss');
     }
   }
+
   trackingVehicle(geojson: any) {
     // console.log(geojson);
-
-    this.removeLayerTracking();
-    this.map.loadImage(
-      'https://img.icons8.com/color/48/undefined/car--v1.png',
-      (error, image) => {
-        if (error) throw error;
-        if (!this.map.hasImage('car')) {
-          if (image) {
-            this.map.addImage('car', image);
+    if (this.map.getSource('iss') && this.map.getLayer('iss')) {
+      const source = this.map.getSource('iss') as mapboxgl.GeoJSONSource;
+      source.setData(geojson);
+    } else {
+      this.map.addSource('iss', {
+        type: 'geojson',
+        data: geojson,
+      });
+      this.map.loadImage(
+        'https://img.icons8.com/color/48/undefined/car--v1.png',
+        (error, image) => {
+          if (error) throw error;
+          if (!this.map.hasImage('car')) {
+            if (image) {
+              this.map.addImage('car', image);
+            }
           }
+          this.map.addLayer({
+            id: 'iss',
+            type: 'symbol',
+            source: 'iss',
+            // source: {
+            //   type: 'geojson',
+            //   data: geojson,
+            // },
+            layout: {
+              'icon-image': 'car',
+              'icon-size': 0.5,
+            },
+          });
         }
-        this.map.addLayer({
-          id: 'iss',
-          type: 'symbol',
-          source: {
-            type: 'geojson',
-            data: geojson,
-          },
-          layout: {
-            'icon-image': 'car',
-            'icon-size': 0.5,
-          },
-        });
-      }
-    );
+      );
+    }
+
+    // this.removeLayerTracking();
   }
   initializeMiniMap() {
     this.miniMap = new mapboxgl.Map({

@@ -36,6 +36,10 @@ export const STATUS_DRIVER: any = {
     lable: 'Không hoạt động',
     class: 'status-inactive',
   },
+  4: {
+    lable: 'Đang bận',
+    class: 'status-used',
+  },
 };
 export const STATUS_VEHICLE: any = {
   0: {
