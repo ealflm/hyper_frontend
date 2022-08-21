@@ -383,7 +383,7 @@ export class DiscountComponent implements OnInit, AfterViewInit {
   }
   sendDiscount(id: string) {
     // console.log(this.selectedCustomers);
-
+    this.selectedCustomers = [];
     this.sendDiscountDialog = true;
     this.discountId = id;
   }
