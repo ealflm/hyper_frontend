@@ -1,5 +1,8 @@
 import { map } from 'rxjs';
-import { OrderServiceTypeFilter } from './../../../constant/service-type';
+import {
+  OrderServiceTypeFilter,
+  ServiceTypeEnum,
+} from './../../../constant/service-type';
 import {
   STATUS_CUSTOMER_TRIP,
   STATUS_TRANSACTION,
@@ -27,7 +30,7 @@ export class OrdersComponent implements OnInit {
   orderServiceTypeFilter = OrderServiceTypeFilter;
   customerTripServiceFilter = ServiceTypeFilter;
   invoiceDialog = false;
-
+  ServiceTypeEnum = ServiceTypeEnum;
   invoiceDetails: any = [];
   totalPrice = 0;
   invoiceTotal?: Order;

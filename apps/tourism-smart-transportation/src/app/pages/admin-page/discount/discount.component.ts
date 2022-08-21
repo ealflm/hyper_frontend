@@ -8,7 +8,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DiscountService } from './../../../services/discount.service';
 import { STATUS_DISCOUNT } from './../../../constant/status';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
   checkMoreThanTodayValidator,
   validateEmty,
@@ -33,13 +33,15 @@ import { Customer } from '../../../models/CustomerResponse';
   templateUrl: './discount.component.html',
   styleUrls: ['./discount.component.scss'],
 })
-export class DiscountComponent implements OnInit {
+export class DiscountComponent implements OnInit, AfterViewInit {
   isOpenIconFillter?: boolean = true;
   discounts: Discount[] = [];
   discountStatus: any[] = [];
   serviceTypes: ServiceType[] = [];
   customers: Customer[] = [];
-  selectedCustomer: Customer[] = [];
+  currentCustomer: Customer[] = [];
+  selectedCustomers: Customer[] = [];
+
   discountId = '';
   sendDiscountDialog = false;
   displayDialog = false;
@@ -61,6 +63,8 @@ export class DiscountComponent implements OnInit {
   pageIndex?: number = 0;
   itemsPerPage?: number = 10;
   menuValue = MenuFilterStatusDiscount;
+  min = 0;
+  max = 1000000;
   constructor(
     private discountService: DiscountService,
     private fb: FormBuilder,
@@ -76,7 +80,17 @@ export class DiscountComponent implements OnInit {
     this._getAllDiscount();
     this._initDiscountForm();
   }
+  ngAfterViewInit(): void {
+    this.customerService.getAllCustomers().subscribe((res) => {
+      this.customers = res.body.items;
 
+      this.currentCustomer = res.body.items;
+
+      // const moneyCustomer: any[] = this.currentCustomer.map((value) => {
+      //   return value?.purchaseMoney;
+      // });
+    });
+  }
   private _getServiceType() {
     this.serviceTypeService.getAllServiceType().subscribe((serviceTypeRes) => {
       this.serviceTypes = serviceTypeRes.body.items.filter(
@@ -116,6 +130,7 @@ export class DiscountComponent implements OnInit {
       }
     );
   }
+
   get _discountsForm() {
     return this.discountForm.controls;
   }
@@ -357,20 +372,53 @@ export class DiscountComponent implements OnInit {
       });
     }
   }
-  sendDiscount(id: string) {
-    this.sendDiscountDialog = true;
-    this.discountId = id;
-    this.customerService.getAllCustomers().subscribe((res) => {
-      this.customers = res.body.items;
+  filterMoney() {
+    this.customers = this.currentCustomer.filter((value: any) => {
+      if (value.purchaseMoney >= this.min && value.purchaseMoney <= this.max) {
+        return {
+          ...value,
+        };
+      }
     });
   }
+  sendDiscount(id: string) {
+    // console.log(this.selectedCustomers);
+
+    this.sendDiscountDialog = true;
+    this.discountId = id;
+  }
   sendToCustomer() {
+    this.loading = true;
     let listCustomerId: any = [];
-    listCustomerId = this.selectedCustomer.map((value: any) => value.id);
+    listCustomerId = this.selectedCustomers.map((value: any) => value.id);
     const result = {
       discountId: this.discountId,
-      customersId: listCustomerId,
+      customerIdList: listCustomerId,
     };
-    console.log(result);
+    if (listCustomerId.length == 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Cảnh báo',
+        detail: 'Hãy chọn khách hàng để gửi',
+      });
+      return;
+    }
+    this.discountService.sendDiscountForCustomer(result).subscribe(
+      (discountRes) => {
+        if (discountRes.statusCode == 201) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: 'Gửi khuyến mãi đến khách hàng thành công',
+          });
+          this.sendDiscountDialog = false;
+          this.loading = false;
+        }
+      },
+      (error) => {
+        this.loading = false;
+        this.sendDiscountDialog = false;
+      }
+    );
   }
 }

@@ -13,6 +13,7 @@ export abstract class Customer {
   cardUid?: string;
   dateOfBirth!: Date;
   email?: string;
+  purchaseMoney?: number;
   createdDate?: Date;
   modifiedDate?: Date;
   status?: number;
