@@ -23,6 +23,8 @@ export class ServiceDetailComponent implements OnInit {
   isAdded?: boolean = false;
   isSubmit? = false;
   serviceTypes: ServiceType[] = [];
+  currentServiceTypes: ServiceType[] = [];
+
   deleteFile?: string | null;
   // check button
   editModeStatus?: boolean = false;
@@ -83,6 +85,7 @@ export class ServiceDetailComponent implements OnInit {
       this.serviceTypes = serviceTypeRes.body.items.filter(
         (value: any) => value.id !== ServiceTypeEnum.RentCarService
       );
+      this.currentServiceTypes = this.serviceTypes;
     });
   }
   private _getPackageId(id: string) {
@@ -116,6 +119,7 @@ export class ServiceDetailComponent implements OnInit {
           .at(index)
           .get('serviceType')
           ?.setValue(packageValue.serviceTypeId);
+
         this._packagesForm.at(index).get('limit')?.setValue(packageValue.limit);
         this._packagesForm.at(index).get('value')?.setValue(packageValue.value);
         this._packagesForm.at(index).get('id')?.setValue(packageValue.id);
@@ -361,6 +365,18 @@ export class ServiceDetailComponent implements OnInit {
       this.checkLengthFormPackageList = true;
       return;
     }
+    if (
+      this._packagesForm.at(0)?.get('serviceType')?.value ===
+      this._packagesForm.at(1)?.get('serviceType')?.value
+    ) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Cảnh báo',
+        detail: '2 dịch vụ phải khác nhau',
+      });
+      this.checkLengthFormPackageList = true;
+      return;
+    }
     const checkEmptyData =
       this._packagesForm.controls[lengthFormArray - 1]?.value;
     let isLastedEmptyDataRow = false;
@@ -379,10 +395,10 @@ export class ServiceDetailComponent implements OnInit {
         isLastedEmptyDataRow
       ) {
         data = [...data];
-        console.log(data);
+        // console.log(data);
       } else {
         data = [...data, x];
-        console.log(data);
+        // console.log(data);
       }
     });
 

@@ -364,7 +364,10 @@
             </ng-container>
           </ng-container>
         </table>
-        <div class="footer-table" *ngIf="createStatus">
+        <div
+          class="footer-table"
+          *ngIf="createStatus && this._packagesForm.controls.length < 2"
+        >
           <button
             [style]="{ width: '57', height: '32px' }"
             class="p-button-outlined p-button-rounded btn-create"
@@ -376,7 +379,10 @@
             Tạo mới <span class="material-icons"> add </span>
           </button>
         </div>
-        <div class="footer-table" *ngIf="editModeStatus">
+        <div
+          class="footer-table"
+          *ngIf="editModeStatus && this._packagesForm.controls.length < 2"
+        >
           <button
             [style]="{ width: '57', height: '32px' }"
             class="p-button-outlined p-button-rounded btn-create"
