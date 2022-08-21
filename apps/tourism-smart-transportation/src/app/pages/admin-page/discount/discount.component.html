@@ -425,17 +425,14 @@
 <p-dialog
   header="Danh sách khách hàng nhận khuyến mãi"
   [(visible)]="sendDiscountDialog"
-  [style]="{ width: '500px', height: '250px' }"
-  [contentStyle]="{
-    'overflow-y': 'auto',
-    'overflow-x': 'hidden',
-    overflow: 'visible'
-  }"
+  [style]="{ width: '75vw' }"
+  [contentStyle]="{ height: '500px' }"
   [blockScroll]="true"
   [resizable]="true"
+  [maximizable]="true"
   [modal]="true"
 >
-  <p-multiSelect
+  <!-- <p-multiSelect
     [options]="customers"
     [(ngModel)]="selectedCustomer"
     defaultLabel="Chọn khách hàng"
@@ -461,7 +458,81 @@
         <div>{{ customer.lastName + ' ' + customer.firstName }}</div>
       </div>
     </ng-template>
-  </p-multiSelect>
+  </p-multiSelect> -->
+  <p-table
+    #dt
+    [value]="customers"
+    [(selection)]="selectedCustomers"
+    dataKey="id"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    responsiveLayout="scroll"
+    [paginator]="true"
+    currentPageReportTemplate="Đang xem {first} đến {last} của {totalRecords} mục"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th>Tên khách hàng</th>
+        <th style="width: 50%">
+          Số tiền đã sử dụng
+          <span>
+            <p-inputNumber
+              class="input-number-filter"
+              type="text"
+              mode="currency"
+              currency="VND"
+              locale="vi-VN"
+              [(ngModel)]="min"
+            ></p-inputNumber>
+            -
+            <p-inputNumber
+              class="input-number-filter"
+              type="text"
+              mode="currency"
+              currency="VND"
+              locale="vi-VN"
+              [(ngModel)]="max"
+            ></p-inputNumber>
+            &nbsp;
+            <button
+              [style]="{ width: '57', height: '28px' }"
+              class="p-button-rounded button-rounded"
+              pButton
+              pRipple
+              type="button"
+              label="Tìm kiếm"
+              (click)="filterMoney()"
+            ></button>
+          </span>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr class="p-selectable-row">
+        <td>
+          <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+        </td>
+        <td>
+          {{ customer.firstName + ' ' + customer.lastName }}
+        </td>
+        <td style="text-align: start">
+          {{
+            customer.purchaseMoney | currency: customer.purchaseMoney:'':'.0-0'
+          }}đ
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
   <ng-template pTemplate="footer">
     <button
       [style]="{ width: '57', height: '32px' }"

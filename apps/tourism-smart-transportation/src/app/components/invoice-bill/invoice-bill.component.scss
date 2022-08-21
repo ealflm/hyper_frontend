@@ -28,7 +28,7 @@
     }
   }
   .invoice-right {
-    margin: 2rem 0;
+    margin: 1rem 0;
     font-size: 1.2rem;
   }
 }
@@ -54,7 +54,7 @@
 
     td {
       font-size: 1.2rem;
-      border-bottom: 1px solid $black-default;
+      border-bottom: 0.1px solid $expired-grey;
       padding: 10px 0px;
     }
     td:last-child {

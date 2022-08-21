@@ -208,6 +208,11 @@
 }
 // dialog
 ::ng-deep {
+  .input-number-filter,
+  .p-inputnumber-input {
+    width: 10rem;
+    height: 28px;
+  }
   .header-close-icon {
     position: absolute;
     right: 3%;

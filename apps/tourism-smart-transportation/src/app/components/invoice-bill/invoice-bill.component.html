@@ -7,6 +7,12 @@
       </div>
     </div>
     <div class="invoice-right">
+      <div
+        [class]="orderStatus[invoiceTotal?.status!]?.class"
+        style="margin: auto"
+      >
+        {{ orderStatus[invoiceTotal?.status!]?.lable }}
+      </div>
       <div>
         Hóa đơn:
         {{ invoiceDetails[0]?.orderId | slice: 0:11 }}
@@ -22,9 +28,6 @@
       <div class="invoice-name">{{ invoiceDetails[0]?.customerName }}</div>
     </div>
     <div class="invoice-content">
-      <div [class]="orderStatus[invoiceTotal?.status!]?.class">
-        {{ orderStatus[invoiceTotal?.status!]?.lable }}
-      </div>
       <div *ngIf="invoiceDetails[0]?.companyName !== null">Tên công ty</div>
       <div class="invoice-name">{{ invoiceDetails[0]?.companyName }}</div>
     </div>

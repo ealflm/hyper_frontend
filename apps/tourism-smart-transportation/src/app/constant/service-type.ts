@@ -2,6 +2,8 @@ export enum ServiceTypeEnum {
   RentCarService = '5168511d-57f1-460a-8c7c-14664e3dbccc',
   BusService = 'd3d43e77-1602-4e16-a8d7-485d4f309db7',
   BookCarService = 'c6ca1cf7-08bb-4f06-8d5d-48ba93251a6d',
+  DepositMoney = '1f91343d-9408-438f-9057-865db45a8468',
+  BuyPackageService = '397a6732-cfd9-4a9b-bdd4-d9db1ef70a5f',
 }
 export const SERVICE_TYPE_MAPING = {
   [ServiceTypeEnum.BookCarService]: { name: 'Đặt xe' },
