@@ -21,9 +21,17 @@ export class RouteService {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('partnerId', partnerId);
     queryParams = queryParams.append('routeId', routeId);
-    return this.http.get<Route>(`${this.partnerAPIRoute}`, {
+    return this.http.get<Route>(`${this.partnerAPIRoute}/add-route-partner`, {
       params: queryParams,
     });
+  }
+  getRoutesOfSystem(partnerId: string): Observable<RoutesResponse> {
+    return this.http.get<RoutesResponse>(
+      `${this.partnerAPIRoute}/hyper-route/${partnerId}`
+      // {
+      //   params: queryParams,
+      // }
+    );
   }
   getRouteForPartner(partnerID: string): Observable<RoutesResponse> {
     let queryParams = new HttpParams();

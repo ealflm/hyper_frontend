@@ -54,7 +54,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
     this.mapBoxService.initializeMiniMap();
     this._getListStationsMarker();
     this.initRouteForm();
-    this._getListRoute();
+    this._getListRouteOfSystem();
   }
   ngAfterContentChecked(): void {
     this.mapBoxService.miniMap.resize();
@@ -67,8 +67,8 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
       stationList: [null, Validators.required],
     });
   }
-  private _getListRoute() {
-    this.routeService.getRouteForPartner(this.partnerId).subscribe((res) => {
+  private _getListRouteOfSystem() {
+    this.routeService.getRoutesOfSystem(this.partnerId).subscribe((res) => {
       this.routes = res.body.items;
     });
   }
