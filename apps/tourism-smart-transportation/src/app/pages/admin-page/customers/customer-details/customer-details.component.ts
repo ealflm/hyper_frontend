@@ -297,7 +297,10 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
             });
           }
         },
-        (error) => {},
+        (error) => {
+          this.onCancleEdit();
+          this.loading = false;
+        },
         () => {
           this.onCancleEdit();
           this.loading = false;
