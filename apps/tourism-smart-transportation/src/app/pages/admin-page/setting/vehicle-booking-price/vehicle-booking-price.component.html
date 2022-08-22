@@ -177,7 +177,7 @@
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
         <div class="vehicle-book-text">
-          Loại xe
+          Loại xe <small class="p-error">(*)</small>&nbsp;
 
           <small
             class="p-error"
@@ -214,7 +214,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-book-text">
-          Khoảng cách cố định
+          Khoảng cách cố định <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_bookingForms['fixedDistance'].errors?.['required'] && isSubmit"
@@ -238,7 +238,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-book-text">
-          Giá cố định
+          Giá cố định <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_bookingForms['fixedPrice'].errors?.['required'] && isSubmit"
@@ -262,7 +262,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-book-text">
-          Giá mỗi Km
+          Giá mỗi Km <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_bookingForms['pricePerKilometer'].errors?.['required'] && isSubmit"

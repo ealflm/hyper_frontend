@@ -210,7 +210,7 @@
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
         <div class="vehicle-renting-text">
-          Năm sản xuất
+          Năm sản xuất <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_rentingForms['publishYearId'].errors?.['required'] && isSubmit"
@@ -230,7 +230,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-renting-text">
-          Phân loại
+          Phân loại <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_rentingForms['categoryId'].errors?.['required'] && isSubmit"
@@ -266,24 +266,18 @@
       </div>
       <div class="col-12">
         <div class="bus-price-text">
-          Khoảng thời gian
+          Khoảng thời gian <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
-            *ngIf="(_rentingForms['minTime'].errors?.['required'] && isSubmit) || (_rentingForms['maxTime'].errors?.['required'] && isSubmit)"
+            *ngIf="(_rentingForms['minTime'].errors?.['required'] && isSubmit) || (_rentingForms['maxTime'].errors?.['required'] || (_rentingForms['minTime'].errors?.['min']) && isSubmit)"
           >
-            Không được trống
+            Không được trống và không bé hơn 1
           </small>
           <small
             class="p-error"
             *ngIf="(_rentingForms['minTime'].errors?.['pattern'] || _rentingForms['maxTime'].errors?.['pattern']) && isSubmit "
           >
             Không được có ký tự khác
-          </small>
-          <small
-            class="p-error"
-            *ngIf="(_rentingForms['minTime'].errors?.['min']) && isSubmit "
-          >
-            Thời gian không được bé hơn 1
           </small>
           <small
             class="p-error"
@@ -329,7 +323,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-renting-text">
-          Giá theo giờ
+          Giá theo giờ <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_rentingForms['pricePerHour'].errors?.['required'] && isSubmit"
@@ -365,7 +359,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-renting-text">
-          Giá cơ bản
+          Giá cơ bản <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_rentingForms['fixedPrice'].errors?.['required'] && isSubmit"
@@ -401,7 +395,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-renting-text">
-          Giá cuối tuần
+          Giá cuối tuần <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_rentingForms['weekendPrice'].errors?.['required'] && isSubmit"
@@ -437,7 +431,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-renting-text">
-          Giá ngày lễ
+          Giá ngày lễ <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_rentingForms['holidayPrice'].errors?.['required'] && isSubmit"

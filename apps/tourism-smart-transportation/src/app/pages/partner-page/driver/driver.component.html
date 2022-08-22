@@ -198,12 +198,12 @@
               <div class="grid">
                 <div class="col-6 driver-input-short">
                   <div class="driver-text">
-                    Tên
+                    Tên <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="(_driversForm['firstName'].errors?.['required'] || _driversForm['firstName'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
-                      Không được bỏ trống</small
+                      Không được trống</small
                     >
                   </div>
 
@@ -220,12 +220,12 @@
                 </div>
                 <div class="col-6 driver-input-short">
                   <div class="driver-text">
-                    Họ
+                    Họ <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="(_driversForm['lastName'].errors?.['required'] || _driversForm['lastName'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
                     >
-                      Không được bỏ trống</small
+                      Không được trống</small
                     >
                   </div>
 
@@ -242,12 +242,12 @@
                 </div>
                 <div class="col-6 driver-input-short">
                   <div class="driver-text">
-                    Ngày sinh
+                    Ngày sinh <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_driversForm['dateOfBirth'].errors?.['required'] && isSubmit "
                       class="p-error"
                     >
-                      Không được bỏ trống</small
+                      Không được trống</small
                     >
                     <small
                       *ngIf="
@@ -277,12 +277,12 @@
                 </div>
                 <div class="col-6 driver-input-short">
                   <div class="driver-text">
-                    Giới tính
+                    Giới tính <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_driversForm['selectedGender'].errors?.['required'] && isSubmit "
                       class="p-error"
                     >
-                      Không được bỏ trống</small
+                      Không được trống</small
                     >
                   </div>
                   <p-dropdown
@@ -297,7 +297,7 @@
                 </div>
                 <div class="col-12 driver-input-long" style="margin-top: 15px">
                   <div class="driver-text">
-                    Số điện thoại
+                    Số điện thoại <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_driversForm['phone'].errors?.['required'] && isSubmit"
                       class="p-error"

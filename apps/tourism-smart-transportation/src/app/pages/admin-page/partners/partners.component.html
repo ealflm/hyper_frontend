@@ -155,7 +155,7 @@
 <p-dialog
   [header]="editMode ? 'Chỉnh sửa đối tác' : 'Tạo mới đối tác'"
   [(visible)]="displayDialog"
-  [style]="{ width: '1000px', height: '520px' }"
+  [style]="{ width: '1110px', height: '520px' }"
   [contentStyle]="{
     'overflow-y': 'hidden',
     'overflow-x': 'hidden',
@@ -274,7 +274,7 @@
               </div>
               <div class="col-6 partner-input-short">
                 <div class="partner-text">
-                  Tên
+                  Tên <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="(_inforsForm['firstName'].errors?.['required'] || _inforsForm['firstName'].errors?.['whitespace'] || _inforsForm['firstName'].errors?.['minlength']) && isSubmit"
                     class="p-error"
@@ -302,7 +302,7 @@
               </div>
               <div class="col-6 partner-input-short">
                 <div class="partner-text">
-                  Họ
+                  Họ <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="(_inforsForm['lastName'].errors?.['required'] || _inforsForm['lastName'].errors?.['whitespace'] || _inforsForm['lastName'].errors?.['minlength']) && isSubmit"
                     class="p-error"
@@ -330,7 +330,7 @@
               </div>
               <div class="col-6 partner-input-short">
                 <div class="partner-text">
-                  Ngày sinh
+                  Ngày sinh <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
                     class="p-error"
@@ -364,7 +364,9 @@
                 <div></div>
               </div>
               <div class="col-6 partner-input-short">
-                <div class="partner-text">Giới tính</div>
+                <div class="partner-text">
+                  Giới tính <small class="p-error">(*)</small>&nbsp;
+                </div>
                 <p-dropdown
                   class="dropdown"
                   [style]="{ height: '28px' }"
@@ -377,7 +379,7 @@
 
               <div class="col-12 partner-input-long" style="margin-top: 10px">
                 <div class="partner-text">
-                  Số điện thoại
+                  Số điện thoại <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="(_inforsForm['phone'].errors?.['required'] || _inforsForm['phone'].errors?.['whitespace']) && isSubmit"
                     class="p-error"
@@ -400,7 +402,7 @@
               </div>
               <div class="col-12 partner-input-long" style="margin-top: 10px">
                 <div class="partner-text">
-                  Email
+                  Email <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="(_inforsForm['email'].errors?.['required'] || _inforsForm['email'].errors?.['whitespace'] || _inforsForm['email'].errors?.['minlength']) && isSubmit"
                     class="p-error"
@@ -429,7 +431,7 @@
               </div>
               <div class="col-12 partner-input-long" style="margin-top: 10px">
                 <div class="partner-text">
-                  Địa chỉ
+                  Địa chỉ <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['addressUser'].invalid && isSubmit"
                     class="p-error"
@@ -464,7 +466,7 @@
               </div>
               <div class="col-12 partner-input-long" style="margin-top: 10px">
                 <div class="partner-text">
-                  Công ty
+                  Công ty <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['companyName'].invalid && isSubmit"
                     class="p-error"
@@ -482,7 +484,7 @@
               </div>
               <div class="col-12 partner-input-long" style="margin-top: 10px">
                 <div class="partner-text">
-                  Địa chỉ
+                  Địa chỉ <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['addressCompany'].invalid && isSubmit"
                     class="p-error"
@@ -511,7 +513,7 @@
               </div>
               <div class="col-12 partner-input-long">
                 <div class="partner-text">
-                  Loại dịch vụ
+                  Loại dịch vụ <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['serviceType'].invalid && isSubmit"
                     class="p-error"

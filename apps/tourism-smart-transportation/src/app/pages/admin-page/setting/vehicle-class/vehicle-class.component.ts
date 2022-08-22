@@ -182,6 +182,9 @@ export class VehicleClassComponent implements OnInit {
       accept: () => {
         this.displayDialog = true;
       },
+      reject: () => {
+        this.isSubmit = false;
+      },
     });
   }
   getAllCategory() {

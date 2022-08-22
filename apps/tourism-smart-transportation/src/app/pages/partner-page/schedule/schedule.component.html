@@ -305,7 +305,7 @@
               <div class="grid">
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Tên
+                    Tên <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="(_schedulesForm['tripName'].errors?.['required'] || _schedulesForm['tripName'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
@@ -327,7 +327,7 @@
                 </div>
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Phương tiện
+                    Phương tiện <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_schedulesForm['vehicleId'].errors?.['required'] && isSubmit"
                       class="p-error"
@@ -358,7 +358,7 @@
                 </div>
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Tài xế
+                    Tài xế <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_schedulesForm['vehicleId'].errors?.['required'] && isSubmit"
                       class="p-error"
@@ -385,7 +385,7 @@
                 </div>
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Tuyến
+                    Tuyến <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_schedulesForm['routeId'].errors?.['required'] && isSubmit"
                       class="p-error"
@@ -412,9 +412,9 @@
                 </div>
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Tuyến
+                    Chọn Tuần <small class="p-error">(*)</small>&nbsp;
                     <small
-                      *ngIf="_schedulesForm['routeId'].errors?.['required'] && isSubmit"
+                      *ngIf="_schedulesForm['week'].errors?.['required'] && isSubmit"
                       class="p-error"
                     >
                       Không được bỏ trống</small
@@ -439,7 +439,7 @@
 
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
-                    Ngày trong tuần
+                    Ngày trong tuần <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_schedulesForm['dateOfWeek'].errors?.['required'] && isSubmit"
                       class="p-error"
@@ -467,6 +467,7 @@
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
                     Thời gian dự kiến bắt đầu
+                    <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_schedulesForm['timeStart'].errors?.['required'] && isSubmit "
                       class="p-error"
@@ -489,6 +490,7 @@
                 <div class="col-12 schedule-input-long">
                   <div class="schedule-text">
                     Thời gian dự kiến kết thúc
+                    <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_schedulesForm['timeEnd'].errors?.['required'] && isSubmit "
                       class="p-error"

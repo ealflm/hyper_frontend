@@ -103,7 +103,7 @@
               </div>
               <div class="col-6 profile-input-short">
                 <div class="profile-text">
-                  Ngày sinh
+                  Ngày sinh <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['dateOfBirth'].errors?.['required'] && isSubmit"
                     class="p-error"
@@ -136,7 +136,9 @@
                 <div></div>
               </div>
               <div class="col-6 profile-input-short">
-                <div class="profile-text">Giới tính</div>
+                <div class="profile-text">
+                  Giới tính <small class="p-error">(*)</small>&nbsp;
+                </div>
                 <p-dropdown
                   class="dropdown"
                   [style]="{ height: '28px' }"
@@ -148,7 +150,9 @@
               </div>
 
               <div class="col-12 profile-input-long" style="margin-top: 10px">
-                <div class="profile-text">Số điện thoại</div>
+                <div class="profile-text">
+                  Số điện thoại <small class="p-error">(*)</small>&nbsp;
+                </div>
                 <input
                   class="profile-input-text-long"
                   type="text"
@@ -166,7 +170,7 @@
               </div>
               <div class="col-12 profile-input-long" style="margin-top: 10px">
                 <div class="profile-text">
-                  Email
+                  Email <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['email'].errors?.['required'] && isSubmit"
                     class="p-error"
@@ -184,7 +188,7 @@
               </div>
               <div class="col-12 profile-input-long" style="margin-top: 10px">
                 <div class="profile-text">
-                  Địa chỉ
+                  Địa chỉ <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['addressUser'].errors?.['required'] && isSubmit "
                     class="p-error"
@@ -212,7 +216,7 @@
               </div>
               <div class="col-12 profile-input-long" style="margin-top: 10px">
                 <div class="profile-text">
-                  Công ty
+                  Công ty <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_inforsForm['companyName'].invalid && isSubmit"
                     class="p-error"
@@ -229,7 +233,9 @@
                 <div></div>
               </div>
               <div class="col-12 profile-input-long" style="margin-top: 10px">
-                <div class="profile-text">Địa chỉ</div>
+                <div class="profile-text">
+                  Địa chỉ <small class="p-error">(*)</small>&nbsp;
+                </div>
                 <input
                   class="profile-input-text-long"
                   type="text"

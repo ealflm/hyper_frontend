@@ -157,7 +157,7 @@
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
         <div class="vehicle-class-text">
-          Tên
+          Tên <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_categoryForm['name'].invalid && isSubmit"
@@ -177,7 +177,7 @@
 
       <div class="col-12">
         <div class="vehicle-class-text">
-          Mô tả
+          Mô tả <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_categoryForm['description'].invalid && isSubmit"

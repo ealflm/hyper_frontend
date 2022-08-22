@@ -89,7 +89,7 @@
             <div class="grid">
               <div class="col-12 tier-input-long">
                 <div class="tier-text">
-                  Tên gói
+                  Tên gói <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_tiersForm['tierName'].invalid && isSubmit"
                     class="p-error"
@@ -107,7 +107,7 @@
 
               <div class="col-12 tier-input-long">
                 <div class="tier-text">
-                  Mô tả
+                  Mô tả <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_tiersForm['description'].invalid && isSubmit"
                     class="p-error"
@@ -126,7 +126,7 @@
 
               <div class="col-12 tier-input-long">
                 <div class="tier-text">
-                  Giá
+                  Giá <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="
                 (_tiersForm['price'].errors?.['required'] )  && isSubmit
@@ -155,7 +155,7 @@
               </div>
               <div class="col-12 tier-input-long">
                 <div class="tier-text">
-                  Tiêu đề quảng cáo
+                  Tiêu đề quảng cáo <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_tiersForm['promotedTitle'].invalid && isSubmit"
                     class="p-error"
@@ -176,7 +176,7 @@
             <div class="grid">
               <div class="col-12 tier-input-long">
                 <div class="tier-text">
-                  Số ngày
+                  Số ngày <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_tiersForm['duration'].errors?.['required'] && isSubmit"
                     class="p-error"
@@ -199,7 +199,7 @@
               </div>
               <div class="col-12 tier-input-long">
                 <div class="tier-text">
-                  Số người
+                  Số người <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="_tiersForm['peopleQuantity'].errors?.['required'] && isSubmit"
                     class="p-error"
@@ -246,12 +246,7 @@
               <tr class="body-table-data">
                 <td>
                   <div class="tier-input-long">
-                    <input
-                      class="tier-input-text-long"
-                      type="text"
-                      pInputText
-                      formControlName="packageName"
-                    /><small
+                    <small class="p-error">(*)</small>&nbsp;<small
                       *ngIf="
                         _packagesForm.controls[i].get('packageName')?.invalid &&
                         isSubmit
@@ -260,10 +255,25 @@
                     >
                       Không được bỏ trống
                     </small>
+                    <input
+                      class="tier-input-text-long"
+                      type="text"
+                      pInputText
+                      formControlName="packageName"
+                    />
                   </div>
                 </td>
                 <td>
                   <div class="tier-input-long">
+                    <small class="p-error">(*)</small>&nbsp;
+                    <small
+                      *ngIf="
+                    _packagesForm.controls[i].get('serviceType')?.errors?.['required']  && isSubmit
+                    "
+                      class="p-error"
+                    >
+                      Không được bỏ trống
+                    </small>
                     <p-dropdown
                       class="dropdown"
                       [style]="{ width: '95%', height: '28px' }"
@@ -274,19 +284,28 @@
                       placeholder="Chọn một dịch vụ"
                       (onChange)="onChangeServiceType()"
                     ></p-dropdown>
-                    <small
-                      *ngIf="
-                      _packagesForm.controls[i].get('serviceType')?.errors?.['required']  && isSubmit
-                      "
-                      class="p-error"
-                    >
-                      Không được bỏ trống
-                    </small>
                   </div>
                 </td>
                 <td>
                   <div class="tier-input-long">
                     <div class="input-suffix">
+                      <small class="p-error">(*)</small>&nbsp;
+                      <small
+                        *ngIf="
+                      _packagesForm.controls[i].get('limit')?.errors?.['required']  && isSubmit
+                      "
+                        class="p-error"
+                      >
+                        Không được bỏ trống
+                      </small>
+                      <small
+                        *ngIf="
+                    _packagesForm.controls[i].get('limit')?.errors?.['min']  && isSubmit
+                    "
+                        class="p-error"
+                      >
+                        Không được bé hơn hoặc bằng 0
+                      </small>
                       <p-inputNumber
                         class="tier-input-text-long"
                         formControlName="limit"
@@ -298,27 +317,28 @@
                           : 'Lần'
                       }}</span>
                     </div>
-                    <small
-                      *ngIf="
-                      _packagesForm.controls[i].get('limit')?.errors?.['required']  && isSubmit
-                      "
-                      class="p-error"
-                    >
-                      Không được bỏ trống
-                    </small>
-                    <small
-                      *ngIf="
-                    _packagesForm.controls[i].get('limit')?.errors?.['min']  && isSubmit
-                    "
-                      class="p-error"
-                    >
-                      Không được bé hơn hoặc bằng 0
-                    </small>
                   </div>
                 </td>
                 <td>
                   <div class="tier-input-long">
                     <div class="input-suffix">
+                      <small class="p-error">(*)</small>&nbsp;
+                      <small
+                        *ngIf="
+                      _packagesForm.controls[i].get('value')?.errors?.['required']  && isSubmit
+                      "
+                        class="p-error"
+                      >
+                        Không được bỏ trống
+                      </small>
+                      <small
+                        *ngIf="
+                    _packagesForm.controls[i].get('value')?.errors?.['min']  && isSubmit
+                    "
+                        class="p-error"
+                      >
+                        Không được bé hơn hoặc bằng 0
+                      </small>
                       <p-inputNumber
                         class="tier-input-text-long"
                         formControlName="value"
@@ -331,32 +351,12 @@
                           : '%'
                       }}</span>
                     </div>
-                    <small
-                      *ngIf="
-                      _packagesForm.controls[i].get('value')?.errors?.['required']  && isSubmit
-                      "
-                      class="p-error"
-                    >
-                      Không được bỏ trống
-                    </small>
-                    <small
-                      *ngIf="
-                    _packagesForm.controls[i].get('value')?.errors?.['min']  && isSubmit
-                    "
-                      class="p-error"
-                    >
-                      Không được bé hơn hoặc bằng 0
-                    </small>
                   </div>
                 </td>
 
                 <td
                   (click)="onClickDeleteItem(i)"
-                  style="
-                    text-align: center;
-                    padding-bottom: 20px;
-                    cursor: pointer;
-                  "
+                  style="text-align: center; padding-top: 22px; cursor: pointer"
                 >
                   <span class="material-icons-outlined"> delete </span>
                 </td>

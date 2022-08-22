@@ -158,7 +158,7 @@
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
         <div class="publish-year-text">
-          Đời xe
+          Đời xe <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_publishYearForm['name'].errors?.['required']&& isSubmit"
@@ -179,7 +179,7 @@
 
       <div class="col-12">
         <div class="publish-year-text">
-          Mô tả
+          Mô tả <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_publishYearForm['description'].invalid && isSubmit"

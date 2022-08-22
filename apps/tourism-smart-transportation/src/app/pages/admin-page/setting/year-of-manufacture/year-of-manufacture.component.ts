@@ -134,8 +134,8 @@ export class YearOfManufactureComponent implements OnInit {
   }
   onSaveVehicleYearOfPublish() {
     this.isSubmit = true;
-    this.loading = true;
     if (this.publishYearForm.invalid) return;
+    this.loading = true;
     if (this.isSubmit && this.editMode) {
       const id = this._publishYearForm['id'].value;
       const publishYear: PublishYear = {

@@ -201,7 +201,7 @@
                 <div class="grid">
                   <div class="col-12 discount-input-long">
                     <div class="discount-text">
-                      Tên
+                      Tên <small class="p-error">(*)</small>&nbsp;
                       <small
                         *ngIf="_discountsForm['title'].invalid && isSubmit"
                         class="p-error"
@@ -227,7 +227,7 @@
                     style="margin-top: 15px"
                   >
                     <div class="discount-text">
-                      Mô tả
+                      Mô tả <small class="p-error">(*)</small>&nbsp;
                       <small
                         *ngIf="(_discountsForm['description'].errors?.['required'] || _discountsForm['description'].errors?.['whitespace']) && isSubmit"
                         class="p-error"
@@ -259,7 +259,7 @@
                     style="margin-top: 15px"
                   >
                     <div class="discount-text">
-                      Dịch vụ
+                      Dịch vụ <small class="p-error">(*)</small>&nbsp;
                       <small
                         *ngIf="_discountsForm['serviceType'].errors?.['required'] && isSubmit"
                         class="p-error"
@@ -284,7 +284,12 @@
                     style="margin-top: 15px"
                   >
                     <div class="discount-text">
-                      Thời gian
+                      Thời gian <small class="p-error">(*)</small>&nbsp;
+                      <small
+                        *ngIf="_discountsForm['time'].errors?.['required'] && isSubmit "
+                        class="p-error"
+                        >Không được bỏ trống</small
+                      >
                       <small
                         *ngIf="_discountsForm['time'].errors?.['dateRange']"
                         class="p-error"
@@ -314,7 +319,7 @@
                     style="margin-top: 15px"
                   >
                     <div class="discount-text">
-                      Giá trị
+                      Giá trị <small class="p-error">(*)</small>&nbsp;
                       <small
                         *ngIf="_discountsForm['value'].errors?.['required'] && isSubmit "
                         class="p-error"
