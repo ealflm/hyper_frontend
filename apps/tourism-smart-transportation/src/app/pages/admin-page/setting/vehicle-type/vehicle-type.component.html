@@ -165,7 +165,7 @@
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
         <div class="vehicle-type-text">
-          Nhãn hiệu
+          Nhãn hiệu <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_vehicleTypeForm['label'].invalid && isSubmit"
@@ -184,7 +184,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-type-text">
-          Nhiên liệu
+          Nhiên liệu <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_vehicleTypeForm['fuel'].errors?.['required'] && isSubmit"
@@ -203,7 +203,7 @@
       </div>
       <div class="col-12">
         <div class="vehicle-type-text">
-          Số ghế
+          Số ghế <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="_vehicleTypeForm['seats'].errors?.['required'] && isSubmit"

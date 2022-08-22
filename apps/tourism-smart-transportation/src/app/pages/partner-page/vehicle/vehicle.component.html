@@ -206,7 +206,7 @@
               <div class="grid">
                 <div class="col-12 vehicle-input-long">
                   <div class="vehicle-text">
-                    Tên
+                    Tên <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="(_vehiclesForm['name'].errors?.['required'] || _vehiclesForm['name'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
@@ -229,6 +229,7 @@
                 <div class="col-12 vehicle-input-long">
                   <div class="vehicle-text">
                     Số hiệu | Ví dụ: ( 51B2-12345 )
+                    <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="(_vehiclesForm['licensePlates'].errors?.['required'] || _vehiclesForm['licensePlates'].errors?.['whitespace']) && isSubmit"
                       class="p-error"
@@ -256,7 +257,7 @@
                 </div>
                 <div class="col-12 vehicle-input-long">
                   <div class="vehicle-text">
-                    Màu
+                    Màu <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="(_vehiclesForm['color'].errors?.['required'] || _vehiclesForm['color'].errors?.['whitespace']) && isSubmit "
                       class="p-error"
@@ -300,7 +301,7 @@
                   style="margin-top: -10px"
                 >
                   <div class="vehicle-text">
-                    Loại dịch vụ
+                    Loại dịch vụ <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_vehiclesForm['serviceTypeId'].errors?.['required'] && isSubmit"
                       class="p-error"
@@ -334,7 +335,7 @@
                 >
                   <div class="col-12 vehicle-input-long">
                     <div class="vehicle-text">
-                      Trạm thuê xe
+                      Trạm thuê xe <small class="p-error">(*)</small>&nbsp;
                       <small
                         *ngIf="_vehiclesForm['rentStationId'].errors?.['required'] && isSubmit "
                         class="p-error"
@@ -363,7 +364,7 @@
 
                   <div class="col-12 vehicle-input-long">
                     <div class="vehicle-text">
-                      Năm sản xuất xe
+                      Năm sản xuất xe <small class="p-error">(*)</small>&nbsp;
                       <small
                         *ngIf="_vehiclesForm['publishYearId'].errors?.['required'] && isSubmit "
                         class="p-error"
@@ -393,7 +394,7 @@
                   </div>
                   <div class="col-12 vehicle-input-long">
                     <div class="vehicle-text">
-                      Phân khúc xe
+                      Phân khúc xe <small class="p-error">(*)</small>&nbsp;
                       <small
                         *ngIf="_vehiclesForm['vehicleClassId'].errors?.['required'] && isSubmit "
                         class="p-error"
@@ -424,7 +425,7 @@
                 </div>
                 <div class="col-12 vehicle-input-long">
                   <div class="vehicle-text">
-                    Loại xe
+                    Loại xe <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_vehiclesForm['vehicleTypeId'].errors?.['required'] && isSubmit"
                       class="p-error"

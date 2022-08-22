@@ -158,10 +158,7 @@
   [(visible)]="displayDialog"
   [style]="{ width: '464px', height: '470px' }"
   [contentStyle]="{
-    'overflow-y': 'auto',
-    'overflow-x': 'hidden',
-    'max-height': '50vh',
-    'min-height': '30vh'
+    overflow: 'visible'
   }"
   [blockScroll]="true"
   [resizable]="true"
@@ -175,7 +172,9 @@
   <form [formGroup]="busPriceForm" class="bus-price-form">
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
-        <div class="bus-price-text">Chế độ</div>
+        <div class="bus-price-text">
+          Chế độ <small class="p-error">(*)</small>&nbsp;
+        </div>
         <p-dropdown
           class="dropdown"
           [style]="{ width: '420px', height: '28px' }"
@@ -188,7 +187,7 @@
       </div>
       <div class="col-12">
         <div class="bus-price-text">
-          Tuyến đường
+          Tuyến đường <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="(_busPriceForms['minRouteDistance'].errors?.['required'] || _busPriceForms['maxRouteDistance'].errors?.['required']) && isSubmit"
@@ -349,7 +348,7 @@
 <p-dialog
   [(visible)]="displaySetPriceDefault"
   header="Tạo giá khoảng cách tuyến"
-  [style]="{ width: '464px', height: '180px' }"
+  [style]="{ width: '480px', height: '180px' }"
   [contentStyle]="{
     'overflow-y': 'hidden',
     'overflow-x': 'hidden',
@@ -368,7 +367,7 @@
     <div class="mt-4 grid p-fluid">
       <div class="col-12">
         <div class="bus-price-text">
-          Tuyến đường
+          Tuyến đường <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="(_priceDefaultForm['minDistance'].errors?.['required'] || _priceDefaultForm['maxDistance'].errors?.['required']) && isSubmit"
@@ -379,7 +378,7 @@
             class="p-error"
             *ngIf="_priceDefaultForm['maxDistance'].errors?.['mustMoreThan']"
           >
-            giá trị khoảng cách không được nhỏ hơn khoảng cách ban đầu</small
+            Giá trị khoảng cách không được nhỏ hơn khoảng cách ban đầu</small
           >
           <small
             class="p-error"
@@ -420,7 +419,7 @@
 
       <div class="col-12">
         <div class="bus-price-text">
-          Giá cơ bản
+          Giá cơ bản <small class="p-error">(*)</small>&nbsp;
           <small
             class="p-error"
             *ngIf="(_priceDefaultForm['price'].errors?.['required'])&&isSubmit"

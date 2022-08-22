@@ -234,6 +234,7 @@ export class VehicleRentingPriceComponent implements OnInit, AfterViewInit {
       key: 'confirmCloseDialog',
       accept: () => {
         this.displayDialog = true;
+        this.isSubmit = false;
       },
     });
   }

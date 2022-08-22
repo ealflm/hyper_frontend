@@ -41,7 +41,7 @@
             <div class="grid">
               <div class="col-6 customer-input-short">
                 <div class="customer-text">
-                  Tên
+                  Tên <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="
                   _customersEditForm['firstName'].errors?.['required']
@@ -60,7 +60,7 @@
               </div>
               <div class="col-6 customer-input-short">
                 <div class="customer-text">
-                  Họ
+                  Họ <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="
                   _customersEditForm['lastName'].errors?.['required']

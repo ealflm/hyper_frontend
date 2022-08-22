@@ -171,6 +171,7 @@
       @include box-shadown-grey-secondary;
       background-color: $white-primary-color;
       .footer-table {
+        margin-top: 10px;
         display: flex;
         justify-content: center;
         .btn-create {
@@ -269,7 +270,7 @@
 }
 ::ng-deep {
   .body-table {
-    padding: 20px 30px 0 30px;
+    padding: 20px 30px 30px;
     .p-datatable-wrapper {
       border-radius: 10px;
       // padding: 0 20px 0 20px;
@@ -296,7 +297,7 @@
   span {
     position: absolute;
     right: 3%;
-    top: 10%;
+    top: 51%;
     @include font-Roboto-Regular-Body2;
     color: $color-grey-text-placeholder;
   }

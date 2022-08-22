@@ -34,13 +34,13 @@
                     style="margin-top: 0px"
                   >
                     <div class="station-text">
-                      Kinh độ
-                      <!-- <small
-                  *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
-                  class="p-error"
-                >
-                  Không được bỏ trống</small
-                > -->
+                      Kinh độ <small class="p-error">(*)</small>&nbsp;
+                      <small
+                        *ngIf="_locationForm['longitude'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                      >
+                        Không được bỏ trống</small
+                      >
                     </div>
 
                     <input
@@ -56,13 +56,13 @@
                     style="margin-top: 0px; margin-left: 12px"
                   >
                     <div class="station-text">
-                      Vĩ độ
-                      <!-- <small
-                  *ngIf="_stationsForm['title'].errors?.['required'] && isSubmit"
-                  class="p-error"
-                >
-                  Không được bỏ trống</small
-                > -->
+                      Vĩ độ <small class="p-error">(*)</small>&nbsp;
+                      <small
+                        *ngIf="_locationForm['latitude'].errors?.['required'] && isSubmit"
+                        class="p-error"
+                      >
+                        Không được bỏ trống</small
+                      >
                     </div>
 
                     <input
@@ -88,7 +88,7 @@
               <div class="col-8">
                 <div class="col-12 station-input-long">
                   <div class="station-text">
-                    Tên Trạm
+                    Tên Trạm <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_locationForm['title'].invalid && isSubmit"
                       class="p-error"
@@ -106,7 +106,7 @@
                 </div>
                 <div class="col-12 station-input-long">
                   <div class="station-text">
-                    Mô tả
+                    Mô tả <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_locationForm['description'].invalid && isSubmit"
                       class="p-error"
@@ -125,7 +125,7 @@
                 </div>
                 <div class="col-12 station-input-long" style="margin-top: 20px">
                   <div class="station-text">
-                    Địa chỉ
+                    Địa chỉ <small class="p-error">(*)</small>&nbsp;
                     <small
                       *ngIf="_locationForm['address'].invalid && isSubmit"
                       class="p-error"

@@ -48,7 +48,7 @@
             <div class="grid p-fluid">
               <div class="col-12 route-input-long">
                 <div class="route-text">
-                  Tên tuyến
+                  Tên tuyến <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="
                   (_routesForm['routeName'].errors?.['required'] || _routesForm['routeName'].errors?.['whitespace']) && isSubmit
@@ -67,7 +67,7 @@
               </div>
               <div class="col-12 route-input-long">
                 <div class="route-text">
-                  Mô tả
+                  Mô tả <small class="p-error">(*)</small>&nbsp;
                   <small
                     *ngIf="
                   _routesForm['routeName'].errors?.['required'] && isSubmit
