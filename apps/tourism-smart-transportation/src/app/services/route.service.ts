@@ -14,6 +14,17 @@ export class RouteService {
   createRouteForPartner(route: Route): Observable<any> {
     return this.http.post<Route>(`${this.partnerAPIRoute}`, route);
   }
+  creatRouteAlreadyForPartner(
+    routeId: string,
+    partnerId: string
+  ): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('partnerId', partnerId);
+    queryParams = queryParams.append('routeId', routeId);
+    return this.http.get<Route>(`${this.partnerAPIRoute}`, {
+      params: queryParams,
+    });
+  }
   getRouteForPartner(partnerID: string): Observable<RoutesResponse> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append('PartnerId', partnerID);

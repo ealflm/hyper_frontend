@@ -1,4 +1,5 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { RouteResponse } from './../../../../models/RouteResponse';
+import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { RouteService } from './../../../../services/route.service';
 import { LocalStorageService } from './../../../../auth/localstorage.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -23,12 +24,17 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
   isSubmit = false;
   editMode = false;
   stations: Station[] = [];
+  routes: Route[] = [];
+  currentBusStationSelectedRoute: any = [];
   currentBusStationMarkers: any = [];
   blockLayout = false;
   private partnerId = '';
   private childrenStationList: any[] = [];
   loadingProgress = false;
   distance: any;
+  createFormStatus = false;
+  busStationsOnMap: Station[] = [];
+  routeId = '';
   constructor(
     private fb: FormBuilder,
     private mapBoxService: MapBoxService,
@@ -48,6 +54,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
     this.mapBoxService.initializeMiniMap();
     this._getListStationsMarker();
     this.initRouteForm();
+    this._getListRoute();
   }
   ngAfterContentChecked(): void {
     this.mapBoxService.miniMap.resize();
@@ -60,11 +67,15 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
       stationList: [null, Validators.required],
     });
   }
+  private _getListRoute() {
+    this.routeService.getRouteForPartner(this.partnerId).subscribe((res) => {
+      this.routes = res.body.items;
+    });
+  }
   private _getListStationsMarker() {
-    let busStationsOnMap: Station[] = [];
     this.mapService.getListStationForPartner().subscribe((stationRes) => {
-      busStationsOnMap = stationRes.body.items;
-      this.setBusStationMarkers(busStationsOnMap);
+      this.busStationsOnMap = stationRes.body.items;
+      this.setBusStationMarkers(this.busStationsOnMap);
     });
   }
   setBusStationMarkers(busStations: Station[]) {
@@ -123,6 +134,95 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
         this.currentBusStationMarkers[i].remove();
       }
     }
+  }
+  public setBusStationSelectedRoute(
+    busStations: Station[],
+    busOnRoute?: Station[]
+  ) {
+    busStations.map((marker) => {
+      const elStationMarker = document.createElement('div');
+      elStationMarker.id = marker.id;
+      let width = 25;
+      let height = 25;
+      elStationMarker.className = 'marker';
+      elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
+      elStationMarker.style.width = `${width}px`;
+      elStationMarker.style.height = `${height}px`;
+      elStationMarker.style.backgroundSize = '100%';
+      const markerDiv = new mapboxgl.Marker(elStationMarker)
+        .setLngLat([marker.longitude, marker.latitude] as [number, number])
+        .addTo(this.mapBoxService.miniMap);
+      const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: 25,
+      });
+      if (busOnRoute) {
+        busOnRoute.map((value) => {
+          if (value.id === marker.id) {
+            width = 30;
+            height = 30;
+            elStationMarker.style.backgroundImage = `url('../../../assets/icons/bus-station-selected.svg')`;
+            popup
+              .setHTML(`<p>${marker.title}</p>`)
+              .addTo(this.mapBoxService.miniMap);
+            markerDiv.setPopup(popup);
+            popup.remove();
+            markerDiv.getElement().addEventListener('mouseover', () => {
+              markerDiv.togglePopup();
+            });
+            markerDiv.getElement().addEventListener('mouseleave', () => {
+              popup.remove();
+            });
+          }
+        });
+      }
+
+      this.currentBusStationSelectedRoute.push(markerDiv);
+    });
+  }
+  public removeBusStationSelectedRoute() {
+    if (this.currentBusStationSelectedRoute !== null) {
+      for (
+        let i = this.currentBusStationSelectedRoute.length - 1;
+        i >= 0;
+        i--
+      ) {
+        this.currentBusStationSelectedRoute[i].remove();
+      }
+    }
+  }
+  getDetailRoute(event: any) {
+    this.routeId = event.id;
+    this.removeBusStationSelectedRoute();
+    this.removeBusStationMarker();
+    this.mapService
+      .getRouteById(event.id)
+      .subscribe((routeRes: RouteResponse) => {
+        this.removeBusStationMarker();
+        this.setBusStationSelectedRoute(
+          this.busStationsOnMap,
+          routeRes.body.stationList
+        );
+        this.distance = routeRes.body.distance;
+        let stationList: any = [];
+        routeRes.body.stationList?.map((stations: Station, index) => {
+          if (index == 1) {
+            this.mapBoxService.flyToMarkerMiniMap(
+              stations.longitude,
+              stations.latitude,
+              12
+            );
+          }
+
+          const lnglat = stations.longitude + ',' + stations.latitude;
+          stationList = [...stationList, lnglat];
+        });
+        const coordinates = stationList.join(';');
+        this.mapService.getRouteDirection(coordinates).subscribe((res) => {
+          this.mapBoxService.getRouteMiniMap(res.routes[0]);
+        });
+      });
   }
   removeSationFormList(stationId: string) {
     this.stations = this.stations.filter((value) => value.id !== stationId);
@@ -250,5 +350,57 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
         }
       );
     }
+  }
+  onChangeCreateFormStatus() {
+    this.blockLayout = false;
+    if (this.createFormStatus) {
+      this.distance = '';
+      this.removeBusStationSelectedRoute();
+      this.mapBoxService.removeRouteMiniMap();
+      this.setBusStationMarkers(this.busStationsOnMap);
+    } else {
+      this.routeId = '';
+      this.distance = '';
+      this.mapBoxService.removeRouteMiniMap();
+      this.removeBusStationMarker();
+      this.stations = [];
+      this.setBusStationMarkers(this.busStationsOnMap);
+    }
+  }
+  onAddRoute() {
+    if (this.routeId == '' || this.routeId == null) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Cảnh báo',
+        detail: 'Hãy chọn tuyến trước khi xác nhận',
+      });
+      return;
+    }
+    this.loadingProgress = true;
+    this.routeService
+      .creatRouteAlreadyForPartner(this.routeId, this.partnerId)
+      .subscribe(
+        (res) => {
+          if (res.statusCode === 200) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Thành công',
+              detail: 'Thêm tuyến thành công',
+            });
+            setTimeout(() => {
+              this.loadingProgress = false;
+              this.location.back();
+            }, 500);
+          }
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Thất bại',
+            detail: 'Có lỗi xẩy ra',
+          });
+          this.loadingProgress = false;
+        }
+      );
   }
 }

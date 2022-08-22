@@ -121,7 +121,8 @@ export class FormStationComponent
               );
               this.mapboxService.flyToMarkerMiniMap(
                 stationRes.body.longitude,
-                stationRes.body.latitude
+                stationRes.body.latitude,
+                17
               );
             }
           });

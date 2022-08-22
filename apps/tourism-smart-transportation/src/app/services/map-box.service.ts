@@ -236,9 +236,9 @@ export class MapBoxService {
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
   }
-  flyToMarkerMiniMap(longitude: number, latitude: number) {
+  flyToMarkerMiniMap(longitude: number, latitude: number, zoom: number) {
     this.miniMap.flyTo({
-      zoom: 17,
+      zoom: zoom,
       center: [longitude, latitude],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
