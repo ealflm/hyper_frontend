@@ -411,6 +411,7 @@ export class DiscountComponent implements OnInit, AfterViewInit {
             summary: 'Thành công',
             detail: 'Gửi khuyến mãi đến khách hàng thành công',
           });
+          this._getAllDiscount();
           this.sendDiscountDialog = false;
           this.loading = false;
         }
