@@ -100,6 +100,7 @@
           <td style="text-align: center">
             <span
               class="material-icons-outlined iconEdit"
+              [ngClass]="discount.status === 1 ? 'enable' : 'disable'"
               (click)="showDialog(true, discount.id)"
             >
               edit
