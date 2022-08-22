@@ -167,7 +167,10 @@
             </p-columnFilter>
           </th>
           <th>Biển số xe</th>
-          <th>Ngày đi</th>
+          <th pSortableColumn="createdDate">
+            Ngày đi
+            <p-sortIcon field="createdDate"></p-sortIcon>
+          </th>
           <th style="width: 15%">
             <p-columnFilter
               field="status"

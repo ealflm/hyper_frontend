@@ -16,7 +16,7 @@ export class WalletComponent implements OnInit {
       order.transactions.map((transaction: any) => {
         if (
           this.Wallet.wallet.walletId === transaction.walletId &&
-          order.orderId === transaction.orderId
+          order?.orderId === transaction?.orderId
         ) {
           return (this.transaction = [
             ...this.transaction,
