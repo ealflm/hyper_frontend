@@ -12,7 +12,7 @@ export class WalletComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.Wallet.orders.map((order: any) => {
+    this.Wallet?.orders.map((order: any) => {
       order.transactions.map((transaction: any) => {
         if (
           this.Wallet.wallet.walletId === transaction.walletId &&
