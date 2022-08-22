@@ -10,7 +10,7 @@
         {{ editMode ? 'Tạo mới tuyến' : 'Chỉnh sửa tuyến' }}
       </div>
     </div>
-    <div class="right-btn-form">
+    <div class="right-btn-form" *ngIf="!createFormStatus">
       <button
         [style]="{ width: '57', height: '32px' }"
         class="p-button-outlined p-button-rounded"
@@ -35,6 +35,21 @@
   <div class="form-edit">
     <div class="form-edit-container">
       <div class="grid p-fluid form-content">
+        <div class="col-12" style="text-align: end">
+          Danh sách tuyến sẵn có:
+          <span>
+            <label class="switch">
+              <input
+                type="checkbox"
+                [(ngModel)]="createFormStatus"
+                (click)="onChangeCreateFormStatus()"
+              />
+              <span class="slider"></span>
+              <!-- <p class="off">Tắt</p> -->
+              <!-- <p class="on">Bật</p> -->
+            </label>
+          </span>
+        </div>
         <div class="col-7">
           <div
             class="map-box-container"
@@ -43,7 +58,7 @@
             <div #mapChild id="mini-map" class="map-container"></div>
           </div>
         </div>
-        <div class="col-5">
+        <div class="col-5" *ngIf="!createFormStatus">
           <form [formGroup]="routeForm">
             <div class="grid p-fluid">
               <div class="col-12 route-input-long">
@@ -149,10 +164,51 @@
             ></button>
           </div>
         </div>
+        <div class="col-5" *ngIf="createFormStatus">
+          <div class="grid p-fluid">
+            <div class="col-12">
+              <div class="list-route">
+                <div class="route-title">Danh sách tuyến</div>
+                <div class="mt-2"></div>
+                <p-scrollPanel
+                  [style]="{ width: '100%', height: '550px' }"
+                  styleClass="custom"
+                >
+                  <div
+                    *ngFor="let route of routes"
+                    class="body-card"
+                    (click)="getDetailRoute(route)"
+                    [ngClass]="routeId === route.id ? 'body-card-active' : ''"
+                  >
+                    <div class="card-header">
+                      <div>{{ route?.name }}</div>
+                    </div>
+                    <div class="card-body">
+                      <div>{{ route.distance! / 1000 }} Km</div>
+                      <div>{{ route?.totalStation }} Trạm</div>
+                    </div>
+                  </div>
+                </p-scrollPanel>
+              </div>
+            </div>
+          </div>
+          <div class="footer-btn">
+            <button
+              [style]="{ width: 'auto', height: '32px' }"
+              class="p-button-rounded button-rounded"
+              pButton
+              pRipple
+              type="button"
+              label="Thêm tuyến"
+              (click)="onAddRoute()"
+            ></button>
+          </div>
+        </div>
+
         <p
           style="text-align: center; width: 70%; margin-top: -20px"
           class="p-error"
-          *ngIf="blockLayout"
+          *ngIf="distance"
         >
           Độ dài của tuyến là {{ distance / 1000 }} km
         </p>

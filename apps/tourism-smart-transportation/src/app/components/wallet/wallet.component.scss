@@ -19,11 +19,21 @@ $bg-color-wallet: #fef5e4;
   margin-left: 10px;
   @include font-Roboto-Regular-Body1;
 }
+
 .wallet-transaction-title {
   font-weight: 500;
   font-size: 24px;
   letter-spacing: 2px;
-  margin-left: 25px;
+  margin-left: 15px;
+}
+.wallet-transaction-right {
+  margin-top: 4px;
+  .btn-transaction {
+    margin-left: 4px;
+  }
+  .p-button-outlined {
+    @include button-outlined-primary(null, null, null, $primary-color);
+  }
 }
 .transaction-history-card {
   display: flex;
