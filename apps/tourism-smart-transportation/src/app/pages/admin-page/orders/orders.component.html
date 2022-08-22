@@ -93,7 +93,7 @@
           </td>
           <td>{{ order.createdDate | date: 'dd/MM/yyyy ' }}</td>
           <td>
-            <div [class]="orderStatus[order?.status].class">
+            <div [class]="orderStatus[order?.status]?.class">
               {{ orderStatus[order?.status]?.lable }}
             </div>
           </td>

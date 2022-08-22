@@ -164,6 +164,10 @@ export const STATUS_TRANSACTION: any = {
     lable: 'Chưa thanh toán',
     class: 'status-unlinked',
   },
+  4: {
+    lable: 'Không còn sử dụng',
+    class: 'status-unlinked',
+  },
 };
 export const STATUS_BUS_PRICE: any = {
   0: {
