@@ -51,7 +51,10 @@ export class OrdersComponent implements OnInit {
   }
   getListOrders() {
     this.orderService.getListOrders().subscribe((orderRes) => {
-      this.orders = orderRes.body.items;
+      this.orders = orderRes.body.items.sort(
+        (a, b) =>
+          new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+      );
     });
   }
   getListCustomerTrip() {

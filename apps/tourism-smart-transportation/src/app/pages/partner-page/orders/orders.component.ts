@@ -63,7 +63,11 @@ export class OrdersComponent implements OnInit {
     this.orderService
       .getListOrdersForPartner(this.partnerId)
       .subscribe((orderRes) => {
-        this.orders = orderRes.body.items;
+        this.orders = orderRes.body.items.sort(
+          (a, b) =>
+            new Date(b.createdDate).getTime() -
+            new Date(a.createdDate).getTime()
+        );
       });
   }
   getListCustomerTrip() {
