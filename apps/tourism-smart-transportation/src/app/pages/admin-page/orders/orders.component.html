@@ -93,8 +93,8 @@
           </td>
           <td>{{ order.createdDate | date: 'dd/MM/yyyy ' }}</td>
           <td>
-            <div [class]="orderStatus[order.status].class">
-              {{ orderStatus[order.status].lable }}
+            <div [class]="orderStatus[order?.status]?.class">
+              {{ orderStatus[order?.status]?.lable }}
             </div>
           </td>
           <td style="text-align: center" class="view-transaction">
@@ -185,8 +185,8 @@
           </td>
           <td>{{ customerTrip?.createdDate | date: 'dd/MM/yyyy' }}</td>
           <td>
-            <div [class]="customerTripStatus[customerTrip.status].class">
-              {{ customerTripStatus[customerTrip.status].lable }}
+            <div [class]="customerTripStatus[customerTrip?.status]?.class">
+              {{ customerTripStatus[customerTrip?.status]?.lable }}
             </div>
           </td>
         </tr>
