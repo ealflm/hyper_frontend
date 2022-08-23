@@ -77,6 +77,14 @@
           <th pSortableColumn="createdDate">
             Ngày thực hiện giao dịch
             <p-sortIcon field="createdDate"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="createdDate"
+              display="menu"
+              class="ml-auto"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
           </th>
           <th>Trạng thái</th>
           <th style="text-align: center">Hành động</th>
@@ -91,7 +99,7 @@
           <td>
             {{ order?.totalPrice | currency: order?.totalPrice:'':'.0-0' }}VND
           </td>
-          <td>{{ order.createdDate | date: 'dd/MM/yyyy ' }}</td>
+          <td>{{ order.createdDate | date: 'dd/MM/yyyy, h:mm:ss a' }}</td>
           <td>
             <div [class]="orderStatus[order?.status]?.class">
               {{ orderStatus[order?.status]?.lable }}
@@ -170,6 +178,14 @@
           <th pSortableColumn="createdDate">
             Ngày đi
             <p-sortIcon field="createdDate"></p-sortIcon>
+            <p-columnFilter
+              type="date"
+              field="createdDate"
+              display="menu"
+              class="ml-auto"
+              [showOperator]="false"
+              [showAddButton]="false"
+            ></p-columnFilter>
           </th>
           <th style="width: 15%">Trạng thái</th>
         </tr>
@@ -186,7 +202,9 @@
           <td>
             {{ customerTrip?.licensePlates }}
           </td>
-          <td>{{ customerTrip?.createdDate | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            {{ customerTrip?.createdDate | date: 'dd/MM/yyyy, h:mm:ss a' }}
+          </td>
           <td>
             <div [class]="customerTripStatus[customerTrip?.status]?.class">
               {{ customerTripStatus[customerTrip?.status]?.lable }}

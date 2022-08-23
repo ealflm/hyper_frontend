@@ -68,6 +68,9 @@ export class OrdersComponent implements OnInit {
             new Date(b.createdDate).getTime() -
             new Date(a.createdDate).getTime()
         );
+        this.orders.forEach(
+          (order) => (order.createdDate = new Date(order.createdDate))
+        );
       });
   }
   getListCustomerTrip() {
@@ -75,6 +78,10 @@ export class OrdersComponent implements OnInit {
       .getListCustomerTripForPartner(this.partnerId)
       .subscribe((customerTripRes) => {
         this.customerTrips = customerTripRes.body;
+        this.customerTrips.forEach(
+          (customerTrip) =>
+            (customerTrip.createdDate = new Date(customerTrip.createdDate))
+        );
       });
   }
   viewInvoiceDetail(id: string, order: Order) {

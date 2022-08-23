@@ -208,7 +208,9 @@
   .button-rounded {
     @include button-rounded-primary(57, 32, null, $primary-color);
   }
+  @include custom-filter-button;
 }
+
 .disable {
   color: rgba(0, 0, 0, 0.3);
   cursor: no-drop;

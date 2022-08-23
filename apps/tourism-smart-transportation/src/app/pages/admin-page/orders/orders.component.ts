@@ -13,6 +13,7 @@ import { Order } from '../../../models/OrderResponse';
 import { PurchaseHistoryService } from '../../../services/purchase-history.service';
 import { CustomerTrip } from '../../../models/CustomerTripResponse';
 import { ServiceTypeFilter } from '../../../constant/service-type';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'tourism-smart-transportation-orders',
@@ -34,7 +35,10 @@ export class OrdersComponent implements OnInit {
   invoiceDetails: any = [];
   totalPrice = 0;
   invoiceTotal?: Order;
-  constructor(private orderService: PurchaseHistoryService) {}
+  constructor(
+    private orderService: PurchaseHistoryService,
+    private configPrimeng: PrimeNGConfig
+  ) {}
 
   ngOnInit(): void {
     this.getListOrders();
@@ -55,11 +59,18 @@ export class OrdersComponent implements OnInit {
         (a, b) =>
           new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
       );
+      this.orders.forEach(
+        (order) => (order.createdDate = new Date(order.createdDate))
+      );
     });
   }
   getListCustomerTrip() {
     this.orderService.getListCustomerTrip().subscribe((customerTripRes) => {
       this.customerTrips = customerTripRes.body;
+      this.customerTrips.forEach(
+        (customerTrip) =>
+          (customerTrip.createdDate = new Date(customerTrip.createdDate))
+      );
     });
   }
   viewInvoiceDetail(order: Order) {

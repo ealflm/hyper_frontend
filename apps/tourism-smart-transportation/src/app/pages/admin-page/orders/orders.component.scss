@@ -210,7 +210,9 @@
 
   @include status-expried;
 }
-
+::ng-deep {
+  @include custom-filter-button;
+}
 // invoice
 .invoice {
   padding: 0 25px;
