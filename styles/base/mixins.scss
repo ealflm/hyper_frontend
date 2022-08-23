@@ -294,3 +294,17 @@
     }
   }
 }
+@mixin custom-filter-button {
+  .p-column-filter-overlay {
+    .p-column-filter-buttonbar {
+      .p-button {
+        border-radius: 20px !important;
+        height: 28px !important;
+        @include button-rounded-primary(null, null, null, $primary-color);
+      }
+      .p-button-outlined {
+        @include button-outlined-primary(null, null, null, null);
+      }
+    }
+  }
+}

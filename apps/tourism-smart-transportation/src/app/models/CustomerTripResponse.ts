@@ -5,8 +5,8 @@ export interface CustomerTrip {
   tripId?: string;
   vehicleId?: string;
   distance?: number;
-  createdDate?: Date;
-  modifiedDate?: Date;
+  createdDate: Date;
+  modifiedDate: Date;
   rentDeadline?: null;
   coordinates?: string;
   serviceTypeName?: string;
