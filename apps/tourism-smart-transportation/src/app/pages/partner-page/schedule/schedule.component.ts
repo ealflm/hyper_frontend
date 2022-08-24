@@ -216,10 +216,12 @@ export class ScheduleComponent implements OnInit {
   // }
   private _getVehicleDropdown() {
     this.vehicleService
-      .getListVehicleByPartnerIdForPartner(this.partnerId, null, 1)
+      .getListVehicleByPartnerIdForPartner(this.partnerId, null, null)
       .subscribe((vehicle) => {
         this.vehicles = vehicle.body.filter(
-          (value) => value.serviceTypeId === ServiceTypeEnum.BusService
+          (value) =>
+            value.serviceTypeId === ServiceTypeEnum.BusService &&
+            value.status != 0
         );
       });
   }
