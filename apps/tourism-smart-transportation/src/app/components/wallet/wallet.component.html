@@ -58,7 +58,7 @@
             <b> {{ trs.serviceTypeName }}</b>
           </div>
           <div>
-            {{ trs.createdDate | date: 'short' }}
+            {{ trs.createdDate | date: 'dd/MM/yyyy, h:mm a' }}
           </div>
         </div>
         <div class="wallet-money" *ngIf="trs.amount > 0">

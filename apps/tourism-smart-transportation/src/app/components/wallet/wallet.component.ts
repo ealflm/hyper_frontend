@@ -37,6 +37,10 @@ export class WalletComponent implements OnInit {
           return;
         });
       });
+      this.transaction = this.transaction.sort(
+        (a: any, b: any) =>
+          new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+      );
       this.currentTransaction = this.transaction;
     }
   }
