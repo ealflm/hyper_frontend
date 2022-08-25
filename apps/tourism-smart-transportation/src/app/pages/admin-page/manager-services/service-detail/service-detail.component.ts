@@ -23,6 +23,7 @@ export class ServiceDetailComponent implements OnInit {
   isAdded?: boolean = false;
   isSubmit? = false;
   serviceTypes: ServiceType[] = [];
+  ServiceTypeEnum = ServiceTypeEnum;
   currentServiceTypes: ServiceType[] = [];
 
   deleteFile?: string | null;
