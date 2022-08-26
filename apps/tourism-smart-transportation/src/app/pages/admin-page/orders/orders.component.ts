@@ -14,6 +14,7 @@ import { PurchaseHistoryService } from '../../../services/purchase-history.servi
 import { CustomerTrip } from '../../../models/CustomerTripResponse';
 import { ServiceTypeFilter } from '../../../constant/service-type';
 import { PrimeNGConfig } from 'primeng/api';
+import { add7Hours } from '../../../providers/ConvertDate';
 
 @Component({
   selector: 'tourism-smart-transportation-orders',
@@ -60,7 +61,7 @@ export class OrdersComponent implements OnInit {
           new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
       );
       this.orders.forEach(
-        (order) => (order.createdDate = new Date(order.createdDate))
+        (order) => (order.createdDate = add7Hours(order.createdDate))
       );
     });
   }
@@ -69,7 +70,7 @@ export class OrdersComponent implements OnInit {
       this.customerTrips = customerTripRes.body;
       this.customerTrips.forEach(
         (customerTrip) =>
-          (customerTrip.createdDate = new Date(customerTrip.createdDate))
+          (customerTrip.createdDate = add7Hours(customerTrip.createdDate))
       );
     });
   }
