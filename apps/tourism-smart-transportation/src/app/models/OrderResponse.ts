@@ -1,6 +1,6 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class Order {
+export class Order {
   id!: string;
   customerId?: string;
   serviceTypeId?: string;

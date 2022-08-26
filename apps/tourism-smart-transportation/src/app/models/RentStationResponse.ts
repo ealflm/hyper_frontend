@@ -10,12 +10,12 @@ export class RentStation {
   latitude!: number;
   status?: number;
 }
-export abstract class RentStationsResponse {
+export class RentStationsResponse {
   statusCode?: number;
   message?: string;
   body!: UtilPaging<RentStation[]>;
 }
-export abstract class RentStationResponse extends RentStation {
+export class RentStationResponse extends RentStation {
   statusCode?: number;
   message?: string;
   body!: RentStation;

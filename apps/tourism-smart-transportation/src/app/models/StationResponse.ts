@@ -9,12 +9,12 @@ export class Station {
   latitude!: number;
   status?: number;
 }
-export abstract class StationsResponse {
+export class StationsResponse {
   statusCode?: number;
   message?: string;
   body!: UtilPaging<Station[]>;
 }
-export abstract class StationResponse {
+export class StationResponse {
   statusCode?: number;
   message?: string;
   body!: Station;

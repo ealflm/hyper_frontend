@@ -1,6 +1,6 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class PackageHistory {
+export class PackageHistory {
   id?: string;
   customerId?: string;
   tierId?: string;
@@ -11,12 +11,12 @@ export abstract class PackageHistory {
   status?: number;
 }
 
-export abstract class PackageHistorysResponse {
+export class PackageHistorysResponse {
   statusCode?: number;
   message?: string;
   body!: UtilPaging<PackageHistory[]>;
 }
-export abstract class PackageHistoryResponse extends PackageHistory {
+export class PackageHistoryResponse extends PackageHistory {
   statusCode?: number;
   message?: string;
   body!: PackageHistory;
