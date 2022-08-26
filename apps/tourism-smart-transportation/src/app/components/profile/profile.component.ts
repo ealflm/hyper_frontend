@@ -300,20 +300,20 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this._changePassForm['currentPassword'].value
     );
     formData.append('NewPassword', this._changePassForm['password'].value);
-
+    this.loading = true;
     this.partnerService.changePasswordPartner(formData).subscribe(
       (res) => {
-        if (res.statusCode === 201) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Thành công',
-            detail: res.message,
-          });
-          this.changePasswordDialog = false;
-        }
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Thành công',
+          detail: res.message,
+        });
+        this.changePasswordDialog = false;
+        this.loading = false;
       },
       (error) => {
         this.changePasswordDialog = true;
+        this.loading = false;
       }
     );
   }
