@@ -1,4 +1,4 @@
-export abstract class UtilPaging<Type> {
+export class UtilPaging<Type> {
   pageSize?: number;
   totalItems!: number;
   items!: Type;

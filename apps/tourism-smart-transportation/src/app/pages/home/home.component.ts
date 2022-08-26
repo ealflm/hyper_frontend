@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'tourism-smart-transportation-home',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  subscribe!: Subscription;
   constructor() {}
 
   ngOnInit(): void {}

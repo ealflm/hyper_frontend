@@ -1,6 +1,6 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class Transaction {
+export class Transaction {
   orderId?: string;
   paymentId?: string;
   walletId?: string;

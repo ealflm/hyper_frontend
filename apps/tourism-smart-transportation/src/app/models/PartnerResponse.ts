@@ -2,7 +2,7 @@ import { ServiceType } from './ServiceTypeResponse';
 import { Service } from './ServicesResponse';
 import { UtilPaging } from './UtilPaging';
 
-export abstract class Partner {
+export class Partner {
   id?: string;
   username?: string;
   firstName?: string;
@@ -21,12 +21,12 @@ export abstract class Partner {
   companyName?: string;
   serviceTypeList?: ServiceType[];
 }
-export abstract class PartnersResponse {
+export class PartnersResponse {
   statusCode?: number;
   message?: string;
   body!: UtilPaging<Partner[]>;
 }
-export abstract class PartnerResponse extends Partner {
+export class PartnerResponse extends Partner {
   statusCode?: number;
   message?: string;
   body!: Partner;

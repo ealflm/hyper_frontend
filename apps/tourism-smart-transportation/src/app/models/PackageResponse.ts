@@ -1,6 +1,6 @@
 import { UtilPaging } from './UtilPaging';
 
-export abstract class Package {
+export class Package {
   id?: string;
   name?: string;
   peopleQuanitty!: number;
@@ -13,12 +13,12 @@ export abstract class Package {
   status?: number;
 }
 
-export abstract class PackagesResponse {
+export class PackagesResponse {
   statusCode?: number;
   message?: string;
   body!: UtilPaging<Package[]>;
 }
-export abstract class PackageResponse extends Package {
+export class PackageResponse extends Package {
   statusCode?: number;
   message?: string;
   body!: Package;
