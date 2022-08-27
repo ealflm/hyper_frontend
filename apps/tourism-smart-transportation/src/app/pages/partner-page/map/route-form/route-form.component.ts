@@ -103,6 +103,7 @@ export class RouteFormComponent implements OnInit, AfterContentChecked {
           this._routesForm['stationList'].setValue(this.stations);
         } else {
           this.removeSationFormList(marker.id);
+          this._routesForm['stationList'].setValue(this.stations);
           elStationMarker.style.backgroundImage = `url('../../../assets/image/google-maps-bus-icon-14.jpg')`;
           // this.messageService.add({
           //   severity: 'warn',
