@@ -326,7 +326,9 @@ export class ServiceDetailComponent implements OnInit {
     formData.append('PeopleQuantity', this._tiersForm['peopleQuantity'].value);
 
     formData.append('UploadFile', this._tiersForm['uploadFile'].value);
-    formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
+    if (this._tiersForm['deleteFile'].value) {
+      formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
+    }
     this.packageService
       .updatePackagebyId(this._tiersForm['id'].value, formData)
       .subscribe(
@@ -449,8 +451,9 @@ export class ServiceDetailComponent implements OnInit {
 
     formData.append('Duration', this._tiersForm['duration'].value);
     formData.append('PeopleQuantity', this._tiersForm['peopleQuantity'].value);
-
-    formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
+    if (this._tiersForm['deleteFile'].value) {
+      formData.append('DeleteFile', this._tiersForm['deleteFile'].value);
+    }
     this.packageService.createPackage(formData).subscribe(
       (res) => {
         if (res.statusCode === 201) {
