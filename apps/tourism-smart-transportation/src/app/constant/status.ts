@@ -96,6 +96,14 @@ export const STATUS_CUSTOMER_TRIP: any = {
     lable: 'Trả phương tiện',
     class: 'status-expired',
   },
+  9: {
+    lable: 'Mới tạo',
+    class: 'status-active',
+  },
+  10: {
+    lable: 'Hoàn Thành',
+    class: 'status-completed',
+  },
 };
 export const STATUS_PACKAGE: any = {
   0: {
