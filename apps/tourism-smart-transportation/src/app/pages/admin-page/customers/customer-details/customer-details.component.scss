@@ -223,22 +223,27 @@
   }
 }
 .status-unlinked {
-  width: 139px !important;
+  width: 155px !important;
   @include status-unlinked;
 }
 .status-paid {
+  width: 155px !important;
   @include status-paid;
 }
 .status-disabled {
+  width: 155px !important;
   @include status-disabled;
 }
 .status-active {
+  width: 155px !important;
   @include status-active;
 }
 .status-completed {
+  width: 155px !important;
   @include status-completed;
 }
 .status-cancel {
+  width: 155px !important;
   @include status-unpaid;
 }
 ::ng-deep {
