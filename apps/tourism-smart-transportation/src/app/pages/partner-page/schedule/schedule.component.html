@@ -217,7 +217,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-trip let-i="rowIndex">
         <tr>
-          <td>{{ trip?.tripName | limitLength: 20 }}</td>
+          <td>{{ trip?.tripName | limitLength: 30 }}</td>
           <td
             class="tb-name"
             [pTooltip]="trip.driverFirstName + ' ' + trip.driverLastName"
