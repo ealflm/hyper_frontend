@@ -4,16 +4,12 @@
     <div class="col-3">
       <p-card [style]="{ height: '130px' }">
         <div>Tổng doanh thu</div>
-        <div class="number-card">
-          {{
-            statictis?.order > 1000000
-              ? statictis?.order / 1000000
-              : (statictis?.order | currency: statictis?.order:'':'.0-0') + 'đ'
-          }}
+        <div class="number-card" style="font-size: 32px">
+          {{ (statictis?.order | currency: statictis?.order:'':'.0-0') + 'đ' }}
 
-          <small *ngIf="statictis?.order > 1000000" style="font-size: 50%"
+          <!-- <small *ngIf="statictis?.order > 1000000" style="font-size: 50%"
             >Triệu VND</small
-          >
+          > -->
         </div>
       </p-card>
     </div>
