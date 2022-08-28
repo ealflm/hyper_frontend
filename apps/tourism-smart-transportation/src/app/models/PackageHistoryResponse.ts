@@ -6,8 +6,8 @@ export class PackageHistory {
   tierId?: string;
   tierName?: string;
   name?: string;
-  timeStart?: Date;
-  timeEnd?: Date;
+  timeStart!: Date;
+  timeEnd!: Date;
   status?: number;
 }
 

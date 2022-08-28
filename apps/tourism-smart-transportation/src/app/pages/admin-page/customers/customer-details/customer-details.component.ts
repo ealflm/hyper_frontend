@@ -315,6 +315,12 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         .getPackgeUsedByCustomerId(idCus ? idCus : '')
         .subscribe((packageHistory: PackageHistorysResponse) => {
           this.packageHistory = packageHistory.body.items;
+          this.packageHistory.forEach(
+            (packageHis) => (
+              (packageHis.timeEnd = add7Hours(packageHis.timeEnd)),
+              (packageHis.timeStart = add7Hours(packageHis.timeStart))
+            )
+          );
         });
     });
   }
