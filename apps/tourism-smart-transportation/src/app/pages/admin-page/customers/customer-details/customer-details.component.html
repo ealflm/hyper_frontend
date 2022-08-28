@@ -334,7 +334,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-order let-i="rowIndex">
           <tr>
-            <td>{{ order?.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ order?.createdDate | date: 'dd/MM/yyyy, h:mm a' }}</td>
             <td *ngIf="order.serviceTypeName !== null">
               {{ order.serviceTypeName }}
             </td>
