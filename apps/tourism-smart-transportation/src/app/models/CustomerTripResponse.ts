@@ -13,6 +13,7 @@ export interface CustomerTrip {
   vehicleName?: string;
   licensePlates?: string;
   status?: number;
+  customerPhone: number;
 }
 export class CustomerTripResponse {
   statusCode?: number;

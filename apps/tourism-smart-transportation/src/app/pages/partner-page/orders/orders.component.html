@@ -95,6 +95,7 @@
           <td>
             {{ order?.customerName }}
           </td>
+
           <td>{{ order?.serviceTypeName }}</td>
           <td>
             {{ order?.totalPrice | currency: order?.totalPrice:'':'.0-0' }}VND
@@ -139,6 +140,8 @@
           <th pSortableColumn="customerName">
             Tên khách hàng <p-sortIcon field="customerName"></p-sortIcon>
           </th>
+          <th>Số điện thoại</th>
+
           <th pSortableColumn="vehicleName">
             Tên xe <p-sortIcon field="vehicleName"></p-sortIcon>
           </th>
@@ -226,6 +229,9 @@
         <tr>
           <td>
             {{ customerTrip?.customerName }}
+          </td>
+          <td>
+            {{ customerTrip?.customerPhone }}
           </td>
           <td>
             {{ customerTrip?.vehicleName }}
