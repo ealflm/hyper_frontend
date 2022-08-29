@@ -318,8 +318,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
         .getPackgeUsedByCustomerId(idCus ? idCus : '')
         .subscribe((packageHistory: PackageHistorysResponse) => {
           this.packageHistory = packageHistory.body.items.sort(
-            (a, b) =>
-              new Date(b.timeEnd).getTime() - new Date(a.timeEnd).getTime()
+            (a, b) => b.status - a.status
           );
           this.packageHistory.forEach(
             (packageHis) => (
