@@ -269,7 +269,7 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       editFormData.append('Phone', this._customersEditForm['phone'].value);
     }
 
-    editFormData.append('Email', this._customersEditForm['email'].value);
+    // editFormData.append('Email', this._customersEditForm['email'].value);
     editFormData.append(
       'Address1',
       this._customersEditForm['addressUser'].value
@@ -278,13 +278,16 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       'UploadFile',
       this._customersEditForm['photoUrl'].value
     );
-    editFormData.append(
-      'DeleteFile',
-      this._customersEditForm['deleteFile'].value
-    );
-    editFormData.forEach((e) => {
-      // console.log(e);
-    });
+    if (this._customersEditForm['deleteFile'].value) {
+      editFormData.append(
+        'DeleteFile',
+        this._customersEditForm['deleteFile'].value
+      );
+    }
+
+    // editFormData.forEach((e) => {
+    // console.log(e);
+    // });
     this.customerService
       .updateCustomerById(this._customersEditForm['id'].value, editFormData)
       .subscribe(
@@ -314,7 +317,10 @@ export class CustomerDetailsComponent implements OnInit, OnDestroy {
       this.customerService
         .getPackgeUsedByCustomerId(idCus ? idCus : '')
         .subscribe((packageHistory: PackageHistorysResponse) => {
-          this.packageHistory = packageHistory.body.items;
+          this.packageHistory = packageHistory.body.items.sort(
+            (a, b) =>
+              new Date(b.timeEnd).getTime() - new Date(a.timeEnd).getTime()
+          );
           this.packageHistory.forEach(
             (packageHis) => (
               (packageHis.timeEnd = add7Hours(packageHis.timeEnd)),
