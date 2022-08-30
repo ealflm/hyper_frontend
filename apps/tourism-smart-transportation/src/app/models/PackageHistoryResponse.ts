@@ -8,7 +8,7 @@ export class PackageHistory {
   name?: string;
   timeStart!: Date;
   timeEnd!: Date;
-  status?: number;
+  status!: number;
 }
 
 export class PackageHistorysResponse {
